@@ -1,0 +1,361 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="3%"></p:spacer>
+
+
+
+		<div class="container-fluid">
+
+			<div class="col-md-12">
+				<p:messages id="msg" showDetail="true" />
+
+
+
+				<h:form id="superFormgg" prependId="false" rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}">
+
+
+					<h1
+						style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+						Bon de Livraion en attente</h1>
+
+
+					<p:dataTable var="ProduitDTO"
+						value="#{magasinierMB.callServiceRecuperationBL()}" reflow="true"
+						row="15" rowKey="#{ProduitDTO.id}"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucun bon de livraison à valider !!"
+						paginator="true" paginatorPosition="bottom" rows="15"
+						selection="#{magasinierMB.selectedBLDTO}"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						selectionMode="single">
+
+						<h:inputHidden id="id" value="#{magasinierMB.selectedBLDTO.id}"
+							style="margin-top:-1px" required="false" label="code" />
+
+
+
+<p:column headerText="Référence" >  
+								     BL#{entiteJMB.StringCutter(ProduitDTO.id,80)} 
+								        </p:column>
+						<p:column headerText="Date ">
+								#{entiteJMB.StringCutter(ProduitDTO.dateEdition,10)} 
+						</p:column>
+								<p:column headerText="Programme" >  
+								     #{entiteJMB.StringCutter(ProduitDTO.programmeLibelle,80)} 
+								        </p:column>
+								        
+						
+						
+						<p:column headerText="Provenance">  
+								         #{entiteJMB.StringCutter(ProduitDTO.provenanceBL,80)} 
+								        </p:column>
+						<p:column headerText="Transporteur">  
+												#{entiteJMB.StringCutter(ProduitDTO.transporteurlibelle,80)}
+								        </p:column>
+						<p:column headerText="Camion">  
+								        #{entiteJMB.StringCutter(ProduitDTO.camionnumero, 80)} 
+								        </p:column>
+						<p:column headerText="Chauffeur"> 
+								       #{entiteJMB.StringCutter(ProduitDTO.chauffeurlibelle,80)} 
+		                                </p:column>
+
+						<p:ajax event="rowSelect" update="superFormgg"
+							listener="#{magasinierMB.getDetailsOfSelectedBL}">
+						</p:ajax>
+
+					</p:dataTable>
+
+
+
+						<h:commandButton styleClass=" btn btn-success pull-right"
+							style="width : 200px ; margin-right : 135px"
+							action="#{magasinierMB.initTraitementBL}"
+							value="Voir  BL" name="suivants" />
+
+					<br />
+					<br />
+
+				</h:form>
+				
+				
+				
+				
+				
+				<!-- Details BL idBloacktoshow 2 -->
+				
+				<h:form  prependId="false" rendered="#{param.idBlocToShow eq '2'}">
+						
+
+						<div style="margin-left: 5%; margin-right: 5%">
+
+							<h1 class="titleCenter" style="text-align: center">Détails
+								du bon de Livraison #{magasinierMB.selectedBLDTO.libelle} </h1>
+							<br />
+							
+							<div class="row">
+								<div class="col-md-4">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label">Expediteur
+										</label>
+										<div class="col-sm-6">
+											<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedBLDTO.auteurBl}</label>
+										</div>
+									</div>
+									<br /><br/><hr/>
+									
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label ">Contact</label>
+										<div class="col-sm-6">
+											<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedBLDTO.contactAuteurBl}</label>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="col-md-4">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label">Statut
+										</label>
+
+										<div class="col-sm-6">
+											<label for="inputEmail3" class="control-label "> <span
+												class="label label-warning"> <i
+													class=" fa fa-spinner " aria-hidden="true"></i> En attente
+											</span>
+											</label>
+										</div>
+									</div>
+									<br /><br/><hr/>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label">Tel
+											Chauffeur</label>
+										<div class="col-sm-6">
+											<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedBLDTO.contactChauffeur}</label>
+										</div>
+									</div>
+
+								</div>
+
+
+								<div class="col-md-4">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label">
+											Poids Total </label>
+										<div class="col-sm-6">
+											<label for="inputEmail3" class="control-label ">
+												#{magasinierMB.selectedBLDTO.poids} (T)
+											</label>
+										</div>
+									</div>
+									<br /><br/><hr/>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label ">Valeur</label>
+										<div class="col-sm-6">
+											<label for="inputEmail3" class="control-label ">#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedBLDTO.prixtotal)}
+											</label>
+										</div>
+									</div>
+									<br /><br/><hr/>
+
+
+								</div>
+
+							</div>
+								<br />
+						</div>
+					
+						
+						
+						<br />
+						<br />
+						<p:dataTable var="ProduitDTO"
+							value="#{magasinierMB.selectedBLDTO.listProduitsOfBL}"
+							reflow="true" row="5" rowKey="#{ProduitDTO.id}"
+							style="width: 90%; margin-left:5%; font-size:15px ; "
+							emptyMessage="Aucun produit à valider !!" paginator="true"
+							paginatorPosition="bottom" rows="5"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} ">
+
+							<p:column headerText="Désignation">  
+								         #{entiteJMB.StringCutter(ProduitDTO.libelle,20)} 
+								        </p:column>
+							<p:column headerText="Quantité" style="width : 15%">  
+								         #{entiteJMB.StringCutter(ProduitDTO.quantite,20)}  (T)
+								        </p:column>
+
+							<p:column headerText="Prix Unitaire" style="width : 15%">  
+												#{referentielMB.utils.formatFloatToCFA(ProduitDTO.prixUnitaire)}
+								        </p:column>
+							<p:column headerText="Campagne" style="width : 25%">  
+								         #{entiteJMB.StringCutter(ProduitDTO.libelleCampagne,30)} 
+								        </p:column>
+							<p:column headerText="Programme">  
+								         #{entiteJMB.StringCutter(ProduitDTO.libelleProgramme,20)} 
+								        </p:column>
+
+							<!-- 							<p:ajax event="rowSelect" update="DetailsSelectedBL" listener="#{magasinierMB.getDetailsOfSelectedBL}"> </p:ajax> -->
+
+						</p:dataTable>
+
+						<br />
+						<a class=" btn btn-success pull-right"
+						style="width: 250px; margin-right: 150px;; color: #006600;"
+							data-target="#BL" data-toggle="modal"
+						>  <i style="color : #ed4f52" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+							 Accepter avec réserves  </a>
+							 
+						<h:commandButton styleClass=" btn btn-success pull-right"
+							style="width : 250px ; margin-right : 100px"
+							action="#{magasinierMB.accepterBL}"
+							value=" Accepter sans réserves" name="suivants" />
+
+						<br />
+						<br />
+						<br />
+						<br />
+					
+					
+					
+						<!-- Modal  BL -->
+			<div class="modal fade" id="BL" role="dialog">
+				<div class="modal-dialog modal-lg"
+					style="width: 1200px; height: auto;">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">
+								<p
+									style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+								Enregistrer un litige de réception d'intrant</p>
+
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									
+									<div class="col-md-5"/>
+									<div class="col-md-2">
+										<img width="110px" height="100px"
+											src="assets/images/litige2.png" alt="Logo du Sénégal"></img>
+										<br /> <br />
+									</div>
+								<div class="col-md-5"/>
+
+								
+								</div>
+
+
+
+								<!-- Data BL -->
+								<div class="row">
+									<br />
+									
+									<div class="col-md-2"/>
+									<div class="col-md-8">
+										<div class="form-group">
+											<label for="inputPassword3" class="col-sm-6 control-label" style="margin-top : 4px ; font-size: 20px ; font-family: 'PTSans Bold'">
+												Quantité manquante (T)</label>
+											<div class="col-sm-6">
+												<p:inputText type="double" placeholder="Entrer la quantité en tonnage en décimal :  ex 0.2 Tonne"
+													value="#{magasinierMB.litigeDTO.quantiteManquante}"
+													styleClass="form-control" title="La quantité  est requise"
+													requiredMessage="La quantité totale est requise"  />
+
+											</div>
+										</div>
+										<hr/>
+										<div class="form-group">
+											<label for="inputPassword3" class="col-sm-6 control-label" style="margin-top : 4px ; font-size: 20px ; font-family: 'PTSans Bold'">
+												Nombre de sacs </label>
+											<div class="col-sm-6">
+												<p:inputText type="number"
+													value="#{magasinierMB.litigeDTO.nombreDesacs}"
+													styleClass="form-control" title="La quantité  est requise"
+													requiredMessage="Le nombre de sac manquant  est requis" />
+
+											</div>
+										</div>
+										<hr/>
+										
+										<div class="form-group">
+											<label for="inputPassword3" class="col-sm-2 control-label" style="margin-top : 40px ; font-size: 20px ; font-family: 'PTSans Bold'">
+												Observations </label>
+											<div class="col-sm-10">
+												<p:inputTextarea placeholder="Entrez les détails   "
+													value="#{magasinierMB.litigeDTO.detailsLitige}"
+													styleClass="form-control" title="La quantité  est requise"
+													requiredMessage="La quantité  est requise"  />
+
+											</div>
+										</div>
+										
+										<div id="buttons" class="pull-right" style="margin-top: 30px">
+							<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 150px ; margin-right : 12px ;"
+								action="#{magasinierMB.accepterBLAvecReserve}"
+								value=" Enregistrer" name="suivants" />
+						
+								
+								
+							<a type="submit" style="margin-right: 22px; width: 150px"
+								href="magasisnierGestionBL.xhtml?idBlocToShow=2"
+								class="fa fa-info btn btn-default pull-right"> Annuler</a>
+						</div>
+						
+										
+										
+									</div>
+									<div class="col-md-2"/>	
+									
+									
+									
+								</div>
+							</div>
+						</div>
+
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+					
+					
+						
+				</h:form>
+				
+				<!-- Fin Details BL idBloacktoshow 2 -->
+				
+				
+
+			</div>
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Ajout Entite Juridique</ui:define>
+
+	<ui:define name="section">
+
+		<div class="creer_user">
+
+
+			<h:form class="" id="form" action="dashboardG.html">
+				<p:messages id="messages" showDetail="false" />
+
+
+				<br />
+				<center>
+					<h4>Information profil #{profilMB.profilDTO.libelle}</h4>
+				</center>
+
+				<div class="formulaire_entij">
+					<h:inputHidden id="id" value="#{profilMB.profilDTO.id}" />
+
+					<fieldset>
+						<br />
+						<div class="labels" id="labels1">
+							<h:outputLabel value="* Code Profil " />
+							<h:outputLabel value="*  Libelle Profil" />
+
+						</div>
+						<div class="inputs">
+							<p:inputText id="code" value="#{profilMB.profilDTO.code}"
+								required="true" requiredMessage="Le telephone est obilgatoire"
+								readonly="true" />
+							<p:inputText value="#{profilMB.profilDTO.libelle}"
+								title="Le libelle est requis"
+								requiredMessage="Le libelle est est requis" required="true"
+								readonly="true" />
+						</div>
+
+						<div class="labels" id="labels2">
+							<h:outputLabel value=" Habilitation " style="margin-top : 5.5px;" />
+							<h:outputLabel value=" Restrictions " />
+
+						</div>
+
+						<div class="inputs" id="inputs2">
+
+							<p:selectCheckboxMenu
+								value="#{profilMB.profilDTO.menusousmenusDTOs}"
+								title="L'habilitation est obligatoire"
+								label="Ajoutez habilitations" required="true"
+								requiredMessage="L'habilitation est requise"
+								styleClass="Selectprof" style="width: 250px ; height: 26px"
+								filter="true" filterText="Filtrez" filterMatchMode="startsWith">
+								<f:selectItems value="#{profilMB.profilMenuSousMenusList}"
+									var="msm" itemValue="#{msm.id}" itemLabel="#{msm.libelle}"
+									itemDisabled="true" />
+							</p:selectCheckboxMenu>
+
+
+							<p:selectCheckboxMenu value="#{profilMB.profilDTO.actionDTOs}"
+								styleClass="Selectprof" label="Ajoutez restrictions"
+								filter="true" filterText="Filter" filterMatchMode="startsWith"
+								itemDisabled="true" style="width: 250px ; height: 26px">
+								<f:selectItems value="#{profilMB.profilActionsList}"
+									var="action" itemValue="#{action.id}"
+									itemLabel="#{action.libelle}" itemDisabled="true" />
+							</p:selectCheckboxMenu>
+
+						</div>
+
+						<h6>* Champs obligatoires</h6>
+
+					</fieldset>
+
+
+				</div>
+				<div id="buttons">
+					<div class="greenBar" style="width: 526px; margin-left: 10px"></div>
+					<h:button class="annuler" value="Acceuil" outcome="dashboardAdmin"
+						name="annuler" />
+					<h:button class="visualiser" value="Liste" outcome="listeProfil"
+						name="visualiser" />
+					<h:button class="enregistrer" value="Ajouter" outcome="creerProfil"
+						name="enregistrer" />
+
+					<h:button class="suivant" outcome="listeProfil" value="Retour"
+						name="suivants" />
+				</div>
+
+
+			</h:form>
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

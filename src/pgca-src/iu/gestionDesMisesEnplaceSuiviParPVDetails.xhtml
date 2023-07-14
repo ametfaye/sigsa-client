@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+		<div class="container-fluid">
+
+
+			
+			<h:form rendered="#{param.idBlocToShow eq '1'}">
+					
+						
+						<br/>
+
+						<div class="container-fluid">
+							<br/><br/><br/><br/>
+						<h1 class="labelCustum"
+								style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+								<span
+									class="badge #{agentSaisieMB.commandeDTO.styleClassCSSstatusCMD}"
+									style="height: 40px; padding-top: 10px; font-size: 200px">
+									<i
+									class="fa #{agentSaisieMB.commandeDTO.styleClassCSSstatusCMD}"
+									aria-hidden="true" /> 
+									Mise en place numéro MP#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.idMiseEnPlace}
+								</span>
+							</h1>
+								<br/><br/> 	
+							<div class="col-lg-5" style="border : 1PX solid #f0f9f4">
+								<br/>								
+								
+									<div class="col-lg-12">
+								<div class="col-lg-6">
+								
+									<div class="form-group ">
+										<i class="fa  fa-cubes" aria-hidden="true"></i>  <span class="">Cumul </span>
+									</div>
+									<hr /> 
+										
+									
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">  
+											</label>
+											<div class="col-xs-8">
+												<h:outputLabel class="montantCFA"
+													value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.quotaIntrantAMettreEnplace - agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}"></h:outputLabel>
+											</div>
+										</div>
+
+								</div>
+								<div class="col-lg-6">  
+									<div class="form-group ">
+										<i class="fa  fa-truck" aria-hidden="true"></i>  <span class=""> Reliquat </span>
+									</div>
+									<hr /> 
+									
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">  
+											</label>
+											<div class="col-xs-8">
+												<h:outputLabel class="montantCFA"
+													value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}"></h:outputLabel>
+											</div>
+										</div>
+
+										
+										
+								
+
+								</div>
+									</div>
+								
+							</div>
+
+							<div class="col-lg-7">
+								
+								<p style="text-align  : center" > Mise en place effectuée </p>
+								<br/>
+								
+								<p:dataTable var="intrantDTO"  
+									value="#{agentSaisieMB.listedesMiseEnplacedejaEffectue}"
+									reflow="true"
+									emptyMessage="Ancun intrant disponible" paginator="true"
+									rows="10" cellSeparator="10"
+									paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+									paginatorPosition="bottom"
+								
+									style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+									<p:column headerText="Date">
+							          #{profilMB.StringCutter(intrantDTO.dateMiseEnplaceEffective, 60)} 
+							        </p:column>
+
+									<p:column headerText="Transporteur">
+							          #{profilMB.StringCutter(intrantDTO.transporteur, 60)} 
+							        </p:column>
+
+									<p:column headerText="Chauffeur">
+							          #{intrantDTO.chauffeur} 
+							        </p:column>
+
+									<p:column headerText="camion">
+							          #{intrantDTO.camion} 
+							        </p:column>
+							        
+							        <p:column headerText="Quantite">
+							          #{intrantDTO.quantiteAmettreEnplace} 
+							        </p:column>
+							        
+								</p:dataTable>
+
+								<br /> <br />
+							</div>
+
+						
+	
+	
+						</div>
+						
+						
+						<div id="buttons" class="pull-right" style="margin-top: 10px">
+<!-- 							<h:commandButton styleClass=" btn btn-success pull-right" -->
+<!-- 								style="width : 200px ; margin-right : 12px" -->
+<!-- 								action="#{referentielMB.createIntrantForCampagne}" value=" Accepter Ordre de livraison" -->
+<!-- 								name="suivants" /> -->
+							<a type="submit" style="margin-right: 80px; width: 150px"
+								href="#"
+								class="fa fa-info btn btn-default pull-right"> Télécharger BL</a>
+								
+								
+										<a type="submit" style="margin-right: 80px; width: 150px"
+								href="#"
+								class="fa fa-info btn btn-default pull-right"> Télécharger rapport</a>
+								
+										<a type="submit" style="margin-right: 80px; width: 150px"
+								href="#"
+								class="fa fa-info btn btn-default pull-right"> Retour</a>
+						</div>
+						
+					</h:form>
+			
+			
+			
+			
+			
+		</div>
+	</ui:define>
+
+</ui:composition>

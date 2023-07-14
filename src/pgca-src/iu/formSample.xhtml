@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="menuG">
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Intrants <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="gestionDesIntrants.xhtml?idBlocToShow=1">Type
+						d'intrants</a></li>
+				<li><a href="gestionDesIntrants.xhtml?idBlocToShow=2">Liste
+						des intrants</a></li>
+			</ul></li>
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Stock <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Gestion des produits</a></li>
+				<li><a href="#">Gestion des compensations</a></li>
+				<li><a href="#">Déplacer un Produit</a></li>
+				<li><a href="#">Gestion des commandes</a></li>
+			</ul></li>
+
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Trésorerie <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Solde Caisse</a></li>
+				<li><a href="#">Chéques à encaisser</a></li>
+				<li><a href="#">Chéques encaisser</a></li>
+				<li><a href="#">Lettre de crédit</a></li>
+			</ul></li>
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Référentiels <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Enregistrer Commande</a></li>
+			</ul></li>
+	</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div class="col-md-12">
+
+				<p:messages id="messages" showDetail="true" />
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+					<p class="titrePage">Liste des engrais de la Campagne Agricole
+						XXX 2016 - 2017</p>
+					<br />
+
+					<p:dataTable id="ProfilID" var="ProfilProvilder"
+						value="#{profilMB.recupListProfil()}" reflow="true"
+						rowKey="#{ProfilProvilder.id}"
+						emptyMessage="#{msg['form.msg.noProfil']}" paginator="true"
+						rows="10" cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						selection="#{profilMB.selectedProfilDTO}" selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+						<!-- selectedProfilDTO -->
+						<p:column headerText="#{msg['engrais.code']}" style="width: 20%">
+				            #{ProfilProvilder.code}
+				        </p:column>
+
+						<p:column headerText="#{msg['engrais.libelle']}">
+				          #{profilMB.StringCutter(ProfilProvilder.libelle, 40)} 
+				        </p:column>
+
+						<p:column headerText="#{msg['engrais.quantite']}">
+				          #{profilMB.StringCutter(ProfilProvilder.libelle, 40)} 
+				        </p:column>
+
+						<!-- 				        <p:column headerText="#{msg['action.option']}" style="width : 160px"> -->
+						<!-- 							<div class="row"> -->
+						<!-- 							  <div class="col-md-4" > -->
+						<!-- 							  	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> -->
+
+						<!-- 							  </div> -->
+
+						<!-- 							  <div class="col-md-4" style="color : red"><i class="fa fa-trash-o" aria-hidden="true"></i></div> -->
+						<!-- 							  <div class="col-md-4"><i class="fa fa-info-circle" aria-hidden="true"></i> -->
+						<!-- 							 </div> -->
+						<!-- 							</div> -->
+						<!-- 				        </p:column> -->
+					</p:dataTable>
+					<div class=" pull-right" style="margin-right: 55px">
+
+						<br />
+
+
+
+						<a type="submit"  href="gestionDesEngrais.xhtml?idBlocToShow=2"
+							class="fa fa-trash-o btn btn-default pull-right">
+							 Créer</a>
+						<a type="submit"
+							class="fa fa-info btn btn-default pull-right"> Modifier</a>
+						<a type="submit"
+							class="fa fa-info btn btn-default pull-right"> Supprimer</a>
+					</div>
+
+					<br />
+					<br />
+				</h:form>
+
+				<h:form id="engraisCreate" rendered="#{param.idBlocToShow eq '2'}"
+					class="form-horizontal">
+					<div class="row">
+						<p class="titrePage">Ajouter  Engrais</p>
+						<br />
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="inputEmail3"
+										placeholder="Email" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="inputPassword3"
+										placeholder="Password" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="inputEmail3"
+										placeholder="Email" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="inputPassword3"
+										placeholder="Password" />
+								</div>
+							</div>
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="inputEmail3"
+										placeholder="Email" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="inputPassword3"
+										placeholder="Password" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="inputEmail3"
+										placeholder="Email" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="inputPassword3"
+										placeholder="Password" />
+								</div>
+							</div>
+
+							<div id="buttons" class="pull-right">
+
+								<button type="submit"
+									class="fa fa-info btn btn-default pull-right">
+									Modifier</button>
+
+								<button type="submit"
+									class="fa fa-trash-o btn btn-default pull-right">
+									Supprimer</button>
+
+							</div>
+						</div>
+					</div>
+
+				</h:form>
+
+				<!--********************************************************************** 
+				
+						Bloc  Recherche d'engrais
+				
+				************************************************************************** -->
+
+				<h:form id="engraisDetails" rendered="#{param.idBlocToShow eq '3'}">
+					<p class="titrePage">Recherche d'engrais</p>
+					<br />
+
+					<form class="form-inline">
+						<div class="form-group">
+							<label for="exampleInputName2">Type </label>
+
+							<h:selectOneMenu
+								value="#{utilisateurMB.utilisateurDTO.pointDeVentetId}"
+								required="true" styleClass="form-control input-sm CustomSelect"
+								requiredMessage="Le Profil est requis">
+								<f:selectItem itemLabel="Selectionnez le type " itemValue="" />
+
+								<f:selectItems value="#{referentielMB.loadPointdeVenteDTOs()}"
+									var="coupleDTO" itemValue="#{coupleDTO.CastKeytoString()}"
+									itemLabel="#{coupleDTO.valeur}" />
+
+							</h:selectOneMenu>
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail2">Mots clés</label> <input
+								type="email" class="form-control" id="exampleInputEmail2"
+								placeholder="Critère de recherche" />
+						</div>
+						<button type="submit"
+							class="fa fa-save btn btn-default pull-right">Recherche</button>
+					</form>
+					<br />
+					<br />
+				</h:form>
+
+				<!--  FIn de recherche  ***************************************************-->
+
+
+
+				<br /> <br />
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

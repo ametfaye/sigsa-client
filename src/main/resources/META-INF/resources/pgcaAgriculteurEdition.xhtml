@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>SIGMA | Edition d'un nouveau agent</title>
+	<h:outputStylesheet name="css/login.css" />
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico" />
+	<!-- Sweet Alert -->
+	<link href="assets/plugins/sweet-alert2/sweetalert2.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/animate/animate.css" rel="stylesheet"
+		type="text/css" />
+	<!-- DataTables -->
+	<link href="assets/plugins/datatables/dataTables.bootstrap4.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/datatables/buttons.bootstrap4.min.css"
+		rel="stylesheet" type="text/css" />
+	<!-- App css -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/metisMenu.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/plugins/daterangepicker/daterangepicker.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+	<style>
+breadcrumb-item.active {
+	color: #bdb1ab ! important;
+}
+
+.badge.badge-soft-success {
+	color: #354840 !important;
+}
+
+.badge.badge-soft-warning {
+	color: #252118 !important;
+}
+
+.badge.badge-soft-danger {
+	color: #564448 !important;
+}
+</style>
+	<link rel="stylesheet" href="assets/css/bd-wizard.css" />
+
+	<script>
+		 function navigateTo( idItem )
+				{						
+						$(idItem).click();
+						$("#Project1_Tab").removeClass("active");
+						$("#Project2_Tab").removeClass("active");
+						$("#Project3_Tab").removeClass("active");
+						$("#Project4_Tab").removeClass("active");
+						$(idItem).addClass("active");
+	
+				}
+</script>
+
+
+</h:head>
+<h:body class="dark-sidenav">
+	<!-- Left Sidenav -->
+	<ui:include src="./includes/leftSideNav.xhtml" />
+	<!-- end left-sidenav-->
+	<div class="page-wrapper">
+		<!-- Top Bar Start -->
+		<ui:include src="./includes/topBar.xhtml" />
+		<!-- Top Bar End -->
+		<!-- Page Content-->
+		<div class="page-content">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+			<a class="navbar-brand" href="#"> <img
+				src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Administration
+							/ Agents / Edition agent</a></li>
+				</ul>
+				<!--end navbar-nav-->
+				<div class="pull-right">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item "><a class="nav-link" href="#">#{AgentController.connectedUserDetails.entitePublique}
+								/ #{AgentController.connectedUserDetails.service} /
+								#{AgentController.connectedUserDetails.sousService}</a></li>
+					</ul>
+				</div>
+				<!--end form-->
+			</div>
+			<!--end navbar-collapse--> </nav>
+			<h:form class="form-horizontal" prependId="false">
+				<div class="container-fluid">
+					<!-- Page-Title -->
+					<!--end row-->
+					<!-- end page title end breadcrumb -->
+					<div class="row">
+						<div class="col-12">
+							<div class="card"
+								style="background-image: url(images/auth-bg.png)">
+
+								<br />
+								<fieldset class="scheduler-border">
+									<legend class="scheduler-border"
+										style="text-align: center; color: #6f6464">Enrollement
+										d'un agriculteur </legend>
+								</fieldset>
+
+								<div class="card-body">
+
+									<!-- BLOC ALERT -->
+								
+												
+				
+											<div class="alert alert-outline-primary b-round"
+													role="alert"  style=" , text-align : center , border : none  , background-color: #{EnrollementAgriculture.blocAlertBackroundColor}">
+													<button type="button" class="close" data-dismiss="alert"
+														aria-label="Close">
+														<span aria-hidden="true"><i
+															class="mdi mdi-close align-middle font-16"></i></span>
+													</button>
+													<strong>#{EnrollementAgriculture.blocAlertTitre}</strong> 👍 #{EnrollementAgriculture.blocAlertMsg}
+											</div>
+
+
+
+									<!-- Tab panes -->
+									<div class="tab-content">
+										<div class="tab-pane active p-3" id="Project1_Tab"
+											role="tabpanel">
+											<div class="holder mt-3">
+												<ul class="steppedprogress pt-1">
+													<li class="complete continuous"><span>Etat
+															civil</span></li>
+													<li class="complete continuous"><span>Adresse -
+															Contact </span></li>
+													<li class=""><span>Bien agricoles</span></li>
+													<li class=""><span>Validation</span></li>
+												</ul>
+											</div>
+											<br /> <br />
+											<p class="text-muted mt-3 mb-1">Etat civil</p>
+											<p class="text-muted text-right mb-1">15% Complete---</p>
+											<div class="progress mb-4" style="height: 4px;">
+												<div class="progress-bar bg-purple" role="progressbar"
+													style="width: 15%;" aria-valuenow="15" aria-valuemin="0"
+													aria-valuemax="100"></div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-6" id="" style="background: #f7f6f178">
+													<legend class="scheduler-border">Etat civil de
+														l'agriculteur </legend>
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Nom
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:inputText styleClass="form-control"
+																value="#{EnrollementAgriculture.infosEnrollement.beneficiaireEnrollement.nom}" />
+															<i class="icon-time"></i>
+														</div>
+													</div>
+
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Prénom
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:inputText styleClass="form-control"
+																value="#{EnrollementAgriculture.infosEnrollement.beneficiaireEnrollement.prenom}" />
+															<i class="icon-time"></i>
+														</div>
+													</div>
+
+
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Sexe
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:selectOneMenu
+																value="#{EnrollementAgriculture.infosEnrollement.beneficiaireEnrollement.sexe}"
+																styleClass="custom-select"
+																style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																<f:selectItem itemLabel="Masculin" itemValue="" />
+
+																<f:selectItem itemLabel="Masculin" itemValue="M" />
+																<f:selectItem itemLabel="Feminin" itemValue="F" />
+															</h:selectOneMenu>
+
+														</div>
+													</div>
+
+													<hr />
+												</div>
+
+
+
+												<div class="col-md-6" id="" style="background: #f7f6f178">
+													<legend class="scheduler-border" style="color: white">
+													</legend>
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Date
+															de naissance </label>
+														<div class="controls bootstrap-timepicker">
+															<h:inputText styleClass="form-control" type="date"
+																value="#{EnrollementAgriculture.infosEnrollement.beneficiaireEnrollement.dateNaissance}" />
+															<i class="icon-time"></i>
+														</div>
+													</div>
+
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Numéro
+															CNI </label>
+														<div class="controls bootstrap-timepicker">
+															<h:inputText styleClass="form-control"
+																value="#{EnrollementAgriculture.infosEnrollement.beneficiaireEnrollement.numerocni}" />
+															<i class="icon-time"></i>
+														</div>
+													</div>
+
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Catégorie
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:selectOneMenu
+																value="#{EnrollementAgriculture.infosEnrollement.categorie}"
+																styleClass="custom-select"
+																style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																<f:selectItem itemLabel="Masculin" itemValue="" />
+
+																<f:selectItem itemLabel="Productur " itemValue="1" />
+																<f:selectItem itemLabel="Gros Producteur" itemValue="2" />
+																<f:selectItem itemLabel="Regroupement / ssociation "
+																	itemValue="3" />
+
+															</h:selectOneMenu>
+
+														</div>
+													</div>
+
+
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Copie
+															CNI </label>
+														<div class="controls bootstrap-timepicker">
+															<p:fileUpload value="#{fileUploadView.file}"
+																label="Carte d'identité" mode="simple" skinSimple="true" />
+
+														</div>
+													</div>
+
+													<br />
+
+												</div>
+
+												<div class="col-md-6" style="margin-left: 45%">
+
+													<br /> <a type="button"
+														onclick="navigateTo('#Project2_Tab')"
+														class="btn btn-round btn-outline-primary waves-effect waves-light"
+														data-toggle="tab" href="#Project2_Tab"> Suivant </a>
+
+												</div>
+
+											</div>
+										</div>
+										<!--end tab-pane-->
+
+
+
+
+
+
+
+
+
+
+
+										<!--TAB JUSTIF tab-pane-->
+										<div class="tab-pane  p-3" id="Project2_Tab" role="tabpanel">
+											<div class="holder mt-3">
+												<ul class="steppedprogress pt-1">
+													<li class="complete continuous"><span>Etat
+															civil</span></li>
+													<li class="complete continuous"><span>Adresse -
+															Contact </span></li>
+													<li class=""><span>Bien agricoles</span></li>
+													<li class=""><span>Validation</span></li>
+												</ul>
+											</div>
+											<div class="task-box mt-3">
+												<div class="task-priority-icon">
+													<i class="fas fa-circle text-success"></i>
+												</div>
+												<p class="text-muted mt-3 mb-1">Télécharger les
+													justificatifs de l'enrollement</p>
+												<p class="text-muted text-right mb-1">30% Complete---</p>
+												<div class="progress mb-4" style="height: 4px;">
+													<div class="progress-bar bg-purple" role="progressbar"
+														style="width: 40%;" aria-valuenow="15" aria-valuemin="0"
+														aria-valuemax="100"></div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-lg-6" style="background: #f7f6f178">
+													<legend class="scheduler-border">Adresse complète
+													</legend>
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Région
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:selectOneMenu
+																value="#{EnrollementAgriculture.idSelectedRegion}"
+																styleClass="custom-select"
+																style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																<p:ajax process="@this" event="change"
+																	update="select-depart , select-c"
+																	listener="#{EnrollementAgriculture.loadDepartementsByIdRegion}" />
+																<f:selectItem itemLabel="Sélectionner une region "
+																	itemValue="0" />
+																<f:selectItems
+																	value="#{EnrollementAgriculture.reflistRegion}" var="d"
+																	itemLabel="#{d.valeurGenerique}"
+																	itemValue="#{d.idGenerique}" />
+															</h:selectOneMenu>
+
+														</div>
+													</div>
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Département
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:selectOneMenu id="select-depart"
+																value="#{EnrollementAgriculture.idSelectedDept}"
+																styleClass="custom-select"
+																style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																<p:ajax process="@this" event="change" update="select-c"
+																	listener="#{EnrollementAgriculture.loadCommunesByIdDepart}" />
+
+																<f:selectItem itemLabel="Sélectionner un departement "
+																	itemValue="0" />
+																<f:selectItems
+																	value="#{EnrollementAgriculture.reflistDepart}" var="d"
+																	itemLabel="#{d.valeurGenerique}"
+																	itemValue="#{d.idGenerique}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Commune
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<h:selectOneMenu id="select-c"
+																value="#{EnrollementAgriculture.idSelectedCom}"
+																styleClass="custom-select"
+																style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																<f:selectItem itemLabel="Sélectionner une commune"
+																	itemValue="0" />
+																<f:selectItems
+																	value="#{EnrollementAgriculture.reflistCom}" var="d"
+																	itemLabel="#{d.valeurGenerique}"
+																	itemValue="#{d.idGenerique}" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<br />
+													<div class="control-group">
+														<label class="control-label input-label" for="startTime">Adresse
+														</label>
+														<div class="controls bootstrap-timepicker">
+															<div class="controls bootstrap-timepicker">
+																<h:inputText styleClass="form-control"
+																	value="#{EnrollementAgriculture.infosEnrollement.adresse}" />
+																<i class="icon-time"></i>
+															</div>
+														</div>
+													</div>
+
+													<br />
+												</div>
+
+
+												<div class="col-lg-6" style="background: #f7f6f178">
+													<fieldset class="scheduler-border">
+														<legend class="scheduler-border">Contact</legend>
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Mobile
+															</label>
+															<div class="controls bootstrap-timepicker">
+																<h:inputText name="telephone" class="form-control"
+																	value="#{EnrollementAgriculture.infosEnrollement.tel}" />
+																<i class="icon-time"></i>
+															</div>
+														</div>
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Email
+															</label>
+															<div class="controls bootstrap-timepicker">
+																<h:inputText styleClass="form-control"
+																	value="#{EnrollementAgriculture.infosEnrollement.mail}" />
+																<i class="icon-time"></i>
+															</div>
+														</div>
+													</fieldset>
+												</div>
+											</div>
+
+
+											<div class="col-md-6" style="margin-left: 40%">
+												<a type="button"
+													class="btn btn-round btn-outline-primary waves-effect waves-light"
+													onclick="navigateTo('#Project1_Tab')" data-toggle="tab"
+													href="#Project1_Tab"> Précédent </a> <a type="button"
+													class="btn btn-round btn-outline-primary waves-effect waves-light"
+													onclick="navigateTo('#Project3_Tab')" data-toggle="tab"
+													href="#Project3_Tab"> Suivant </a>
+
+											</div>
+
+										</div>
+										<!--end tab-pane-->
+
+
+
+
+										<!--TAB tab-pane-->
+										<div class="tab-pane p-3" id="Project3_Tab" role="tabpanel">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="media mb-3">
+														<img src="assets/images/widgets/project1.jpg" alt=""
+															class="thumb-lg rounded-circle" />
+
+													</div>
+												</div>
+
+											</div>
+											<!--end row-->
+
+											<div class="holder mt-3">
+												<ul class="steppedprogress pt-1">
+													<li class="complete continuous"><span>Etat
+															civil</span></li>
+													<li class="complete continuous"><span>Adresse -
+															Contact </span></li>
+													<li class="complete continuous"><span>Bien
+															agricoles</span></li>
+													<li class=""><span>Validation</span></li>
+												</ul>
+											</div>
+											<div class="task-box mt-3">
+
+
+												<p class="text-muted mt-3 mb-1">Ajouter les bien
+													agricoles connus.</p>
+												<p class="text-muted text-right mb-1">75% Complete</p>
+												<div class="progress mb-4" style="height: 4px;">
+													<div class="progress-bar bg-warning" role="progressbar"
+														style="width: 75%;" aria-valuenow="100" aria-valuemin="0"
+														aria-valuemax="100"></div>
+												</div>
+
+											</div>
+											<!--end task-box-->
+
+
+											<div class="row">
+
+												<div class="col-md-6">
+													<fieldset class="scheduler-border  ">
+														<legend class="scheduler-border">Informations du
+															bien agricole</legend>
+
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Catégorie
+															</label>
+															<div class="controls bootstrap-timepicker">
+																<h:selectOneMenu
+																	value="#{EnrollementAgriculture.infosEnrollement.categorie}"
+																	styleClass="custom-select"
+																	style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																	<f:selectItem itemLabel="Exploitation individuelle"
+																		itemValue="0" />
+																	<f:selectItem itemLabel="Exploitation industrielle"
+																		itemValue="1" />
+																	<f:selectItem itemLabel="Exploitation industrielle"
+																		itemValue="2" />
+																	<f:selectItem itemLabel="Groupement / Association"
+																		itemValue="3" />
+																</h:selectOneMenu>
+															</div>
+														</div>
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Superficie
+																en m2 </label>
+															<div class="controls bootstrap-timepicker">
+																<h:inputText styleClass="form-control"
+																	value="#{EnrollementAgriculture.infosEnrollement.superficieChamp}" />
+																<i class="icon-time"></i>
+															</div>
+														</div>
+
+
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Coordonnées
+																GPS - Longitude </label>
+															<div class="controls bootstrap-timepicker">
+																<h:inputText styleClass="form-control"
+																	value="#{EnrollementAgriculture.infosEnrollement.longitudeChamp}" />
+																<i class="icon-time"></i>
+															</div>
+														</div>
+
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Coordonnées
+																GPS - Latitude </label>
+															<div class="controls bootstrap-timepicker">
+																<h:inputText styleClass="form-control"
+																	value="#{EnrollementAgriculture.infosEnrollement.latitudeChamp}" />
+																<i class="icon-time"></i>
+															</div>
+														</div>
+
+
+
+													</fieldset>
+													 
+												</div>
+
+
+
+
+												<div class="col-md-6">
+													<fieldset class="scheduler-border  ">
+														<legend class="scheduler-border" style="color: white">-</legend>
+
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Type de sol </label>
+															<div class="controls bootstrap-timepicker">
+																<h:selectOneMenu
+																	value="#{EnrollementAgriculture.infosEnrollement.typeTitre}"
+																	styleClass="custom-select"
+																	style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																	<f:selectItem itemLabel="Selectionner un type de sol "
+																		itemValue="0" />
+																	
+																</h:selectOneMenu>
+															</div>
+														</div>
+
+														<br/>
+														
+															<div class="control-group">
+															<label class="control-label input-label" for="startTime">Titre
+																de propriété </label>
+															<div class="controls bootstrap-timepicker">
+																<h:selectOneMenu
+																	value="#{EnrollementAgriculture.infosEnrollement.typeTitre}"
+																	styleClass="custom-select"
+																	style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+																	<f:selectItem itemLabel="Selectionner un titre "
+																		itemValue="0" />
+																	<f:selectItem itemLabel="Titre foncier" itemValue="1" />
+																	<f:selectItem itemLabel="Bail " itemValue="2" />
+																	<f:selectItem itemLabel="Notification" itemValue="3" />
+																</h:selectOneMenu>
+															</div>
+														</div>
+														
+
+
+
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Scan
+																du titre </label>
+															<div class="controls bootstrap-timepicker">
+																<p:fileUpload value="#{fileUploadView.file}"
+																	label="Carte d'identité" mode="simple"
+																	skinSimple="true" />
+
+															</div>
+														</div>
+
+
+														<br />
+														<div class="control-group">
+															<label class="control-label input-label" for="startTime">Photo
+																du biens - 1 </label>
+															<div class="controls bootstrap-timepicker">
+																<p:fileUpload value="#{fileUploadView.file}"
+																	label="Carte d'identité" mode="simple"
+																	skinSimple="true" />
+
+															</div>
+														</div>
+
+
+													</fieldset>
+													 
+												</div>
+
+
+
+											</div>
+
+
+											<div class="col-md-6" style="margin-left: 40%">
+												<a type="button"
+													class="btn btn-round btn-outline-primary waves-effect waves-light"
+													data-toggle="tab" onclick="navigateTo('#Project2_Tab')">
+													Précedent </a> <a type="button"
+													class="btn btn-round btn-outline-primary waves-effect waves-light"
+													onclick="navigateTo('#Project4_Tab')"> Suivant </a>
+
+											</div>
+
+
+
+										</div>
+										<!--end tab-pane-->
+
+
+
+
+
+
+										<div class="tab-pane p-3" id="Project4_Tab" role="tabpanel">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="media mb-3">
+														<img src="assets/images/widgets/project1.jpg" alt=""
+															class="thumb-lg rounded-circle" />
+
+													</div>
+												</div>
+
+											</div>
+											<!--end row-->
+
+											<div class="holder mt-3">
+												<ul class="steppedprogress pt-1">
+													<li class="complete continuous"><span>Etat
+															civil</span></li>
+													<li class="complete continuous"><span>Adresse -
+															Contact </span></li>
+													<li class="complete continuous"><span>Bien
+															agricoles</span></li>
+													<li class="complete finish"><span>Validation</span></li>
+												</ul>
+											</div>
+											<div class="task-box mt-3">
+												<div class="task-priority-icon">
+													<i class="fas fa-check text-danger"></i>
+												</div>
+												<div class="mt-4 d-flex justify-content-between">
+													<h6 class="font-weight-semibold">
+														Nom agriculture : <span
+															class="text-muted font-weight-normal"> 530 /
+															481:30</span>
+													</h6>
+													<h6 class="font-weight-semibold">
+														Today : <span class="text-muted font-weight-normal">
+															2:45</span><span
+															class="badge badge-soft-pink font-weight-semibold ml-2"><i
+															class="far fa-fw fa-clock"></i> 2 days left</span>
+													</h6>
+												</div>
+												<p class="text-muted mt-3 mb-1">Adresse formatée</p>
+												<p class="text-muted text-right mb-1">100% Complete</p>
+												<div class="progress mb-4" style="height: 4px;">
+													<div class="progress-bar bg-success" role="progressbar"
+														style="width: 100%;" aria-valuenow="100" aria-valuemin="0"
+														aria-valuemax="100"></div>
+												</div>
+
+											</div>
+											<!--end task-box-->
+
+
+
+
+
+											<div class="col-sm-12" style="margin-left: 45%">
+												<div class="button-items ">
+
+													<a type="button"
+														class="btn btn-round btn-outline-primary waves-effect waves-light"
+														onclick="navigateTo('#Project3_Tab')"> Suivant </a>
+
+													<button type="button"
+														class="btn btn-warning waves-effect waves-light">
+														<h:commandLink
+															action="#{AgentController.annulerCreationAgent()}"
+															style="color: #ffffff;" update="resultFile"
+															value="Annuler"></h:commandLink>
+													</button>
+													<button type="button"
+														class="btn btn-success waves-effect waves-light">
+														<h:commandLink
+															action="#{EnrollementAgriculture.checkValidityEnrollement()}"
+															style="color: #ffffff;" ajax="false" update="resultFile"
+															value="Enregistrer"></h:commandLink>
+													</button>
+												</div>
+											</div>
+
+
+										</div>
+										<!--end tab-pane-->
+
+
+
+
+
+									</div>
+								</div>
+								<!--end JUSTIF-body-->
+
+
+							</div>
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+					<button style="display: none;" type="button"
+						id="create-agent-topright-error">show alert</button>
+					<h:inputText value="#{AgentController.createAgentErreurMsg}"
+						id="create-agent-error-text" style="display: none;" />
+
+					<button type="button" style="display: none;">
+						<h:commandLink id="reset-error-msgs" value="Enregistrer"
+							style="color: #ffffff;">
+							<p:ajax event="click" update="create-agent-error-text"
+								process="@this" listener="#{AgentController.resetErrorMsgs()}"></p:ajax>
+						</h:commandLink>
+					</button>
+				</div>
+				<!-- container -->
+				<ui:include src="./includes/footer.xhtml" />
+				<!--end footer-->
+			</h:form>
+		</div>
+		<!-- end page content -->
+	</div>
+	<!-- end page-wrapper -->
+</h:body>
+<!-- jQuery  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/metismenu.min.js"></script>
+<script src="assets/js/waves.js"></script>
+<script src="assets/js/feather.min.js"></script>
+<script src="assets/js/simplebar.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/moment.js"></script>
+<script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+<!-- Sweet-Alert  -->
+<script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script src="assets/pages/jquery.sweet-alert.init.js"></script>
+<script>
+    $(document).ready(function() {
+      if ($('#create-agent-error-text').val() !== '') {
+        $('#create-agent-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+  </script>
+</html>

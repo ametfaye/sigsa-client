@@ -1,0 +1,1038 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+		<div class="container-fluid">
+
+
+			<h:form id="MainForm" class="col-md-12">
+
+				<p class="titrePage">Suivi des mises en place par Zone</p>
+
+
+				<p:messages id="messages" showDetail="true"
+					style="width : 60% ; margin-left : 20%" />
+				<br />
+				<br />
+				<br />
+
+				<div class="col-xs-12"  >
+
+					<div class="col-sm-4"   style="display : display">
+						<div class="form-group">
+							<div class="col-lg-3" style="margin-top: 8px">
+
+								<label for="inputEmail3" class="col-lg-12 control-label">Région</label>
+							</div>
+
+							<div class="col-lg-8">
+
+								<h:selectOneMenu value="#{referentielMB.pointDeVente.idRegion}"
+									styleClass="form-control input-sm CustomSelect"
+									requiredMessage="La region est requise ">
+									<f:selectItem itemLabel="Selectionnez une region " itemValue="" />
+									<f:selectItems value="#{referentielMB.loadAllRegions()}"
+										var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+										itemLabel="#{CollaborateurDTO.valeur}" />
+
+									<p:ajax event="change"
+										listener="#{referentielMB.refreshDepartementByRegionId()}"
+										update="deptList2 communList2" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</div>
+
+
+					<h:panelGroup id="deptList2"  style="display : display">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="col-lg-3" style="margin-top: 8px">
+									<label for="inputEmail3" class="col-sm-1 control-label">Département</label>
+								</div>
+
+								<div class="col-lg-8">
+									<h:selectOneMenu
+										value="#{referentielMB.pointDeVente.idDepartement}"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le departement est requis">
+										<f:selectItem itemLabel="Selectionnez un département"
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.departements}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+										<p:ajax event="change"
+											listener="#{referentielMB.refreshCommunesByDepratementId()}"
+											update="communList2" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+
+
+
+					<h:panelGroup id="communList2"  style="display : display">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="col-lg-3" style="margin-top: 8px">
+									<label for="inputEmail3" class="col-sm-1 control-label">Commune</label>
+								</div>
+
+								<div class="col-lg-8">
+									<h:selectOneMenu value="#{agentSaisieMB.nomCommune}"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="La commune est requise">
+										<f:selectItem itemLabel="Selectionnez une commune"
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.communes}"
+											var="CollaborateurDTO"
+											itemValue="#{CollaborateurDTO.clef}-#{CollaborateurDTO.valeur}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+										<p:ajax event="change"
+											listener="#{agentSaisieMB.loadAllMiseEnPlaceByIdCommune()}"
+											update="msgg2 Suivi" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<!--  Messsage d'erreur ou de conf -->
+					
+					<h:panelGroup id="messageService" rendered="#{param.blocInfoMessage eq '1'}">
+						<br />
+						<br />
+						<hr />
+						<h1 style="text-align: center">
+							<span class="ui-label"> <a href="#"
+								class="#{agentSaisieMB.nomCommuneClass}"> <i
+									class="fa fa-exclamation-triangle" aria-hidden="true" />
+									#{agentSaisieMB.messageService}
+							</a></span>
+				  <a class="#{agentSaisieMB.messageServiceCSS}"  style="color : red" data-toggle="modal" data-target="#POPBL">  Télécharger le BL </a> ou le <a  style="color : red" data-toggle="modal" data-target="#POPBL">  Document de suivi </a>
+							
+							</h1>
+					</h:panelGroup>
+					<!--  Fin Message -->
+
+					<h:panelGroup id="msgg2" style="display : display">
+						<br />
+						<br />
+						<hr />
+						<h1 style="text-align: center">
+							<span class="ui-label"> <a href="#"
+								class="#{agentSaisieMB.nomCommuneClass}"> <i
+									class="fa fa-exclamation-triangle" aria-hidden="true" />
+									#{agentSaisieMB.nomCommune}
+							</a></span>
+						</h1>
+						<br />
+						<div class="col-lg-3" />
+
+						
+						<br />
+						<br />
+						
+					</h:panelGroup>
+
+
+
+
+					<!--  Liste des points des ventes trouvés dans la commune -->
+
+					<h:panelGroup id="Suivi">
+						<hr />
+
+
+						<div class="col-sm-12" style="border: 1px solid white;">
+							<p:dataTable var="utilisateurProviver" selectionMode="single"
+								value="#{agentSaisieMB.loadMiseEnPlace()}"
+								selection="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente}"
+								rowKey="#{utilisateurProviver.idPointDeVente}" reflow="true"
+								row="5" style="width: 90%; margin-left:5%; font-size:15px ; "
+								emptyMessage="Aucune mise a disposition pour cette zone !!!"
+								paginator="true" paginatorPosition="bottom" rows="11"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} ">
+
+								
+								<p:column headerText="Point de Vente">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.nomPointDeVente,90)} 
+								        </p:column>
+
+								<p:column headerText="Responsable">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.nomGerant,20)} 
+								        </p:column>
+
+
+								<p:column headerText="Intrant">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.libelleIntrantAMettreEnplace,20)} 
+								        </p:column>
+
+								<p:column headerText="Quota">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.quotaIntrantAMettreEnplace, 20)} 
+								         
+								        
+								        </p:column>
+
+
+								<p:column headerText="Cumul">  
+								         #{utilisateurProviver.quotaIntrantAMettreEnplace -  utilisateurProviver.reliquatIntrantAMettreEnplace } 
+								        </p:column>
+								        
+								        
+
+								<p:column headerText="Reliquat">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.reliquatIntrantAMettreEnplace,20)} 
+								         
+								          <i class="fa fa-sort-desc " aria-hidden="true" style="color : red" />
+								        </p:column>
+
+
+								<p:ajax event="rowSelect" update="MainForm:popUpMiseEnplace"
+									listener="#{agentSaisieMB.updatePopUpData()}" />
+								<!-- <p:ajax event="rowUnselect" listener="#{articleBean.onRowUnselect}" -->
+								<!--                     oncomplete="articleBean.onSelection" /> -->
+
+							</p:dataTable>
+
+						</div>
+						<br />
+
+						<div id="buttons" class="pull-right"
+							style="margin-top: 50px; margin-right: 80px">
+
+
+							<a type="submit" style="margin-right: 22px; width: 250px"
+								data-toggle="modal" data-target="#BL"
+								class="btn btn-success pull-right">Enregistrer mise en place</a>
+								
+								
+											
+							<h:commandButton value="Voir détails mise en place"
+									action="#{agentSaisieMB.loadMiseEnPlacedejaEffectuee}" name="Détails"
+									styleClass=" btn btn-success pull-right"
+									style="margin-right : 80px ; width : 220px" />
+									
+									
+									
+						</div>
+
+
+
+					</h:panelGroup>
+
+
+
+
+
+
+
+
+					<h:panelGroup id="popUpMiseEnplace">
+						<!-- Modal  BL -->
+						<div class="modal fade" id="BL" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Mise en place
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomProgramme}
+												- Point de vente
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomPointDeVente}</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+
+											<!-- Header BL -->
+											<div class="row">
+
+
+												<div class="col-md-5">
+
+
+													<div id="ui-widget"
+														style="margin-left: 10px; height: 50%; width: 50%; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+														<h1 class="ui-value">
+															<a href="#" style="color: #029441;"
+																title="2  Ordre (s) de livraison en attente de pour votre point de vente">
+																#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.quotaIntrantAMettreEnplace - agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}
+															</a>
+														</h1>
+														<span class="ui-label"> <a href="#"
+															style="color: #029441; font-size: 17px;"> CUMUL </a></span>
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<img width="110px" height="100px"
+														src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+
+												</div>
+
+
+												<div class="col-md-5 ">
+
+													<div id="ui-widget"
+														style="margin-left: 10px; height: 50%; width: 50%; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+														<h1 class="ui-value">
+															<a href="#" style="color: #029441;"
+																title="2  Ordre (s) de livraison en attente de pour votre point de vente">
+																#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}
+															</a>
+														</h1>
+														<span class="ui-label"> <a href="#"
+															style="color: #029441; font-size: 17px;"> RELIQUAT </a></span>
+													</div>
+												</div>
+											</div>
+
+
+
+
+											<br /> <br /> <br />
+											<!-- Data BL -->
+											<div class="row"
+												style="border-top: 2px solid #ffffff; background: #f9f9f9; height: auto">
+												<hr />
+												<div class="col-md-5">
+
+													<div class="form-group">
+														<label for="inputPassword3" class="col-sm-4 control-label">Désignation</label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{agentSaisieMB.executionMiseEnPlace.designation}"
+																styleClass="form-control">
+
+															</p:inputText>
+														</div>
+
+													</div>
+													<hr />
+
+													<div class="form-group">
+														<label for="inputPassword3" class="col-sm-4 control-label">Distributeur</label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{agentSaisieMB.executionMiseEnPlace.distributeur}"
+																styleClass="form-control">
+
+															</p:inputText>
+														</div>
+
+													</div>
+													<hr />
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">Quantité</label>
+														<div class="col-sm-8">
+
+															<p:inputText
+																value="#{agentSaisieMB.executionMiseEnPlace.quantiteIntrantAMettreEnplace}"
+																styleClass="form-control">
+
+															</p:inputText>
+														</div>
+													</div>
+
+													<hr />
+
+
+
+												</div>
+
+
+
+												<div class="col-md-5 pull-right">
+
+
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">Transporteur</label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu value="#{referentielMB.idTransporteur}"
+																
+																styleClass="form-control input-sm CustomSelect"
+																>
+																<f:selectItem itemLabel="Selectionnez une region "
+																	itemValue="" />
+																<f:selectItems
+																	value="#{referentielMB.loadAllTransporteur()}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.clef}"
+																	itemLabel="#{CollaborateurDTO.valeur}" />
+
+																<p:ajax event="change"
+																	listener="#{referentielMB.updateListCamionByTransporteur()}"
+																	update="transporteur chauffeur" />
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<hr />
+													<div class="form-group">
+														<label for="inputPassword3" class="col-sm-4 control-label">N°
+															Camion</label>
+														<div class="col-sm-8">
+															<h:selectOneMenu value="#{referentielMB.idCamion}"
+																id="transporteur"
+																styleClass="form-control input-sm CustomSelect"
+																>
+																<f:selectItem itemLabel="Selectionnez un département"
+																	itemValue="" />
+																<f:selectItems value="#{referentielMB.listCamion}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.clef}"
+																	itemLabel="#{CollaborateurDTO.valeur}" />
+																<!-- 																<p:ajax event="change" -->
+																<!-- 																	listener="#{referentielMB.updateListChauffeurByidCamion()}" -->
+																<!-- 																	update="chauffeur" /> -->
+
+															</h:selectOneMenu>
+														</div>
+													</div>
+													<hr />
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">Chauffeur</label>
+														<div class="col-sm-8">
+															<h:selectOneMenu value="#{referentielMB.idChauffeur}"
+																id="chauffeur"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="La commune est requise">
+																<f:selectItem itemLabel="Selectionnez une commune"
+																	itemValue="" />
+																<f:selectItems value="#{referentielMB.listChauffeur}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.clef}"
+																	itemLabel="#{CollaborateurDTO.valeur}" />
+															</h:selectOneMenu>
+														</div>
+														<hr />
+
+														<div id="buttons" class="pull-right">
+															<button type="submit" class="fa fa-info btn btn-default ">
+																Annuler</button>
+
+															<h:commandLink title="Enregistrer "
+																action="#{agentSaisieMB.executeMiseEnplace}">
+																<img
+																	style="margin-left: 60px ! important; margin-top: 20px;"
+																	height="120px" src="assets/images/enre.jpg"
+																	alt="Logo PGCA" />
+
+																<f:setPropertyActionListener
+																	target="#{agentSaisieMB.executionMiseEnPlace.idTransporteur}"
+																	value="#{referentielMB.idTransporteur}" />
+																<f:setPropertyActionListener
+																	target="#{agentSaisieMB.executionMiseEnPlace.idCamion}"
+																	value="#{referentielMB.idCamion}" />
+																<f:setPropertyActionListener
+																	target="#{agentSaisieMB.executionMiseEnPlace.idChauffeurWithName}"
+																	value="#{referentielMB.idChauffeur}" />
+
+
+
+															</h:commandLink>
+
+														</div>
+
+													</div>
+													<hr />
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer"></div>
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<!--  BL De MISE EN PLACE -->
+						<div class="modal fade" id="POPBL" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Mise en place
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomProgramme}
+												- Point de vente
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomPointDeVente}</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+									  				
+						
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									<div class="col-md-5">
+										<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+										<br />
+										<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+											5, Bd du Centenaire de la Commune, Dakar</h1>
+										<br />
+										<h1 class="ui-label soflLabel">
+											Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+										</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+									</div>
+
+									<div class="col-md-2">
+										<img width="110px" height="100px"
+											src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+										<br /> <br />
+									</div>
+
+
+									<div class="col-md-5 ">
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Campagne</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.bondeLivraisonDTO.campagneLibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label  soflLabel">Programme</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.bondeLivraisonDTO.programmeLibelle}</label>
+											</div>
+										</div>
+										<br />
+											
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Agent</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">
+													#{SessionMB.getSessionDataByTag('prenomUser')}
+													#{SessionMB.getSessionDataByTag('nomUser') }</label>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+
+
+
+								<br /> <br /> <br />
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+									<br />
+									<div class="col-md-5">
+										<div class="row" style="border-top: 2px solid #0c9848;">
+											<br />
+											<p
+												style="text-align: center; color: #0c9848; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Expéditeur</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Origine
+												Produit</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{agentSaisieMB.bondeLivraisonDTO.provenanceBL}</label>
+											</div>
+										</div>
+										<br />
+
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Transporteur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{agentSaisieMB.bondeLivraisonDTO.transporteurlibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Chauffeur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{agentSaisieMB.bondeLivraisonDTO.chauffeurlibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Numéro
+												de camion</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.bondeLivraisonDTO.camionnumero}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Date
+												d'expédition</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.utils.splitStringDate(agentSaisieMB.bondeLivraisonDTO.dateEdition)} </label>
+											</div>
+										</div>
+
+									</div>
+					
+
+									<div class="col-md-5 pull-right">
+
+										<div class="row" style="border-top: 2px solid #0c9848;">
+											<br />
+											<p
+												style="text-align: center; color: #0c9848; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Receptionnaire</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Point
+												de vente</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.bondeLivraisonDTO.libelle}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Receptionnaire</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label"></label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Region</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label"></label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Departement</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label"></label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label"></label>
+											</div>
+										</div>
+										<br />
+
+
+
+									</div>
+								</div>
+
+								<!-- Marchandises -->
+								<br /> <br /> <br /> <br /> <br /> <br />
+								<div class="row">
+									<div class="col-md-2"></div>
+
+									<div class="col-md-8">
+
+										<div class="row" style="border-top: 2px solid #0c9848;">
+											<br />
+											<p
+												style="color: #0c9848; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;">Désignation</p>
+											<br />
+										</div>
+										<h:panelGroup id="listOfProductBL">
+
+											<p:dataTable id="listProduct" var="pvDTO"
+												value="#{referentielMB.listProduitsDTOtoCreate}"
+												reflow="true" rowKey="#{pvDTO.idProduit}"
+												emptyMessage="Ancun produit	 de vente disponible"
+												paginator="false" rows="10" cellSeparator="10"
+												paginatorPosition="bottom"
+												style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+
+
+												<p:column headerText="Type Produit">
+								        		  #{profilMB.StringCutter(pvDTO.typeProduit, 80)} 
+								        		</p:column>
+
+												<p:column headerText="Désignation">
+								        		  #{profilMB.StringCutter(pvDTO.libelleProduit, 50)} 
+								        		</p:column>
+
+												<p:column headerText="Quantite" style="width : 150px">
+				          			#{profilMB.StringCutter(pvDTO.quantite, 40)} T
+				        		</p:column>
+
+
+
+											</p:dataTable>
+
+										</h:panelGroup>
+
+									</div>
+									<div class="col-md-2 pull-right"></div>
+								</div>
+								<br /> <br /> <br />
+
+								<!-- footer BL -->
+								<div class="row" style="margin-top: 10%">
+									<div class="col-md-4"
+										style="border: 1px solid #0c9848; min-height: 200px; min-height: 200px">
+										<p class="titrePage">Commission de distribution</p>
+									</div>
+									<div class="col-md-4"
+										style="border: 1px solid white; min-height: 150px">
+										<p class="titrePage">Cachet Sedab</p>
+									</div>
+									<div class="col-md-4 pull-right"
+										style="border: 1px solid #0c9848; min-height: 200px; min-height: 200px">
+										<p class="titrePage">Reserves</p>
+									</div>
+								</div>
+
+								<div class="row">
+
+
+									<br /> <br /> <br /> <br /> <br />
+									<h1 class="ui-label pull-left">
+										contact@sedab.com<br />
+									</h1>
+									<h1 class="ui-label pull-right">www.sedab.com</h1>
+
+
+								</div>
+
+
+							</div>
+						
+
+					
+									</div>
+									<div class="modal-footer"></div>
+								</div>
+							</div>
+						</div>
+						<!--  FIN BL DE MISE EN PLACE -->
+
+
+
+
+
+
+						<!--  Document de Suvi VL -->
+
+						<div class="modal fade" id="POPSUIVI" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Document de Suivi - Point de vente
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomPointDeVente}</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+
+											<!-- Header BL -->
+											<div class="row">
+
+
+												<div class="col-md-5">
+
+
+													<div id="ui-widget"
+														style="margin-left: 10px; height: 50%; width: 50%; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+														<h1 class="ui-value">
+															<a href="#" style="color: #029441;"
+																title="2  Ordre (s) de livraison en attente de pour votre point de vente">
+																#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}
+															</a>
+														</h1>
+														<span class="ui-label"> <a href="#"
+															style="color: #029441; font-size: 17px;"> CUMUL </a></span>
+													</div>
+												</div>
+
+												<div class="col-md-2">
+													<img width="110px" height="100px"
+														src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+
+												</div>
+
+
+												<div class="col-md-5 ">
+
+													<div id="ui-widget"
+														style="margin-left: 10px; height: 50%; width: 50%; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+														<h1 class="ui-value">
+															<a href="#" style="color: #029441;"
+																title="2  Ordre (s) de livraison en attente de pour votre point de vente">
+																#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}
+															</a>
+														</h1>
+														<span class="ui-label"> <a href="#"
+															style="color: #029441; font-size: 17px;"> RELIQUAT </a></span>
+													</div>
+												</div>
+											</div>
+
+
+
+
+											<br /> <br /> <br />
+											<!-- Data BL -->
+									
+										</div>
+									</div>
+									<div class="modal-footer"></div>
+								</div>
+							</div>
+						</div>
+
+					</h:panelGroup>
+
+
+				</div>
+			</h:form>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<h:form rendered="#{param.idBlocToShow eq '5b'}">
+
+						<h1 class="labelCustum"
+							style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+							<span
+								class="badge #{agentSaisieMB.commandeDTO.styleClassCSSstatusCMD}"
+								style="height: 40px; padding-top: 10px; font-size: 200px">
+								<i
+								class="fa #{agentSaisieMB.commandeDTO.styleClassCSSstatusCMD}"
+								aria-hidden="true" /> 
+								Ordre N° #{agentSaisieMB.commandeDTO.referenceCMD} -
+								#{agentSaisieMB.commandeDTO.statusLibelle}
+							</span>
+						</h1>
+						
+						<br/>
+
+						<div class="container-fluid">
+								<br/>
+							<div class="col-lg-8" style="border : 1PX solid #f0f9f4">
+								<br/>
+									<div class="col-lg-12">
+								<div class="col-lg-6">
+								
+									<div class="form-group ">
+										<i class="fa fa-4x fa-user" aria-hidden="true"></i>  <span class="montantCFA">Bénéficiaire </span>
+									</div>
+									<hr /> 
+										
+									
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Client 
+											</label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{agentSaisieMB.commandeDTO.clientNom} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Tél Client </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{agentSaisieMB.commandeDTO.clientTel} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">CNI Client </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=""
+													value="#{agentSaisieMB.commandeDTO.clientCNI} "></h:outputLabel>
+											</div>
+										</div>
+									
+									<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Adresse Client </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=""
+													value="#{agentSaisieMB.commandeDTO.clienAdresse} "></h:outputLabel>
+											</div>
+										</div>
+									
+									
+								</div>
+								
+								<div class="col-lg-6">  
+									<div class="form-group ">
+										<i class="fa fa-4x fa-home" aria-hidden="true"></i>  <span class="montantCFA">Origine </span>
+									</div>
+									<hr /> 
+									
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Origine 
+											</label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{agentSaisieMB.commandeDTO.pointDeVenteDepartementProvenance} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Commune </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{agentSaisieMB.commandeDTO.communeLibelle}" />
+											</div>
+										</div>
+
+										<div class="form-group row">        
+											<label class="col-xs-4 col-form-label">Responsable </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "  
+													value="#{agentSaisieMB.commandeDTO.pointDeVenteGerantProvenance}"></h:outputLabel>
+											</div>
+										</div>
+										
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Tél Responsable </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{agentSaisieMB.commandeDTO.pointDeVenteTelProvenance}"></h:outputLabel>
+											</div>
+										</div>
+										
+								
+
+								</div>
+									</div>
+								
+							</div>
+
+							<div class="col-lg-4">
+								
+								<p style="text-align  : center" > Intrant à livrer </p>
+								<br/>
+								
+								<p:dataTable var="intrantDTO"  
+									value="#{agentSaisieMB.listedesMiseEnplacedejaEffectue}"
+									reflow="true"
+									emptyMessage="Ancun intrant disponible" paginator="true"
+									rows="10" cellSeparator="10"
+									paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+									paginatorPosition="bottom"
+								
+									style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+									<p:column headerText="Date">
+							          #{profilMB.StringCutter(intrantDTO.dateMiseEnplaceEffective, 60)} 
+							        </p:column>
+
+									<p:column headerText="Transporteur">
+							          #{profilMB.StringCutter(intrantDTO.transporteur, 60)} 
+							        </p:column>
+
+									<p:column headerText="Chauffeur">
+							          #{intrantDTO.chauffeur} 
+							        </p:column>
+
+									<p:column headerText="camion">
+							          #{intrantDTO.camion} 
+							        </p:column>
+							        
+							        <p:column headerText="Quantite">
+							          #{intrantDTO.quantiteAmettreEnplace} 
+							        </p:column>
+							        
+								</p:dataTable>
+
+								<br /> <br />
+							</div>
+
+						
+	
+	
+						</div>
+						
+						
+						<div id="buttons" class="pull-right" style="margin-top: 10px">
+<!-- 							<h:commandButton styleClass=" btn btn-success pull-right" -->
+<!-- 								style="width : 200px ; margin-right : 12px" -->
+<!-- 								action="#{referentielMB.createIntrantForCampagne}" value=" Accepter Ordre de livraison" -->
+<!-- 								name="suivants" /> -->
+							<a type="submit" style="margin-right: 22px; width: 150px"
+								href="gestionDesOL.xhtml?idBlocToShow=5"
+								class="fa fa-info btn btn-default pull-right"> Retour</a>
+						</div>
+						
+					</h:form>
+			
+			
+			
+			
+			
+		</div>
+	</ui:define>
+
+</ui:composition>

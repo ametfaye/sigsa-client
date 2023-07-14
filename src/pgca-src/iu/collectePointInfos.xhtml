@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Ajout Entite Juridique</ui:define>
+
+	<ui:define name="section">
+		<div class="creer_user" style="height: 750px;">
+			<h:form class="" id="form" action="dashboardG.html">
+
+				<center>
+					<h4>#{msg['form.enju.detail']}</h4>
+				</center>
+				<div class="formulaire_entij">
+					<p:messages id="messages" showDetail="true" autoUpdate="true"
+						closable="true" />
+					<h:inputHidden style="margin-top:5px" id="id"
+						value="#{entiteJMB.enjuDTO.id}" />
+					<fieldset style="height: 140px;">
+						<LEGEND style="color: #49670f"> Entité juridique</LEGEND>
+						<div class="labels" id="labels1">
+							<h:outputLabel value="* Type " />
+							<h:outputLabel value="* Libelle" />
+							<h:outputLabel value="* Code 3L" />
+						</div>
+						<div class="inputs">
+							<p:selectOneMenu value="#{entiteJMB.enjuDTO.idType}"
+								label="Selectionnez le type" readonly="true" required="true">
+								<f:selectItems itemDisabled="true"
+									value="#{referentielMB.typeEntityJutiridiques}" var="coupleDTO"
+									itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" />
+							</p:selectOneMenu>
+							<p:inputText value="#{entiteJMB.enjuDTO.libelle}" required="true"
+								label="code" requiredMessage="Le login est obilgatoire"
+								readonly="true" />
+							<p:inputText value="#{entiteJMB.enjuDTO.code3l}" required="true"
+								label="liblle"
+								requiredMessage="Le code 3 lettres est obligatoire"
+								readonly="true" />
+						</div>
+
+						<div class="labels" id="labels2">
+							<h:outputLabel value="* Téléphone Fixe " />
+							<h:outputLabel value=" Mobile " />
+							<h:outputLabel value=" Courriel " />
+							<h:outputLabel value=" Site web " />
+						</div>
+						<div class="inputs" id="inputs2">
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.fixe}"
+								required="true" label="code"
+								requiredMessage="Le telephone est obilgatoire" readonly="true" />
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.mobile}"
+								readonly="true" />
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.courriel}"
+								readonly="true" />
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.site}"
+								readonly="true" />
+
+						</div>
+
+
+
+					</fieldset>
+
+					<br />
+
+					<fieldset class="formulaire_ohada" style="height: 120px;">
+
+						<LEGEND style="color: #49670f"> Adresse du point de
+							collecte</LEGEND>
+						<div class="labels" id="labels3">
+							<h:outputLabel value="* Adresse " />
+							<h:outputLabel value="Boite Postale " />
+							<h:outputLabel value="Quartier" />
+						</div>
+						<div class="inputs">
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.libelle}"
+								required="true" requiredMessage="Le telephone est obilgatoire"
+								readonly="true" />
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.codepostal}"
+								required="false" label="code"
+								requiredMessage="Le login est obilgatoire" readonly="true" />
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.quartier}"
+								readonly="true" />
+						</div>
+						<div class="labels" id="labels2">
+							<h:outputLabel value="* Ville" />
+							<h:outputLabel value="* Région " />
+							<h:outputLabel value="* Pays " />
+						</div>
+						<div class="inputs" id="inputs2">
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.ville}"
+								required="true" label="code"
+								requiredMessage="Le login est obilgatoire" readonly="true" />
+							<p:selectOneMenu value="#{entiteJMB.enjuDTO.idRegion}"
+								label="Selectionnez le type" style="margin-top:3px"
+								readonly="true" requiredMessage="L'habilitation est requis"
+								filter="true" filterText="Filtrez" filterMatchMode="startsWith"
+								required="true">
+								<f:selectItems itemDisabled="true"
+									value="#{referentielMB.regionDtos}" var="coupleDTO"
+									itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" />
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{entiteJMB.enjuDTO.idPays}"
+								label="Selectionnez le type" readonly="true" required="true"
+								requiredMessage="L'habilitation est requis"
+								style="margin-top:2px" filter="true" filterText="Filtrez"
+								filterMatchMode="startsWith">
+								<f:selectItems itemDisabled="true"
+									value="#{referentielMB.paysDtos}" var="coupleDTO"
+									itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" />
+							</p:selectOneMenu>
+
+						</div>
+
+					</fieldset>
+
+					<br /> <br />
+					<fieldset id="tarification" style="height: 200px;">
+						<LEGEND style="color: #49670f"> Cordinateurs</LEGEND>
+						<!-- style="width: 96%; margin-left:2%; font-size: 15px;" paginator="true" paginatorPosition="bottom" rows="5" paginatorTemplate="{PreviousPageLink} {NextPageLink} {PageLinks} "  -->
+						<p:dataTable id="tarifs" var="tarif"
+							value="#{entiteJMB.enjuDTO.tarificationDTOs}"
+							emptyMessage="La liste des tarifications est vide !!!"
+							rowKey="#{tarif.id}"
+							style="width: 96%; margin-left:2%; font-size: 15px;"
+							paginator="true" paginatorPosition="bottom" rows="5"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} {PageLinks} "
+							editable="false" editMode="row">
+
+							<!-- <p:ajax event="rowEdit" listener="#{tarifJMB.onEdit}" update=":form:messages" /> -->
+							<p:ajax event="rowEditInit" listener="#{tarifJMB.onEdit}"
+								update=":form:messages" />
+							<p:ajax event="rowEditCancel" listener="#{tarifJMB.onCancel}"
+								update=":form:messages" />
+
+							<h:inputHidden id="numero" value="#{tarif.id}" label="numero" />
+							<p:column headerText="Nom" style="width: 20%;" styleClass="wrap">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tarif.libelleTypeFormulaire}" />
+									</f:facet>
+
+									<f:facet name="input">
+										<h:selectOneMenu value="#{tarif.idTypeFormulaire}">
+											<f:selectItems value="#{referentielMB.typeFormulaires2}"
+												var="typeForm" itemLabel="#{typeForm.valeur}"
+												itemValue="#{typeForm.clef}" />
+										</h:selectOneMenu>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Prenom" styleClass="textOnRight">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tarif.strCoutBase}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{tarif.coutBase}" style="width:100%">
+											<f:convertNumber />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Montant Alloué" styleClass="textOnRight">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tarif.strUniteDeBase}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{tarif.uniteDeBase}" style="width:100%">
+											<f:convertNumber />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Montant utilisé" styleClass="textOnRight">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tarif.strCoutParUniteBase}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{tarif.coutParUniteBase}"
+											style="width:100%">
+											<f:convertNumber />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Frais de gestion" styleClass="textOnRight">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tarif.strFraisDeGestion}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{tarif.fraisDeGestion}"
+											style="width:100%">
+											<f:convertNumber />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+							<p:column style="width:5%;  font-size : 15px" headerText="Edit">
+								<!-- <p:commandLink id="deleteLink" styleClass="ui-icon ui-icon-trash" style=" margin-left :  15px; width : 20px;  border-color : blue; float : left"
+																	onclick="if (!confirm('Etes-vous sûr de vouloir supprimer cette activité ?')) return false" title="Supprimer" action="#{immatriculationMB.supprimerActivite(activity.numerotmp)}"
+																	update="activity" />-->
+
+								<p:commandLink id="modifbutton"
+									action="#{entiteJMB.initModifTarif(tarif.id)}"
+									oncomplete="wTarif1.show()" styleClass="ui-icon ui-icon-pencil"
+									title="Modifier" update=":form:pgtarif1 tarifs">
+									<!--  update="actPGModif"  -->
+
+								</p:commandLink>
+							</p:column>
+							<!-- <p:column style="width:12%">  
+															<f:facet name="header">Edition</f:facet>
+									            <p:rowEditor  />  
+									        </p:column>
+									        <p:column>
+							                <f:facet name="header">Action</f:facet>
+							                <h:commandButton value="Effacer" action="#" />
+							            </p:column>-->
+						</p:dataTable>
+						<h:panelGroup>
+							<div id="addTarif" class="ajout_suppr" onclick="wTarif.show();"
+								style="margin-top: -20px; float: right">
+								<a href="#">Ajouter un tarif<img
+									src="assets/css/img/content/ajout_conjoint.png" alt="+" /></a>
+							</div>
+						</h:panelGroup>
+
+						<p:dialog id="dialTarif" widgetVar="wTarif" showEffect="explode"
+							hideEffect="explode" modal="true" width="700px">
+							<fieldset>
+								<legend style="color: #49670f">
+									Ajout - <label style="color: red;">
+										#{entiteJMB.enjuDTO.libelle}</label>
+								</legend>
+
+								<h:panelGrid id="pgtarif" columns="4"
+									style="margin-left:4%; text-align: right;">
+									<!-- ligne1 -->
+									<!-- <h:outputLabel  for="entiteJuridique" value=" * Entité juridique" style="margin-right:2px"/>
+																	<h:outputLabel  for="entiteJuridique" value="#{entiteJMB.enjuDTO.libelle}" />
+																	<h:selectOneMenu style="margin-top:2px; margin-bottom:2px; width:162px" value="#{entiteJMB.enjuDTO.tarificationDTO.idEntiteJuridique}" requiredMessage="l'entité juridique est requise">
+																		<f:selectItems itemDisabled="true" value="#{referentielMB.refreshEntiteJuridiqueDTOs()}" var="coupleDTO" itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}"/>  
+																	</h:selectOneMenu>
+																	<h:outputLabel  value=""/>
+																	<h:outputLabel  value=""/> -->
+
+									<h:outputLabel value="* Type de Formalité "
+										style=" margin-left:10px; margin-right:2px" />
+									<h:selectOneMenu
+										value="#{entiteJMB.enjuDTO.tarificationDTO.idTypeFormulaire}"
+										label="Selectionnez le type" required="true"
+										style="margin-top:2px; margin-bottom:2px; width:162px">
+										<f:selectItems value="#{referentielMB.typeFormulaires2}"
+											var="coupleDTO" itemValue="#{coupleDTO.clef}"
+											itemLabel="#{coupleDTO.valeur}" />
+									</h:selectOneMenu>
+									<h:outputLabel value="" />
+									<h:outputLabel value="" />
+									<!-- ligne2 -->
+									<h:outputLabel value="* Cout" style="margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO.coutBase}"
+										validatorMessage="Le cout est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<h:outputLabel value=" Frais de gestion "
+										style=" margin-left:10px; margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO.fraisDeGestion}"
+										validatorMessage="Frais de gestion est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<!-- ligne3 -->
+									<h:outputLabel value="* Cout par unité"
+										style="margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO.coutParUniteBase}"
+										validatorMessage="Le coût par unité est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<h:outputLabel value=" Unité de calcul "
+										style=" margin-left:10px; margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO.uniteDeBase}"
+										validatorMessage="L'unité de base est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<!-- ligne4 -->
+								</h:panelGrid>
+							</fieldset>
+							<div id="buttons" style="margin-top: 6px;">
+								<div class="greenBar" style="width: 490px; margin-left: 12px"></div>
+								<!-- <h:button class="visualiser"  value="Annuler" name="visualiser" />-->
+								<p:commandButton value="Annuler" onclick="wTarif.hide()"
+									type="button" name="visualiser" />
+								<p:commandButton value="Ajouter"
+									action="#{entiteJMB.ajouterTarif}" update="tarifs pgtarif"
+									oncomplete="wTarif.hide()" name="suivants" />
+							</div>
+						</p:dialog>
+						<!-- modif -->
+						<p:dialog id="dialTarif1" widgetVar="wTarif1" showEffect="explode"
+							hideEffect="explode" modal="true" width="700px">
+							<fieldset style="color: #49670f">
+								<legend>
+									Modification d'un tarif- <label style="color: red;">
+										#{entiteJMB.enjuDTO.libelle}</label>
+								</legend>
+
+								<h:panelGrid id="pgtarif1" columns="4"
+									style="margin-left:4%; text-align: right;">
+									<!-- ligne1
+																	<h:outputLabel  for="entiteJuridique" value=" * Entité juridique" style="margin-right:2px"/>
+																	<h:selectOneMenu style="margin-top:2px; margin-bottom:2px; width:162px" value="#{entiteJMB.enjuDTO.tarificationDTO2.idEntiteJuridique}" requiredMessage="l'entité juridique est requise">
+																		<f:selectItems itemDisabled="true"  value="#{referentielMB.refreshEntiteJuridiqueDTOs()}" var="coupleDTO" itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}"/>  
+																	</h:selectOneMenu> -->
+									<h:outputLabel value="* Type de Formalité "
+										style=" margin-left:10px; margin-right:2px" />
+									<h:selectOneMenu
+										value="#{entiteJMB.enjuDTO.tarificationDTO2.idTypeFormulaire}"
+										label="Selectionnez le type" required="true"
+										style="margin-top:2px; margin-bottom:2px; width:162px">
+										<f:selectItems value="#{referentielMB.typeFormulaires2}"
+											var="coupleDTO" itemValue="#{coupleDTO.clef}"
+											itemLabel="#{coupleDTO.valeur}" />
+									</h:selectOneMenu>
+									<h:outputLabel value="" />
+									<h:outputLabel value="" />
+
+									<!-- ligne2 -->
+									<h:outputLabel value="* Cout" style="margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO2.coutBase}"
+										validatorMessage="Le cout de base est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<h:outputLabel value=" Frais de gestion "
+										style=" margin-left:10px; margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO2.fraisDeGestion}"
+										validatorMessage="Frais de gestion est invalide">
+										<f:convertNumber />
+									</p:inputText>
+
+									<!-- ligne3 -->
+									<h:outputLabel value="* Cout par unité"
+										style="margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO2.coutParUniteBase}"
+										validatorMessage="Le coût par unité est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<h:outputLabel value=" Unité de calcul "
+										style=" margin-left:10px; margin-right:2px" />
+									<p:inputText
+										value="#{entiteJMB.enjuDTO.tarificationDTO2.uniteDeBase}"
+										validatorMessage="L'unité de base est invalide">
+										<f:convertNumber />
+									</p:inputText>
+									<!-- ligne4 -->
+								</h:panelGrid>
+							</fieldset>
+							<div id="buttons" style="margin-top: 6px;">
+								<div class="greenBar" style="width: 490px; margin-left: 12px"></div>
+								<!-- <h:button class="visualiser"  value="Annuler" name="visualiser" />-->
+								<p:commandButton value="Annuler" onclick="wTarif1.hide()"
+									type="button" name="visualiser" />
+								<p:commandButton value="Modifier"
+									action="#{entiteJMB.modifierTarif}" update="tarifs pgtarif1"
+									oncomplete="wTarif1.hide()" name="suivants" />
+							</div>
+						</p:dialog>
+					</fieldset>
+				</div>
+				<div id="buttons">
+					<div class="greenBar" style="width: 57% px; margin-left: 10px"></div>
+					<h:button class="annuler" value="Acceuil" outcome="dashboardAdmin"
+						name="annuler" style="margin-right : 15px" />
+					<h:button class="visualiser" value="Liste"
+						outcome="listeEntiteJuridique" name="visualiser"
+						style="margin-right : 15px" />
+					<h:commandButton class="enregistrer" value="ajouter"
+						action="creerEntiteJuridique" name="enregistrer"
+						style="margin-right : 15px" />
+
+					<h:button class="suivant" outcome="listeEntiteJuridique"
+						value="Retour" name="suivants" style="margin-right : 15px" />
+				</div>
+
+			</h:form>
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

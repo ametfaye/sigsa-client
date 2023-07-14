@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de collecte</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div class="col-md-12">
+
+				<p:messages id="msg" 
+					style="width: 60%; margin-left : 15%; text-align  : center; margin-top: 40px;    font-size: 15px;color: #253123; letter-spacing: 2px; text-align: center;" />
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+
+
+					<p class="titrePage">Liste des versments</p>
+					<br />
+
+				
+				<h:form id="superFormgg" prependId="false"
+					enctype="multipart/form-data">
+				<p:dataTable var="VersementDTO"
+						value="#{magasinierMB.callServiceRecuperationDepotBanque()}"
+						rowKey="#{VersementDTO.idVersment}" reflow="true" row="5"
+						selection="#{magasinierMB.versementBanque}" selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucun depot enregistré !!" paginator="true"
+						paginatorPosition="bottom" rows="5"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+						<p:column headerText="Date " style="width : 150PX">  
+							 #{VersementDTO.dateDeVersement} 
+						 </p:column>
+
+						<p:column headerText="Montant">  								     
+			
+					    		#{referentielMB.utils.formatFloatToCFA(VersementDTO.montantVersment)}
+						</p:column>
+
+						<p:column headerText="Auteur">  								     
+					    	#{VersementDTO.libellePersonneAuteurVersment}
+						</p:column>
+
+						<p:column headerText="Moyen versement">  
+								     #{entiteJMB.StringCutter(VersementDTO.moyenVersment,40)} 
+						</p:column>
+
+
+					</p:dataTable>
+				
+				
+						<div id="buttons" class="pull-right" style="margin-right: 45px ;  ">
+
+					
+							<button type="button" class="btn btn-success  pull-right"
+								style="margin-right: 10px" data-toggle="modal"
+								data-target="#DetailsVersment">Voir details</button>
+				
+							<button type="button" class="btn btn-success  pull-right"
+								style="margin-right: 10px" data-toggle="modal"
+								data-target="#Versment">Nouveau versement</button>
+					
+						
+							<h:commandLink onclick="return false;" action="#{managerManagedBean.reportListSubvention()}"  title="Télécharger la liste des versements au format excel ">
+									<img src="assets/images/exportExcel.png"   class="pull-right"
+										style="width: 10%; height: 10%; margin-right: 30px ; margin-top : -10px" />
+								
+								</h:commandLink>
+
+						<br /> <br /> <br /> <br />
+
+					</div>
+					
+					
+ </h:form>
+<!-- 					<p:dataTable var="CreditDTO" -->
+<!-- 						value="#{agentCollecteMB.callServiceTotalBudgetAlloue()}" -->
+<!-- 						rowKey="#{CreditDTO.alloc_id}" reflow="true" row="5" -->
+<!-- 						selection="#{agentCollecteMB.allocationBudget}" -->
+<!-- 						selectionMode="single" -->
+<!-- 						style="width: 90%; margin-left:5%; font-size:15px ; " -->
+<!-- 						emptyMessage="Aucun credit enregistré !!" paginator="true" -->
+<!-- 						paginatorPosition="bottom" rows="8" -->
+<!-- 						paginatorTemplate="{PreviousPageLink} {NextPageLink}"> -->
+
+<!-- 						<p:column headerText="Date ">   -->
+<!-- 								     		#{referentielMB.utils.getFormatedDateFromString(CreditDTO.dateAllcation)}								       -->
+<!-- 								        </p:column> -->
+
+<!-- 						<p:column headerText="Programme ">   -->
+<!-- 								     #{entiteJMB.StringCutter(CreditDTO.programme,20)}  -->
+<!-- 								        </p:column> -->
+
+<!-- 						<p:column headerText="Intrant à collecter ">   -->
+<!-- 								     #{entiteJMB.StringCutter(CreditDTO.intranACollecter,20)}  -->
+<!-- 								        </p:column> -->
+<!-- 						<p:column headerText="Bénéficiaire ">   -->
+<!-- 								     #{entiteJMB.StringCutter(CreditDTO.collaborateurBeneficiare,20)}  -->
+<!-- 								        </p:column> -->
+
+<!-- 						<p:column headerText="Montant">  		     -->
+<!-- 				     #{referentielMB.utils.formatFloatToCFA(CreditDTO.montantalloue)} -->
+<!-- 								  </p:column> -->
+
+<!-- 						<p:column headerText="Montant Utilisé">   -->
+<!-- 						   #{referentielMB.utils.formatFloatToCFA(CreditDTO.montantUtilise)} -->
+								 
+<!-- 								</p:column> -->
+
+<!-- 					</p:dataTable> -->
+
+					<div class=" pull-right" style="margin-right: 55px">
+						<br />
+
+<!-- 						<h:commandButton value="Détails" -->
+<!-- 							action="#{agentCollecteMB.getDetailsIntrant}" name="Détails" -->
+<!-- 							class="enregistrer a fa-info btn btn-default " -->
+<!-- 							style="margin-right : 15px" /> -->
+
+
+<!-- 						<h:commandButton value="Enregistrer collecte" -->
+<!-- 							action="#{agentCollecteMB.initEnregistrementCollecte}" -->
+<!-- 							class="btn btn-success" style="margin-right : 15px" /> -->
+
+					</div>
+
+					<br />
+					<br />
+
+<!-- 					<p class="titrePage" -->
+<!-- 						style="background: url('assets/images/small_shadow.jpg')">.</p> -->
+
+				</h:form>
+
+
+
+
+
+
+
+
+				<!--********************************************************************** 
+				
+						Bloc  Enregistrement Collecte
+				
+				************************************************************************** -->
+				<h:form  rendered="#{param.idBlocToShow eq '2'  or param.idBlocToShow eq null}"
+					class="form-horizontal">
+
+					<p class="titrePage">Enregistrement collecte #{agentCollecteMB.allocationBudget.intranACollecter} </p>
+				
+					<div class="col-xs-4" id="blocPV" />
+
+					<div class="col-xs-8" id="blocPV">
+						<div class="form-group">
+							<div class="col-sm-8">
+								<div class="row" style="margin-left: 3%">
+
+									<div class="form-group">
+										  <label for="inputEmail3" class="col-sm-2 control-label"
+											style="margin-top: 17px"> <i class="fa fa-home" aria-hidden="true"></i>
+											Commune</label>
+										<div class="col-sm-8">
+											<br />
+											<p:inputText style="min-width : 330px"
+												value="#{agentCollecteMB.intrantDtoToCreate.vendeurCommune}"
+												maxlength="3"
+												styleClass="typeahead tt-query form-control CustomSelect"
+												title="Commune du fournisseur"
+												requiredMessage="La commune du fournisseur est requise"
+												required="true">
+											</p:inputText>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-1" />
+						<div class="col-xs-5">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label">Campagne
+								</label>
+								<div class="col-sm-8">
+									<h:selectOneMenu readonly="true"
+										value="#{agentCollecteMB.allocationBudget.campagneAgricole}"
+										styleClass="form-control input-sm CustomSelect">
+										<f:selectItem
+											itemLabel="#{agentCollecteMB.allocationBudget.campagneAgricole}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label">Programme</label>
+								<div class="col-sm-8">
+									<h:selectOneMenu readonly="true"
+										value="#{agentCollecteMB.allocationBudget.intranACollecter}"
+										styleClass="form-control input-sm CustomSelect">
+										<f:selectItem
+											itemLabel="#{agentCollecteMB.allocationBudget.intranACollecter}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Intrant</label>
+								<div class="col-sm-8">
+									<p:inputText readonly="true"
+										value="#{agentCollecteMB.allocationBudget.intranACollecter}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="L'intrant  est requis" required="true" />
+								</div>
+							</div>
+
+							
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Prix Unitaire
+									 </label>
+								<div class="col-sm-8">
+									<p:inputText type="number"
+										value="#{agentCollecteMB.allocationBudget.producteurPrixUnitaire}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le prix unitaire est requis" required="true" />
+								</div>
+							</div>
+							
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label">Date
+									Dépôt</label>
+								<div class="col-sm-8">
+
+									<p:inputText
+										value="#{agentCollecteMB.allocationBudget.producteurDateDepot}" 
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="La date de livraison  est requise"
+										required="true" type="date">
+
+									</p:inputText>
+
+								</div>
+							</div>
+							
+							
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-5">
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Prénom
+									Producteur</label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{agentCollecteMB.allocationBudget.producteurPrenom}"
+										styleClass="form-control" 
+										requiredMessage="Le prenom du producteur  est requis" required="true" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Nom
+									Producteur </label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{agentCollecteMB.allocationBudget.producteurNom}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le nom du producteur  est requis" required="true" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Numéro
+									CNI Producteur </label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{agentCollecteMB.allocationBudget.producteurCNI}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le numéro CNI  est requis" required="true" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Village
+									Producteur </label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{agentCollecteMB.allocationBudget.producteurVillage}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le village  est requis" required="true" />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Quantité 
+									 </label>
+								<div class="col-sm-8">
+									<p:inputText type="number"
+										value="#{agentCollecteMB.allocationBudget.producteurPoidsTotal}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="La quantité est requise" required="true" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="buttons" class="pull-right">
+						
+								
+						<a type="submit" href="ACBudget.xhtml?idBlocToShow=1"
+							style="margin-right: 50PX; margin-top: 0PX; width: 200px"
+							class="fa fa-reply btn btn-default "> Annuler</a>
+							
+							<h:commandButton styleClass=" btn btn-success "
+							style="color: white; margin-right : 50PX ; margin-top : 0PX ; width : 200px; background: #80c347 !important; margin-right : 130px"
+							action="#{agentCollecteMB.enregistrertCollecte}" value="Enregiter Collecte "
+							name="suivants" />
+							
+					</div>
+				</h:form>
+
+
+
+
+
+
+
+
+
+
+				<!--********************************************************************** 
+				
+						Confirmation collecte 
+				
+				************************************************************************** -->
+
+				<h:form id="engraisDetails" rendered="#{param.idBlocToShow eq '3'}"
+					class="form-horizontal">
+					<p style="text-align: center; margin-top: 10px; margin-bottom: 18px; text-transform: uppercase; font-size: 16px; font-family: 'PTSans Bold'; color: #22a058; letter-spacing: 2px; text-align: center">
+							<i class="fa fa-check  fa-2x" style="color: #22a058;" /> Votre
+							collecte est enregistrée sous le numero, <a href="#"
+								style="color: #22a058;">
+								#{agentCollecteMB.allocationBudget.reference}</a>
+						</p>
+						<br />
+						<br />
+
+						<p style="margin-left: 60px; margin-right: 60px">Vous pouvez
+							imprimer ou envoyer par mail les documents liés à votre collecte
+							(Récu d'achat , Bon de sortie d'espèces ...)</p>
+						<br />
+
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+
+						<button type="button" class="btn btn-success  pull-right"
+							style="margin-right: 90px" data-toggle="modal" data-target="#bon">Voir bon de sortie d'espèces</button>
+			
+			
+			
+						<button type="button" class="btn btn-success  pull-right"
+							style="margin-right: 90px" data-toggle="modal" data-target="#bon2">Voir reçu d'achat  </button>
+			
+				
+				</h:form>
+
+
+				<!--  FIn de recherche  ***************************************************-->
+				<br /> <br />
+			</div>
+			
+			
+			
+			
+					
+					<!-- POP UP bon -->
+					<div class="modal fade" id="bon" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Bon de sortie d'espèces  Nº #{agentCollecteMB.allocationBudget.reference}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+										<br />
+
+										<!-- Header BL -->
+										<div class="row">
+											<div class="col-md-5">
+												<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+												<br />
+												<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+													5, Bd du Centenaire de la Commune, Dakar</h1>
+												<br />
+												<h1 class="ui-label soflLabel">
+													Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+												</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+											</div>
+
+											<div class="col-md-2">
+												<img width="110px" height="100px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+												<br /> <br />
+											</div>
+
+											<div class="col-md-5 ">
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Campagne</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.campagneAgricole}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label  soflLabel">Programme</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.programme}</label>
+													</div>
+												</div>
+												
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label  soflLabel">Date Dépôt</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.producteurDateDepot}</label>
+													</div>
+												</div>
+												
+												
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Agent</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">
+															#{SessionMB.getSessionDataByTag('prenomUser')}
+															#{SessionMB.getSessionDataByTag('nomUser') }</label>
+													</div>
+												</div>
+
+											</div>
+										</div>
+
+										<br /> <br /> <br />
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+											<br />
+											<div class="col-md-5">
+												<div class="row" style="border-top: 2px solid #80c347 ;">
+													<br />
+													<p
+														style="text-align: center; color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+														Récepteur</p>
+													<br />
+												</div>
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Nom
+														</label>
+
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{agentCollecteMB.allocationBudget.producteurPrenom}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Montant en chiffre</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{referentielMB.utils.formatFloatToCFA(agentCollecteMB.allocationBudget.producteurValeurCollecte)}
+														</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Montant en lettre</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">    
+														#{referentielMB.utils.convertChiffreenLettre(agentCollecteMB.allocationBudget.producteurPrixUnitaire * agentCollecteMB.allocationBudget.producteurPoidsTotal)}
+														</label>
+													</div>
+												</div>
+												<br />
+											
+												
+											</div>
+											<div class="col-md-5 pull-right">
+																					<div class="row" style="border-top: 2px solid #80c347 ;">
+													<br />
+													<p
+														style="text-align: center; color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+														Point de collecte</p>
+													<br />
+											</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Région
+													</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.regionPointDecollecteBeneficiaire}
+														</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Département</label>
+
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.departementPointDecollecteBeneficiaire}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.communePointDecollecteBeneficiaire}</label>
+													</div>
+												</div>
+												<br />
+												
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label "> Point de Collecte</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.pointdeCollecteBeneficiare}</label>
+													</div>
+												</div>
+												<br />
+												
+											</div>
+										</div>
+
+										<!-- Marchandises -->
+										<br /> <br /> <br />
+										<div class="row">
+											<div class="col-md-2"></div>
+											<div class="col-md-8">
+												<div class="row" style="border-top: 2px solid #80c347 ;">
+													<br />
+													<p
+														style="color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+													<br />
+												</div>
+												
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label ">Objet décaissement</label>
+													<div class="col-sm-8">
+														<label for="inputEmail3" class="control-label pull-right">Achat de 	   #{agentCollecteMB.allocationBudget.producteurPoidsTotal} (T) de 
+														#{agentCollecteMB.allocationBudget.intranACollecter} pour un montant de 	total de													#{referentielMB.utils.convertChiffreenLettre(agentCollecteMB.allocationBudget.producteurPrixUnitaire * agentCollecteMB.allocationBudget.producteurPoidsTotal)}
+														</label>
+													</div>
+												</div>
+							
+											</div>
+											<div class="col-md-2 pull-right"></div>
+										</div>
+										<br /> <br /> <br />
+										<!-- footer BL -->
+										<div class="row">
+											<div class="col-md-4"
+												style="border: 1px solid #80c347 ; min-height: 200px; min-height: 200px">
+												<p class="titrePage">Visa Directeur</p>
+											</div>
+											<div class="col-md-4"
+												style="border: 1px solid white; min-height: 150px">
+												<p class="titrePage">Visa Payeur</p>
+											</div>
+											<div class="col-md-4 pull-right"
+												style="border: 1px solid #80c347 ; min-height: 200px; min-height: 200px">
+												<p class="titrePage">Visa Recepteur</p>
+											</div>
+										</div>
+										<div class="row">
+											<br /> <br /> <br /> <br /> <br />
+											<h1 class="ui-label pull-left">
+												contact@sedab.com<br />
+											</h1>
+											<h1 class="ui-label pull-right">www.sedab.com</h1>
+										</div>
+									</div>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+									<!-- POP UP bon -->
+					<div class="modal fade" id="bon2" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Reçu de décaissement  Nº #{agentCollecteMB.allocationBudget.reference}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewB2L" class="container-fluid">
+										<br />
+
+										<!-- Header BL -->
+										<div class="row">
+											<div class="col-md-5">
+												<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+												<br />
+												<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+													5, Bd du Centenaire de la Commune, Dakar</h1>
+												<br />
+												<h1 class="ui-label soflLabel">
+													Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+												</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+											</div>
+
+											<div class="col-md-2">
+												<img width="110px" height="100px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+												<br /> <br />
+											</div>
+
+											<div class="col-md-5 ">
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Campagne</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.campagneAgricole}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label  soflLabel">Programme</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.programme}</label>
+													</div>
+												</div>
+												
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label  soflLabel">Date Dépôt</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label"> 
+											  		#{referentielMB.utils.splitStringDate(agentCollecteMB.allocationBudget.producteurDateDepot)}
+														</label>
+													</div>
+												</div>
+												
+												
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Agent</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">
+															#{SessionMB.getSessionDataByTag('prenomUser')}
+															#{SessionMB.getSessionDataByTag('nomUser') }</label>
+													</div>
+												</div>
+
+											</div>
+										</div>
+
+										<br /> <br /> <br />
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+											<br />
+											<div class="col-md-5">
+												<div class="row" style="border-top: 2px solid #80c347 ;">
+													<br />
+													<p
+														style="text-align: center; color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+														Producteur</p>
+													<br />
+												</div>
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Prenom
+														</label>
+
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{agentCollecteMB.allocationBudget.producteurPrenom}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Nom</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{agentCollecteMB.allocationBudget.producteurNom}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Numéro CNI</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{agentCollecteMB.allocationBudget.producteurCNI}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Village</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.producteurVillage}</label>
+													</div>
+												</div>
+												<br />
+												
+											</div>
+		
+											<div class="col-md-5 pull-right">
+												<div class="row" style="border-top: 2px solid #80c347 ;">
+													<br />
+													<p
+														style="text-align: center; color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+														Point de collecte</p>
+													<br />
+											</div>
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Région
+													</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.regionPointDecollecteBeneficiaire}
+														</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Département</label>
+
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.departementPointDecollecteBeneficiaire}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.communePointDecollecteBeneficiaire}</label>
+													</div>
+												</div>
+												<br />
+												
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label "> Point de Collecte</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{agentCollecteMB.allocationBudget.pointdeCollecteBeneficiare}</label>
+													</div>
+												</div>
+												<br />
+												
+											</div>
+										</div>
+
+										<!-- Marchandises -->
+										<br /> <br /> <br />
+										<div class="row">
+											<div class="col-md-2"></div>
+											<div class="col-md-8">
+												<div class="row" style="border-top: 2px solid #80c347 ;">
+													<br />
+													<p
+														style="color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+													<br />
+												</div>
+												
+				
+												<h:form id="listOfProductBL2">
+													<p:dataTable id="listProducttt" var="pvDTO"
+														value="#{agentSaisieMB.listProduitCommande} "
+														reflow="true" rowKey="#{pvDTO.idProduit}"
+														emptyMessage="Ancun produit	 de vente disponible"
+														paginator="false" rows="10" cellSeparator="10"
+														paginatorPosition="bottom"
+														style="width: 90%; margin-left:5%; font-size:15px ; ">
+														
+															<p:column headerText="Désignation ">  
+											     		#{agentCollecteMB.allocationBudget.intranACollecter}							      
+											        </p:column>
+												<p:column headerText="Prix Unitaire "> 
+													    
+											#{referentielMB.utils.formatFloatToCFA(agentCollecteMB.allocationBudget.producteurPrixUnitaire)}
+													     
+													        </p:column>
+											<p:column headerText="Poids Total ">  
+													     #{agentCollecteMB.allocationBudget.producteurPoidsTotal}
+													        </p:column>
+					
+											<p:column headerText="Valeur ">  
+												#{referentielMB.utils.formatFloatToCFA(agentCollecteMB.allocationBudget.producteurValeurCollecte)}
+													     
+													        </p:column>
+					
+												</p:dataTable>
+												
+												<div class="col-sm-12">
+														<label for="inputEmail3" class="control-label pull-right" style="text-align : center; color: #80c347 ; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX; margin-top : 20PX">	
+																#{referentielMB.utils.convertChiffreenLettre(agentCollecteMB.allocationBudget.producteurPrixUnitaire * agentCollecteMB.allocationBudget.producteurPoidsTotal)}  f cfa
+														</label>
+													</div>
+													
+												</h:form>
+											</div>
+											<div class="col-md-2 pull-right"></div>
+										</div>
+										<br /> <br /> <br />
+										<!-- footer BL -->
+										<div class="row">
+											<div class="col-md-3"
+												style="border: 1px solid #80c347 ; min-height: 200px; min-height: 200px">
+												<p class="titrePage">Signature Producteur</p>
+											</div>
+											<div class="col-md-3"
+												style=" min-height: 150px; ">
+												<p class="titrePage" style="text-decoration: underline;">Signature chef de Village</p>
+											</div>
+											
+											<div class="col-md-3 "
+												style="border: 1px solid white ; min-height: 200px; min-height: 200px ;">
+												<p class="titrePage" style="text-decoration: underline;">Signature Correspondant</p>
+											</div>
+											
+											<div class="col-md-3 "
+												style="border: 1px solid #80c347 ; min-height: 200px; min-height: 200px">
+												<p class="titrePage">Signature Sedab </p>
+											</div>
+											
+											
+										</div>
+										<div class="row">
+											<br /> <br /> <br /> <br /> <br />
+											<h1 class="ui-label pull-left">
+												contact@sedab.com<br />
+											</h1>
+											<h1 class="ui-label pull-right">www.sedab.com</h1>
+										</div>
+									</div>
+								</div>
+							
+							</div>
+						</div>
+					</div>
+						
+		</div>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<p:spacer width="3%"></p:spacer>
+
+		<h:form id="tbCord">
+
+
+			<div class="container-fluid fullbg">
+
+				<h1 style="text-align: center; margin-top: -20px; margin-bottom: 30px;  
+			 font-size: 25px; color: #253123; letter-spacing: 2px; text-align: center">
+								Enregistrement vente #{magasinierMB.stockResiduelSelectedAgentCollecte.libelleProduit}
+				</h1>
+
+
+				<div class="col-md-12"
+					style="margin-top: 20px; margin-bottom: 20px; border: 0; width: 94%; margin-left: 2%">
+
+
+					<div class="col-md-5 dashboardIndicateursInverse">
+						<div class="row">
+
+							<div class="col-md-6 " style="text-align: center">
+
+								<span class="" style="color: #002839"> <i
+									class="fa fa-retweet" aria-hidden="true" style="color: #80c347" />
+									Nombre de points de ventes affectés: <span style="font-size: 30px;">
+										1</span>
+								</span>
+							</div>
+
+							<div class="col-md-6 " style="text-align: center">
+
+								<span class="pull-left" style="color: #002839"> <i
+									class="fa fa-balance-scale" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> Mises en place
+									reçues : <span style="font-size: 30px;">
+										#{agentCollecteMB.stockResiduelSize} </span>
+								</span>
+							</div>
+
+
+
+						</div>
+					</div>
+
+
+					<div class="col-md-1 " style="text-align: center">
+
+						<hr />
+					</div>
+
+					<div class="col-md-6 dashboardIndicateursInverse">
+
+						<div class="row">
+
+							<div class="col-md-8 col-md-offset-2" style="text-align: center">
+								<h:form>
+
+									<h:commandLink action="#{agentSaisieMB.redirectToListBon()}">
+										<span class="pull-left"
+											style="margin-right: 5%; color: #002839"> <i
+											class="fa fa-clone" aria-hidden="true"
+											style="margin-right: 5px; color: #80c347" /> 											Vous avez un écart de versement de  #{referentielMB.utils.formatFloatToCFA( magasinierMB.gettotalVente() - magasinierMB.callTotalServiceRecuperationDepotBanque() )}
+											 <span
+											style="font-size: 30px;">
+												</span>
+										</span>
+									</h:commandLink>
+								</h:form>
+
+							</div>
+
+
+						</div>
+
+
+
+
+					</div>
+					<br />
+				</div>
+
+
+
+
+
+
+
+					<div id="previewBL" class="container-fluid">
+						<br />
+
+
+				
+								
+						<div class="container-fluid">
+						
+						
+
+							<div class="col-md-12">
+
+								
+
+
+								<p:messages id="msg" showDetail="true"
+									style="text-align  : center;     font-size: 15px;color: #253123;letter-spacing: 2px; text-align: center;" />
+									
+									<br/><br/>
+							
+							
+
+
+									<hr />
+
+
+
+
+							
+<!-- 								<div class="col-md-3"> -->
+<!-- 									<p style="text-align : center ; margin-top : -30px">#{magasinierMB.stockResiduelSelectedAgentCollecte.libelleProduit}  </p> <br/> -->
+<!-- 																						<img src="assets/images/pictosIntrant/#{magasinierMB.stockResiduelSelectedAgentCollecte.pictoImages}.png" style="width: 100% ; height : 100%"  /> -->
+									
+<!-- 								</div> -->
+								
+								
+								<div class="col-xs-6">
+
+									<h1
+										style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+										<i class="fa fa-user" aria-hidden="true"></i> Client
+									</h1>
+
+								
+								<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 10px;"> Quantité à vendre </label>
+										<div class="col-sm-6">
+												<p:inputText type="number" required="true"
+																requiredMessage="La quantité est requise"
+																value="#{magasinierMB.quantiteProduitAvendre}"
+																styleClass="form-control" title="L'quantite">
+																<p:ajax event="keyup"
+																	update="tbCord:totalVente tbCord:totalRestant"
+																	resetValues="true" />
+															</p:inputText>
+											<br />
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 10px;"> Prénom </label>
+										<div class="col-sm-6">
+											<p:inputText requiredMessage="Le prenom du client est requis"
+												required="true" value="#{magasinierMB.clientPrenom}"
+												styleClass="form-control" title="Le client">
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 10px;">Nom </label>
+										<div class="col-sm-6">
+											<p:inputText value="#{magasinierMB.clientNom}"
+												required="true" styleClass="form-control" title="Le client"
+												requiredMessage="Le nom du client est requis">
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 10px;">Téléphone </label>
+										<div class="col-sm-6">
+											<p:inputText value="#{magasinierMB.clientTel}"
+												styleClass="form-control" title="Le client">
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 10px;"> Adresse </label>
+										<div class="col-sm-6">
+											<p:inputText
+												requiredMessage="L'adresse du client est requise"
+												required="true" value="#{magasinierMB.clientAdresse}"
+												styleClass="form-control" title="Le client">
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+
+
+
+
+
+
+								</div>
+
+								<div class="col-xs-6">
+									<h1
+										style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+										<i class="fa fa-credit-card" aria-hidden="true"></i> Paiement
+									</h1>
+		
+
+									<div class="form-group">
+										<br /> <label for="inputEmail3"
+											class="col-sm-6 control-label" style="margin-top: 8px;">
+											Prix Tonnage  </label>
+										<div class="col-sm-6">
+											<p:inputText type="number"
+												requiredMessage="Le poids est requis"
+												value="#{magasinierMB.stockResiduelSelectedAgentCollecte.prixProducteur}"
+												styleClass="form-control" title="La quantite">
+												<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<br /> <label for="inputEmail3"
+											class="col-sm-6 control-label" style="margin-top: 8px;">
+											Montant payé par espèces </label>
+										<div class="col-sm-6">
+											<p:inputText type="number"
+												requiredMessage="Le poids est requis"
+												value="#{magasinierMB.montantPayeParEspeces}"
+												styleClass="form-control" title="La quantite">
+												<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label"
+											style="margin-top: 8px;"> Montant payé par BLP </label>
+										<div class="col-sm-6">
+											<p:inputText type="number"
+												requiredMessage="Le poids est requis"  
+												value="#{magasinierMB.montantPayeParNature}"
+												styleClass="form-control" title="La quantite">
+												<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-6 control-label"
+											style="margin-top: 8px;"> Autre Payement </label>
+										<div class="col-sm-6">
+											<p:inputText type="number"
+												requiredMessage="Le poids est requis" 
+												value="#{magasinierMB.montantPayeParBonSubvention}"
+												styleClass="form-control" title="L'quantite">
+												<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+											</p:inputText>
+											<br />
+										</div>
+									</div>
+									<hr />
+									<div class="form-group">
+										<label for="inputPassword3" class="col-sm-4 control-label">
+											Montant payé par chéque / Numéro</label>
+										<div class="col-sm-4">
+											<p:inputText type="number"
+												value="#{magasinierMB.montantPayeParCheque}"
+												styleClass="form-control" title="L'quantite">
+												<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+											</p:inputText>
+										</div>
+
+										<div class="col-sm-4">
+											<p:inputText value="#{magasinierMB.numeroCheque}"
+												styleClass="form-control" title="La quantite">
+<!-- 												<p:ajax event="keyup" update="totalRestant totalPaye" /> -->
+
+											</p:inputText>
+
+										</div>
+										<br />
+									</div>
+
+									<div class="form-group">
+										<br /> <label for="inputEmail3" style="margin-top : 10px"
+											class="col-sm-4 control-label"> Banque émettrice </label>
+										<div class="col-sm-4">
+
+											<h:selectOneMenu value="#{magasinierMB.banqueEmetriceCheque}"
+												required="false"
+												styleClass="form-control input-sm CustomSelect"
+												requiredMessage="Le moyen de paiement est requis ">
+												<f:selectItem itemLabel="Selectionnez la banque "
+													itemValue="0" />
+												<f:selectItems value="#{tresoMB.loadBanqueSenegal()}" />
+
+											</h:selectOneMenu>
+
+											<br />
+										</div>
+									</div>
+
+
+<label for="inputEmail3" class="col-sm-12 control-label"
+								style="margin-top: -8px; margin-left: 30%; font-size: 20px">
+								<i class="fa fa-pagelines" aria-hidden="true"></i> Enregistrer les 	#{referentielMB.utils.formatFloatToCFA((magasinierMB.quantiteProduitAvendre *  magasinierMB.stockResiduelSelectedAgentCollecte.prixProducteur)- (magasinierMB.montantPayeParEspeces +  magasinierMB.montantPayeParBonSubvention + magasinierMB.montantPayeParNature + magasinierMB.montantPayeParCheque)) }
+								
+								 comme crédit <!-- 								<h:selectBooleanCheckbox value="#{magasinierMB.payerLeResteParCredit}" -->
+								<!-- 												style="width: 30px; height: 30px;" /> --> <p:selectBooleanCheckbox
+									value="#{magasinierMB.payerLeResteParCredit}"
+									style="width: 30px; margin-left : 10px ; margin-top: 5px;   height: 30px;" /> <br />
+							</label>
+
+									<br />
+
+
+
+								</div>
+								
+								
+								
+								
+								
+									<div class="row">
+						<div class="col-lg-2"
+							style="text-align: center; margin-top: 20px; margin-bottom: 40px; color: red">
+							<label class="titrePage  Margin10 montantCFA"
+								style="font-size: 20px ! important"> <span
+								style="margin-right: 20px">Montant à payer</span> <h:outputLabel
+									id="totalVente"> #{referentielMB.utils.formatFloatToCFA(magasinierMB.quantiteProduitAvendre *  magasinierMB.stockResiduelSelectedAgentCollecte.prixProducteur) }</h:outputLabel>
+							</label>
+						</div>
+						<div class="col-lg-2"
+							style="text-align: center; margin-top: 20px; margin-bottom: 40px; color: red">
+							<label class="titrePage  Margin10 montantCFA"
+								style="font-size: 20px ! important"> <span
+								style="margin-right: 20px">Montant payé </span> <h:outputLabel
+									id="totalPaye"> #{referentielMB.utils.formatFloatToCFA(magasinierMB.montantPayeParEspeces +  magasinierMB.montantPayeParBonSubvention + magasinierMB.montantPayeParNature + magasinierMB.montantPayeParCheque) }</h:outputLabel>
+							</label>
+						</div>
+						
+						<div class="col-lg-2"
+							style="text-align: center; margin-top: 20px; margin-bottom: 40px; color: red">
+							<label class="titrePage  Margin10 montantCFA"
+								style="font-size: 20px ! important"> <span
+								style="margin-right: 20px">Reste à payer </span> <h:outputLabel
+									id="totalRestant"> #{referentielMB.utils.formatFloatToCFA((magasinierMB.quantiteProduitAvendre *  magasinierMB.stockResiduelSelectedAgentCollecte.prixProducteur)- (magasinierMB.montantPayeParEspeces +  magasinierMB.montantPayeParBonSubvention + magasinierMB.montantPayeParNature + magasinierMB.montantPayeParCheque)) }</h:outputLabel>
+							</label>
+							
+						</div>
+						
+						
+						
+
+					</div>
+
+
+					<div class="col-lg-8 col-lg-offset-4">
+						<div class="container-fluid"
+							style="text-align: center; margin-top: 10px; margin-bottom: 40px;">
+							 <br /> 
+
+									<div id="buttons" class="pull-right" style="margin-top: 30px">
+										<h:commandButton styleClass=" btn btn-success pull-right"
+											disabled="false" style="width : 300px ; margin-right: 30px"
+											action="#{magasinierMB.callVendreProduitServiceAgentCollecte}"
+											value="Enregister la vente" name="suivants" />
+									</div>
+						</div>
+
+					</div>
+
+							</div>
+
+
+
+						</div>
+
+						<h:panelGroup id="detailsPV"
+							rendered="#{magasinierMB.showBlocInfosConfirmation == 1}">
+
+							<br />
+							<br />
+
+
+
+							<p:messages id="messages" showDetail="true" />
+							<!-- sticky="true" -->
+
+
+
+							<p style="margin-left: 60px; margin-right: 60px">
+								<i class="fa fa-check  fa-2x" style="color: #80c347;" /> Votre
+								vente est enregistrée avec succès, cliquer sur le bouton
+								ci-dessous pour télécharger la facture
+							</p>
+							<br />
+
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+
+							<button type="button" class="btn btn-success  pull-right"
+								style="margin-right: 60px" data-toggle="modal"
+								data-target="#Facture">Télécharger la facture</button>
+
+
+
+
+							<a type="button" class="btn btn-default  pull-right"
+								href="dashboardMagasinier.xhtml" style="margin-right: 60px">Retour</a>
+
+
+
+
+							<br />
+							<br />
+							<br />
+							<br />
+
+
+
+
+
+							<br />
+							<br />
+							<br />
+
+						</h:panelGroup>
+
+
+
+					</div>
+
+
+
+
+
+			</div>
+		</h:form>
+
+
+
+
+		<!-- Modal  BL -->
+
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAgentCollecte == false}">
+			<div class="container-fluid">
+				<div class="col-md-12">
+
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+					<h1>Votre profil ne vous donne pas accès à cette ressource
+						demandée</h1>
+
+					<img src="assets/images/restrict.png" alt="Logo du Sénégal" />
+
+
+				</div>
+			</div>
+		</h:panelGroup>
+
+
+	</ui:define>
+
+</ui:composition>

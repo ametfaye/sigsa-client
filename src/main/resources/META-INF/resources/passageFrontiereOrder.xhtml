@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+ 	  xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+  	  xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets"
+   	  xmlns:sec="http://www.springframework.org/security/tags">
+  <h:head>
+    <title>SIGMA | Ordre de mission</title>
+	
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+	<!-- App css -->
+    <h:outputStylesheet name="/css/bootstrap.min.css" />
+    <h:outputStylesheet name="/css/jquery-ui.min.css"/>
+    <h:outputStylesheet name="/css/icons.min.css"/>
+    <h:outputStylesheet name="/css/metisMenu.min.css"/>
+    <h:outputStylesheet name="/plugins/daterangepicker/daterangepicker.css"/>
+    <h:outputStylesheet name="/css/app.min.css"/>
+
+<script>
+	function entreTerritoire()
+	{
+		let today = new Date().toLocaleDateString()
+		$("#entreTerritoire").html("Entrée territoire le " + today)
+	}
+	
+	function sortieTerritoire()
+	{
+		let today = new Date().toLocaleDateString()
+		$("#sortieTerriitoire").html("Sortie territoire le " + today)
+	}
+</script>
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+
+      button.ui-button {
+        margin-right: .5rem;
+      }
+
+      body {
+        margin-top: 20px;
+      }
+
+      .timeline-steps {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap
+      }
+
+      .timeline-steps .timeline-step {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin: 1rem
+      }
+
+      @media (min-width :768px) {
+        .timeline-steps .timeline-step:not(:last-child):after {
+          content: "";
+          display: block;
+          border-top: .25rem dotted #3b82f6;
+          width: 3.46rem;
+          position: absolute;
+          left: 7.5rem;
+          top: .3125rem
+        }
+
+        .timeline-steps .timeline-step:not(:first-child):before {
+          content: "";
+          display: block;
+          border-top: .25rem dotted #3b82f6;
+          width: 3.8125rem;
+          position: absolute;
+          right: 7.5rem;
+          top: .3125rem
+        }
+      }
+
+      .timeline-steps .timeline-content {
+        width: 10rem;
+        text-align: center
+      }
+
+      .timeline-steps .timeline-content .inner-circle {
+        border-radius: 1.5rem;
+        height: 1rem;
+        width: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #3b82f6
+      }
+
+      .timeline-steps .timeline-content .inner-circle:before {
+        content: "";
+        background-color: #3b82f6;
+        display: inline-block;
+        height: 3rem;
+        width: 3rem;
+        min-width: 3rem;
+        border-radius: 6.25rem;
+        opacity: .5
+      }
+    </style>
+  </h:head>
+  <h:body>
+    <div style="width: 100%; margin-top: -20px;">
+      <!-- Top Bar Start -->
+      <div class="topbar" style="background-image: url(images/auth-bg.png)">
+        <!-- Navbar -->
+        <nav class="navbar-custom" style="background: linear-gradient(186deg, rgb(112 203 155), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0,255,0,0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);">
+          <!--end topbar-nav-->
+          <ul class="list-unstyled topbar-nav mb-0">
+            <li style="margin-left: 18%; margin-top: 2%;">
+              <p class="titre-application">SYSTEME INTEGRE DE GESTON DES ORDRES DE MISSION</p>
+            </li>
+            <li>
+              <img src="#{resource['assets/images/sigmalogoT.png']}" style="max-width: 120px;" />
+            </li>
+          </ul>
+        </nav>
+        <!-- end navbar-->
+      </div>
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+          <a class="navbar-brand" href="#">
+            <img src="#{resource['assets/images/logo-sm.png']}" height="26" alt="" class="mr-1" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#"> SOLUTION SIGOM SENEGAL / Module de passage au frontière </a>
+              </li>
+            </ul>
+          </div>
+          <!--end navbar-collapse-->
+        </nav>
+        <h:form class="form-horizontal auth-form my-4" prependId="false">
+          <div class="container-fluid">
+            <div class="row">
+              <!--end col-->
+            </div>
+            <!--end row-->
+            <div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="dastyle-profile">
+								<div class="row">
+									<div class="col-lg-3"></div>
+									<div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+										<div class="dastyle-profile-main">
+											<div class="dastyle-profile-main-pic">
+												<img src="#{resource['assets/images/profil.png']}" alt="" height="130" class="rounded-circle" />
+												</div>
+												<div class="dastyle-profile_user-detail">
+												<h5 class="dastyle-user-name"> #{PassageFrontiereController.nomAgent} </h5>
+												<p class="mb-0 dastyle-user-name-post">Etablissement : #{PassageFrontiereController.etb} </p>
+												<p class="mb-0 dastyle-user-name-post">Service : #{PassageFrontiereController.service}</p>
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-4 align-self-center">
+										<div class="row">
+											<div class="col-auto">
+												<span>
+													<img src="#{resource['assets/images/sceau.png']}" style="width: 50%;" />
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="card">
+						<div class="row text-center justify-content-center mb-3">
+							<div class="col-xl-6 col-lg-8">
+								<h2 class="font-weight-bold">Ordre de mission SN#{PassageFrontiereController.ordreDeMission.odmId} / #{PassageFrontiereController.etbCode}</h2>
+								<p class="text-muted">#{PassageFrontiereController.ordreDeMission.motif}</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+									<p:repeat value="#{PassageFrontiereController.historiqueOrdreDeMissions}" var="hisOdm">
+										<div class="timeline-step">
+											<div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
+												<div class="inner-circle"></div>
+												<p class="h6 mt-3 mb-1">
+												<h:outputText styleClass="color:red" value="#{hisOdm.dateCreation}">
+													<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+												</h:outputText>
+												</p>
+												<p class="h6 text-muted mb-0 mb-lg-0">#{hisOdm.etat.libelleEtat} </p>
+											</div>
+										</div>
+									</p:repeat>
+								</div>
+							</div>
+						</div>
+						<!--end card-->
+						<div class="card-body p-0">
+							<div class="col-sm-12" style="text-align : center">
+								<br />
+								<a href="#" disabled="true" data-toggle="modal" data-target="#entreeTerritoire" onclick="entreTerritoire()" class="btn btn-info">Entrée de térritoire</a>
+								<a href="#" disabled="true" data-toggle="modal" data-target="#sortieTerritoire" onclick="sortieTerritoire()" class="btn btn-success">Sortie de térritoire</a>
+								
+								<div class="modal fade bd-example-modal-sm" id="entreeTerritoire" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-md" role="entreeTerritoire">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h6 class="modal-title m-0" id="mySmallModalLabel">Entrée de térritoire</h6>
+												<button type="button" class="close " data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">
+													<i class="la la-times"></i>
+												</span>
+												</button>
+											</div>
+											<!--end modal-header-->
+											<div class="modal-body text-center">
+												<div class="row">
+												<div class="col-lg-12 center">
+													<div class="form-group row">
+													<div class="col-sm-12">
+														<h:inputTextarea row="100" col="10" styleClass="form-control" id="entreTerritoire" style="min-height : 120px" value="#{PassageFrontiereController.detailsEntreeTerritoire}" />
+													</div>
+													</div>
+												</div>
+												</div>
+											</div>
+											<!--end modal-body-->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+												<button type="button" class="btn btn-primary btn-xs">
+												<h:commandLink action="#{PassageFrontiereController.entreeTerritoire()}" style="color: #ffffff;" update="succes-text" ajax="false" value="Confirmer"></h:commandLink>
+												</button>
+											</div>
+											<!--end modal-footer-->
+										</div>
+										<!--end modal-content-->
+									</div>
+									<!--end modal-dialog-->
+								</div>
+
+								<div class="modal fade bd-example-modal-sm" id="sortieTerritoire" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+									<div class="modal-dialog modal-md" role="sortieTerritoire">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h6 class="modal-title m-0" id="mySmallModalLabel">Sortie de térritoire</h6>
+												<button type="button" class="close " data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">
+													<i class="la la-times"></i>
+												</span>
+												</button>
+											</div>
+											<!--end modal-header-->
+											<div class="modal-body text-center">
+												<div class="row">
+												<div class="col-lg-12 center">
+													<div class="form-group row">
+													<div class="col-sm-12">
+														<h:inputTextarea row="100" col="10" styleClass="form-control "  id="sortieTerriitoire" style="min-height : 120px" value="#{PassageFrontiereController.detailsSortieTerritoire}" />
+													</div>
+													</div>
+												</div>
+												</div>
+											</div>
+											<!--end modal-body-->
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+												<button type="button" class="btn btn-primary btn-xs">
+												<h:commandLink action="#{PassageFrontiereController.sortieTerritoire()}" style="color: #ffffff;" update="succes-text" ajax="false" value="Confirmer"></h:commandLink>
+												</button>
+											</div>
+											<!--end modal-footer-->
+										</div>
+										<!--end modal-content-->
+									</div>
+									<!--end modal-dialog-->
+								</div>
+								<!--end modal-->
+							</div>
+						</div>
+						<br />
+					</div>
+				</div>
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+	
+    <!-- jQuery  -->
+    <h:outputScript name="/js/jquery.min.js"/>
+	<h:outputScript name="/js/bootstrap.bundle.min.js"/>
+		
+    <!-- App js -->
+    <h:outputScript name="/js/app.js"/>
+  </h:body>
+</html>

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+  <h:head>
+    <title>SIGMA | Accueil</title>
+
+    <h:outputStylesheet name="css/login.css" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+      .update-msg {
+        background-color: transparent ! important;
+      }
+      
+    </style>
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml"/>
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml"/>
+      <!-- Top Bar End -->
+      <div class="page-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+          <a class="navbar-brand" href="#">
+            <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Dashboard / Liste des ordres de mission en attente </a>
+              </li>
+            </ul>
+            <!--end navbar-nav-->
+            <div class="pull-right">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="#">#{DashboardControllerChs.connectedUserDetails.entitePublique} / #{DashboardControllerChs.connectedUserDetails.service}
+                    / #{DashboardControllerChs.connectedUserDetails.sousService}</a>
+                </li>
+              </ul>
+            </div>
+            <!--end form-->
+          </div>
+          <!--end navbar-collapse-->
+        </nav>
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-header">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <h4 class="card-title">Plannification des missions</h4>
+                      </div>
+                      <!--end col-->
+                      <!--end col-->
+                    </div>
+                    <!--end row-->
+                  </div>
+                  <!--end card-header-->
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-9 border-right">
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                          <thead>
+                            <tr>
+                              <th>Référence </th>
+                              <th> Destination</th>
+                              <th>Période</th>
+                              <th>Type</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <p:repeat value="#{DashboardControllerChs.listOdmLocalConnecTedUser}" var="agent">
+                              <tr>
+                                <td>
+                                  <h:commandLink action="#{OrderMissionController.viewOrdreDeMission()}" value="#{agent.odmId}ODM" style="cursor: pointer;  color : #8e1d07 ; margin-right : 5px">
+                                    <f:param name="idSelectedODM" value="#{agent.odmId}" />
+                                  </h:commandLink>
+                                </td>
+                                <td>#{agent.destinationLibelle}</td>
+                                <td title="Période de la mission">#{agent.dateDebutMission} - #{agent.dateFinMission} </td>
+                                <td>#{agent.type} </td>
+                              </tr>
+                            </p:repeat>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!--end col-->
+                      <div class="col-lg-3">
+                        <p> pie chart ( en attente / Acceept / ECHO / refuse) </p>
+                        <span class="badge badge-soft-primary float-right">
+                          <i class="far fa-arrow-alt-circle-up mr-1"></i>30.2% </span>
+                        <div class="media">
+                          <div class="icon-info align-self-center">
+                            <i class="far fa-smile align-self-center icon-lg  icon-dual"></i>
+                          </div>
+                          <!--end media-body-->
+                        </div>
+                        <hr class="hr-dashed" />
+                        <span class="badge badge-soft-danger float-right">
+                          <i class="far fa-arrow-alt-circle-down mr-1"></i>1.1% </span>
+                        <div class="media">
+                          <div class="icon-info align-self-center">
+                            <i class="far fa-user align-self-center icon-lg  icon-dual"></i>
+                          </div>
+                          <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold">10k</h3>
+                            <p class="mb-0 text-muted">Tops Agences</p>
+                          </div>
+                          <!--end media-body-->
+                        </div>
+                        <hr class="hr-dashed" />
+                        <span class="badge badge-soft-primary float-right">
+                          <i class="far fa-arrow-alt-circle-up mr-1"></i>11.8% </span>
+                      </div>
+                      <!--end col-->
+                    </div>
+                    <!--end row-->
+                  </div>
+                  <!--end card-body-->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                    <input type="hidden" name="j_idt18" value="j_idt18" />
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="card">
+                            <div class="card-header">
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <h4 class="card-title">Zone géographique </h4>
+                                </div>
+                                <!--end col-->
+                              </div>
+                              <!--end row-->
+                            </div>
+                            <!--end card-header-->
+                            <div class="card-body">
+                              <div class="">
+                                <div id="widget1" class="apex-charts"></div>
+                              </div>
+                            </div>
+                            <!--end card-body-->
+                          </div>
+                          <!--end  card-->
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4">
+                          <div class="card">
+                            <div class="card-header">
+                              <h4 class="card-title">Edition des billets</h4>
+                            </div>
+                            <!--end card-header-->
+                            <div class="card-body p-0"></div>
+                            <div class="card-body">
+                              <ul class="list-group custom-list-group mb-n3">
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                  <div class="media">
+                                    <img class="d-flex align-self-center mr-3 rounded-circle" src="assets/images/widgets/opp-1.png" alt="" height="36" />
+                                    <div class="media-body align-self-center">
+                                      <h6 class="mt-0 mb-1">Agences Ponty</h6>
+                                      <ul class="list-inline mb-0 text-muted">
+                                        <li class="list-inline-item mr-2">
+                                          <span>
+                                            <i class="fas fa-map-marker-alt mr-2 text-secondary font-14"></i>
+                                          </span>Dakar, Centre
+                                        </li>
+                                        <li class="list-inline-item mr-2">
+                                          <span>
+                                            <i class="far fa-envelope mr-2 text-secondary font-14"></i>
+                                          </span>dcentre@airsenegal.com
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!--end media-body-->
+                                  </div>
+                                  <!--end media-->
+                                  <div class="align-self-center">
+                                    <a href="#" class="mr-2">
+                                      <i class="las la-pen text-info font-18"></i>
+                                    </a>
+                                    <a href="#">
+                                      <i class="las la-trash-alt text-danger font-18"></i>
+                                    </a>
+                                  </div>
+                                </li>
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                  <div class="media">
+                                    <img class="d-flex align-self-center mr-3 rounded-circle" src="assets/images/widgets/opp-2.png" alt="" height="36" />
+                                    <div class="media-body align-self-center">
+                                      <h6 class="mt-0 mb-1">Agence AIBD </h6>
+                                      <ul class="list-inline mb-0 text-muted">
+                                        <li class="list-inline-item mr-2">
+                                          <span>
+                                            <i class="fas fa-map-marker-alt mr-2 text-secondary font-14"></i>
+                                          </span>Diamniadio, Washington
+                                        </li>
+                                        <li class="list-inline-item mr-2">
+                                          <span>
+                                            <i class="far fa-envelope mr-2 text-secondary font-14"></i>
+                                          </span>ddiamniadio@airsenegal.com
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!--end media-body-->
+                                  </div>
+                                  <!--end media-->
+                                  <div class="align-self-center">
+                                    <a href="#" class="mr-2">
+                                      <i class="las la-pen text-info font-18"></i>
+                                    </a>
+                                    <a href="#">
+                                      <i class="las la-trash-alt text-danger font-18"></i>
+                                    </a>
+                                  </div>
+                                </li>
+                                <li class="list-group-item align-items-center d-flex justify-content-between">
+                                  <div class="media">
+                                    <img class="d-flex align-self-center mr-3 rounded-circle" src="assets/images/widgets/opp-3.png" alt="" height="36" />
+                                    <div class="media-body align-self-center">
+                                      <h6 class="mt-0 mb-1">Agence en ligne </h6>
+                                      <ul class="list-inline mb-0 text-muted">
+                                        <li class="list-inline-item mr-2">
+                                          <span>
+                                            <i class="fas fa-map-marker-alt mr-2 text-secondary font-14"></i>
+                                          </span>Dakar, Pikine
+                                        </li>
+                                        <li class="list-inline-item mr-2">
+                                          <span>
+                                            <i class="far fa-envelope mr-2 text-secondary font-14"></i>
+                                          </span>pikine@airsenegal.com
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <!--end media-body-->
+                                  </div>
+                                  <!--end media-->
+                                  <div class="align-self-center">
+                                    <a href="#" class="mr-2">
+                                      <i class="las la-pen text-info font-18"></i>
+                                    </a>
+                                    <a href="#">
+                                      <i class="las la-trash-alt text-danger font-18"></i>
+                                    </a>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div>
+                            <!--end card-body-->
+                          </div>
+                          <!--end  card-->
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4">
+                          <div class="card">
+                            <div class="card-header">
+                              <div class="row align-items-center">
+                                <div class="col">
+                                  <h4 class="card-title">Couverture Air Sénégal</h4>
+                                </div>
+                                <!--end col-->
+                              </div>
+                              <!--end row-->
+                            </div>
+                            <!--end card-header-->
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-xl-6">
+                                  <div id="email_report" class="apex-charts mb-n3"></div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-xl-6 align-self-center">
+                                  <ul class="list-unstyled">
+                                    <li class="list-item mb-2 font-weight-semibold-alt">
+                                      <i class="fas fa-play text-primary mr-2"></i>Envoyés
+                                    </li>
+                                    <li class="list-item mb-2 font-weight-semibold-alt">
+                                      <i class="fas fa-play text-info mr-2"></i>Ouverts
+                                    </li>
+                                    <li class="list-item font-weight-semibold-alt">
+                                      <i class="fas fa-play mr-2" style="color: #fdb5c8;"></i>Fermés
+                                    </li>
+                                  </ul>
+                                  <button type="button" class="btn btn-sm btn-outline-primary btn-round dual-btn-icon">Voir tout <i class="mdi mdi-arrow-right"></i>
+                                  </button>
+                                </div>
+                                <!--end col-->
+                              </div>
+                              <!--end row-->
+                              <div class="text-center mt-4">
+                                <h6 class="text-primary bg-soft-primary p-3 mb-0 font-11 rounded">
+                                  <i data-feather="calendar" class="align-self-center icon-xs mr-1"></i> 25 NOV 2020
+                                </h6>
+                              </div>
+                            </div>
+                            <!--end card-body-->
+                          </div>
+                          <!--end  card-->
+                        </div>
+                        <!--end col-->
+                      </div>
+                      <!--end row-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/metismenu.min.js"></script>
+    <script src="assets/js/waves.js"></script>
+    <script src="assets/js/feather.min.js"></script>
+    <script src="assets/js/simplebar.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/moment.js"></script>
+    <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    
+    <!-- Chart JS -->
+    <script src="assets/plugins/chartjs/chart.min.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+    
+    <script>
+      $('#datatable').DataTable({
+        "language": {
+          "sProcessing": "Traitement en cours ...",
+          "sLengthMenu": "Afficher _MENU_ lignes",
+          "sZeroRecords": "Aucun résultat trouvé",
+          "sEmptyTable": "Aucune donnée disponible",
+          "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+          "sInfoEmpty": "Aucune ligne affichée",
+          "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+          "sInfoPostFix": "",
+          "sSearch": "Chercher:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Chargement...",
+          "oPaginate": {
+            "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+          },
+          "oAria": {
+            "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+          }
+        }
+      });
+    </script>
+  </h:body>
+</html>

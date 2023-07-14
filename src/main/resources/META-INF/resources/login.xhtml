@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>SIGMA | Authentification</title>
+	<h:outputStylesheet name="/css/login.css" />
+
+	<h:outputStylesheet name="/css/bootstrap.min.css" />
+	<h:outputStylesheet name="/css/icons.min.css" />
+	<h:outputStylesheet name="/css/app-rtl.min.css" />
+
+	<h:outputScript library="/js/jquery.min.js" />
+	<h:outputScript library="/js/bootstrap.bundle.min.js" />
+	<h:outputScript library="/js/waves.js" />
+	<h:outputScript library="/js/feather.min.js" />
+	<h:outputScript library="/js/simplebar.min.js" />
+</h:head>
+
+<h:body styleClass="account-body accountbg"  style=" background: linear-gradient(186deg, rgb(201 136 24), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0,255,0,0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);">
+	<div class="container">
+		<div class="row vh-100 d-flex justify-content-center">
+			<div class="col-12 align-self-center">
+					<div class="row" style="background: white">
+
+
+
+					<div class="col-lg-5 mx-auto">
+						<div class="card">
+							<div class="card-body p-0 auth-header-box"
+								style="background: white ! important">
+								<div class="text-center p-3">
+									<a href="#" class="logo logo-admin"> <img
+										src="#{resource['assets/images/sigsa-ca.png']}"
+										height="250" class="auth-logo" />
+									</a>
+									<h4 class="mt-5 mb-1 font-weight-semibold font-18"
+										style="color: #5d5f62;">SIGSA - CA</h4>
+									<p class="text-muted  mb-0">Module des commissions agricoles</p>
+								</div>
+							</div>
+							<div class="card-body" style="margin-top: -5%;">
+								<div class="tab-content">
+									<div class="tab-pane active" id="LogIn_Tab" role="tabpanel">
+										<h:form class="form-horizontal auth-form my-4"
+											prependId="false">
+											<h:panelGroup rendered="${!empty param['error']}">
+												<div class="alert alert-danger border-0" role="alert">
+													<center>
+														<strong> Identifiant ou mot de passe incorrect </strong>
+													</center>
+												</div>
+											</h:panelGroup>
+
+											<div class="form-group" style="text-align: center;">
+												<label for="username">Identifiant</label>
+												<div class="form-group">
+													<h:inputText id="username" name="username"
+														class="form-control"
+														placeholder="Entrer votre identifiant"
+														style="text-align: center ;direction :  ltr !important" />
+												</div>
+											</div>
+											<!--end form-group-->
+
+											<div class="form-group" style="text-align: center;">
+												<label for="userpassword">Mot de passe</label>
+												<div class="input-group mb-3">
+													<h:inputSecret type="password" class="form-control"
+														name="password" id="password"
+														placeholder="Entrer votre mot de passe"
+														style="text-align: center; ;direction :  ltr !important" />
+												</div>
+											</div>
+											<!--end form-group-->
+
+											<div class="form-group mb-0 row">
+												<div class="col-12 mt-2">
+													<h:commandButton value="Connexion" ajax="false"
+														style="background: #146b30; border: none"
+														styleClass="btn btn-primary btn-block waves-effect waves-light" />
+												</div>
+												<!--end col-->
+											</div>
+											<!--end form-group-->
+
+										</h:form>
+										<!--end form-->
+									</div>
+								</div>
+							</div>
+
+							<!--end card-body-->
+							<div class="card-body bg-light-alt text-center">
+								<span class="text-muted d-none d-sm-inline-block">CCI
+									International &copy; 2023 - Version
+									#{FooterController.appVersion}</span>
+							</div>
+						</div>
+						<!--end card-->
+					</div>
+					<!--end col-->
+
+
+					<div class="col-lg-5 mx-auto"
+						style="background-image : #{resource['assets/images/sigsa-server.png']}">
+
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">Plateforme des commissions agricoles </h4>
+							</div>
+							<!--end card-header-->
+							<div class="card-body">
+								<p class="">La solution SIGSA est une plateforme collaborative permettant
+									d’informatiser les processus métiers entre les différents
+									acteurs du secteur agricole (fournisseurs, ONG, réseaux
+									producteurs, opérateurs de saisies, opérateurs de collecte,
+									Direction Agricole , DRDR …). Dotée de plusieurs modules, la
+									plateforme couvre l’ensemble des phases d’une campagne
+									agricole, allant de l’ouverture jusqu’à la génération des
+									rapports de fin de campagne pour chaque zone. La plateforme
+									permet ainsi d’ouvrir une campagne agricole et de suivre
+									l’ensemble des activités qui lui sont liées via des tableaux de
+									bord graphique, des notifications mails , sms.</p>
+
+
+								<p class="card-text">
+									<small class="text-muted">Last updated 3 mins ago</small>
+								</p>
+								
+								
+								
+								Avantages de PGCA
+
+Visibilité en temps réel sur les activités d’une campagne agricole.
+
+Agrégation des besoins en intrants par catégorie et par zone.
+
+Génération des rapports de mise en place pour la direction agricole
+du ministère de l’agriculture.
+
+Générations des rapports des différentes activités pour les
+managers avec prévisualisation sur des tableaux de bords.
+
+Possibilité de s’interfacer avec d’autres systèmes pour partager des
+données référentielles via des Web services embarqués.
+
+Notifications automatisées (alertes mail  sms)
+						
+                                            
+							</div>
+							<span>	Licence  : Pro Priv/Public 2</span>						
+							
+							<!--end card-body-->
+						</div>
+
+					</div>
+
+				</div>
+				<!--end row-->
+			</div>
+			<!--end col-->
+		</div>
+		<!--end row-->
+	</div>
+	<!--end container-->
+
+</h:body>
+
+</html>

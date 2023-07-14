@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	
+	<ui:define name="section">
+		<div class="container-fluid">
+		
+		
+			<div id="engraisCreate" class="form-horizontal">
+				<h:form  class="col-md-12" >
+									
+					
+					<p class="titrePage">Edition d'un fournisseur</p>
+					
+						<p:messages id="messages" showDetail="false" style="width : 60% ; margin-left : 20%" />			
+				<br/><br/><br/>
+				
+					<div class="col-xs-4">
+						
+
+					</div>
+
+
+					<!--  right bloc -->
+					<div class="col-xs-4">
+					
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-4 control-label">Nom Fournisseur </label>
+							<div class="col-sm-8">
+								<p:inputText
+									value="#{referentielMB.providerDTO.libelle}"
+									styleClass="form-control" title="L'adresse"  
+									required="true"  requiredMessage="Le nom  du fournisseur est requis" />
+							</div>
+						</div>
+						
+								
+					<div class="form-group">
+							<label for="inputPassword3" class="col-sm-4 control-label">Représentant Civil</label>
+							<div class="col-sm-8">
+								<p:inputText
+									value="#{referentielMB.providerDTO.representantCivil}"
+									styleClass="form-control" title="L'adresse"  
+									required="true"  requiredMessage="Le representant est obligatoire" />
+							</div>
+						</div>
+
+						
+
+
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-4 control-label">Téléphone</label>
+							<div class="col-sm-8">
+								<p:inputText
+									value="#{referentielMB.providerDTO.representantTelephone}"
+									styleClass="form-control" title="L'adresse"  
+									/>
+							</div>
+						</div>
+					
+					
+					
+						<div id="buttons" class="pull-right">
+						<br/>
+					<br/>
+					
+					<h:commandButton styleClass="suivant btn btn-validatd pull-right"
+						action="#{referentielMB.createFournisseur}" value="Créer"
+						name="suivants"   style="width : 160px ; margin-left : 12px; margin-right : 20px" class=" btn btn-success pull-right"/>
+	
+					<a type="submit"
+						href="dashboardAgentsaisie.xhtml?"
+						class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+				</div>
+				
+					
+					</div>
+						
+						<div class="col-xs-4"/>
+						
+					
+				
+				</h:form>
+			
+			
+			</div>
+
+			
+
+		</div>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,583 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div id="engraisCreate" class="col-xs-12" style="margin-top: -10px">
+				<p:messages id="msg" showDetail="true" showIcon="true"
+					style="text-align  : center;     font-size: 15px; color: #253123;letter-spacing: 2px;text-align: center; margin-top : 30px ; margin-right : 15%;  margin-left : 15%" />
+				<h:form
+					rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}">
+
+
+
+					<h1 class="labelCustum"
+						style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+						Liste des intrants du stock</h1>
+					<br />
+					<br />
+					<br />
+
+					<!--  Filtre des ordres -->
+					<div class="col-xs-11 pull-right">
+						<div class="col-md-3" style="margin-top: -10px;">
+							<div class="form-inline">
+								<p class="form-control-static">Programme</p>
+								<div class="input-group-lg">
+									<h:selectOneMenu
+										value="#{managerManagedBean.olIdProgramme}"
+										styleClass="form-control input-sm "
+										requiredMessage="Le programme est obligatoire">
+
+										<f:selectItems
+											value="#{agentSaisieMB.loadAllProgrammeOuvert()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-md-3" style="margin-top: -10px;">
+							<div class="form-inline">
+								<p class="form-control-static">Type Intrant</p>
+								<div class="input-group-lg">
+									<h:selectOneMenu value="#{managerManagedBean.olIdPointdeVente}"
+										styleClass="form-control input-sm"
+										requiredMessage="Le point de vente est obligatoire ">
+										<f:selectItems
+											value="#{referentielMB.loadAllPointDeVentes('0')}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.idPv}"
+											itemLabel="#{CollaborateurDTO.libelle}" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-md-3" style="margin-top: -10px;">
+							<div class="form-inline">
+								<p class="form-control-static">Taux subvention</p>
+								<div class="input-group-lg">
+									<h:selectOneMenu value="#{managerManagedBean.olstatut}"
+										 styleClass="form-control input-sm "
+										requiredMessage="Le point de vente est obligatoire ">
+
+										<f:selectItem itemLabel="En attente de validation"
+											itemValue="0" />
+										<f:selectItem itemLabel="En attente de traitement"
+											itemValue="4" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</div>
+
+					<div class="col-md-3" style="margin-top: -10px;">
+							<div class="form-inline">
+								<p class="form-control-static" style="color : white">.</p>
+								<div class="input-group-lg">
+									<div class="input-group input-group-lg">
+									
+									<div class="input-group-btn">
+											
+											
+										<h:commandButton value="Recherche"
+											action="#{managerManagedBean.loadOrdresEnvoyesByPointDeCollecteParCriteria()}"
+											name="Détails"
+											class="enregistrer a fa-info btn btn-default pull-right btn-default "
+											style="margin-left : 12px; margin-right : 25px" />
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+					
+					
+
+					
+					</div>
+					<hr />
+
+					<!--  Fin filtre  -->
+
+
+					<div class="container-fluid">
+						<br /> <br />
+						
+						
+						<p:dataTable var="ProduitDTO"
+								value="#{magasinierMB.callServiceRecuperationStock()}"
+								reflow="true" row="5" rowKey="#{ProduitDTO.idProduit}"
+								style="width: 90%; margin-left:5%; font-size:15px ; "
+								emptyMessage="Aucun produit dans votre stock !!"
+								paginator="true" paginatorPosition="bottom" rows="6"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								selection="#{magasinierMB.selectedProduitListAvendre}"
+								selectionMode="multiple">
+								
+						
+							  <p:column headerText="Programme"> 
+								       #{entiteJMB.StringCutter(ProduitDTO.libelleProgramme,20)} 
+		                                </p:column>
+							  
+								        
+								<p:column headerText="Libellé">  
+								         #{entiteJMB.StringCutter(ProduitDTO.libelle,20)} 
+								        </p:column>
+								<p:column headerText="Quantité">  
+												#{entiteJMB.StringCutter(ProduitDTO.quantite,20)}
+								        </p:column>
+								<p:column headerText="Prix avec subvention">  
+								        #{entiteJMB.StringCutter(ProduitDTO.prixUnitaire, 15)} 
+								        </p:column>
+								 	<p:column headerText="Prix sans subvention">  
+								        #{entiteJMB.StringCutter(ProduitDTO.prixUnitaire, 15)} 
+								        </p:column>       
+								<p:column headerText="Taux Subvention">  
+								        #{entiteJMB.StringCutter(ProduitDTO.subvention, 15)}  %
+								        </p:column>        
+								
+							</p:dataTable>
+
+							
+				
+						
+
+						<div class=" pull-right" style="margin-right: 55px">
+							<br />
+
+							<h:commandButton value="Voir commission realisée"
+								action="#"
+								name="Détails"
+								class="enregistrer a fa-info btn btn-default pull-right btn-success"
+								style="margin-left : 12px; margin-right : 25px" />
+
+							<h:commandButton value="Enregistrer un toc"
+								action="#"
+								name="Détails"
+								class="enregistrer a fa-info btn btn-default pull-right btn-success"
+								style="margin-right : 15px" />
+						</div>
+						<br /> <br />
+					</div>
+				</h:form>
+
+				<h:form rendered="#{param.idBlocToShow eq '1b'}">
+
+					<h1 class="labelCustum"
+						style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+						<span
+							class="badge #{managerManagedBean.commandeDTO.styleClassCSSstatusCMD}"
+							style="height: 40px; padding-top: 10px; font-size: 200px">
+							<i
+							class="fa #{managerManagedBean.commandeDTO.styleClassCSSstatusCMD}"
+							aria-hidden="true" /> OL
+							#{managerManagedBean.commandeDTO.referenceCMD} -
+							#{managerManagedBean.commandeDTO.statutCMD}
+						</span>
+					</h1>
+					<br />
+					<div class="container-fluid">
+						<br />
+						<div class="col-lg-8" style="border: 1PX solid #f0f9f4">
+							<br />
+							<div class="col-lg-12">
+								<div class="col-lg-6">
+
+									<div class="form-group ">
+										<i class="fa fa-4x fa-user" aria-hidden="true"></i> <span
+											class="montantCFA" style="color: #7ccca2">Bénéficiaire
+										</span>
+									</div>
+									<hr />
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Client </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{managerManagedBean.commandeDTO.clientNom} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Tél Client </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{managerManagedBean.commandeDTO.clientTel} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">CNI Client </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=""
+												value="#{managerManagedBean.commandeDTO.clientCNI} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Adresse Client
+										</label>
+										<div class="col-xs-8">
+											<h:outputLabel class=""
+												value="#{managerManagedBean.commandeDTO.clienAdresse} "></h:outputLabel>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="form-group ">
+										<i class="fa fa-4x fa-home" aria-hidden="true"></i> <span
+											class="montantCFA">Point de vente </span>
+									</div>
+									<hr />
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Origine </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{managerManagedBean.commandeDTO.pointDeVenteDepartementProvenance} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Commune </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{managerManagedBean.commandeDTO.communeLibelle}" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Responsable </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{managerManagedBean.commandeDTO.pointDeVenteGerantProvenance}"></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Tél Responsable
+										</label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{managerManagedBean.commandeDTO.pointDeVenteTelProvenance}"></h:outputLabel>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<p style="text-align: center">Intrant à livrer</p>
+							<br />
+							<p:dataTable var="intrantDTO"
+								value="#{managerManagedBean.commandeDTO.listProduitsDTOtoCreate}"
+								reflow="true" emptyMessage="Ancun intrant disponible"
+								paginator="true" rows="10" cellSeparator="10"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								paginatorPosition="bottom"
+								selection="#{managerManagedBean.commandeDTO}"
+								style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+								<p:column headerText="Produit">
+							          #{profilMB.StringCutter(intrantDTO.libelle, 60)} 
+							        </p:column>
+
+								<p:column headerText="Quantité">
+							          #{profilMB.StringCutter(intrantDTO.quantite, 60)} 
+							        </p:column>
+
+								<p:column headerText="Prix Unitaire">
+							          #{profilMB.StringCutter(intrantDTO.prixUnitaire, 60)} 
+							        </p:column>
+
+
+							</p:dataTable>
+
+							<br /> <br />
+						</div>
+
+
+
+
+					</div>
+
+
+					<div id="buttons" class="pull-right" style="margin-top: 10px">
+
+						<a type="submit" style="margin-right: 22px; width: 150px"
+							href="managerGestionOL.xhtml?idBlocToShow=1"
+							class="fa fa-info btn btn-default pull-right"> Retour</a>
+					</div>
+
+				</h:form>
+
+
+				<!-- Fin de la liste des commandes -->
+
+
+				<!-- Modal  BL -->
+				<div class="modal fade" id="BL" role="dialog">
+					<div class="modal-dialog modal-lg"
+						style="width: 1200px; height: auto;">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">X</button>
+								<h4 class="modal-title">
+									<p
+										style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+										Ordre de livraison Nº
+										#{managerManagedBean.commandeDTO.referenceCMD}</p>
+
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div id="previewBL" class="container-fluid">
+									<br />
+
+									<!-- Header BL -->
+									<div class="row">
+										<div class="col-md-5">
+											<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+											<br />
+											<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+											<br />
+											<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+												5, Bd du Centenaire de la Commune, Dakar</h1>
+											<br />
+											<h1 class="ui-label soflLabel">
+												Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+											</h1>
+											<br />
+											<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+										</div>
+
+										<div class="col-md-2">
+											<img width="110px" height="100px"
+												src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+											<br /> <br />
+										</div>
+
+										<div class="col-md-5 ">
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label soflLabel">Campagne</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{managerManagedBean.commandeDTO.libelleCampagane}</label>
+												</div>
+											</div>
+											<br />
+
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label soflLabel">Programme</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{managerManagedBean.commandeDTO.libelleProgramme}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label  soflLabel">Date</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{referentielMB.utils.splitStringDate(managerManagedBean.commandeDTO.dateLivraisonSouhaite)}</label>
+												</div>
+											</div>
+											<br />
+
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label soflLabel">Auteur </label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">
+														#{SessionMB.getSessionDataByTag('prenomUser')}
+														#{SessionMB.getSessionDataByTag('nomUser') }</label>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<br /> <br /> <br />
+									<!-- Data BL -->
+									<div class="row"
+										style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+										<br />
+										<div class="col-md-5">
+											<div class="row" style="border-top: 2px solid #80c347;">
+												<br />
+												<p
+													style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+													Bénéficiaire</p>
+												<br />
+											</div>
+
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Nom
+													- Prénom </label>
+
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label ">#{managerManagedBean.commandeDTO.clientNom}</label>
+												</div>
+											</div>
+											<br />
+
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Téléphone</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label ">#{managerManagedBean.commandeDTO.clientTel}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Numéro
+													CNI</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label ">#{managerManagedBean.commandeDTO.clientCNI}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{managerManagedBean.commandeDTO.communeLibelle}</label>
+												</div>
+											</div>
+											<br />
+										</div>
+
+										<div class="col-md-5 pull-right">
+											<div class="row" style="border-top: 2px solid #80c347;">
+												<br />
+												<p
+													style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+													Origine intrant</p>
+												<br />
+											</div>
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Point
+													de vente </label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{managerManagedBean.commandeDTO.communeLibelle}
+													</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Responsable</label>
+
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{managerManagedBean.commandeDTO.clientNom}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Tel
+													Responsable </label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">
+														#{managerManagedBean.commandeDTO.clientTel}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Adresse
+												</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{managerManagedBean.commandeDTO.clienAdresse}</label>
+												</div>
+											</div>
+											<br />
+										</div>
+									</div>
+
+									<!-- Marchandises -->
+									<br /> <br /> <br />
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<div class="row" style="border-top: 2px solid #80c347;">
+												<br />
+												<p
+													style="color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+												<br />
+											</div>
+											<h:form id="listOfProductBL2">
+												<p:dataTable var="pvDTO"
+													value="#{managerManagedBean.listProduitCommande} "
+													reflow="true" rowKey="#{pvDTO.idProduit}"
+													emptyMessage="Ancun produit	 de vente disponible"
+													paginator="false" rows="10" cellSeparator="10"
+													paginatorPosition="bottom"
+													style="width: 90%; margin-left:5%; font-size:15px ; ">
+												</p:dataTable>
+											</h:form>
+										</div>
+										<div class="col-md-2 pull-right"></div>
+									</div>
+									<br /> <br /> <br />
+									<div class="row"
+										style="border-top: 2px solid #ffffff; height: 220px;">
+										<br />
+										<p style="text-align: center">
+											Veuillez livrer à <i>
+												#{managerManagedBean.commandeDTO.clientNom} </i>, détenteur du
+											numéro de téléphone
+											#{managerManagedBean.commandeDTO.clientTel} la liste des
+											produits ci-dessous. . <br /> <a href="#"
+												style="color: black;"> </a>
+										</p>
+										<br /> <br />
+										<p:dataTable id="listProduct2dd22" var="pvDTO"
+											value="#{managerManagedBean.listProduitCommande}"
+											reflow="true" rowKey="#{pvDTO.idProduit}" paginator="false"
+											rows="6" cellSeparator="10"
+											style="width: 70%; margin-left:15%; font-size:15px ; text-align :center ">
+											<p:column headerText="Désignation">
+				          				#{profilMB.StringCutter(pvDTO.libelleProduit, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+											<p:column headerText="QTE/T">
+				          				#{profilMB.StringCutter(pvDTO.quantiteProduitAvendre, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+											<p:column headerText="Observations">
+				          				#{profilMB.StringCutter(pvDTO.quantiteProduitAvendre, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+										</p:dataTable>
+									</div>
+
+
+									<!-- footer BL -->
+									<div class="row">
+										<div class="col-md-4 pull-left"
+											style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+											<p class="titrePage">La direction</p>
+										</div>
+									</div>
+
+									<div class="row">
+										<br /> <br /> <br /> <br /> <br />
+										<h1 class="ui-label pull-left">
+											contact@sedab.com<br />
+										</h1>
+										<h1 class="ui-label pull-right">www.sedab.com</h1>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<img id="awa" width="90px" height="80px"
+									src="assets/images/print.png" title="Imprimer BL" /> <img
+									width="90px" height="80px" src="assets/images/sendBymail.png"
+									title="Envoyer BL par Mail" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

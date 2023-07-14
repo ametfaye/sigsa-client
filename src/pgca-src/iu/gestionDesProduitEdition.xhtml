@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+
+
+		<div id="engraisCreate" class="row ">
+
+			<h:form id="cmdListe" rendered="#{param.idBlocToShow eq '1'}"
+				prependId="false">
+
+				<!--  Paiement par credit -->
+				<br />
+				<br />
+				<br />
+
+
+
+				<br />
+				<br />
+				<p class="pull-right" style="margin-right: 5%; color: #002839">
+					<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+					Tableau de bord / Gestion des stocks auprès des fournisseurs
+				</p>
+
+				<hr />
+
+
+
+
+				<p:messages id="msg" showDetail="true" showIcon="true"
+					style="text-align  : center;  width : 80%; margin-left : 10%;    font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+
+
+
+
+					<h:panelGroup id="pform1">
+
+							<br />
+						
+
+							<div class="col-sm-6 col-sm-offset-3">
+
+
+								<h1 class="labelCustum"
+									style="text-align: center; color: #002839; TEXT-ALIGN: CENTER; FONT-SIZE: 45PX; margin-top: 30px;">Approvisionnement
+									intrant auprès d'un fournisseur</h1>
+								<br />
+								<p:messages showSummary="true" showIcon="true"
+									style="text-align  : center;  width : 70%; margin-left : 15%;    font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Fournisseur</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText style="min-width : 400px"
+											value="#{agentSaisieMB.libelleFournisseur}" maxlength="4"
+											styleClass="listeFournisseurs tt-query form-control"
+											title="Point de vente"
+											requiredMessage="Le point de vente est requis"
+											required="true">
+										</p:inputText>
+									</div>
+								</div>
+
+
+
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Intrant</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText id="communeCommande23" style="min-width : 400px"
+											value="#{agentSaisieMB.libelleIntrant}" maxlength="4"
+											styleClass="listeIntrant tt-query form-control"
+											title="L'intrant à acheter chez le fournisseur"
+											requiredMessage="L'intrant est requis" required="true">
+										</p:inputText>
+									</div>
+								</div>
+
+
+
+
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Quantité </label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText id="communeCommande12" style="min-width : 400px ; height : 50px"
+											value="#{agentSaisieMB.quantite}" title="Point de vente"
+											requiredMessage="Le point de vente est requis"
+											required="true">
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+
+							<BR />
+
+
+
+							<div class="col-md-3 col-md-offset-4">
+
+								<div id="buttons" class="pull-right" style="margin-top: 30px;">
+									<h:commandButton
+										styleClass=" fa fa-plus btn btn-success pull-right"
+										style="width : 150px ; "
+										action="#{agentSaisieMB.createIntrantForCampagne}"
+										value=" Enregistrer" name="suivants">
+
+										<f:setPropertyActionListener
+											target="#{agentSaisieMB.idTypeProduit}"
+											value="#{referentielMB.selectedIntrantDTO.idtypeProduit}" />
+
+										<f:setPropertyActionListener
+											target="#{agentSaisieMB.idProduit}"
+											value="#{referentielMB.selectedIntrantDTO.idProduit}" />
+
+									</h:commandButton>
+									<a type="submit" style="margin-right: 22px; width: 150px"
+										href="dashboardAgentsaisie.xhtml"
+										class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+								</div>
+
+							</div>
+
+
+					</h:panelGroup>
+
+</h:form> </div>   
+	
+	</ui:define>
+
+</ui:composition>

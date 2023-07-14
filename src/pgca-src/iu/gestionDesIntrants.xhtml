@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="menuG">
+
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Services <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Déplacer un Produit</a></li>
+				<li><a href="#">Gestion des commandes</a></li>
+			</ul></li>
+			
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Stock <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="gestionDesProduits.xhtml?idBlocToShow=1">Liste des intrants</a></li>
+				<li><a href="gestionDesIntrants.xhtml?idBlocToShow=1">Liste des types intrants</a></li>
+<!-- 				<li><a href="gestionDesIntrants.xhtml?idBlocToShow=2">Liste des intrants</a></li> -->
+			</ul></li>
+
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Trésorerie <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">Solde Caisse</a></li>
+				<li><a href="#">Chéques à encaisser</a></li>
+				<li><a href="#">Chéques encaisser</a></li>
+				<li><a href="#">Lettre de crédit</a></li>
+			</ul></li>
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Référentiels <span class=""></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="gestionDesPointsdeVente.xhtml?idBlocToShow=1">Point de ventes</a></li>
+				<li><a href="#">Point de collectes</a></li>
+				<li><a href="gestionDesIntrants.xhtml?idBlocToShow=2">Collaborateurs</a></li>
+				<li><a href="#">Magasins</a></li>
+			</ul>
+		</li>
+		
+	</ui:define>
+
+	<ui:define name="section">
+		<h:form class="container-fluid">
+			<div class="col-md-12">
+				<p:messages id="messages" showDetail="true" />
+				<h:panelGroup rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+					<p class="titrePage">Liste des types d'intrants</p>
+					<br />
+					<p:dataTable id="ProfilID" var="ProfilProvilder"
+						value="#{referentielMB.getAllTypeIntrantDTO()}" reflow="true"
+						rowKey="#{ProfilProvilder.id}"
+						emptyMessage="#{msg['form.msg.noProfil']}" paginator="true"
+						rows="8" cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosƒition="bottom"
+						selection="#{profilMB.selectedProfilDTO}" selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+						<!-- selectedProfilDTO -->
+					
+						<p:column headerText="#{msg['engrais.code']}" style="width :  30%">
+				          #{profilMB.StringCutter(ProfilProvilder.libelle, 2)}  #{ProfilProvilder.id} 
+				        </p:column>
+
+						<p:column headerText="#{msg['engrais.libelle']}">
+				          #{profilMB.StringCutter(ProfilProvilder.libelle, 40)} 
+				        </p:column>
+
+					</p:dataTable>
+
+					<div class=" pull-right" style="margin-right: 50px;">
+
+<!-- 						<h:commandButton value="Détails" -->
+<!-- 							action="#{referentielMB.loadDetailsSelectedIntrant()}" -->
+<!-- 							class="suivant fa fa-info btn btn-default pull-right" -->
+<!-- 							name="suivants" /> -->
+
+<!-- 						<h:commandButton value="Supprimer" -->
+<!-- 							action="#{referentielMB.loadDetailsSelectedIntrant()}" -->
+<!-- 							class="suivant fa fa-info btn btn-default pull-right" -->
+<!-- 							name="suivants" /> -->
+
+<!-- 						<h:commandButton value="Créer" -->
+<!-- 							action="#{referentielMB.loadDetailsSelectedIntrant()}" -->
+<!-- 							class="suivant fa fa-info btn btn-default pull-right" -->
+<!-- 							name="suivants" /> -->
+					</div>
+					<br />
+					<br />
+				</h:panelGroup>
+				<!--*****************************-->
+
+
+
+				<h:panelGroup rendered="#{param.idBlocToShow eq '2'}">
+					<br />
+					<p class="titrePage">Liste des intrants</p>
+					<br />
+
+					<p:dataTable  var="ProfilProvilder"
+						value="#{referentielMB.getAllIntrantDTO()}" reflow="true"
+						rowKey="#{ProfilProvilder.id}"
+						emptyMessage="#{msg['form.msg.noProfil']}" paginator="true"
+						rows="10" cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						selection="#{referentielMB.selectedIntrantDTO}"
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+						<p:column headerText="#{msg['engrais.libelle']}">
+				          #{profilMB.StringCutter(ProfilProvilder.libelleProduit, 25)} 
+				        </p:column>
+
+
+						<p:column headerText="#{msg['engrais.tag']}">
+				          #{profilMB.StringCutter(ProfilProvilder.tagsProduit, 25)}   
+				        </p:column>
+
+
+						<p:column headerText="#{msg['engrais.typeProduit']}"> 
+				          #{profilMB.StringCutter(ProfilProvilder.typeProduit, 20)} 
+				        </p:column>
+
+						<p:column headerText="#{msg['engrais.quantite']}">
+				          #{profilMB.StringCutter(ProfilProvilder.quantite, 30)} Tonnes
+				        </p:column>
+
+
+					</p:dataTable>
+
+					<div class=" pull-right" style="margin-right: 50px;">
+
+						<h:commandButton value="Détails"
+							action="#{referentielMB.loadDetailsSelectedIntrant()}"
+							class="suivant fa fa-info btn btn-default pull-right"
+							name="suivants" />
+
+						<h:commandButton value="Supprimer"
+							action="#{referentielMB.loadDetailsSelectedIntrant()}"
+							class="suivant fa fa-info btn btn-default pull-right"
+							name="suivants" />
+
+						<a type="submit" class="fa fa-info btn btn-default pull-right"
+							href="gestionDesIntrants.xhtml?idBlocToShow=4"> Créer</a> <br />
+
+					</div>
+
+					<br />
+				</h:panelGroup>
+				<br />
+
+
+				<!--********************************************************************** 
+						Bloc  Details Intrants
+				************************************************************************** -->
+
+				<h:panelGroup rendered="#{param.idBlocToShow eq '3'}">
+					<br />
+					<p class="titrePage" style="color: #006600">
+						#{referentielMB.selectedIntrantDTO.libelleProduit}</p>
+
+					<div class="row">
+
+						<div class="col-md-4 fixed"
+							style="background: url('assets/images/#{referentielMB.selectedIntrantDTO.pictoImages} '); height: 250px; float: left; background-color: #fff;">
+						</div>
+
+						<div class="col-md-8">
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"><i
+									class="fa fa-cubes" aria-hidden="true"></i> Catégorie : </label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10"
+										value="#{referentielMB.selectedIntrantDTO.typeProduit} "></h:outputLabel>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"><i
+									class="fa fa-hourglass-end" aria-hidden="true"></i> Tonnage
+									disponible :</label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10"
+										value="#{referentielMB.selectedIntrantDTO.quantite} Tonnes "></h:outputLabel>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"><i
+									class="fa fa-hourglass-end" aria-hidden="true"></i> Point de
+									stock :</label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10" value=" Kolda "></h:outputLabel>
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"><i
+									class="fa fa-hourglass-end" aria-hidden="true"></i> Chiffre
+									d'affaire :</label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage  Margin10 montantCFA"
+										value="10.543.300 FCFA">
+										<i class="fa fa-arrow-up" aria-hidden="true"></i>
+									</h:outputLabel>
+								</div>
+							</div>
+
+
+							<div class=" pull-right" style="margin-right: 50px;">
+
+								<h:commandButton value="Inventaire Intrant"
+									action="#{referentielMB.loadDetailsSelectedIntrant()}"
+									class="suivant fa fa-info btn btn-default pull-right"
+									name="suivants" />
+
+								<a type="submit" class="fa fa-info btn btn-default pull-right"
+									href="gestionDesIntrants.xhtml?idBlocToShow=2"> retour</a> <br />
+							</div>
+
+						</div>
+					</div>
+					<br />
+					<br />
+				</h:panelGroup>
+
+
+
+
+
+
+				<!-- Création Intrant -->
+				<h:panelGroup rendered="#{param.idBlocToShow eq '4'}"
+					class="form-horizontal">
+					<div class="row">
+						<p class="titrePage">Edition Intrant</p>
+						<br />
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Libelle</label>
+								<div class="col-sm-10">
+									<p:inputText id="code" styleClass="form-control"
+										value="#{referentielMB.selectedIntrantDTO.libelleProduit}"
+										required="true" requiredMessage="Le telephone est obilgatoire" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Quantité</label>
+								<div class="col-sm-10">
+									<p:inputText id="quantite" styleClass="form-control"
+										value="#{referentielMB.selectedIntrantDTO.quantite}"
+										required="true" requiredMessage="La quantite  est obilgatoire" />
+								</div>
+							</div>
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Categorie</label>
+								<div class="col-sm-10">
+
+									<h:selectOneMenu
+										value="#{referentielMB.selectedIntrantDTO.idtypeProduit}"
+										id="profilListe" required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez une categorie "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.loadTypesIntrant()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+											itemLabel="#{CollaborateurDTO.libelle}" />
+
+									</h:selectOneMenu>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Point
+									de stock</label>
+								<div class="col-sm-10">
+
+									<h:selectOneMenu value="#{referentielMB.stockDTO.clef}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un point de collecte "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.loadAllStock()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+									</h:selectOneMenu>
+
+								</div>
+							</div>
+						
+						
+							<div class="col-xs-4 col-sm-4 col-md-4 pull-right">
+								<h:commandButton 
+									class="suivant btn btn-success btn-block pull-right"
+									action="#{referentielMB.createIntrant}" value="Valider"
+									styleClass="btn btn-info btn-block" type="submit"  />
+							</div>
+							
+
+							<div class="col-xs-4 col-sm-4 col-md-4 pull-right">
+								<h:commandLink rev="gestionDesIntrants.xhtml?idBlocToShow=2"
+									class="annuler btn btn-success btn-block pull-right"
+									value="Retour"
+									styleClass="btn btn-info btn-block"/>
+							</div>
+
+							
+							<br />
+						</div>
+						<br />
+					</div>
+					<br />
+				</h:panelGroup>
+
+				<!-- Fin creaction -->
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

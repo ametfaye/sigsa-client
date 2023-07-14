@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+		<p:spacer width="3%"></p:spacer>
+
+		<div class="container-fluid ">
+		
+						
+		<h:form rendered="#{param.idBlocToShow eq null}" prependId="false"
+					enctype="multipart/form-data">
+			<div class="col-md-2">
+				<div id="ui-widget" style="margin-left: 10px;  box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								<h1 class="ui-value"> <a href="#" style="color: #029441;     font-size: 20px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( magasinierMB.getMontantTotalventes() )} 
+								
+								 </a></h1>
+								<span class="ui-label" style="color: #029441;"> <a href="#" style="color: #029441; font-size: 17px;"> Total Crédit  </a></span>
+							</div>
+	
+			</div>
+			</h:form>
+			
+			<div class="col-md-10 fullbg">
+			
+				<h:form rendered="#{param.idBlocToShow eq null}" prependId="false"
+					enctype="multipart/form-data">
+					<br /> <br />
+						<p class="TitreGeneric">Gestion  des crédits </p>
+
+						<br /> <br />
+						
+					<p:messages id="msg" showDetail="true" />
+
+					<p:dataTable var="CreditDTO"
+						value="#{magasinierMB.callServiceRecuperationCreditDTO()}"
+						rowKey="#{CreditDTO.credit_id}" reflow="true" row="10"
+						selection="#{magasinierMB.selectedCreditDTO}"
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucun credit enregistré !!" paginator="true"
+						paginatorPosition="bottom" rows="20"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+						<p:column headerText="Reference ">  
+																	     #{entiteJMB.StringCutter(CreditDTO.referenceCredit,20)} 
+									
+								        </p:column>
+
+						<p:column headerText="Date Contraction">  
+								     #{entiteJMB.StringCutter(CreditDTO.dateContraction,20)} 
+								        </p:column>
+
+						<p:column headerText="Zone ">  
+								     #{entiteJMB.StringCutter(CreditDTO.zoneCredit,60)} 
+								        </p:column>
+
+						<p:column headerText="Créancier">  
+								     #{entiteJMB.StringCutter(CreditDTO.nomsouscripteur,20)} 
+								        </p:column>
+
+						<p:column headerText="Montant Initial">  
+								    
+								    #{referentielMB.utils.formatFloatToCFA(CreditDTO.montantInitialCredit)}
+								   
+								  </p:column>
+
+						<p:column headerText="Montant Restant">  
+								
+								 #{referentielMB.utils.formatFloatToCFA(CreditDTO.montantRestantApayer)}
+								   
+								   						  
+								 </p:column>
+
+						<br />
+						<br />
+					</p:dataTable>
+
+					<br />
+
+
+
+					<div id="buttons" class="pull-right" style="margin-right: 75px;">
+
+
+						<h:commandButton action="#{magasinierMB.showDeatilsCredit}" 
+						styleClass="btn btn-success  pull-right"
+							value="Enregistrer Acompte"  />
+							
+								<h:commandButton action="#{magasinierMB.callEnregistrerCredit}" 
+						styleClass="btn btn-success  pull-right"
+							value=" Voir détails" style="margin-right : 20px"  />
+
+
+
+
+						<h:commandLink onclick="return false;"
+							action="#{managerManagedBean.reportListSubvention()}"
+							title="Télécharger la liste des credits au format excel ">
+							<img src="assets/images/exportExcel.png" class="pull-right"
+								style="width: 10%; height: 10%; margin-right: 30px; margin-top: -20px" />
+
+						</h:commandLink>
+
+						<br /> <br /> <br /> <br />
+
+					</div>
+
+
+
+				</h:form>
+				<!--  Details credits  -->
+		
+				
+				
+				<h:form rendered="#{param.idBlocToShow eq '5b'}">
+					<p:messages id="msgF" showDetail="true" />
+
+						<h1 class="labelCustum"
+							style="text-align: center; color: #49b97e; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+							<span
+								class="badge #{magasinierMB.commandeDTO.styleClassCSSstatusCMD}"
+								style="height: 40px; padding-top: 10px; font-size: 200px">
+								<i class="fa #{magasinierMB.commandeDTO.styleClassCSSstatusCMD}"
+								aria-hidden="true" /> Ordre N°
+								#{magasinierMB.selectedCreditDTO.credit_id}
+						
+							</span>
+						</h1>
+
+						<br />
+
+						<div class="container-fluid">
+							<br />
+							
+
+							<div class="col-lg-4">
+								
+					
+
+					
+						<!-- -  FIN Avnce sur credit -->
+						
+							</div>
+							
+				
+								
+										
+											<!-- Data BL -->
+											<div class="row"
+												style="border-top: 2px solid #ffffff; height: 220px;">
+												
+																<h1 class="titrePage Margin10  " style="text-align :center"> Enregistrement d'un acompte   </h1>
+												
+												<div class="col-xs-6">
+												<br/> <br/><br/>
+														<h1 class="titrePage Margin10 montantCFA "
+																		style="font-size: 20px">Restant à payer : <br/>
+																		#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCreditDTO.montantRestantApayer)}
+																		
+																	</h1>
+												</div>					
+												<div class="col-xs-6">
+													
+													<br/>
+
+																<div class="form-group">
+																	<label for="inputEmail3" class="col-sm-4 control-label">
+																		Moyen Paiement
+																	</label>
+																	<div class="col-sm-8">
+
+																		<h:selectOneMenu
+																			value="#{magasinierMB.avanceDTO.moyenPaiement}"
+																			required="true"
+																			styleClass="form-control input-sm CustomSelect"
+																			requiredMessage="Il faut au minimum un produit par BL ">
+																			<f:selectItem itemLabel="Selectionnez un produit "
+																				itemValue="" />
+																			<f:selectItem itemLabel="Espéces" itemValue="1" />
+																			<f:selectItem itemLabel="Chéque " itemValue="2" />
+																			<f:selectItem itemLabel="Bon subvention "
+																				itemValue="3" />
+																			<f:selectItem itemLabel="Nature" itemValue="4" />
+
+																		</h:selectOneMenu>
+																	</div>
+																</div>
+																<br />
+
+
+																<div class="form-group" style="margin-top: 20px">
+																	<label for="inputPassword3"
+																		class="col-sm-4 control-label"> Montant</label>
+																	<div class="col-sm-8">
+																		<p:inputText type="number"
+																			requiredMessage="Le poids est requis"
+																			value="#{magasinierMB.avanceDTO.montanance}"
+																			styleClass="form-control" title="L'quantite" />
+																		<br />
+																	</div>
+																	<br />
+																</div>
+
+
+																<div class="form-group" style="margin-top: 20px">
+																	<label for="inputPassword3"
+																		class="col-sm-4 control-label"> Auteur</label>
+																	<div class="col-sm-8">
+																		<p:inputText 
+																			requiredMessage="Le poids est requis"
+																			value="#{magasinierMB.avanceDTO.auteurPaiement}"
+																			styleClass="form-control" title="L'quantite" />
+																		<br /> <br />
+																	</div>
+
+																</div>
+
+
+																<br /> <br /> <br />
+
+																<h:commandButton
+																	styleClass=" btn  pull-right btn-success"
+																	update=" form1:totalCharge"
+																	style="width : 150px ; margin-right : 12px"
+																	action="#{magasinierMB.callServiceAvanceSurCredit()}"
+																	value=" Enregistrer" name="suivants">
+
+
+																</h:commandButton>
+																<a type="submit" style="margin-right: 22px; width: 150px"
+								href="magasisnierGestionCredits.xhtml"
+								class="fa fa-info btn btn-default pull-right"> Retour</a>
+																<br /> <br /> <br />
+
+												</div>
+
+											</div>
+											<br />
+									
+
+							
+							
+							
+						</div>
+
+				
+					</h:form>
+				
+				
+				
+				
+				
+				<!--   Détails  -->
+				
+				<h:form rendered="#{param.idBlocToShow eq '5c'}">
+
+						<h1 class="labelCustum"
+							style="text-align: center; color: #49b97e; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+							<span
+								class="badge #{magasinierMB.commandeDTO.styleClassCSSstatusCMD}"
+								style="height: 40px; padding-top: 10px; font-size: 200px">
+								<i class="fa #{magasinierMB.commandeDTO.styleClassCSSstatusCMD}"
+								aria-hidden="true" /> Crédit  N°
+								#{magasinierMB.selectedCreditDTO.credit_id}
+							</span>
+						</h1>
+
+						<br />
+
+						<div class="container-fluid">
+							<br />
+											<p:messages id="msgJ" showDetail="true" />
+						
+
+							<div class="col-lg-9">
+												<p > Historique des acomptes </p>
+												<p:repeat value="#{magasinierMB.listeAvance}" var="car">
+												
+											 	
+											 	    <ul class="timeline">
+													<li class="timeline">
+															<div class="tl-circ">
+															<i class="fa fa-chevron-down" aria-hidden="true"></i>
+																
+															</div>
+															<div class="timeline-panel">
+																<div class="tl-heading">
+																	<h4>Paiement #{car.moyenPaiement} </h4>
+																	<p>
+																	<br/>
+																		<small class="text-muted"><i
+																			class="glyphicon glyphicon-time"></i> #{car.dateAvance}</small>
+																	</p>
+																</div>
+																<br/>
+																<div class="tl-body">
+																	<p>#{car.montanance} CFA payé par #{car.auteurPaiement}</p>
+
+																
+																</div>
+															</div>
+													</li>
+													</ul>
+												</p:repeat>
+												
+							</div>
+						
+				
+								<div class="col-lg-3">
+								
+								
+													
+									<div class="col-lg-12">
+
+										<div class="form-group ">
+											<i class="fa fa-2x fa-user" aria-hidden="true"></i> <span
+												class="montantCFA">Responsable </span>
+										</div>
+										<hr />
+
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Auteur </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCreditDTO.auteurCreditLibelle} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Tél Client </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCreditDTO.telSouscripteur} "></h:outputLabel>
+											</div>
+										</div>
+
+						<br/>
+
+									</div>
+
+									<div class="col-lg-12">
+										<div class="form-group ">
+											<span
+												class="montantCFA">Détails </span>
+										</div>
+										<hr />
+
+										<div class="form-group row">
+										<div class="col-xs-12">
+											
+											<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCreditDTO.resumeCredit} "></h:outputLabel>
+											</div>
+										</div>  <br/>
+
+									
+
+
+									</div>
+									
+									
+									<div class="col-lg-12">
+										
+										<hr />
+
+										<div class="form-group row">
+										<div class="col-xs-12">
+											
+												<h1 class="titrePage Margin10 montantCFA "
+																		style="font-size: 20px"><p>Restant à payer </p> <br/>
+																		#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCreditDTO.montantRestantApayer)}
+																		
+																	</h1>
+																	</div>
+										</div>  <br/>
+
+									
+
+
+									</div>
+								
+
+							</div>
+							
+							
+							
+							
+							
+						</div>
+
+						<div id="buttons" class="pull-right" style="margin-top: 10px">
+							<a type="submit" style="margin-right: 22px; width: 150px"
+								href="magasisnierGestionCredits.xhtml"
+								class="fa fa-info btn btn-default pull-right"> Retour</a>
+						</div>
+
+					</h:form>
+				
+			</div>
+
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

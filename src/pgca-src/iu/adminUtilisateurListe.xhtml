@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title">PGCA Liste des utilisateurs</ui:define>
+
+
+	
+
+
+	<ui:define name="section">
+
+		<div class="row fullbg">
+
+
+
+			<h:form id="form">
+
+				<center>
+					<h4
+						style="font-size: 26px ! important; color: #137112 ! important;">Liste
+						des Utilisateurs</h4>
+					<br /> <br />
+				</center>
+
+				<p:messages id="messages" />
+
+				<br />
+				<br />
+
+
+				<p:dataTable id="UtilisateurID" var="utilisateurProviver"
+					value="#{utilisateurMB.utilisateurDTOs}" widgetVar="carsTable"
+					rowKey="#{utilisateurProviver.id}" reflow="true" row="5"
+					style="width: 90%; margin-left:5%; font-size:15px ; "
+					emptyMessage="Pas d'utilisateurs enregistrés !!!" paginator="true"
+					paginatorPosition="bottom" rows="11"
+					paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+					selection="#{utilisateurMB.selectedUtilisateurDTO}"
+					selectionMode="single" dynamic="true" lazy="true">
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('carsTable').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+
+					<p:ajax event="rowSelect" listener="#{utilisateurMB.onEdit}"
+						update=":form:buttonGroup :form:messages" />
+
+					<h:inputHidden id="id" value="#{utilisateurMB.utilisateurDTO.id}"
+						style="margin-top:-1px" required="false" label="code" />
+
+
+
+					<p:column headerText="#{msg['form.personne.prenom']}">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.prenom,20)} 
+								        </p:column>
+
+					<p:column headerText="#{msg['form.personne.nom']}">  
+												#{entiteJMB.StringCutter(utilisateurProviver.nom,20)}
+								        </p:column>
+
+					<p:column headerText="#{msg['form.utilisateur.codeutilisateur']}">  
+								        #{entiteJMB.StringCutter(utilisateurProviver.code, 45)} 
+								        </p:column>
+					
+							<p:column headerText="#{msg['form.utilisateur.profil']}"
+						escape="false"> 
+		                                 #{entiteJMB.StringCutter(utilisateurProviver.profilDTO.valeur,40)} 
+		                                </p:column>
+		                                
+					<p:column headerText="Zone d'intervention"> 
+								       #{entiteJMB.StringCutter(utilisateurProviver.entiteJuridiqueDTO.valeur,40)} 
+		                                </p:column>
+
+			
+				</p:dataTable>
+		
+		
+		
+			<div id="buttons" class="pull-right" style="margin-top: 10px">
+
+						<a type="submit" style="margin-right: 135px; width: 250px"
+							href="adminUtilisateurCreation.xhtml?idBlocToShow=1"
+							class="fa fa-add btn btn-success pull-right"> Ajouter utilisateur</a>
+					</div>
+					
+					
+				<br />
+				<br />
+				<p:toolbarGroup align="center" id="buttonGroup">
+					<div id="buttons" style="display : none">
+						<div class="greenBar"></div>
+						<h:commandButton styleClass="annuler" value="Modifier"
+							action="#{utilisateurMB.initModifierUtilisateur}" name="annuler"
+							style="margin-right : 15px" />
+						<h:commandButton styleClass="visualiser" value="Détails"
+							action="#{utilisateurMB.detailUtilisateur}" name="visualiser"
+							style="margin-right : 15px" />
+						<h:commandButton styleClass="enregistrer" value="Supprimer"
+							 id="ajaxlnksubmit2"  
+							style="margin-right : 15px"
+							onclick="if (!confirm('Etes-vous sûr de vouloir supprimer cet ulisateur?')) return false"
+							action="#{utilisateurMB.onDelete}" name="enregistrer" />
+						<h:button styleClass="suivant" outcome="adminUtilisateurCreation"
+							value="Ajouter" name="suivants" />
+					</div>
+					<br />
+				</p:toolbarGroup>
+
+			</h:form>
+			<br /> <br /> <br />
+		</div>
+	</ui:define>
+
+</ui:composition>
+

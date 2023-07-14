@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><ui:insert name="title">e-SEDAB -  PGCA</ui:insert></title>
+
+	<style type="text/css">
+.ui-steps .ui-steps-item {
+    width: 24%;
+}
+ 
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+ 
+.ui-steps.custom {
+    margin-bottom: 30px;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+    height: 10px;
+    padding: 0 1em;
+}
+ 
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+    background-color: #0081c2;
+    color: #FFFFFF;
+    display: inline-block;
+    width: 30px;
+    border-radius: 10px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+ 
+.ui-steps.custom .ui-steps-item.ui-state-highlight .ui-steps-title {
+    color: #555;
+}
+</style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!--    <script  type="text/javascript" src="../js/typeahead/0.11.1/typeahead.bundle.js"></script> -->
+	
+	<script src="assets/commun/Jquery.1.11.1/jquery-1.11.1.min.js"></script>
+	<link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+		<link href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+		
+<!-- 	<link href="assets/css/fonts/font-awesome.min.css" rel="stylesheet" type="text/css" /> -->
+<!-- 	<link href="css/animate.min.css" rel="stylesheet" /> -->
+	<!-- Custom styling plus plugins -->
+<!-- 	<link href="css/custom.css" rel="stylesheet" type="text/css" /> -->
+<!-- 	<link rel="stylesheet" type="text/css" href="css/maps/jquery-jvectormap-2.0.3.css" /> -->
+<!-- 	<link href="css/icheck/flat/green.css" rel="stylesheet" type="text/css"/> -->
+<!-- 	<link href="css/floatexamples.css" rel="stylesheet" type="text/css"/> -->
+
+
+	<!--*************COMMUN STYLES PGCA FOR ALL THEME*******************************
+	*******************************************************************************-->
+	<link
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<script src="assets/css/plugins/bootstrap.3.3.6/js/bootstrap.js" />
+
+	<!-- 	<script src="assets/commun/bootstrap.3.3.6/js/bootstrap.min.js"></script> -->
+	<link href="assets/custumCSS/custom.css" rel="stylesheet"  type="text/css"/>
+
+
+	<!-- 	<script src="assets/commun/Jquery.1.11.1/jquery-1.11.1.min.js" ></script>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap-theme.css" rel="stylesheet"/>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap-theme.css.map" rel="stylesheet"/>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap-theme.min.css.map" rel="stylesheet"/>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+	
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap.css.map" rel="stylesheet"/>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="assets/commun/bootstrap.3.3.6/css/bootstrap.min.css" rel="stylesheet"/>  -->
+
+
+	<link rel="stylesheet" href="assets/commun/commun.css" type="text/css"/>
+	
+	<link rel="stylesheet" href="assets/commun/timeline.css" type="text/css"/>
+	
+	<!-- *****************************************************************************
+    *******************************************************************************-->
+
+
+
+
+
+	<!--*************************PGCA BLUE THEME************************************
+	*******************************************************************************-->
+	<link rel="stylesheet" href="assets/themes/blue/formulaire.css" type="text/css"/>
+	<link rel="stylesheet" href="assets/themes/blue/connexion.css" type="text/css"/>
+	
+		<link rel="stylesheet" href="assets/themes/blue/connexion.css" type="text/css"/>
+		
+		<link rel="stylesheet" href="assets/css/ALLthemePGCA.css" type="text/css"/>
+	
+	<!-- *****************************************************************************
+    *******************************************************************************-->
+
+
+
+
+	<link rel="stylesheet" href="assets/css/hint.css" type="text/css"/>
+
+
+
+	<link rel="stylesheet" href="assets/css_ohada/entiteJuridique.css" />
+
+	<link rel="stylesheet" href="assets/css_ohada/dashboard.css" type="text/css"/>
+
+	<link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+	<link rel="stylesheet" href="assets/css/style-a.css" />
+	<link rel="stylesheet" href="assets/css_ohada/surcouchePrimefaces.css" type="text/css"/>
+
+	<link rel="stylesheet" href="assets/css/surcoucheBootstrap.css" type="text/css"/>
+
+
+
+	<link rel="stylesheet" href="assets/ammap_3.20.12.free/ammap/ammap.css"
+		type="text/css" />
+	<script src="assets/ammap_3.20.12.free/ammap/ammap.js"
+		type="text/javascript"></script>
+	<script src="assets/ammap_3.20.12.free/ammap/maps/js/senegalLow.js"
+		type="text/javascript"></script>
+	
+		
+		
+	
+		<script src="assets/datePeeker/bootstrap-datepicker.min.js"
+		type="text/javascript"></script>
+		<link href="assets/datePeeker/bootstrap-datepicker.standalone.css"
+		rel="stylesheet" type="text/css"></link>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	
+	<script src="assets/js/typeahead.bundle.min.js" type="text/javascript"></script>
+	<script src="assets/js/communes.js" type="text/javascript"></script>
+	
+	<script>
+	
+
+	
+	$(document).ready(function(){
+	    // Defining the local dataset
+	    //var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+	    var cars =  communes; 
+	    
+	    // Constructing the suggestion engine
+	    var cars = new Bloodhound({
+	        datumTokenizer: Bloodhound.tokenizers.whitespace,
+	        queryTokenizer: Bloodhound.tokenizers.whitespace,
+	        local: cars
+	    });
+	    
+	    // Initializing the typeahead
+	    $('.typeahead').typeahead({
+	        hint: true,
+	        highlight: true, /* Enable substring highlighting */
+	        minLength: 1 /* Specify minimum characters required for showing result */
+	    },
+	    {
+	        name: 'cars',
+	        source: cars
+	    });
+	}); 
+	</script>
+	
+	
+
+<style type="text/css">
+.bs-example {
+	font-family: sans-serif;
+	position: relative;
+	margin: 100px;
+}
+.typeahead, .tt-query, .tt-hint {
+	/*border: 2px solid #CCCCCC;
+	border-radius: 8px;
+	font-size: 22px; 
+	height: 30px;
+	line-height: 30px;
+	outline: medium none;
+	padding: 8px 12px;
+	width: 396px;*/
+}
+.typeahead {
+	background-color: #FFFFFF;
+}
+.typeahead:focus {
+	border: 2px solid #0097CF;
+}
+.tt-query {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.tt-hint {
+	color: #999999;
+}
+.tt-menu {
+	background-color: #FFFFFF;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	margin-top: 12px;
+	padding: 8px 0;
+	width: 422px;
+}
+.tt-suggestion {
+	font-size: 22px;  /* Set suggestion dropdown font size */
+	padding: 3px 20px;
+	width : 100%;
+}
+.tt-suggestion:hover {
+	cursor: pointer;
+	background-color: #94af9f;
+	color: #FFFFFF;
+}
+.tt-suggestion p {
+	margin: 0;
+}
+</style>
+
+
+
+	<!--  AMCHART TEST -->
+	<script>
+		
+
+	
+		var map;
+		var engraisMode;
+
+		AmCharts
+				.ready(function() {
+					map = new AmCharts.AmMap();
+
+					/**  CREATION PROVIDER ***/
+					var dataProvider = {
+						mapVar : AmCharts.maps.senegalLow,
+						getAreasFromMap : false,
+
+						areas : [
+								{
+									id : "SN-TH",
+									value : 2,
+									color : "#002737",
+
+									description : 'Zone de Thies  28% Mais ,  239 tonnes Riz ',
+								},
+
+								{
+									id : "SN-SL",
+									value : 2,
+									color : "#002737",
+
+									description : 'Zone de SAINT LOUIS 2 Magasins - 32 coordinateurs  28% Mais',
+								},
+
+								{
+									id : "SN-KD",
+									value : 12,
+									color : "#002737",
+
+									description : 'Zone de Kedougou  1 Magasins, 3 coordinateurs  28% Mil',
+								},
+
+								{
+									id : "SN-DK",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans cette zone',
+								},
+
+								{
+									id : "SN-DB",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans la zone de Diourbel',
+								},
+
+								{
+									id : "SN-LG",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans la zone Louga',
+								},
+
+								{
+									id : "SN-KL",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans la zone Kolda',
+								},
+								{
+									id : "SN-ZG",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans la zone Zigunchor',
+								},
+								{
+									id : "SN-KE",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans la zone Kedougou',
+								},
+
+								{
+									id : "SN-TC",
+									value : 12,
+									color : "#dddddd",
+
+									description : 'Aucun produit dans la zone Tambacounda',
+								},
+								{
+									id : "SN-KL",
+									value : 12,
+									color : "#dddddd",
+									description : 'Aucun produit dans la zone Kalaock',
+								}
+
+						]
+					
+
+					};
+					/**  ************/
+
+					map.dataProvider = dataProvider;
+
+					map.areasSettings = {
+						autoZoom : true,
+						selectedColor : "#006600",
+						rollOverColor : "#006600"
+					/* outlineColor : "#006600"*/
+					/*selectedColor : "red"*/
+					
+					
+					};
+					
+					
+					
+
+					map.smallMap = new AmCharts.SmallMap();
+					map.write("mapdiv");
+				});
+	</script>
+</h:head>
+
+
+<h:body  style="margin-left : 5% ; margin-right : 5%;  background-color: white;  " class='container-fluid  #{SessionMB.getSessionDataByTag("theme")}'  >
+	<div class="navbar-wrapper" >
+	
+		<header style="display : none" >
+		<div id="header-logos">
+			<img width="90px" height="80px" src="assets/images/logoSedab.gif"
+				alt="Logo du Sénégal"></img>
+			
+
+		</div>
+		<div id="header-title">
+			<h2>
+
+				<span>S</span>ahélienne d'<span>E</span>ntreprise de <span>D</span>istribution
+				en <span>A</span>gro<span>B</span>usiness
+				<!-- 				 <img -->
+				<!-- 					src="assets/css/img/header/redSquare-header.png" alt="Carré Rouge"></img> -->
+			</h2>
+			<h3>
+			<span style="color: #006600">
+					Plateforme de Gestion des Campagnes Agricoles</span>
+			</h3>
+		</div>
+		</header>
+		
+		
+		<div class="headerLogoSedab container-fluid" style="
+
+	margin-bottom: 10px ! important;
+	background: white;
+	background-repeat: no-repeat ! important ;
+	border : 1px solid red ! important ; 
+	margin-top : 30px ! important;
+	margin-bottom : 30px  ! important;">
+	
+	<p class="titrePage" style="background : url('assets/images/small_shadow.jpg')">.</p>
+	
+		
+				<div id="header-title">
+				<h2>
+	
+					<span>S</span>ahélienne d'<span>E</span>ntreprise de <span>D</span>istribution
+					en <span>A</span>gro<span>B</span>usiness
+					<!-- 				 <img -->
+					<!-- 					src="assets/css/img/header/redSquare-header.png" alt="Carré Rouge"></img> -->
+				</h2>
+				<h3>
+				<span style="color: #006600">
+						Plateforme de Gestion des Campagnes Agricoles</span>
+				</h3>
+			</div>
+		
+		</div>
+		
+		
+		
+		<!-- conteneur principal-->
+
+		<div id="content" > 
+
+			<div id="header-content">
+
+
+				<nav class="navbar navbar-inverse navbar-static-top">
+
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+						aria-controls="navbar">
+						<span class="sr-only">Menu PGCA</span> <span class="icon-bar"><i
+							class="fa fa-bars" aria-hidden="true"></i> </span>
+
+					</button>
+					<h:form style="text-display : inline">
+						<h:commandLink action="#{connexionMB.logout}">
+							<h:graphicImage value="assets/images/logout.png"
+								style="text-decoration:none;border:0 ; height : 40px; height : 40px ; margin-top : 10px; margin-left : 10px" />
+							<f:param name="menuItem" value="Licht" />
+						</h:commandLink>
+
+					</h:form>
+
+
+				</div>
+				<div id="navbar" class="navbar-collapse collapse pull-right">
+
+					<h:form>
+						<ul class="nav navbar-nav">
+
+							<li class="active"><h:commandLink value="Tableau de bord"
+									action="#{connexionMB.redirectDashboard}" /></li>
+
+							<!--  Menu Manager :  Tips  : Les autres dashboards redefinnissent  les menus  -->
+							<ui:insert name="menuG">
+
+							<!-- 	<li class="dropdown"><a href="#" class="dropdown-toggled"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Collecte <span class=""></span></a>
+									<ul class="dropdown-menu">
+										<li class="dropdown"><a href="collecteListePoint.xhtml"
+											title="Gestion des point de Collecte">Point de Collecte </a></li>
+										<li><a href="#">Nationale</a></li>
+										<li><a href="#">Internationale</a></li>
+										<li><a href="#">Statistiques</a></li>
+									</ul></li>
+
+
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Stock <span class=""></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Gestion des produits</a></li>
+										<li><a href="#">Gestion des compensations</a></li>
+										<li><a href="#">Déplacer un Produit</a></li>
+										<li><a href="#">Gestion des commandes</a></li>
+									</ul></li>   -->
+
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Programme <span class=""></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="managerGestionDesCampagnes.xhtml?idBlocToShow=1">Gestion Programme</a></li>
+										<li><a href="#">Rapport Programme</a></li>
+									</ul></li> 
+									
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Trésorerie <span class=""></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="managerTreso.xhtml">Solde Caisse</a></li>
+										<li><a href="#">Chéques à encaisser</a></li>
+										<li><a href="#">Chéques encaisser</a></li>
+										<li><a href="#">Lettre de crédit</a></li>
+										<li><a href="tresoAllocationBudgetListe.xhtml">Allocation
+												bugdet collecte</a></li>
+										<li><a href="#">Tarificateur produit</a></li>
+
+									</ul></li>
+
+
+
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Services <span class=""></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Recherche produit</a></li>
+										<li><a href="#">Valorisation stock</a></li>
+										<li><a href="#">Déplacer un </a></li>
+										<li><a href="#">Gestion des commandes</a></li>
+									</ul></li>
+
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false">Référentiels <span class=""></span></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Commandes</a></li>
+										<li><a href="#">Gestion logistique</a></li>
+										<li><a href="#">Gestion des BL</a></li>
+										<li><a href="#">Transporteurs</a></li>
+									</ul></li>
+
+<!-- 								<li class="dropdown"><a href="#" class="dropdown-toggle" -->
+<!-- 									data-toggle="dropdown" role="button" aria-haspopup="true" -->
+<!-- 									aria-expanded="false">Administration <span class=""></span></a> -->
+<!-- 									<ul class="dropdown-menu"> -->
+
+<!-- 										<li class="dropdown"><a -->
+<!-- 											href="adminUtilisateurListe.xhtml" -->
+<!-- 											title="Gestion des utilisateurs  de PGCA"><img -->
+<!-- 												style="width: 20px; height: 20px" -->
+<!-- 												src="assets/images/man.png" /> Gestion des utilisateurs </a></li> -->
+
+<!-- 										<li class="dropdown"><a href="adminProfilListe.xhtml" -->
+<!-- 											title="Gestion des utilisateurs  de PGCA"><img -->
+<!-- 												style="width: 20px; height: 20px" -->
+<!-- 												src="assets/images/man.png" /> Gestion des profils </a></li> -->
+<!-- 									</ul></li> -->
+							</ui:insert>
+							<li class="dropdown"><a href="recherchepgca.xhtml"
+								class="fa fa-search-plus "> Recherche</a></li>
+						</ul>
+					</h:form>
+				</div>
+
+				</nav>
+
+				<div class="container-fluid pull-right">
+					<ol class="breadcrumb">
+						<li><a href="#"> <i class="fa fa-envira"
+								aria-hidden="true"></i> Campagne Agricole 2016
+						</a></li>
+						<li><a href="#"> <i class="fa fa-bank" aria-hidden="true"></i>
+								#{SessionMB.getSessionDataByTag('connectedUserPointPhysique')}
+						</a></li>
+						<li class="active"><i class="fa fa-user" aria-hidden="true"></i>
+							#{SessionMB.getSessionDataByTag('prenomUser')}
+							#{SessionMB.getSessionDataByTag('nomUser') }</li>
+					</ol>
+				</div>
+
+
+			</div>
+			<ui:insert name="section">	Default Page Section
+			<div id="section-header">
+					<span class="reference">#{SessionMB.getSessionDataByTag('nomUtilisateur')}</span>
+					<div id="form_type">
+						<br /> <br />
+						<h3></h3>
+					</div>
+					<div id="logo_ohada">
+						<img src="assets/css/img/content/logo_ohada.png" alt="Ohada" />
+					</div>
+				</div>
+
+			</ui:insert>
+
+
+
+
+
+
+		</div>
+		<div class="footer">
+			<br /> <a href="http://www.awaconsulting.com/awaconsulting/"
+				title="Mouhamed FAYE" style="margin-top: 15px; color: white">
+				PGCA Version 1.0.0 Copyright © 2016 Agile Way International </a>
+		</div>
+		<div class="bodyContinue" />
+	</div>
+
+
+</h:body>
+</html>

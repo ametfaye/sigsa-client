@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title">PGCA Situation financière</ui:define>
+
+
+
+	<ui:define name="section">
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+
+		<div class="container-fluid  fullbg">
+			<div class="col-md-12">
+
+				<h:form id="form" action="dashboardG.html">
+
+					<center>
+						<br />
+						<h4 class="TitreGeneric">Situation
+							financière</h4>
+						<br /> <br />
+					</center>
+
+					<p:messages id="messages" />
+
+					<div class="right_col" role="main">
+
+
+
+						<div class="row">
+							
+							<div class="col-xs-6 col-sm-3">
+								<div id="ui-widget" style="width : 420px">
+									<h1 class="ui-value">
+										<a href="managerGestionBanque.xhtml" style="color: #80c347;     font-size: 40px;">
+											<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( tresoMB.callServiceTotalDepotBanque() )} 
+												
+												
+										</a>
+									</h1>
+									<span class="ui-label"> <a href="managerGestionBanque.xhtml" style="color: #80c347;"> Banque </a> </span>
+								</div>
+							</div>
+							
+							
+							
+							<div class="col-xs-6 col-sm-3">
+									<div id="ui-widget" style="width : 420px">
+								<h1 class="ui-value"> <a href="ManagerGestionCredits.xhtml" style="color: #80c347;     font-size: 40px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( tresoMB.callServiceTotalCredit() )} 
+									
+								 </a></h1>
+								<span class="ui-label" style="color: #80c347;"> <a href="ManagerGestionCredits.xhtml" style="color: #80c347;"> credits </a></span>
+							</div>
+								
+							</div>
+							
+							
+							<div class="col-xs-6 col-sm-3">
+									<div id="ui-widget" style="width : 420px">
+								<h1 class="ui-value"> <a href="ManagerGestionVentes.xhtml" style="color: #80c347;     font-size: 40px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( tresoMB.callServiceTotalVente() )} 
+									
+								 </a></h1>
+								<span class="ui-label" style="color: #80c347;"> <a href="ManagerGestionVentes.xhtml" style="color: #80c347;"> CAISSE </a></span>
+							</div>
+								
+							</div>
+							
+
+							<div class="col-xs-6 col-sm-3">
+								<div id="ui-widget" style="width : 420px">
+									<h1 class="ui-value">
+										<a href="managerGestionSubventions.xhtml?idBlocToShow=2" style="color: #80c347;     font-size: 40px;">
+											<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+													#{referentielMB.utils.formatFloatToCFA( tresoMB.loadAllSubventions() )}  
+										</a>
+									</h1>
+									<span class="ui-label"> <a href="managerGestionSubventions.xhtml?idBlocToShow=2" style="color: #80c347;"> Subvention </a> </span>
+								</div>
+							</div>
+
+							
+
+						</div>
+
+					
+					
+					</div>
+
+					<hr />
+					<br />
+					<br />
+					<br />
+
+					<div class="row">
+						<p:dataTable id="ProfilID" var="engraisDTO" rendered="false"
+							value="#{referentielMB.selectedIntrantDTO}" reflow="true"
+							rowKey="#{engraisDTO.idProduit}"
+							emptyMessage="Ancun engrais disponible" paginator="true"
+							rows="10" cellSeparator="10"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+							paginatorPosition="bottom"
+							selection="#{referentielMB.selectedEngraisDTO}"
+							selectionMode="single"
+							style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+							<p:column headerText="Libelle">
+				          #{profilMB.StringCutter(engraisDTO.libelleProduit, 40)} 
+				        </p:column>
+
+							<p:column headerText="Montant ">
+				          #{profilMB.StringCutter(engraisDTO.libelleProgramme, 40)} 
+				        </p:column>
+
+
+
+							<p:column headerText="Date">
+				          #{profilMB.StringCutter(engraisDTO.nomPointStock, 40)} 
+				        </p:column>
+
+							<p:column headerText="Zone">
+				          #{profilMB.StringCutter(engraisDTO.quantite, 40)} 
+				        </p:column>
+
+							<p:column headerText="Auteur">
+				          #{profilMB.StringCutter(engraisDTO.quantite, 40)} 
+				        </p:column>
+
+						</p:dataTable>
+
+
+					</div>
+				</h:form>
+				<br /> <br /> <br />
+			</div>
+		</div>
+		
+		</h:panelGroup>
+		
+		
+		
+			<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+	
+	</ui:define>
+
+</ui:composition>
+

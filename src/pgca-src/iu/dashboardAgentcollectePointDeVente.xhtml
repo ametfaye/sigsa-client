@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+
+		<h:form>
+
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<p:spacer width="3%"></p:spacer>
+
+		<h:panelGroup 	rendered="#{agentCollecteMB.connectedUserProfilIsAgentCollecte == true}" >
+
+
+			<div class="container-fluid fullbg">
+
+				<p:messages id="msg" showDetail="true" showIcon="true"
+					style="text-align  : center;   color : black;   font-size: 15px ; margin-left : 20% ; margin-right : 20%" />
+
+
+<!-- 				<p -->
+<!-- 					style="text-align: center; margin-top: -10px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">Tableau -->
+<!-- 					de Bord Cordinateur - -->
+<!-- 					#{SessionMB.getSessionDataByTag('connectedUserStockLibelle')}</p> -->
+
+
+				<div class="col-md-12 dashboardIndicateursInverse"
+					style="margin-top: 20px; margin-bottom: 10px; border: 0; width: 94%; margin-left: 2%">
+
+
+						<div class="row">
+
+<!-- 							<div class="col-md-4 " style="text-align: center"> -->
+
+<!-- 								<span class="" style="color: #002839"> <i -->
+<!-- 									class="fa fa-retweet" aria-hidden="true" -->
+<!-- 									style="color: #80c347; font-size: 30px;" /> Nombre de points -->
+<!-- 									de ventes affectés : <span style="font-size: 30px;">  #{agentCollecteMB.nbAffectations}   </span> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+
+<!-- 							<div class="col-md-4 " style="text-align: center"> -->
+
+<!-- 								<span class="pull-left" style="color: #002839"> <i -->
+<!-- 									class="fa fa-balance-scale" aria-hidden="true" -->
+<!-- 									style="margin-right: 5px; color: #80c347; font-size: 30px !important;" /> -->
+<!-- 									Vous avez reçu #{agentCollecteMB.stockResiduelSize} mise(s) en place <span -->
+<!-- 									style="font-size: 30px;"> -->
+<!-- 										</span> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+							
+<!-- 							<div class="col-md-4 " style="text-align: center"> -->
+
+<!-- 								<span class="pull-left" style="color: #002839"> <i -->
+<!-- 									class="fa fa-balance-scale" aria-hidden="true" -->
+<!-- 									style="margin-right: 5px; color: #80c347; font-size: 30px !important;" /> -->
+<!-- 									Vous avez reçu #{agentCollecteMB.stockResiduelSize} variété(s)  d'intran dans vos points de vente<span -->
+<!-- 									style="font-size: 30px;"> -->
+<!-- 										</span> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+							
+
+
+<!-- 							<div class="col-md-3 " style="text-align: center"> -->
+
+<!-- 								<span class="" style="color: #002839"> <i -->
+<!-- 									class="fa fa-retweet" aria-hidden="true" -->
+<!-- 									style="color: #80c347; font-size: 30px;" /> Total de vos ventes  :  -->
+<!-- 									<span style="font-size: 37px;     color: #709239;"> 431.000.765 FCFA</span> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+
+<!-- 							<div class="col-md-3 " style="text-align: center"> -->
+
+<!-- 								<span class="" style="color: #002839"> <i -->
+<!-- 									class="fa fa-retweet" aria-hidden="true" -->
+<!-- 									style="color: #80c347; font-size: 30px;" /> Total de vos versements  :  -->
+<!-- 									<span style="font-size: 37px;     color: #709239;"> 141.000.765 FCFA</span> -->
+<!-- 								</span> -->
+<!-- 							</div> -->
+
+				
+
+
+						</div>
+				
+
+				
+					<br />
+				</div>
+
+
+
+
+				<div class="row">
+					
+
+					<div class="col-md-12">
+
+						<!-- 						<div class="progress"> -->
+						<!-- 							<div -->
+						<!-- 								class="progress-bar progress-bar-success progress-bar-striped active" -->
+						<!-- 								role="progressbar" aria-valuenow="40" aria-valuemin="0" -->
+						<!-- 								aria-valuemax="100" style="width: 40%"> -->
+						<!-- 								<span>40% budgé consommé</span> -->
+						<!-- 							</div> -->
+						<!-- 						</div> -->
+
+
+						<h1 class="titrePage">Stock du point de vente  #{agentCollecteMB.selectedPointDeVenteDTO.libelleCommune}  </h1>
+
+						<p:dataTable id="ProfilID" var="stock" widgetVar="stock"
+							value="#{agentCollecteMB.listIntrantOfSelectedPV}" reflow="true"
+							rowKey="#{stock.idProduit}"
+							selection="#{magasinierMB.stockResiduelSelectedAgentCollecte}"
+							filteredValue="#{agentCollecteMB.stockResiduelFiltred}"
+							selectionMode="single"
+							emptyMessage="Ancun  stock résiduel disponible" paginator="true"
+							rows="10" cellSeparator="10"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+							paginatorPosition="bottom"
+							style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Critères de recherche "
+										style="color : #002839" />
+									<i class="fa fa-search" aria-hidden="true"
+										style="color: #80c347" />
+
+									<p:inputText id="globalFilter" onkeyup="PF('stock').filter()"
+										style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+										placeholder="Entrez un critère " />
+								</p:outputPanel>
+							</f:facet>
+
+						
+				         <p:column headerText="Programme "
+								filterBy="#{stock.libelleProgramme}"
+								sortBy="#{stock.libelleProgramme}">
+				          		#{profilMB.StringCutter(stock.libelleProgramme, 50)}
+				          
+				        </p:column>
+				        
+
+						<p:column headerText="Intrant"
+								filterBy="#{stock.libelleProduit}"
+								sortBy="#{stock.libelleProduit}">
+				          		#{profilMB.StringCutter(stock.libelleProduit, 50)}
+				          
+				        </p:column>
+				        
+				        
+				        
+
+						<p:column headerText="Quantité"
+								filterBy="#{stock.quantite}"
+								sortBy="#{stock.quantite}">
+				          		#{profilMB.StringCutter(stock.quantite, 50)}
+				          
+				        </p:column>
+
+						<p:column headerText="Tarif / T "
+								filterBy="#{stock.prixProducteur}"
+								sortBy="#{stock.prixProducteur}">
+				          		#{profilMB.StringCutter(stock.prixProducteur, 50)}
+				          
+				        </p:column>
+				        
+<!-- 				        	<p:column headerText="Prix Non Subventionné " -->
+<!-- 								filterBy="#{stock.prixProducteur}" -->
+<!-- 								sortBy="#{stock.prixProducteur}"> -->
+<!-- 				          		#{profilMB.StringCutter(stock.prixProducteur, 50)} -->
+				          
+<!-- 				        </p:column> -->
+				        
+				        
+				        <!--  ON peut pas afficher LV OU BL car c un Cumul de plusieurs depot de stock -->
+<!-- 				        <p:column headerText="Numéro BL " -->
+<!-- 								filterBy="#{stock.prixNonSubventionne}" -->
+<!-- 								sortBy="#{stock.prixNonSubventionne}">XXX -->
+<!-- 				        </p:column> -->
+						
+						
+<!-- 						 <p:column headerText="Njuméro LV " -->
+<!-- 								filterBy="#{stock.prixNonSubventionne}" -->
+<!-- 								sortBy="#{stock.prixNonSubventionne}">XXX -->
+				          
+<!-- 				        </p:column> -->
+				        
+				       	<p:ajax event="rowSelect" 
+							update="@form" />
+						
+					</p:dataTable>
+					
+					<h:panelGroup id="detailsSlectedLine">
+							<div style="text-align :center">
+								selected intran here (before bouton) avec photo	#{magasinierMB.stockResiduelSelectedAgentCollecte.libelleProduit}			
+							</div>
+					</h:panelGroup>
+					
+					
+						<div id="buttons" class="pull-right" style="margin-top: 30px ; margin-right : 35px">
+
+		
+							<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 350px ; margin-right: 52px"
+								action="#{magasinierMB.vendreProduitForAgentCollecte}"
+								value=" Enregistrer Vente" name="suivants" />
+							
+
+							<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 350px ; margin-right: 52px"
+								action="#{magasinierMB.initTransfertIntrantFromPointToMagasin}"
+								value=" Enregistrer transfert vers magasin" name="suivants" />
+								
+								<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 350px ; margin-right: 52px"
+								action="#{magasinierMB.initTransfertIntrantFromPointToPointdeVente}"
+								value=" Enregistrer transfert vers point de vente" name="suivants" />
+								
+								
+								<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 350px ; margin-right: 52px"
+								
+								value=" Voir les détails de l'intrant" name="suivants" />
+						
+								
+						</div>
+					</div>
+
+
+<!-- 					<div class="col-md-4"> -->
+					
+<!-- 					<br /> <br /><br /> <br /> -->
+<!-- 						<div class="col-xs-6"> -->
+<!-- 							<div id="ui-widget" style="width: 220px"> -->
+<!-- 								<h1 class="ui-value"> -->
+<!-- 									<a href="ACListeCollecte.xhtml?idBlocToShow=1" -->
+<!-- 										style="color: #28351d; font-size: 20px;"> <i -->
+<!-- 										class="fa fa-caret-up" aria-hidden="true" style="color: red"></i> -->
+<!-- 										#{referentielMB.utils.formatFloatToCFA( -->
+<!-- 										magasinierMB.gettotalVente())} -->
+
+<!-- 									</a> -->
+<!-- 								</h1> -->
+<!-- 								<span class="ui-label" style="color: #80c347;"> <a -->
+<!-- 									href="ACListeCollecte.xhtml?idBlocToShow=1" -->
+<!-- 									style="color: #80c347; margin-top: 20px !important"> <br /> -->
+<!-- 										Vente -->
+<!-- 								</a></span> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+
+<!-- 						<div class="col-xs-6"> -->
+<!-- 							<div id="ui-widget" style="width: 220px"> -->
+<!-- 								<h1 class="ui-value"> -->
+<!-- 									<a href="ACGestionBanque.xhtml?idBlocToShow=1" -->
+<!-- 										style="color: #28351d; font-size: 20px;"> <i -->
+<!-- 										class="fa fa-caret-up" aria-hidden="true" style="color: red"></i> -->
+<!-- 										#{referentielMB.utils.formatFloatToCFA( -->
+<!-- 										magasinierMB.callTotalServiceRecuperationDepotBanque())} -->
+
+
+
+<!-- 									</a> -->
+<!-- 								</h1> -->
+<!-- 								<span class="ui-label" style="color: #80c347;"> <a -->
+<!-- 									href="ACBudget.xhtml?idBlocToShow=1" style="color: #80c347;"> -->
+<!-- 										Versement</a></span> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+<!-- 						<br /> <br /> <br /> -->
+
+<!-- 					</div> -->
+
+					<div class="btn-group pull-right">
+						<!-- 				<span class="ui-label btn btn-success" style="color: #80c347; margin-right : 50PX ; margin-top : 100PX ; width : 200px"> <a -->
+						<!-- 								href="ACListeCollecte.xhtml?idBlocToShow=2" style="color: white;"> -->
+						<!-- 									Enregistrer Achat </a></span> -->
+					</div>
+				</div>
+			</div>
+
+ 		 </h:panelGroup>
+
+
+
+			<h:panelGroup
+				rendered="#{connexionMB.connectedUserProfilIsAgentCollecte == false}">
+				<div class="container-fluid">
+					<div class="col-md-12">
+
+
+						<br />
+						<p class="titrePage">Accès restreint</p>
+						<h1>Votre profil ne vous donne pas accès à cette ressource
+							demandée</h1>
+
+						<img src="assets/images/restrict.png" alt="Logo du Sénégal" />
+
+
+					</div>
+				</div>
+			</h:panelGroup>
+
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

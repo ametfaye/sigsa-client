@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Modification Password</ui:define>
+
+	<ui:define name="section">
+
+		<div class="creer_user">
+
+
+			<h:form class="" id="form" action="dashboardG.html">
+				<p:growl id="messages" showDetail="false" />
+
+
+				<center>
+					<h4>Modification de mot de passe</h4>
+				</center>
+				<div class="formulaire_utilisateur">
+					<br />
+					<br />
+					<center>
+						<h:message for="password" style="color:red;font-size:13px;" />
+					</center>
+					<center>
+						<h:message for="newPassword" style="color:red;font-size:13px;" />
+					</center>
+					<center>
+						<h:message for="confirm" style="color:red;font-size:13px;" />
+					</center>
+
+					<h:inputHidden style="margin-top:5px" id="id"
+						value="#{connexionMB.connectionDTO.id}" label="id" />
+
+
+					<fieldset class="formulaire_ohada">
+
+						<LEGEND></LEGEND>
+						<div class="formulaire">
+							<div class="labels" id="labels1"
+								style="width: 200px; margin-left: 15%;">
+								<h:outputLabel for="code"
+									value="*#{msg['form.utilisateur.codeutilisateur']}" />
+								<h:outputLabel for="password"
+									value="*#{msg['form.connexion.motdepasseactuel']}" />
+								<h:outputLabel for="newPassword"
+									value="*#{msg['form.connexion.nouveaumotdepasse']}"
+									style="margin-top:7px;" />
+								<h:outputLabel for="confirm"
+									value="*#{msg['form.connexion.confirm_motdepasse']}"
+									style="margin-top:4px;" />
+							</div>
+							<div class="inputs">
+								<h:inputText id="code"
+									value="#{connexionMB.connectionDTO.codeUtilisateur}"
+									disabled="false" required="true" label="code"
+									requiredMessage="Le login est obilgatoire" />
+								<h:inputSecret id="password"
+									value="#{connexionMB.connectionDTO.motDePasse}" required="true"
+									label="mot de passe"
+									requiredMessage="Le mot de passe est obilgatoire" />
+								<h:inputSecret id="newPassword"
+									value="#{connexionMB.connectionDTO.newPassword}"
+									required="true" label="newPassword"
+									requiredMessage="Le mot de passe est obilgatoire">
+									<f:validateLength minimum="4" maximum="10" />
+								</h:inputSecret>
+								<h:inputSecret id="confirm"
+									value="#{connexionMB.connectionDTO.confirmPassword}"
+									required="true" label="confirm"
+									requiredMessage="Le mot de passe est obilgatoire">
+									<f:validateLength minimum="4" maximum="10" />
+								</h:inputSecret>
+							</div>
+						</div>
+
+						<br />
+						<p style="color: red; text-align: center">Vous venez de vous
+							connecter la première fois sur la plateforme PGCA ou votre mot de
+							passe a été modifier par l'administrateur. Vous devez modifier le
+							mot de passe qui vous a été attribué avant d’accéder aux
+							fonctionnalités de la plateforme</p>
+					</fieldset>
+
+				</div>
+				<div id="buttons">
+					<div class="greenBar" style="width: 526px; margin-left: 10px"></div>
+					<h:button class="annuler" value="Acceuil" outcome="dashboardAdmin"
+						name="annuler" />
+					<h:button class="visualiser" value="Liste"
+						outcome="listeUtilisateur" name="visualiser" />
+					<h:button class="enregistrer" value="Annuler"
+						outcome="listeUtilisateur" name="enregistrer" />
+					<h:commandButton class="suivant"
+						action="#{connexionMB.changePassword}" value="Changer"
+						name="suivants" />
+				</div>
+
+			</h:form>
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

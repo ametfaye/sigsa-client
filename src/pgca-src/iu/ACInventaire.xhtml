@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de collecte</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div class="col-md-12 fullbg">
+
+				<p:messages id="msg" showDetail="true"
+					style="width: 60%; margin-left : 15%; text-align  : center; margin-top: 40px;    font-size: 15px;color: #253123; letter-spacing: 2px; text-align: center;" />
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+
+
+					<p class="titrePage">Enregister un intrant disponibles dans votre point de vente </p>
+					<br />
+			
+
+					<h:panelGroup id="pform1">
+						
+
+
+							<div class="col-sm-6 col-sm-offset-3"
+								style="background-image: url('assets/images/footer2.png') ! important;">
+
+
+								
+							
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Origine</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText style="min-width : 500px"
+											value="#{SessionMB.getSessionDataByTag('connectedUserPointPhysique')}" maxlength="4"
+											styleClass="listeFournisseurs tt-query form-control"
+											title="Point de vente"
+											
+											disabled="true" readonly="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Auteur inventaire</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText style="min-width : 500px"
+											value="#{SessionMB.getSessionDataByTag('prenomUser')}  #{SessionMB.getSessionDataByTag('nomUser')}" maxlength="4"
+											styleClass="listeFournisseurs tt-query form-control"
+											title="Point de vente"
+											
+											disabled="true" readonly="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+
+
+
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Intrant</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText id="communeCommande23" style="min-width : 500px"
+											value="#{agentSaisieMB.libelleIntrant}" maxlength="4"
+											styleClass="listeIntrant tt-query form-control"
+											title="L'intrant à acheter chez le fournisseur"
+											requiredMessage="L'intrant est requis" required="true">
+										</p:inputText>
+									</div>
+								</div>
+
+
+
+								
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Quantité  </label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText  style="width : 500px" styleClass="form-control" 
+											value="#{agentSaisieMB.quantite}" title="La quantité"
+											requiredMessage="La quantité est requise "
+											required="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+								
+								<div class="row">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Prix standard / T  </label>
+									<div class="col-sm-6">
+										<br />
+										<p:inputText  styleClass="form-control"
+											value="#{agentSaisieMB.prixUnitaire}" title="Le prix de vente par /T"
+											requiredMessage="Le Prix standard / T est requis"
+											required="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+								
+								
+							
+								
+								
+							</div>
+
+							<BR />
+
+
+
+							<div class="col-md-3 col-md-offset-4">
+
+								<div id="buttons" class="pull-right" style="margin-top: 30px;">
+									<h:commandButton
+										styleClass=" fa fa-plus btn btn-success pull-right"
+										style="width : 150px ; "
+										action="#{agentSaisieMB.collecteIntrantFromPointDevente}"
+										value=" Enregistrer" name="suivants">
+									</h:commandButton>
+									<a type="submit" style="margin-right: 22px; width: 150px"
+										href="dashboardAgentcollecte.xhtml"
+										class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+								</div>
+
+							</div>
+
+					
+
+					</h:panelGroup>
+
+	<p class="titrePage">Le module d'inventaire permet de réajuster le stock des intrants disponibles dans votre point de vente.  <br/>  </p>
+					<br />
+
+
+				</h:form>
+
+				
+				
+				<!--  MODIFICATION DES LINTRANT -->
+				
+				
+				<h:form id="engraisListUpdate" rendered="#{param.idBlocToShow eq '2'}">
+					<br />
+
+
+					<p class="titrePage">Modification de l'intran  #{magasinierMB.libelleIntrantAmodifier}   </p>
+					<br />
+			
+
+					<h:panelGroup>
+							<div class="col-sm-6 col-sm-offset-3"
+								style="background-image: url('assets/images/footer2.png') ! important;">
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Origine</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText style="min-width : 500px"
+											value="#{SessionMB.getSessionDataByTag('connectedUserPointPhysique')}" maxlength="4"
+											styleClass="listeFournisseurs tt-query form-control"
+											title="Point de vente"
+											
+											disabled="true" readonly="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Auteur inventaire</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText style="min-width : 500px"
+											value="#{SessionMB.getSessionDataByTag('prenomUser')}  #{SessionMB.getSessionDataByTag('nomUser')}" maxlength="4"
+											styleClass="listeFournisseurs tt-query form-control"
+											title="Point de vente"
+											
+											disabled="true" readonly="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Intrant</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText id="communeCommande23" style="min-width : 500px"
+											value="#{magasinierMB.libelleIntrantAmodifier}" maxlength="4"
+											styleClass="listeIntrant tt-query form-control"
+											title="L'intrant à acheter chez le fournisseur" readonly="true" disabled="true"
+											requiredMessage="L'intrant est requis" required="true">
+										</p:inputText>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Quantité  </label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText  style="width : 500px" styleClass="form-control" 
+											value="#{magasinierMB.quantiteAmodifier}" title="La quantité"
+											requiredMessage="La quantité est requise "
+											required="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+								
+								<div class="row">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Prix standard / T  </label>
+									<div class="col-sm-6">
+										<br />
+										<p:inputText  styleClass="form-control"
+											value="#{magasinierMB.prixUnitaireAmodifier}" title="Le prix de vente par /T"
+											requiredMessage="Le Prix standard / T est requis"
+											required="true">
+										</p:inputText>
+									</div>
+								</div>
+							</div>
+
+							<BR />
+
+							<div class="col-md-3 col-md-offset-4">
+								<div id="buttons" class="pull-right" style="margin-top: 30px;">
+									<h:commandButton
+										styleClass=" fa fa-plus btn btn-success pull-right"
+										style="width : 150px ; "
+										action="#{magasinierMB.modifierIntrantBySuperviseurProcess}"
+										value=" Enregistrer" name="suivants">
+									</h:commandButton>
+									<a type="submit" style="margin-right: 22px; width: 150px"
+										href="dashboardAgentcollecte.xhtml"
+										class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+								</div>
+							</div>	
+					</h:panelGroup>
+
+	<p class="titrePage">Le module d'inventaire permet de réajuster le stock des intrants disponibles dans votre point de vente.  <br/>  </p>
+					<br />
+
+
+				</h:form>
+				
+				
+				
+
+		</div>
+		
+		</div>
+
+	</ui:define>
+
+</ui:composition>

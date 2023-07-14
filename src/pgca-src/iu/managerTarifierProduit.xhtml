@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+		<p:spacer width="3%"></p:spacer>
+		
+				<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+		
+		<div class="container-fluid fullbg ">
+			<div class="col-md-12">
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+
+
+
+					<p class="TitreGeneric">Tarification des intrants</p>
+
+					<br />
+
+
+					<p:dataTable id="ProfilID" var="intrantDTO"
+						value="#{referentielMB.getlistIntrantDTOForManager()}"
+						reflow="true" rowKey="#{intrantDTO.idProduit}"
+						emptyMessage="Ancun intrant disponible" paginator="true" rows="10"
+						cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						selection="#{referentielMB.selectedIntrantDTO}"
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+<!-- 						<p:column headerText="Categorie"> -->
+<!-- 				          #{profilMB.StringCutter(intrantDTO.typeProduit, 40)}  -->
+<!-- 				        </p:column> -->
+
+						<p:column headerText="Libellé">
+				          #{profilMB.StringCutter(intrantDTO.libelleProduit, 40)} 
+				        </p:column>
+				        		<p:column headerText="Programme">
+				          #{profilMB.StringCutter(intrantDTO.libelleProgramme, 60)} 
+				        </p:column>
+				        
+				        
+
+						<p:column headerText="Point de stock">
+				          #{profilMB.StringCutter(intrantDTO.libellePointdeStock, 40)}
+				        </p:column>
+				        
+				        
+				        <p:column headerText="Prix non subventionné" >
+						#{referentielMB.utils.formatFloatToCFA(intrantDTO.prixNonSubventionne)}
+						
+				        </p:column>
+				        
+				        <p:column headerText="Prix subventionné" >
+						#{referentielMB.utils.formatFloatToCFA(intrantDTO.prixProducteur)}
+						
+				        </p:column>
+				        
+				        
+				        
+				        	
+						<p:column headerText="Taux subvention" >
+							#{intrantDTO.tauxSubventionLibelle} 
+				        </p:column>
+				        
+				        
+
+				
+				        <p:ajax event="rowSelect" 
+											update="engraisList:TarifIntrant" />
+											
+					</p:dataTable>
+
+					<br />
+					<br />
+					<div class="col-xs-2" />
+					
+					<h:panelGroup id="TarifIntrant" style="display : none" >
+					<div class="col-xs-6">
+						
+<!-- 						<div class="form-group"> -->
+<!-- 							<label for="inputPassword3" -->
+<!-- 								style="margin-top: 10px; font-size: 17px;" -->
+<!-- 								class="col-sm-4 control-label">Prix Producteur</label> -->
+<!-- 							<div class="col-sm-6"> -->
+<!-- 								<p:inputText -->
+<!-- 									value="#{referentielMB.selectedIntrantDTO.prixProducteur}" -->
+<!-- 									type="number" styleClass="form-control" -->
+<!-- 									title="Le libelle est requis"  -->
+<!-- 									requiredMessage="date  est  requise" required="true" /> -->
+<!-- 							</div> -->
+<!-- 							<br/> -->
+<!-- 						</div> -->
+					
+<!-- 						<div class="form-group">	<br/> -->
+<!-- 							<label for="inputPassword3" -->
+<!-- 								style="margin-top: 10px; font-size: 17px;" -->
+<!-- 								class="col-sm-4 control-label">Taux subvention</label> -->
+<!-- 							<div class="col-sm-6"> -->
+<!-- 								<p:inputText -->
+<!-- 									value="#{referentielMB.selectedIntrantDTO.tauxSubvention}" -->
+<!-- 									type="number" styleClass="form-control" -->
+<!-- 									title="Le libelle est requis" -->
+<!-- 									requiredMessage="date  est  requise" required="true" /> -->
+<!-- 							</div> -->
+							
+<!-- 						</div> -->
+					</div>
+					</h:panelGroup>
+
+					<div class=" pull-right" style="margin-right: 55px">
+						<br />
+
+
+<!-- 						<h:commandButton styleClass="  btn btn-validatd pull-right" -->
+<!-- 							value="Confirmer " name="suivants" -->
+<!-- 							style="width : 200px ; margin-right : 0px; " -->
+<!-- 							class="btn   pull-right btn-success" /> -->
+
+
+					</div>
+
+
+
+
+				</h:form>
+
+
+
+				<h:form id="superFormgg" prependId="false"
+					enctype="multipart/form-data"
+					rendered="#{param.idBlocToShow eq '2'}">
+					<p:messages id="msg" showDetail="true" />
+					<h1
+						style="text-align: center; margin-top: 20px; margin-bottom: 30px; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center; font-size: 2.26em; text-align: center; color: #a4a9a3; text-shadow: 1px 1px 0 #000;">
+						Commission de ventes</h1>
+					<p:dataTable var="VersementDTO"
+						value="#{magasinierMB.callServiceRecuperationDepotBanque()}"
+						rowKey="#{VersementDTO.idVersment}" reflow="true" row="5"
+						selection="#{magasinierMB.versementBanque}" selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucun depot enregistré !!" paginator="true"
+						paginatorPosition="bottom" rows="5"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+
+
+						<p:column headerText="Collaborateur">  								     
+			
+					    		#{referentielMB.utils.formatFloatToCFA(VersementDTO.montantVersment)}
+						</p:column>
+
+						<p:column headerText="Montant">  								     
+					    	#{VersementDTO.libellePersonneAuteurVersment}
+						</p:column>
+
+						<p:column headerText="Zone " style="width : 150PX">  
+							 #{VersementDTO.dateDeVersement} 
+						 </p:column>
+
+						<p:column headerText="Nombre de ventes">  
+								     #{entiteJMB.StringCutter(VersementDTO.moyenVersment,40)} 
+						</p:column>
+
+
+					</p:dataTable>
+
+					<div class="col-xs-8 pull-right">
+
+						<div class="col-xs-1"></div>
+
+						<div class="col-xs-2 pull-right"
+							style="margin-top: 20px; margin-right: 45px">
+							<button type="button" class="btn btn-success  pull-right"
+								style="margin-right: 10px" data-toggle="modal"
+								data-target="#DetailsVersment">Voir details des ventes</button>
+						</div>
+
+						<!-- 						<div class="col-xs-3"> -->
+						<!-- 							<button type="button" class="btn btn-success  pull-right" -->
+						<!-- 								style="margin-right: 10px" data-toggle="modal" -->
+						<!-- 								data-target="#Versment">Nouveau versement</button> -->
+						<!-- 							<br /> -->
+						<!-- 						</div> -->
+
+						<br /> <br /> <br /> <br />
+
+					</div>
+
+
+
+
+					<h:panelGroup id="DetailsSelectCRedit">
+
+
+
+						<div class="modal fade" id="Versment" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto; margin-bottom: 30px;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Enregistrement versement Banque</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+											<br />
+											<div class="row">
+												<div class="col-md-5" />
+												<div class="col-md-2">
+													<img width="110px" height="100px"
+														src="assets/images/logoSedab.gif" alt="Logo du Sénégal"
+														style="margin-left: 25px"></img> <br /> <br />
+												</div>
+												<div class="col-md-5 "></div>
+											</div>
+											<!-- Data BL -->
+											<div class="row"
+												style="border-top: 2px solid #ffffff; height: 220px;">
+												<br />
+												<div class="col-xs-3" />
+
+												<div class="col-xs-6">
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Date versement </label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{tresoMB.versementDTO.dateDeVersement}"
+																type="date" styleClass="form-control" title="date"
+																required="true"
+																requiredMessage="La date du versement est  requise">
+															</p:inputText>
+															<br />
+														</div>
+													</div>
+													<br />
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Montant versement </label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{tresoMB.versementDTO.montantVersment}"
+																type="number" styleClass="form-control" title="montant"
+																required="true"
+																requiredMessage="Le montant du versement est  requis">
+															</p:inputText>
+															<br />
+														</div>
+													</div>
+													<br />
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">
+															Moyen Paiement </label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu
+																value="#{tresoMB.versementDTO.moyenVersment}"
+																required="true"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le moyen de paiement est requis ">
+																<f:selectItem itemLabel="Selectionnez un produit "
+																	itemValue="0" />
+																<f:selectItem itemLabel="Espéces" itemValue="1" />
+																<f:selectItem itemLabel="Chéque " itemValue="2" />
+
+															</h:selectOneMenu>
+															<br />
+														</div>
+													</div>
+													<br />
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">
+															Banque </label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu value="#{tresoMB.versementDTO.banque}"
+																required="true"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le moyen de paiement est requis ">
+																<f:selectItem itemLabel="Selectionnez un produit "
+																	itemValue="0" />
+																<f:selectItems value="#{tresoMB.loadBanqueSenegal()}" />
+
+															</h:selectOneMenu>
+															<br />
+														</div>
+													</div>
+													<br />
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Libelle versement </label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{tresoMB.versementDTO.libelleVersment}"
+																styleClass="form-control" title="Le client">
+															</p:inputText>
+															<br />
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Justificatif de
+															paiement </label>
+														<div class="col-sm-8">
+															<p:fileUpload
+																value="#{tresoMB.versementDTO.documentJustificatif}"
+																mode="simple" skinSimple="true" required="true"
+																requiredMessage="Le fichier de justificatif est requis" />
+
+															<br />
+														</div>
+													</div>
+
+												</div>
+
+												<div class="col-xs-3" />
+
+
+												<br /> <br />
+											</div>
+
+											<br />
+										</div>
+									</div>
+
+									<div class="modal-footer" style="border-top: none">
+										<br /> <br /> <br />
+
+										<h:commandButton styleClass=" btn  pull-right btn-success"
+											style="width : 150px ; margin-right : 12px"
+											action="#{tresoMB.enregistrerVersementBanque()}"
+											value=" Créer" name="suivants">
+
+
+										</h:commandButton>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Annuler</button>
+										<br /> <br /> <br />
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<!-- PREVIEW DOCUMENT SELECTED  -->
+
+						<div class="modal fade" id="confirmation" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto; margin-bottom: 30px;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Confirmation depot</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+											<br />
+
+											<!-- Data BL -->
+
+											<div class="row"
+												style="border-top: 2px solid #ffffff; height: 220px;">
+												<br />
+												<div class="col-xs-3">
+
+													<div id="ui-widget" style="margin-left: 80px">
+														<h1 class="ui-value">
+															<a href="magasisnierGestionBL.xhtml"
+																style="color: #029441;"> 00000</a>
+														</h1>
+														<span class="ui-label"> <i class="fa fa-ravelry"
+															aria-hidden="true"></i> <a
+															href="magasisnierGestionBL.xhtml" style="color: #029441;">BL
+														</a>
+														</span>
+													</div>
+
+												</div>
+
+												<div class="col-xs-6">
+													<text> la situation actuelle de votre comptabilité
+													est le suivant </text>
+													#{magasinierMB.versementBanque.montantVersment}
+													<p:outputLabel> #{magasinierMB.versementBanque.pathdocumentJustificatif} </p:outputLabel>
+
+												</div>
+
+												<div class="col-xs-3">
+													<div id="ui-widget" style="margin-left: 80px">
+														<h1 class="ui-value">
+															<a href="magasisnierGestionBL.xhtml"
+																style="color: #029441;"> 0000000 </a>
+														</h1>
+														<span class="ui-label"> <i class="fa fa-ravelry"
+															aria-hidden="true"></i> <a
+															href="magasisnierGestionBL.xhtml" style="color: #029441;">BL
+														</a>
+														</span>
+													</div>
+													s
+
+												</div>
+
+
+												<br /> <br />
+											</div>
+
+											<br />
+										</div>
+									</div>
+
+									<div class="modal-footer" style="border-top: none">
+										<br /> <br /> <br />
+
+										<h:commandButton styleClass=" btn  pull-right btn-success"
+											style="width : 150px ; margin-right : 12px"
+											action="#{magasinierMB.enregistrerVersementBanque}"
+											value=" Créer" name="suivants">
+
+
+										</h:commandButton>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Annuler</button>
+										<br /> <br /> <br />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- fin Confirmation block -->
+
+
+
+
+
+
+
+
+
+
+						<div class="modal fade" id="DetailsVersment" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto; margin-bottom: 30px;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Confirmation XXXX</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+											<br />
+											<div class="row">
+												<div class="col-md-5" />
+												<div class="col-md-2">
+													<img width="110px" height="100px"
+														src="assets/images/logoSedab.gif" alt="Logo du Sénégal"
+														style="margin-left: 25px"></img> <br /> <br />
+												</div>
+												<div class="col-md-5 "></div>
+											</div>
+											<!-- Data BL -->
+
+
+											<br />
+										</div>
+									</div>
+
+									<div class="modal-footer" style="border-top: none">
+										<br /> <br /> <br />
+
+										<h:commandButton styleClass=" btn  pull-right btn-success"
+											style="width : 150px ; margin-right : 12px"
+											action="#{magasinierMB.enregistrerVersementBanque}"
+											value=" Créer" name="suivants">
+
+
+										</h:commandButton>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Annuler</button>
+										<br /> <br /> <br />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- end confirmation -->
+
+					</h:panelGroup>
+				</h:form>
+				<!--  Details credits  -->
+			</div>
+
+
+		</div>
+  </h:panelGroup>
+  
+  
+  
+  
+  	<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+		
+
+
+	</ui:define>
+
+</ui:composition>

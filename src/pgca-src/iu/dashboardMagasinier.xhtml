@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+	<ui:define name="section">
+	
+		<p:spacer width="3%"></p:spacer>
+		
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIsMagasinier}">
+		
+			<div class="container-fluid fullbg">
+			
+			
+				<h:form id="form2">
+											<hr/>
+				
+				<div class="col-md-12">
+				
+					<h:form id="form1" >
+					
+					
+					<div class="col-md-12"
+					style="margin-top: 20px; margin-bottom: 20px; border: 0; width: 94%; margin-left: 2%">
+
+
+					<div class="col-md-5 dashboardIndicateursInverse">
+					<div class="row">
+						
+					
+				
+													<div class="col-md-8 col-md-offset-2 " style="text-align: center">
+							<h:form>
+
+								<h:commandLink action="#{agentSaisieMB.redirectToListBon()}">
+									<span class="pull-left"
+										style="margin-right: 5%; color: #002839"> <i
+										class="fa fa-home" aria-hidden="true"
+										style="margin-right: 5px; color: #80c347 ; font-size: 40px;" />   <span
+										style="font-size: 30px;"> Vous avez 
+											#{connexionMB.nbPvaffectes} point(s) de vente</span> 
+										
+									</span>
+								</h:commandLink>
+							</h:form>
+
+						</div>
+						
+						
+						
+						
+						
+						
+					</div>
+					</div>
+					 
+
+					<div class="col-md-2 " style="text-align: center">
+						
+						<hr />
+					</div>
+
+					<div class="col-md-5 dashboardIndicateursInverse">
+
+					<div class="row">
+							
+							
+						
+						
+							<div class="col-md-8 col-md-offset-2" style="text-align: center">
+							<h:form>
+
+								<h:commandLink action="#{agentSaisieMB.getNbOLtoValidate()}">
+									<span class="pull-left"
+										style="margin-right: 5%; color: #002839"> <i
+										class="fa fa-clone" aria-hidden="true"
+										style="margin-right: 5px; color: #80c347" /> Vous avez  <span style="font-size: 30px;"> #{magasinierMB.getNbOLtoValidate()} </span> demandes de trasnferts de stock en attente :
+											#{agentSaisieMB.indicateurs.nbBl}</span>
+									
+								</h:commandLink>
+							</h:form>
+
+						</div>
+						
+					
+
+						
+					
+					</div>
+						
+
+
+
+					</div>
+					<br/>
+				</div>
+					
+							
+							
+					<h:panelGroup id="Stock"
+						rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}">
+						
+							<p:messages id="msg" showDetail="true" showIcon="true" style="text-align  : center;   color : black;   font-size: 15px ; margin-left : 20% ; margin-right : 20%"/>
+						
+
+						<div style="text-align  : center">
+
+							<div id="ui-widget" style="margin-left: 10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								<h1 class="ui-value">
+									<a href="magasisnierGestionBL.xhtml" style="color: #029441;" title=" #{magasinierMB.getNbBLtoValidate()}  Bon(s) de livraison de livraison en attente de traitement">
+										#{magasinierMB.getNbBLtoValidate()} </a>
+								</h1>
+								<span class="ui-label"> <i class="fa fa-ravelry"
+									aria-hidden="true"></i> <a href="magasisnierGestionBL.xhtml"
+									style="color: #029441; font-size: 17px;"> B L </a>
+								</span>
+							</div>
+							
+							<div id="ui-widget" style="margin-left: 10px  ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								<h1 class="ui-value">
+									<a href="magasinierGestionOL.xhtml" style="color: #029441;    " title="#{magasinierMB.getNbOLtoValidate()}  Ordre (s) de livraison en attente de pour votre point de vente"> 
+										#{magasinierMB.getNbOLtoValidate()} 
+										</a>
+									</h1>
+								<span class="ui-label"> <a href="magasinierGestionOL.xhtml" style="color: #029441; font-size: 17px;">O L </a></span>
+
+							</div>
+
+							
+						
+							
+
+
+							<div id="ui-widget" style="margin-left: 10px;  box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								<h1 class="ui-value"> <a href="magasisnierGestionCredits.xhtml" style="color: #029441;     font-size: 20px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( magasinierMB.getMontantCreditstoValidate() )} 
+								
+								 </a></h1>
+								<span class="ui-label" style="color: #029441;"> <a href="magasisnierGestionCredits.xhtml" style="color: #029441; font-size: 17px;"> credits </a></span>
+							</div>
+
+							
+							<div id="ui-widget" style="margin-left: 10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								<h1 class="ui-value"> <a href="magasisnierGestionBanque.xhtml" style="color: #029441;     font-size: 20px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+									#{referentielMB.utils.formatFloatToCFA( magasinierMB.montantTotalDeposeEnBanque )} 
+									 								
+								 </a></h1>
+								<span class="ui-label" style="color: #029441;"> <a href="magasisnierGestionBanque.xhtml" style="color: #029441; font-size: 17px;"> Banque </a></span>
+							</div>
+							
+									<div id="ui-widget" style="margin-left: 10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								
+									<h1 class="ui-value">
+										<a href="magasisnierGestionCommandes.xhtml" style="color: #029441;" title="#{magasinierMB.getNbCommandestoValidate()}  commande (s)  en attente de traitement">
+										#{magasinierMB.getNbCommandestoValidate()}  </a>
+									</h1>
+									<span class="ui-label"> <i class="fa fa-ravelry"
+										aria-hidden="true"></i> <a href="magasisnierGestionCommandes.xhtml"
+										style="color: #029441; font-size: 17px;">Commandes </a>
+									</span>
+									
+								</div>
+							
+							<br /> <br />
+						<hr/>
+							<h1
+								style="text-align: center; margin-top: 40px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 30px; color: #253123; letter-spacing: 2px; text-align: center">
+								Stock actuel de #{SessionMB.getSessionDataByTag('connectedUserPointPhysique')}</h1>
+							<p:dataTable var="ProduitDTO"
+								value="#{magasinierMB.callServiceRecuperationStock()}"
+								reflow="true" row="5" rowKey="#{ProduitDTO.idProduit}"
+								style="width: 90%; margin-left:5%; font-size:15px ; "
+								emptyMessage="Aucun produit dans votre stock !!"
+								paginator="true" paginatorPosition="bottom" rows="6"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								selection="#{magasinierMB.selectedProduitListAvendre}"
+								selectionMode="multiple">
+								
+						
+							  
+								        
+								<p:column headerText="Intrant">  
+								         #{entiteJMB.StringCutter(ProduitDTO.libelle,20)} 
+								        </p:column>
+								<p:column headerText="Quantité">  
+												#{entiteJMB.StringCutter(ProduitDTO.quantite,20)}
+								        </p:column>
+								<p:column headerText="Prix Producteur">  
+								        #{entiteJMB.StringCutter(ProduitDTO.prixUnitaire, 15)} 
+								        </p:column>
+								<p:column headerText="Taux Subvention">  
+								        #{entiteJMB.StringCutter(ProduitDTO.subvention, 15)}  %
+								        </p:column>        
+<!-- 								<p:column headerText="Programme">  -->
+<!-- 								       #{entiteJMB.StringCutter(ProduitDTO.libelleProgramme,20)}  -->
+<!-- 		                                </p:column> -->
+
+							</p:dataTable>
+
+							<div id="buttons" class="pull-right" style="margin-top: 30px">
+
+								<h:commandButton styleClass=" btn btn-success pull-right"
+									style="width : 300px ; margin-right: 140px"
+									action="#{magasinierMB.vendreProduit}" value=" Enregistrer une vente "
+									name="suivants" />
+
+								<h:commandButton styleClass=" btn btn-success pull-right"
+									style="width : 300px ; margin-right: 140px"
+									action="#{magasinierMB.modifierIntrantBySuperviseur}" value=" Modifier intrant "
+									name="suivants" />
+									
+
+							</div>
+
+<!-- 							<div id="buttons" class="pull-right" style="margin-top: 30px"> -->
+<!-- 								<a class=" btn btn-default pull-right" -->
+<!-- 									style="width: 150px; margin-right: 52px"> Deplacer </a> -->
+
+<!-- 							</div> -->
+
+<!-- 							<div id="buttons" class="pull-right" style="margin-top: 30px"> -->
+<!-- 								<a class=" btn btn-default pull-right" -->
+<!-- 									style="width: 150px; margin-right: 52px"> Toc </a> -->
+<!-- 							</div> -->
+						</div>
+							
+						
+							
+					</h:panelGroup>
+					
+					
+					</h:form>
+					
+					
+					<h:panelGroup id="superFormgg" prependId="false"
+						rendered="#{param.idBlocToShow eq '2'}">
+
+						<h1
+							style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+							Vente Produit</h1>
+
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label">Produit
+								</label>
+								<div class="col-sm-8">
+									<p:inputText disabled="true"
+										requiredMessage="Le poids est requis"
+										value="#{magasinierMB.selectedProduit.libelle}"
+										styleClass="form-control" title="Quantite" />
+									<br />
+								</div>
+							</div>
+							<br />
+
+							<div class="form-group">
+								<br /> <label for="inputEmail3" class="col-sm-4 control-label ">Prix
+									Unitaire</label>
+								<div class="col-sm-8">
+									<p:inputText type="number"
+										requiredMessage="Le poids est requis"
+										value="#{magasinierMB.selectedProduit.prixUnitaire}"
+										styleClass="form-control" title="La quantite" />
+									<br />
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label">Quantité
+								</label>
+								<div class="col-sm-6">
+									<p:inputText type="number"
+										requiredMessage="Le poids est requis"
+										value="#{magasinierMB.selectedProduit.quantiteProduitAvendre}"
+										styleClass="form-control" title="La quantite" />
+									<br />
+								</div>
+								<div class="col-sm-2">
+									<span style="margin-left : -18px; margin-top : -10px ">T</span>
+								</div>
+
+							</div>
+							<br />
+
+							<div class="form-group">
+								<br /> <label for="inputEmail3" class="col-sm-4 control-label ">Mode
+									Paiement</label>
+								<div class="col-sm-8">
+									<h:selectOneMenu
+										value="#{magasinierMB.selectedProduit.moyenDePaiement}"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le tranporteur est obligatoire"
+										converterMessage="Type de donnée invalide pour le tranporteur">
+
+										<f:selectItem itemLabel="Selectionner un mode" itemValue="" />
+
+										<f:selectItem itemLabel="Espèces" itemValue="0" />
+										<f:selectItem itemLabel="Chéques" itemValue="1" />
+										<f:selectItem itemLabel="Bon de Subvention" itemValue="2" />
+
+									</h:selectOneMenu>
+									<br />
+									
+									
+								</div>
+							</div>
+
+
+						</div>
+						<div id="buttons" class="pull-right" style="margin-top: 30px">
+
+							<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 200px ; margin-right: 30px"
+								action="#{magasinierMB.callVendreProduitService}" value=" Vendre"
+								name="suivants" />
+						</div>
+					</h:panelGroup>
+					
+					
+					
+					<h:panelGroup id="listeProduddddi"
+						rendered="#{param.idBlocToShow eq '3'}">    #{magasinierMB.selectedBLDTO.id}
+					</h:panelGroup>
+					
+				</div>
+				</h:form>
+			</div>
+			
+</h:panelGroup>
+		
+			
+			
+			<h:panelGroup rendered="#{connexionMB.connectedUserProfilIsMagasinier == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+					
+									
+
+	</ui:define>
+
+
+
+
+
+		
+		
+</ui:composition>

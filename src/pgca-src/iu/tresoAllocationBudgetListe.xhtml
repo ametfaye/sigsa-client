@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title">PGCA Liste des Collobarateurs</ui:define>
+
+	<ui:define name="section">
+
+		<div class="formulaire_utilisateur">
+
+			<center>
+				<br />
+				<br />
+				<h4 style="font-size: 26px ! important; color: #137112 ! important;">Liste des collaborateurs - Campagne 2016-17 </h4>
+				<br /> <br />
+			</center>
+
+
+			<p:spacer width="10px"></p:spacer>
+			<h:form id="form">
+				<p:messages id="messages" showDetail="true" />
+
+
+				<p:dataTable id="ProfilID" var="ProfilProvilder"
+					 reflow="true" value="#{referentielMB.collaborateursDTOs}"
+					rowKey="#{ProfilProvilder.idPersonne}"
+					emptyMessage="#{msg['form.msg.noProfil']}" paginator="true"
+					rows="10" cellSeparator="10"
+					paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+					paginatorPosition="bottom"
+					selection="#{tresoMB.selectedCollaborateurDTO}" selectionMode="single"
+					style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+					<p:ajax event="rowSelect"
+						update=":form:buttonGroup :form:messages " />
+					<!-- selectedProfilDTO -->
+					
+					<p:column headerText="Collaborateur">
+				          #{profilMB.StringCutter(ProfilProvilder.nom, 40)} 
+				        </p:column>
+					
+				
+					
+					<p:column headerText="Secteur">
+				          #{profilMB.StringCutter(ProfilProvilder.idPersonne, 40)} 
+				        </p:column>
+				        
+				        	<p:column headerText="Montant alloué"
+						style="width: 20%">
+				            15 000 000 fcfa
+				        </p:column>
+					
+					<p:column headerText="Montant utilisé"
+						style="width: 20%">
+				            #{ProfilProvilder.prenom}
+				        </p:column>
+				</p:dataTable>
+
+
+				<p:toolbarGroup id="buttonGroup">
+
+					<div id="buttons">
+						<div class="greenBar" style="width: 55%; margin-left: 10px"></div>
+
+
+						<h:commandButton value="Modifier"
+							action="#{profilMB.initModifierProfil}" class="annuler"
+							name="annuler" style="margin-right : 15px" />
+
+						<h:commandButton value="#{msg['form.btn.details']}"
+							action="#{profilMB.initDetailsProfil}" class="visualiser"
+							name="visualiser" style="margin-right : 15px" />
+
+						<h:commandButton value="#{msg['form.btn.sup']}"
+							onclick="if (!confirm('Etes-vous sûr de vouloir supprimer ce Profil ?')) return false"
+							action="#{profilMB.onDelete}" name="enregistrer"
+							class="enregistrer" style="margin-right : 15px" />
+
+						<!-- <h:button  value="#{msg['form.btn.add']}" outcome="creerProfil"   name="suivants" class="suivant" />-->
+						<h:commandButton value="#{msg['form.btn.add']}"
+							action="#{tresoMB.initCreationTreso}" class="suivant" 
+							name="suivants" />
+
+					</div>
+				</p:toolbarGroup>
+
+
+			</h:form>
+		</div>
+		<br />
+		<br />
+		<br />
+
+	</ui:define>
+
+</ui:composition>

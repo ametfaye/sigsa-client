@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+	<ui:define name="section">
+<!-- 			<div id="container222" style="min-width: 310px; height: 400px; margin: 0 auto"></div> -->
+
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<p:spacer width="3%"></p:spacer>
+
+
+		<h:panelGroup  rendered="#{connexionMB.connectedUserProfilIManager}">
+		
+		
+		<div class="container-fluid">
+		
+			<div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box bg-aqua">
+            <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Bookmarks</span>
+              <span class="info-box-number">41,410</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+                  <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box bg-green">
+            <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Likes</span>
+              <span class="info-box-number">41,410</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+                  <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box bg-yellow">
+            <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Events</span>
+              <span class="info-box-number">41,410</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+                  <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box bg-red">
+            <span class="info-box-icon"><i class="fa fa-comments-o"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Comments</span>
+              <span class="info-box-number">41,410</span>
+
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%"></div>
+              </div>
+                  <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      
+      
+      
+
+
+			<div class="col-md-9">
+
+
+
+				<br/> <br/>  <br/>
+
+				<h4 class="spanValue">
+					<i class="fa fa-check-circle" aria-hidden="true"></i> 
+							<a href="managerGestionOL.xhtml?idBlocToShow=1">Ordre de livraison à valider </a> <div id="ui-widget" class="pull-right" style="margin-top: -10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25) ;     width: 80px;  height: 80px">						
+								<h1 class="ui-value row">
+									<a href="managerGestionOL.xhtml?idBlocToShow=1" style="color: #029441;" title="#{magasinierMB.getNbCommandestoValidate()}  commande (s)  en attente de traitement">
+									#{managerManagedBean.loadOrdresEnAttentDeValidation()}  </a>
+								</h1>
+							</div>	
+															
+				<hr />				
+				</h4>
+				
+				
+				<h4 class="spanValue" >
+					<i class="fa fa-check-circle" aria-hidden="true"></i> 
+						<a href="managerGestionCheques.xhtml">  Chèque à encaisser </a> <div id="ui-widget" class="pull-right" style="margin-top: -10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25) ;     width: 80px;  height: 80px">						
+								<h1 class="ui-value row">
+									<a href="managerGestionCheques.xhtml" style="color: #029441;" title="#{magasinierMB.getNbCommandestoValidate()}  commande (s)  en attente de traitement">
+									#{tresoMB.callServiceRecuperationALlNBCheques()}  </a>
+								</h1>
+							</div>										
+				<hr />				
+				</h4>
+				
+				
+				<h4 class="spanValue">
+					<i class="fa fa-check-circle" aria-hidden="true"></i> 
+						<a href="managerServices.xhtml?idBlocToShow=2"> Collecte en cours </a> <div id="ui-widget" class="pull-right" style="margin-top: -10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25) ;     width: 80px;  height: 80px">						
+								<h1 class="ui-value ">
+									<a href="managerServices.xhtml?idBlocToShow=2" style="color: #029441;" title="#{magasinierMB.getNbCommandestoValidate()}  commande (s)  en attente de traitement">
+									#{managerManagedBean.callServiceRecuperationANBAllocation()}  </a>
+								</h1>
+							</div>										
+				<hr />				
+				</h4>
+				
+				
+				<h4 class="spanValue">
+					<i class="fa fa-check-circle" aria-hidden="true"></i> 
+							<a href="managerGestionMiseEnplace.xhtml?idBlocToShow=1">  Mises en place</a>  <div id="ui-widget" class="pull-right" style="margin-top: -10px ; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25) ;     width: 80px;  height: 80px">						
+								<h1 class="ui-value ">
+									<a href="managerGestionMiseEnplace.xhtml" style="color: #029441;" title="#{magasinierMB.getNbCommandestoValidate()}  commande (s)  en attente de traitement">
+									#{managerManagedBean.callCulerTauxMiseEnPlace()} </a>
+								</h1>
+							</div>										
+				<hr />				
+				</h4>
+				
+				
+			
+
+
+			</div>
+
+			
+			<div class="col-md-3">		
+				<div id="mapdiv"	style="width: 100%; background-color: WHITE; height: 500px;" />
+		
+			</div>
+			
+		</div>
+
+		
+		<script type="text/javascript">
+
+Highcharts.chart('container222', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Evolution mise en place'
+    },
+    subtitle: {
+        text: 'Programme Contre saison 2017'
+    },
+    xAxis: {
+        categories: ['Dakar', 'THies', 'Kaolack', 'Louga', 'Diourbel', 'Fatick', 'Kaffrine',  'Saint Louis', 'Matam', 'Kolda', 'Ziguinchor', 'Kédougou']
+    },
+    yAxis: {
+        title: {
+            text: 'Tonnage '
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Reliquat',
+        data: [7.0, 6.9, 1.5, 34.5, 18.4, 21.5, 25.2, 26.5, 23.3, 26.5, 23.3]
+    }, {
+        name: 'Cumul',
+        data: [3.9, 4.2, 4.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 26.5, 23.3]
+    }]
+});
+
+
+
+
+
+
+		</script>
+		
+		
+		
+			
+		
+		</h:panelGroup>
+		
+		
+		
+		
+		
+		
+		
+<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+		
+		
+		<div class="row" />
+		
+		
+		
+		
+
+	</ui:define>
+
+</ui:composition>

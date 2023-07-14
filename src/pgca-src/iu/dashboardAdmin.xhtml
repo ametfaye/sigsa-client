@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Administrateur - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="1%"></p:spacer>
+
+		<h:form id="mecanoMor">
+		
+			<p:messages id="messages" showDetail="true"
+						style="width : 60% ; margin-left : 20%" />
+
+			<h:panelGroup rendered="#{connexionMB.connectedUserProfilIsAdmin}">
+
+				<div class="container-fluid fullbg">
+				
+				
+				
+
+					<p
+						style="text-align: center; margin-top: 40px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">Tableau
+						de bord administration</p>
+
+					<p:dataTable id="UtilisateurID" var="utilisateurProviver"
+						value="#{utilisateurMB.utilisateurDTOs}" widgetVar="sokhou"
+						rowKey="#{utilisateurProviver.id}" reflow="true" row="5"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Pas d'utilisateurs enregistrés !!!" paginator="true"
+						paginatorPosition="bottom" rows="11"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						selection="#{utilisateurMB.selectedUtilisateurDTO}"
+						selectionMode="single" filteredValue="#{utilisateurMB.utilisateurDTOsFiltred}" >
+						
+						
+							<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Filtre les compte d'utilisateur "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('sokhou').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+						
+
+						<!-- 					<p:ajax event="rowSelect" listener="#{utilisateurMB.onEdit}" -->
+						<!-- 						update=":form:buttonGroup :form:messages" /> -->
+
+						<h:inputHidden id="id" value="#{utilisateurMB.utilisateurDTO.id}"
+							style="margin-top:-1px" required="false" label="code" />
+
+
+
+						<p:column headerText="Utilisateur"  filterBy="#{utilisateurProviver.prenom}"
+							sortBy="#{utilisateurProviver.prenom}" filterMatchMode="exact">  
+									  #{entiteJMB.StringCutter(utilisateurProviver.prenom,20)}  			#{entiteJMB.StringCutter(utilisateurProviver.nom,20)}
+								        </p:column>
+
+						<p:column headerText="#{msg['form.utilisateur.codeutilisateur']}" filterBy="#{utilisateurProviver.code}"
+							sortBy="#{utilisateurProviver.code}" filterMatchMode="exact">  
+								        #{entiteJMB.StringCutter(utilisateurProviver.email, 45)} 
+								        </p:column>
+
+						<p:column headerText="#{msg['form.utilisateur.profil']}"
+							escape="false"> 
+		                                 #{entiteJMB.StringCutter(utilisateurProviver.profilDTO.valeur,40)} 
+		                                </p:column>
+
+						<p:column headerText="Zone d'intervention" filterBy="#{utilisateurProviver.entiteJuridiqueDTO}"
+							sortBy="#{utilisateurProviver.entiteJuridiqueDTO}" filterMatchMode="exact"> 
+								       #{entiteJMB.StringCutter(utilisateurProviver.entiteJuridiqueDTO.valeur,40)} 
+		                                </p:column>
+
+
+						<!-- 					<p:column headerText="Dernière connexion ">  -->
+						<!-- 								      23 / 10 / 2018 18h23  -->
+						<!-- 		                                </p:column> -->
+
+
+
+						<!-- 					<p:column headerText="D C">  -->
+						<!-- 								       #{utilisateurProviver.dateCreation}  -->
+						<!-- 		                                </p:column> -->
+
+
+
+						<!-- 					<p:column headerText="D connection">  -->
+						<!-- 								       #{utilisateurProviver.dateDerniereModificationMDP}  -->
+						<!-- 		                                </p:column> -->
+
+
+						<!-- 					<p:column headerText="D dateDerniereConnexion">  -->
+						<!-- 								       #{utilisateurProviver.dateDerniereConnexion}  -->
+						<!-- 		                                </p:column> -->
+
+						<p:column style="width : 150PX" headerText="Statut" sortBy="#{utilisateurProviver.statutUser}" filterBy="#{utilisateurProviver.statutUser}" >
+							<i class="#{utilisateurProviver.statusUserIcon}"
+								aria-hidden="true"
+								style='color: #{utilisateurProviver.statusUserIconColor}'></i>   #{utilisateurProviver.statutUser}								
+		             </p:column>
+
+
+						<p:ajax event="rowSelect" update="mecanoMor" />  
+
+
+
+					</p:dataTable>
+
+
+			
+
+					<div id="buttons" class="pull-right" style="margin-top: 10px">
+
+						<a type="submit" style="margin-right: 135px; width: 250px"
+							href="adminUtilisateurCreation.xhtml?idBlocToShow=1"
+							class="fa fa-add btn btn-success pull-right"> Ajouter
+							utilisateur</a>
+					</div>
+
+						<h:commandButton styleClass="suivant  btn btn-validatd pull-right"  rendered="#{utilisateurMB.showbuttonDesactiverMDP() == true}"
+							action="#{utilisateurMB.verouillerUtilisateur()}"
+							value="Désactiver Utilisateur " name="suivants"
+							style="width : 200px ; margin-top : 10px;  width : 250px  ; margin-right : 10px"
+							class="fa fa-undo  btn   pull-right btn-success" />
+						
+						
+						<h:commandButton styleClass="suivant  btn btn-validatd pull-right" rendered="#{utilisateurMB.showbuttonDesactiverMDP() == true}"
+							action="#{utilisateurMB.initModifierUser()}"
+							value="Modifier Utilisateur" name="suivants"
+							style="width : 200px ; margin-top : 10px;  width : 250px  ; margin-right : 10px"
+							class="fa fa-undo  btn   pull-right btn-success" />
+							
+								
+						<h:commandButton styleClass="suivant  btn btn-validatd pull-right"  rendered="#{utilisateurMB.showbuttonActiverMDP() == true}"
+							action="#{utilisateurMB.deverouillerUtilisateur()}"
+							value="Activer Utilisateur " name="suivants"
+							style="width : 200px ; margin-top : 10px;  width : 250px  ; margin-right : 10px ; background-color : red"
+							class="fa fa-undo  btn   pull-right btn-success" />
+							
+
+						<h:commandButton styleClass="suivant  btn btn-validatd pull-right" rendered="#{utilisateurMB.showbuttonDesactiverMDP() == true}"
+							action="#{utilisateurMB.reinitialiserMDP()}"
+							value="Réinitialiser mot de passe" name="suivants"
+							style="width : 200px ; margin-top : 10px;  width : 250px  ; margin-right : 10px"
+							class="fa fa-undo  btn   pull-right btn-success" />
+
+
+
+
+
+
+
+
+
+					<h:panelGroup id="infosSelectedUser" rendered="#{utilisateurMB.selectedUtilisateurDTO != null}">
+
+
+
+						<div class="container-fluid"
+							style="margin-left: 5%; width: 90%; margin-right: 5%">
+
+							<br />
+							<p
+								style="text-align: center; margin-top: 40px; margin-bottom: 30px;  font-family: 'PTSans Bold'; font-size: 15px;  letter-spacing: 2px; text-align: center">
+							<span  style="color: #{utilisateurMB.selectedUtilisateurDTO.statusUserIconColor} ;" class="#{utilisateurMB.selectedUtilisateurDTO.statusUserIcon}"/>	Le compte de  #{utilisateurMB.selectedUtilisateurDTO.prenom}
+								#{utilisateurMB.selectedUtilisateurDTO.nom} est #{utilisateurMB.selectedUtilisateurDTO.statutUser}. </p>
+
+							<div class="col-md-2">   
+							
+							<h:graphicImage value="assets/images/person.png"
+										class="pull-right"
+										style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px; width : 50% ; height : 50%" />
+
+							</div>
+										
+							<div class="col-md-8">   
+
+
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Date de création</th>
+											<th>Date modification mot de passe</th>
+											
+											<th>Date dernière connexion</th>
+											<th>Nombre de connexion</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>#{utilisateurMB.convertFormatDate(utilisateurMB.selectedUtilisateurDTO.dateCreation)}  
+											</td>
+											<td>#{utilisateurMB.convertFormatDate(utilisateurMB.selectedUtilisateurDTO.dateDerniereConnexion)}
+											</td>
+											
+											<td>#{utilisateurMB.convertFormatDate(utilisateurMB.selectedUtilisateurDTO.dateDerniereConnexion)}
+											</td>
+											<td>
+											<span
+									class="label label-success">#{utilisateurMB.selectedUtilisateurDTO.nbConnexionReussi}</span>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+
+
+<!-- 								<h4 class="spanValue"> -->
+<!-- 									<i class="fa fa-sort-desc" aria-hidden="true" -->
+<!-- 										style="color: red; margin-top: 30px"></i> Nombre de connexion -->
+<!-- 								</h4> -->
+<!-- 								<span class="label4  pull-right"> <span -->
+<!-- 									class="label label-success">#{utilisateurMB.selectedUtilisateurDTO.nbConnexionReussi}</span></span> -->
+<!-- 								<br /> -->
+								<hr />
+
+								<!-- 							<h4 class="spanValue"> -->
+								<!-- 								<i class="fa fa-check-circle" aria-hidden="true"></i> Dernière -->
+								<!-- 								connexion en échec -->
+								<!-- 							</h4> -->
+								<!-- 							<span class="label4 pull-right"> <span -->
+								<!-- 								class="label label-success">0</span></span> <br /> -->
+								<hr />
+
+
+
+
+
+							</div>
+
+							<br /> <br /> <br /> <br />
+
+							<div class="col-md-4" />
+
+							<div class="col-md-4">
+							
+							
+							
+
+
+<!-- 								<div class="col-md-4"> -->
+<!-- 									<i class="fa fa-unlock fa-4x" aria-hidden="true" -->
+<!-- 										style="color: #7fc347; margin-left: 20PX"></i> <br /> <br /> -->
+<!-- 									<span style="font-size: 30px; margin-left: -20PX"> -->
+<!-- 										Actifs : 20 </span> -->
+
+<!-- 								</div> -->
+
+<!-- 								<div class="col-md-4"> -->
+<!-- 									<i class="fa fa-lock fa-4x" aria-hidden="true" -->
+<!-- 										style="color: #7fc347; color: red; margin-left: 30PX"></i> <br /> -->
+<!-- 									<br /> <span style="font-size: 30px; margin-left: -20PX"> -->
+<!-- 										Vérouillés : 120 </span> -->
+
+<!-- 								</div> -->
+
+
+<!-- 								<div class="col-md-3"> -->
+<!-- 									<i class="fa fa-info fa-4x" aria-hidden="true" -->
+<!-- 										style="color: #7fc347; color: #dcc719; margin-left: 15px"></i> -->
+<!-- 									<br /> <br /> <span -->
+<!-- 										style="font-size: 30px; margin-left: -20PX"> Infos : 20 -->
+<!-- 									</span> -->
+
+<!-- 								</div> -->
+
+								<div class="col-md-1" />
+
+
+
+
+							</div>
+
+						</div>
+
+
+
+
+
+
+
+					</h:panelGroup>
+
+
+
+
+
+
+					<h:panelGroup rendered="#{param.idBlocToShow eq '2'}">
+		
+		 changer de theme
+		 
+		</h:panelGroup>
+
+				</div>
+			</h:panelGroup>
+
+
+		</h:form>
+
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAdmin == false}">
+			<div class="container-fluid">
+				<div class="col-md-12">
+
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+					<h1>Votre profil ne vous donne pas accès à cette ressource
+						demandée</h1>
+
+					<img src="assets/images/restrict.png" alt="Logo du Sénégal" />
+
+
+				</div>
+			</div>
+		</h:panelGroup>
+
+
+	</ui:define>
+
+</ui:composition>

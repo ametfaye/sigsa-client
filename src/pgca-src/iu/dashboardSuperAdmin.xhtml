@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+	<ui:define name="section">
+
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<p:spacer width="3%"></p:spacer>
+
+
+
+		<div class="container-fluid">
+
+			<div class="col-md-8">
+				<div id="mapdiv"
+					style="width: 800px; background-color: WHITE; height: 500px;" />
+			</div>
+
+
+			<div class="col-md-4">
+
+
+
+
+				<table class="table"
+					style="margin-left: -113px; background: white; width: 100%; height: 200px">
+					<thead>
+						<tr>
+							<th>Magasins</th>
+							<th>Collaborateur</th>
+							<th>Commande</th>
+							<th>Compensation</th>
+							<th>Tonnage</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>3</td>
+							<td>23</td>
+							<td>2</td>
+							<td>13</td>
+							<td>2332 T</td>
+						</tr>
+
+
+					</tbody>
+				</table>
+
+
+				<h4 class="spanValue">
+					<i class="fa fa-sort-desc" aria-hidden="true" style="color: red"></i>
+
+					Chiffre d'affaire
+				</h4>
+				<span class="label4 pull-right"> 11.394.345 FCFA</span> <br />
+				<hr />
+
+				<h4 class="spanValue">
+					<i class="fa fa-check-circle" aria-hidden="true"></i> Budget Alloué
+				</h4>
+				<span class="label4 pull-right"> 11.394.345 FCFA</span> <br />
+				<hr />
+
+				<h4 class="spanValue">
+					<i class="fa fa-sort-desc" aria-hidden="true" style="color: red"></i>
+					Rapprochement
+				</h4>
+				<span class="label4 pull-right"> 11.394.345 FCFA</span> <br />
+				<hr />
+
+
+
+
+			</div>
+
+		</div>
+		<div class="row" />
+
+	</ui:define>
+
+</ui:composition>

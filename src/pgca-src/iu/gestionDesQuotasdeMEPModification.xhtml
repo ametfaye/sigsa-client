@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+		<h:form id="MEPForm">
+
+
+
+
+			<input id="cumulSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}" />
+			<input id="reliquatSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}" />
+			<input id="intrantSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}" />
+
+
+			<div class="container-fluid">
+
+				<div class="row" />
+				<br />
+
+				
+							<div class="modal-header">
+								<h4 class="modal-title">
+									<p
+										style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+										<i class="fa fa-edit " style="COLOR: #99bd7b;"
+											aria-hidden="true"></i> Modifcation d'un quota de mise en
+										place N°  #{agentSaisieMB.listQuotaMiseEnplaceSelectedQuota.idMiseEnPlace} 
+									</p>
+
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div id="previewBL" class="container-fluid">
+									<br />
+
+									<!-- Data BL -->
+									<div class="row"
+										style="border-top: 2px solid #ffffff; height: 250px;">
+										<br />
+
+										<div class="row">
+											<div class="col-md-4" />
+											<div class="col-md-6"></div>
+											<div class="col-md-2" />
+										</div>
+
+										<div class="col-md-12">
+
+
+
+
+											<div class="container-fluid">
+
+
+
+
+
+
+
+												<p:messages id="msg" showDetail="true" showIcon="true"
+													style="text-align  : center;     font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+
+											</div>
+
+											<div class="col-xs-1" id="blocPV" />
+
+											<div class="col-xs-6 col-xs-offset-2" id="blocPV">
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-3 control-label"
+														style="margin-top: 25px">Programme</label>
+													<div class="col-sm-9">
+														<br />
+														<p:inputText style="min-width : 400px"  disabled="true"
+															value="#{agentSaisieMB.programmeFromAutoComplete}"
+															maxlength="4"
+															styleClass="ProgAutoComplete tt-query form-control"
+															title="Programme affilié"
+															requiredMessage="Le programme  est requis"
+															>
+														</p:inputText>
+													</div>
+												</div>
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-3 control-label"
+														style="margin-top: 25px">Intrant</label>
+													<div class="col-sm-9">
+														<br />
+														<p:inputText style="min-width : 400px" readonly="true"  disabled="true"
+															value="#{agentSaisieMB.intrantFromAutoComplete}"
+															maxlength="4"
+															styleClass="listeIntrant tt-query form-control"
+															title="Point de vente"
+															requiredMessage="L'intrant est requis" >
+														</p:inputText>
+													</div>
+													<br />
+												</div>
+
+
+												<hr />
+												<div class="form-group">
+													<label for="inputPassword3" style="margIn-top: 10px"
+														class="col-sm-3 control-label"> Point de vente </label>
+													<div class="col-sm-9">
+														<p:inputText  readonly="true"  disabled="true"
+															value="#{agentSaisieMB.pointdeVenteAutocomplete}"
+															styleClass="typeahead form-control" style="width : 400px"
+															title="La commune du point  devente "
+															requiredMessage="Le point de vente  est requis" />
+
+													</div>
+												</div>
+
+
+
+												<hr />
+												<div class="form-group">
+													<label for="inputPassword3" style="margIn-top: 10px"
+														class="col-sm-3 control-label">Tonnage</label>
+													<div class="col-sm-9">
+														<p:inputText
+															value="#{agentSaisieMB.quantiteAmettreEnPlace}"
+															styleClass="form-control" style="width : 400px"
+															title="La quantité  est requise"
+															validatorMessage="la quatité saisie est incorrect"
+															requiredMessage="La quantité  est requise" />
+
+													</div>
+												</div>
+
+
+
+
+
+
+
+												<div id="buttons" class="pull-right"
+													style="margin-right: 255PX">
+													<h:commandButton
+														styleClass="suivant  btn btn-validatd pull-right"
+														action="#{agentSaisieMB.updateQuotaMEP()}"
+														value="Enregistrer  " name="suivants"
+														style="width : 200px ;"
+														class="fa fa-undo  btn   pull-right btn-success" />
+
+													<a href="gestionDesQuotasdeMEP.xhtml"
+														style="margin-right: 15px; margin-top: -2px"
+														class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+
+												</div>
+
+
+											</div>
+
+
+
+											<div class="col-xs-5" id="blocPV">
+
+
+
+
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer"></div>
+					
+		
+
+
+
+
+
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

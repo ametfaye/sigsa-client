@@ -1,0 +1,134 @@
+
+============  TRES GRAVE  CERTAINS MB LEVE DES ENTITITY MB EXCEPTION ==================
+
+==========  A corriger avant demo
+
+
+
+======================================================================================================
+
+===================  VOLET STATISTIQUE AGRICOLE ( JT 23 janvier 2017 )
+MUST
+
+Apres reception produit : 
+
+pendant update , verifier si le produit existe et modifier la quantite;
+
+=========================================================================================================
+
+
+1-  Pendnat ajout produit BL ou CMD / certrains produit comme semence renvoi un null Pointer 
+
+2 - Update selected credit detail, pas fait sur liste credit 
+A virer rapidement après DEMO
+----------------------------------------
+
+
+
+================================  COUPLE DTO A CREER AVEC NIMPORTE QUEL ENTOTITY =======================
+
+				Utilisation de la reflection JAVA pour recupere des attributs de maniere générique
+				
+				On peut créer une liste de referentiel de type CoupeDTO de n'importe quelle entite en base 
+				
+				
+								createGenericCoupleDTO ();
+								
+========================================================================================================
+
+MUST
+
+Apres reception produit : 
+
+pendant update , verifier si le produit existe et modifier la quantite;
+
+=========================================================================================================
+
+
+
+
+MUST  NIVAU 2
+
+Manager Dashboard  :  rajouter une nouvelle carte representant la mise en place des angrais 
+
+Java Script afficher / Masquer une des deux carte selon un clik sur le label (Carte stock dispo et carte mise en place)
+=========================================================================================================
+
+
+
+ LAZY LOADINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+ 
+ loadAllPointDeVente(boolean mode) : S'inspirer de cette methode et l'adapter sur toute les liste pour eviter le rechargement des données
+=========
+ PRimary Keys PB Postgres
+SELECT MAX(the_primary_key) FROM the_table;  SELECT nextval('the_primary_key_sequence');
+
+================
+
+
+Tips  : 
+
+Un admin ne peut pas creer un manager Sinon faille car 
+n'importe quel admin pourrait cré un manager et changé les données financieres  :
+ Done mais afficher et desactiver au lieu de masquer comme c le cas en ce moment
+
+
+========
+HOW TO
+
+ReferenrentieBean  appelle les services de CommunBean et SessionBean
+
+
+
+
+================================================================
+
+THEME GREEEN SUPER NICE A RAJOUTER DANS PARAMETRE DASHBOARD ADMIN 
+
+EVENT JQUERY ONCLIQU CHANGE HEADER  :  mettre /img/header/1.PNG 
+
+et changer les deux classe ci dessous
+
+
+Changer thème 
+
+
+.navbar-inverse {
+*      background-color: #6aa339;
+*      /* border-color: #002130; */
+*      color: red ! important;
+}
+
+
+changer header 
+
+
+header {
+*      display: inline-block;
+*      width: 100%;
+*      height: 150px;
+*      margin-bottom: 10px;
+*      background-image: url(img/header/1.png);
+*      background-repeat: no-repeat;
+*      /* width: 120%; */
+}
+
+-------------------------------
+
+
+
+--------------
+
+
+PRINT PRIMEFACES
+
+
+http://www.primefaces.org/showcase/ui/misc/printer.xhtml
+
+
+--------------------------------------
+
+CHARGER Le code du departement dans COuple DTO LOAD DEPOARTEMENT ceci permet de recuprer un departementa apartir de son code
+Utils  : pendent saisi l'agent tape le code et le systeme prerempli tout le reste (commun - dept - region -pays)
+
+

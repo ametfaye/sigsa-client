@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Modification Entite Juridique</ui:define>
+
+	<ui:define name="section">
+
+		<div class="creer_user">
+
+
+			<h:form class="" id="form" action="dashboardG.html">
+				<h:inputHidden value="#{entiteJMB.enjuDTO.id}" />
+				<h:inputHidden value="#{entiteJMB.enjuDTO.idType}" />
+				<h:inputHidden value="#{entiteJMB.enjuDTO.libelle}" />
+
+				<p:messages id="messages" showDetail="false" />
+
+
+				<center>
+					<h4>#{msg['form.enju.modif']}</h4>
+				</center>
+				<div class="formulaire_entij">
+
+					<fieldset>
+						<div class="labels" id="labels1">
+							<h:outputLabel value="* Type " />
+							<h:outputLabel value="* Libelle" />
+							<h:outputLabel value="* Code 3L" />
+						</div>
+						<div class="inputs">
+							<p:selectOneMenu value="#{entiteJMB.enjuDTO.idType}"
+								label="Selectionnez le type">
+								<f:selectItems itemDisabled="#{SessionMB.checkSuperAdmin()}"
+									value="#{referentielMB.typeEntityJutiridiques}" var="coupleDTO"
+									itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" />
+							</p:selectOneMenu>
+							<p:inputText value="#{entiteJMB.enjuDTO.libelle}"
+								disabled="#{SessionMB.checkSuperAdmin()}" required="true"
+								label="code" requiredMessage="#{msg['form.enju.reqlib']}" />
+							<p:inputText value="#{entiteJMB.enjuDTO.code3l}" required="true"
+								label="liblle"
+								requiredMessage="Le code 3 lettres est obligatoire" />
+						</div>
+
+						<div class="labels" id="labels2">
+							<h:outputLabel value="* Téléphone Fixe " />
+							<h:outputLabel value=" Mobile " />
+							<h:outputLabel value=" Courriel " />
+							<h:outputLabel value=" Site web " />
+						</div>
+						<div class="inputs" id="inputs2">
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.fixe}"
+								required="true" label="code"
+								requiredMessage="#{msg['form.enju.reqfix']}  "
+								validatorMessage="votre téléphone fixe est invalide">
+								<f:validateRegex pattern="[0-9]*"></f:validateRegex>
+							</p:inputText>
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.mobile}"
+								validatorMessage="votre mobile est invalide">
+								<f:validateRegex pattern="[0-9]*"></f:validateRegex>
+							</p:inputText>
+
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.courriel}"
+								validatorMessage="Email invalide">
+								<f:validateRegex
+									pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"></f:validateRegex>
+							</p:inputText>
+							<p:inputText value="#{entiteJMB.enjuDTO.contact.site}"
+								validatorMessage="votre site est invalide">
+								<f:validateRegex
+									pattern="((http|https)(:\/\/))?([a-zA-Z0-9]+[.]{1}){2}[a-zA-z0-9]+(\/{1}[a-zA-Z0-9]+)*\/?" />
+							</p:inputText>
+
+						</div>
+
+					</fieldset>
+					<br /> <br />
+
+
+
+					<fieldset class="formulaire_ohada">
+
+						<div class="labels" id="labels3">
+							<h:outputLabel value="* Adresse " />
+							<h:outputLabel value="Boite Postale " />
+							<h:outputLabel value="Quartier" />
+						</div>
+						<div class="inputs">
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.libelle}"
+								required="true" requiredMessage="Le telephone est obilgatoire" />
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.codepostal}"
+								validatorMessage="Code Postale Invalide" required="false"
+								label="code" requiredMessage="Le Code postal est obilgatoire">
+								<f:validateRegex pattern="[0-9]{5}" />
+							</p:inputText>
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.quartier}" />
+						</div>
+
+
+
+
+						<div class="labels" id="labels2">
+							<h:outputLabel value="* Ville" />
+							<h:outputLabel value="* Région " />
+							<h:outputLabel value="* Pays " />
+						</div>
+						<div class="inputs" id="inputs2">
+							<p:inputText value="#{entiteJMB.enjuDTO.adresse.ville}"
+								validatorMessage="Votre ville est invalide" required="true"
+								label="code" requiredMessage="Le login est obilgatoire">
+								<f:validateRegex pattern="[a-zA-Z ]*"></f:validateRegex>
+							</p:inputText>
+							<p:selectOneMenu value="#{entiteJMB.enjuDTO.idRegion}"
+								label="Selectionnez le type" style="margin-top:3px"
+								requiredMessage="L'habilitation est requis" filter="true"
+								filterText="Filtrez" filterMatchMode="startsWith"
+								required="true">
+								<f:selectItems value="#{referentielMB.regionDtos}"
+									var="coupleDTO" itemValue="#{coupleDTO.clef}"
+									itemLabel="#{coupleDTO.valeur}" />
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{entiteJMB.enjuDTO.idPays}"
+								label="Selectionnez le type" required="true"
+								requiredMessage="L'habilitation est requis"
+								style="margin-top:2px" filter="true" filterText="Filtrez"
+								filterMatchMode="startsWith">
+								<f:selectItems value="#{referentielMB.paysDtos}" var="coupleDTO"
+									itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" />
+							</p:selectOneMenu>
+
+						</div>
+						<br />
+
+					</fieldset>
+				</div>
+				<div id="buttons">
+					<div class="greenBar" style="width: 52%; margin-left: 10px"></div>
+					<h:button class="annuler" value="Acceuil" outcome="dashboardAdmin"
+						name="annuler" style="margin-right : 15px" />
+					<h:button class="visualiser" value="Liste"
+						outcome="listeEntiteJuridique" name="visualiser"
+						style="margin-right : 15px" />
+					<h:button class="enregistrer" value="Annuler"
+						onclick="if (!confirm('Etes-vous sûr de vouloir annuler  ?')) return false"
+						outcome="dashboardAdmin" name="enregistrer"
+						style="margin-right : 15px" />
+					<h:commandButton class="suivant"
+						action="#{entiteJMB.modifierEntiteJurique}" value="Enregistrer"
+						name="suivants" style="margin-right : 15px" />
+				</div>
+
+			</h:form>
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

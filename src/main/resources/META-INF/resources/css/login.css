@@ -1,0 +1,43 @@
+body {
+	background-color : #d4ecf8;
+    
+}
+
+.ui-widget-content {
+	background-color: #E0E0E0;
+}
+
+h2 {
+	margin-bottom: 10px
+}
+
+.center {
+	margin: 0 auto;
+}
+
+.red {
+	color: #F44336;
+}
+
+ 
+.bodyLogin
+{
+	
+
+} 
+
+
+.ui-widget-content {
+     background-color: transparent  !  important;
+}
+.ui-widget-content {
+    border: 1px solid #a8a8a8;
+    background: !  important;
+    color: #4f4f4f;
+}
+
+
+.ui-noborder
+{
+	margin-top : 10% ! important;
+}

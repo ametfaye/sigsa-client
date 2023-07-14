@@ -1,0 +1,14 @@
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3047 , 'Dakar', 233308 ,'14.78418','-17.32701');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (520411 , 'Diourbel', 233308 ,'15.13953','-12.78577');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3048 , 'Fatick', 233308 ,'13.68333','-16.41667');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (520415 , 'Kaolack', 233308 ,'14','-16');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3049 , 'Kolda', 233308 ,'13.33333','-14.61667');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3050 , 'Louga', 233308 ,'14.63333','-15.35');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (520413 , 'Matam', 233308 ,'16.2367','-13.97621');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3051 , 'Region de Kaffrine', 233308 ,'13.96667','-15.13333');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3052 , 'Region de Kedougou', 233308 ,'12.5526','-12.5293');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3053 , 'Region de Sedhiou', 233308 ,'13.08333','-15.58333');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (520412 , 'Region de Thies', 233308 ,'15.85','-16.8');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (520414 , 'Saint-Louis', 233308 ,'16.41651','-14.64309');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (3054 , 'Tambacounda', 233308 ,'14.18333','-13.51667');
+INSERT INTO regn_region  (regn_id, libelle, pays_id, longitude, latitude) VALUES (520410 , 'Ziguinchor', 233308 ,'12.81028','-16.22639');

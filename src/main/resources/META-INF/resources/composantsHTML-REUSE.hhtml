@@ -1,0 +1,57 @@
+
+															<div class="tab-pane p-3 mt-2 active" id="fichie"
+																role="tabpanel">
+
+																<div class="row">
+																	<div class="col-12">
+																		<div class="card">
+																			<div class="card-header">
+																				<h4 class="card-title">Fiche Agriculteur </h4>
+																				<p class="text-muted mb-0">Derniere mise à jour : 21/11/2023</p>
+																			</div>
+																			<!--end card-header-->
+																			<div class="card-body">
+																								----
+
+																			</div>
+																			<!--end card-body-->
+																		</div>
+																		<!--end card-->
+																	</div>
+																	<!-- end col -->
+																</div>
+																<div class="row">
+																	<div class="col-sm-4" />
+																	<div class="col-sm-5">
+																		
+																				<div class="row">
+																					<div class="col-md-6">
+																						<button type="button" data-toggle="modal"
+																							data-target="#signeODM"
+																							class="btn btn-success  btn-round waves-effect waves-light">
+																							Valider la mission <i class="fa fa-check"></i>
+																						</button>
+																						<h4 class="m-0 font-weight-bold">
+																							<span
+																								class="text-muted font-12 font-weight-normal"
+																								style="margin-left: 10px"></span>
+																						</h4>
+																					</div>
+																					<div class="col-md-6">
+																						<button type="button" data-toggle="modal"
+																							data-target="#refuserODM"
+																							class="btn btn-danger  btn-round waves-effect waves-light">
+																							Refuser la mission <i class="fa fa-times"></i>
+																						</button>
+																						<h4 class="m-0 font-weight-bold">
+																							<span
+																								class="text-muted font-12 font-weight-normal"
+																								style="margin-left: 10px"></span>
+																						</h4>
+																					</div>
+																				</div>
+																		
+																	</div>
+																</div>
+																<!-- end row -->
+															</div>

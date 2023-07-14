@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+
+
+		<br />
+		<br />
+		<p:spacer width="3%"></p:spacer>
+
+		<h:form id="tbCord">
+
+
+			<!--  Paiement par credit -->
+
+
+			<p class="pull-right" style="margin-right: 5%; color: #002839">
+				<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+				Tableau de bord / Gestion des transferts
+			</p>
+
+			<hr />
+
+			<div class="container-fluid fullbg">
+
+				<h1
+					style="text-align: center; margin-top: -20px; margin-bottom: 30px; font-size: 25px; color: #253123; letter-spacing: 2px; text-align: center">
+					Transfert de
+					#{magasinierMB.stockResiduelSelectedAgentCollecte.libelleProduit}
+					vers magasin</h1>
+
+
+				<div class="col-md-12"
+					style="margin-top: 20px; margin-bottom: 20px; border: 0; width: 94%; margin-left: 2%">
+
+
+					<div class="col-md-5 dashboardIndicateursInverse">
+						<div class="row">
+
+							<div class="col-md-6 " style="text-align: center">
+
+								<span class="" style="color: #002839"> <i
+									class="fa fa-retweet" aria-hidden="true" style="color: #80c347" />
+									Nombre de points de ventes affectés: <span
+									style="font-size: 30px;"> 1</span>
+								</span>
+							</div>
+
+							<div class="col-md-6 " style="text-align: center">
+
+								<span class="pull-left" style="color: #002839"> <i
+									class="fa fa-balance-scale" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> Mises en place
+									reçues : <span style="font-size: 30px;">
+										#{agentCollecteMB.stockResiduelSize} </span>
+								</span>
+							</div>
+
+
+
+						</div>
+					</div>
+
+
+					<div class="col-md-1 " style="text-align: center">
+
+						<hr />
+					</div>
+
+					<div class="col-md-6 dashboardIndicateursInverse">
+
+						<div class="row">
+
+							<div class="col-md-8 col-md-offset-2" style="text-align: center">
+								<h:form>
+
+									<h:commandLink action="#{agentSaisieMB.redirectToListBon()}">
+										<span class="pull-left"
+											style="margin-right: 5%; color: #002839"> <i
+											class="fa fa-clone" aria-hidden="true"
+											style="margin-right: 5px; font-size : 25px; color: #80c347" /> Vous avez un
+											écart de versement de #{referentielMB.utils.formatFloatToCFA(
+											magasinierMB.gettotalVente() -
+											magasinierMB.callTotalServiceRecuperationDepotBanque() )} <span
+											style="font-size: 30px;"> </span>
+										</span>
+									</h:commandLink>
+								</h:form>
+
+							</div>
+
+
+						</div>
+
+
+
+
+					</div>
+					<br />
+				</div>
+
+
+
+
+
+
+				<div class="col-md-10 col-md-offset-1">
+
+					<div id="previewBL" class="container-fluid">
+						<br />
+
+						<div class="container-fluid">
+
+							<div class="col-md-12">
+
+								<p:messages id="msg" showDetail="true"
+									style="text-align  : center;     font-size: 15px;color: #253123;letter-spacing: 2px; text-align: center;" />
+
+								<br />
+								<br />
+
+
+
+
+
+
+								<div class="col-md-1" />
+
+								<div class="col-md-10">
+
+
+
+
+									<br />
+									<div class=" pull-left" style="margin-left: 5%">
+										<br /> <LABEL style="margin-right: 30px"><i
+											style="color: #80c347" class="fa fa-spinner"
+											aria-hidden="true"></i> </LABEL>
+									</div>
+								</div>
+
+
+								<div class="col-md-2">
+									<p style="text-align : center ; margin-top : -30px">#{magasinierMB.stockResiduelSelectedAgentCollecte.libelleProduit}  </p> <br/>
+																						<img src="assets/images/pictosIntrant/#{magasinierMB.stockResiduelSelectedAgentCollecte.pictoImages}.png" style="width: 100% ; height : 100%"  />
+									
+								</div>
+								
+								<div class="col-md-4">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 15px">Point de Vente </label>
+										<div class="col-sm-8">
+											<br />
+
+											<p:inputText
+												value="#{magasinierMB.pointdeVenteAutocomplete}"
+												styleClass="typeahead form-control" style="width : 410px"
+												title="La commune du point  devente " required="true"
+												requiredMessage="Le point de vente  est requis" />
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 15px">Quantité</label>
+										<div class="col-sm-8">
+											<br />
+											<p:inputText value="#{magasinierMB.quantiteAtranferer}"
+												styleClass="form-control" title="Le libelle est requis"
+												requiredMessage="La quantite est requise" required="true">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+									<hr />
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 5px">LV</label>
+										<div class="col-sm-8">
+											<p:inputText value="#{magasinierMB.numeroLVManuel}"
+												styleClass="form-control" title="Le libelle est requis"
+												requiredMessage="Le numéro de LV est requis" required="true">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+									<hr />
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 5px">BL</label>
+										<div class="col-sm-8">
+											<p:inputText value="#{magasinierMB.numeroBLManuel}"
+												styleClass="form-control" title="Le libelle est requis"
+												requiredMessage="Le numéro de BL est obligatoire"
+												required="true">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+
+
+								</div>
+
+
+
+								<div class="col-md-6">
+
+									<script>
+										/*******  Autocompletion liste Transporteur ***/
+										$(document)
+												.ready(
+														function() {
+															var arrayProdut = $(
+																	"#listOfTransporteurFromDBInJSON")
+																	.val();
+															var cars2 = arrayProdut
+																	.split(":");
+															var cars2 = new Bloodhound(
+																	{
+																		datumTokenizer : Bloodhound.tokenizers.whitespace,
+																		queryTokenizer : Bloodhound.tokenizers.whitespace,
+																		local : cars2
+																	});
+															$(
+																	'.typeaheadTransport')
+																	.typeahead(
+																			{
+																				hint : true,
+																				highlight : true, /* Enable substring highlighting */
+																				minLength : 1
+																			/* Specify minimum characters required for showing result */
+																			},
+																			{
+																				name : 'cars2',
+																				source : cars2
+																			});
+														});
+
+										/*******  Autocompletion liste Camion ***/
+										$(document)
+												.ready(
+														function() {
+															var arrayProdut = $(
+																	"#listOfCamionFromDBInJSON")
+																	.val();
+															var cars2 = arrayProdut
+																	.split(":");
+															var cars2 = new Bloodhound(
+																	{
+																		datumTokenizer : Bloodhound.tokenizers.whitespace,
+																		queryTokenizer : Bloodhound.tokenizers.whitespace,
+																		local : cars2
+																	});
+															$(
+																	'.typeaheadCamion')
+																	.typeahead(
+																			{
+																				hint : true,
+																				highlight : true, /* Enable substring highlighting */
+																				minLength : 1
+																			/* Specify minimum characters required for showing result */
+																			},
+																			{
+																				name : 'cars2',
+																				source : cars2
+																			});
+														});
+
+										/*******  Autocompletion liste chauffeur ***/
+										$(document)
+												.ready(
+														function() {
+															var arrayProdut = $(
+																	"#listOfTChauffeurFromDBInJSON")
+																	.val();
+															var cars2 = arrayProdut
+																	.split(":");
+															var cars2 = new Bloodhound(
+																	{
+																		datumTokenizer : Bloodhound.tokenizers.whitespace,
+																		queryTokenizer : Bloodhound.tokenizers.whitespace,
+																		local : cars2
+																	});
+															$(
+																	'.typeaheadChauffeur')
+																	.typeahead(
+																			{
+																				hint : true,
+																				highlight : true, /* Enable substring highlighting */
+																				minLength : 1
+																			/* Specify minimum characters required for showing result */
+																			},
+																			{
+																				name : 'cars2',
+																				source : cars2
+																			});
+														});
+									</script>
+
+
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 20px">Transporteur </label>
+										<div class="col-sm-8">
+											<br />
+
+											<p:inputText id="communeCommande" style="min-width : 400px"
+												value="#{magasinierMB.transportTotransfert}"
+												styleClass="typeaheadTransport tt-query form-control"
+												title="transporteur " required="true"
+												requiredMessage="Le transporteur est requis">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+
+
+
+
+
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 20px">Camion </label>
+										<div class="col-sm-8">
+											<br />
+
+											<p:inputText id="cam" style="min-width : 400px"
+												value="#{magasinierMB.camionTotransfer}"
+												styleClass="typeaheadCamion tt-query form-control"
+												title="Numéro du camion " required="true"
+												requiredMessage="Le cammin est requis">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 20px">Chauffeur </label>
+										<div class="col-sm-8">
+											<br />
+
+											<p:inputText id="cauff" style="min-width : 400px"
+												value="#{magasinierMB.chauufeurTotransfer}"
+												styleClass="typeaheadChauffeur tt-query form-control"
+												title="Prenom et Nom du chauffeur du camion" required="true"
+												requiredMessage="Le chauffeur est requis">
+
+											</p:inputText>
+
+										</div>
+									</div>
+								</div>
+
+
+
+
+
+
+								<div class="col-md-6 pull-right">
+
+									<div id="buttons" class="pull-right"
+										style="margin-top: 50px; margin-right: 250PX">
+										<h:commandButton styleClass=" btn btn-success pull-right"
+											style="width : 250px ; margin-right : 12px"
+											action="#{magasinierMB.deplacerStockFromPOINTdEVENTEToPointdeVente}"
+											value=" Enregistrer" name="suivants" />
+										<a type="submit"
+											style="margin-right: 22px; width: 250px; height: 45px; color: #006600;"
+											href="dashboardAgentcollecte.xhtml"
+											class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+									</div>
+									<br />
+									<br />
+									<br />
+									<br />
+									<br />
+								</div>
+								<div class="col-md-3" />
+
+
+
+
+
+							</div>
+
+
+
+
+
+
+
+						</div>
+
+						<h:panelGroup id="detailsPV"
+							rendered="#{magasinierMB.showBlocInfosConfirmation == 1111}">
+
+							<br />
+							<br />
+
+
+
+							<p:messages id="messages" showDetail="true" />
+							<!-- sticky="true" -->
+
+
+
+							<p style="margin-left: 60px; margin-right: 60px">
+								<i class="fa fa-check  fa-2x" style="color: #80c347;" /> Votre
+								vente est enregistrée avec succès, cliquer sur le bouton
+								ci-dessous pour télécharger la facture
+							</p>
+							<br />
+
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+
+							<button type="button" class="btn btn-success  pull-right"
+								style="margin-right: 60px" data-toggle="modal"
+								data-target="#Facture">Télécharger la facture</button>
+
+
+
+
+							<a type="button" class="btn btn-default  pull-right"
+								href="dashboardMagasinier.xhtml" style="margin-right: 60px">Retour</a>
+
+
+
+
+							<br />
+							<br />
+							<br />
+							<br />
+
+
+
+
+
+							<br />
+							<br />
+							<br />
+
+						</h:panelGroup>
+
+
+
+					</div>
+
+
+
+				</div>
+
+
+
+			</div>
+		</h:form>
+
+
+
+
+		<!-- Modal  BL -->
+
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAgentCollecte == false}">
+			<div class="container-fluid">
+				<div class="col-md-12">
+
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+					<h1>Votre profil ne vous donne pas accès à cette ressource
+						demandée</h1>
+
+					<img src="assets/images/restrict.png" alt="Logo du Sénégal" />
+
+
+				</div>
+			</div>
+		</h:panelGroup>
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+		<p:spacer width="3%"></p:spacer>
+
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+
+		<div class="container-fluid fullbg">
+		
+<!-- 		<div class="col-md-6"> -->
+<!-- <div id="containerBB" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
+
+<!-- </div> -->
+	 		
+							
+			<div class="col-md-12">
+			
+
+		
+				<h:form id="superFormgg" prependId="false"
+					enctype="multipart/form-data">
+					<p:messages id="msg" showDetail="true"  style="text-align  : center;     font-size: 15px; color: #253123;letter-spacing: 2px;text-align: center; margin-top : 30px ; margin-right : 15%;  margin-left : 15%" />
+					<h1
+						class="TitreGeneric">
+						Suivi de l'évolution des chèques</h1> <br/>
+					<p:dataTable var="Cheque"
+						value="#{managerManagedBean.callServiceRecuperationALlCheques()}"
+						rowKey="#{Cheque.id_cheque}" reflow="true" row="5"
+						selection="#{tresoMB.selectedChequeDTO}"  selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucun depot enregistré !!" paginator="true"
+						paginatorPosition="bottom" rows="15"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+						<p:column headerText="Date réception" >  							 
+							#{referentielMB.utils.getFormatedDateFromString(Cheque.dateEdition)}	 
+						 </p:column>
+						 
+						 <p:column headerText="Date Dépôt" >  							 
+							#{referentielMB.utils.getFormatedDateFromString(Cheque.dateEdition)}	 
+						 </p:column>
+						
+<!-- 							<p:column headerText="Zone ">  								      -->
+<!-- 							#{Cheque.pointdevente} -->
+<!-- 						</p:column> -->
+						
+						<p:column headerText="Banque">  								     
+							#{Cheque.banqueEmetrice}
+						</p:column>
+
+						<p:column headerText="Montant">  								     
+					    			#{referentielMB.utils.formatFloatToCFA(Cheque.montantCheque)}
+					    	
+						</p:column>
+
+						<p:column headerText="Numéro">  
+								     #{Cheque.numeroCheque} 
+						</p:column>
+						
+						<p:column headerText="Statut">  
+								     #{Cheque.libelleStatut} 
+						</p:column>
+
+
+
+<!-- 					<p:ajax event="change"	update="panelDialogDetails" ></p:ajax> -->
+												
+
+					</p:dataTable>
+					
+					<br/>
+
+					
+					<div class="col-xs-3 pull-right">
+									<h:commandButton value="Encaisser chèque"
+								action="#{tresoMB.encaisseChequeManager}" name="Supprimer"
+								class=" a fa-info btn btn-success pull-right"
+								style="margin-right : 80px "/>
+								
+						</div>
+
+
+				</h:form>
+				<!--  Details credits  -->
+			</div>
+			
+			
+						<div class="col-xs-6 col-sm-2">
+						
+						<br/><br/><br/>
+									<div id="ui-widget">
+								<h1 class="ui-value"> <a href="#" style="color: #029441;     font-size: 20px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( managerManagedBean.montantAencaisser )} 
+									
+								 </a></h1>
+								<span class="ui-label" style="color: #029441;"> <a href="#" style="color: #029441;"> TOTAL A ENCAISSER </a></span>
+							</div>
+								
+							</div>
+							
+
+
+		</div>
+  
+  
+		<script type="text/javascript">
+
+Highcharts.chart('containerBB', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        backgroundColor  : 'transparent',
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Répartion des chéques par point de vente'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} ',
+               
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Microsoft Internet Explorer',
+            y: 56.33
+        }, {
+            name: 'Chrome',
+            y: 24.03,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Firefox',
+            y: 10.38
+        }, {
+            name: 'Safari',
+            y: 4.77
+        }, {
+            name: 'Opera',
+            y: 0.91
+        }, {
+            name: 'Proprietary or Undetectable',
+            y: 0.2
+        }]
+    }]
+});
+		</script>
+  
+  <script type="text/javascript">
+
+Highcharts.chart('container222', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Monthly Average Temperature'
+    },
+    subtitle: {
+        text: 'Source: WorldClimate.com'
+    },
+    xAxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    yAxis: {
+        title: {
+            text: 'Temperature (°C)'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [7.0, 6.9, 1.5, 34.5, 18.4, 21.5, 25.2, 26.5, 23.3]
+    }, {
+        name: 'London',
+        data: [3.9, 4.2, 4.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2]
+    }]
+});
+
+
+
+
+
+
+		</script>
+		
+  </h:panelGroup>
+
+
+
+<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+		
+	</ui:define>
+
+</ui:composition>

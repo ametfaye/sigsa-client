@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:sec="http://www.springframework.org/security/tags">
+  <h:head>
+    <title>SIGMA | Modification d'un ordre de mission</title>
+    <link href="/assets/css/login.css" />
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <!-- DataTables -->
+    <link href="assets/plugins/leaflet/leaflet.css" rel="stylesheet" />
+    <link href="assets//plugins/lightpick/lightpick.css" rel="stylesheet" />
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- FlexSELECT -->
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+    <link rel="stylesheet" href="assets/plugins/flexselect/flexselect.css" type="text/css" media="screen" />
+    <script src="assets/plugins/flexselect/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/plugins/flexselect/liquidmetal.js" type="text/javascript"></script>
+    <script src="assets/plugins/flexselect/jquery.flexselect.js" type="text/javascript"></script>
+    <script>
+      jQuery(document).ready(function() {
+        $("select.flexselect").flexselect();
+      });
+      
+      function cbChange(obj) {
+    	  
+	        if (obj.checked == true)
+	        {
+	        	var cbs = document.getElementsByClassName("b");
+	      	     for (var i = 0; i &lt; cbs.length; i++) {
+	      	        cbs[i].checked = false;
+	               console.log(obj.id);
+	        }
+	    }
+	  obj.checked   = true;
+}
+
+    </script>
+    <style>
+      .red {
+        color: red !important;
+      }
+
+      .green {
+        color: green !important;
+      }
+
+      .gray {
+        color: gray !important;
+      }
+
+      .orange {
+        color: #eea200 !important;
+      }
+
+      .blue {
+        color: blue !important;
+      }
+      .custom-select {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+      }
+
+      .flexselect_dropdown {
+        display: none;
+        position: absolute;
+        z-index: 999999;
+        margin: 0;
+        padding: 0;
+        border: 1px solid WindowFrame;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: Window;
+        color: WindowText;
+        text-align: left;
+        box-shadow: 0 6px 12px #ccc;
+        -webkit-box-shadow: 0 6px 12px #ccc;
+        background: linear-gradient(351deg, rgb(194 225 208), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0, 255, 0, 0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);
+      }
+
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+
+      .custom-select {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+      }
+
+      .flexselect_dropdown {
+        display: none;
+        position: absolute;
+        z-index: 999999;
+        margin: 0;
+        padding: 0;
+        border: 1px solid WindowFrame;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: Window;
+        color: WindowText;
+        text-align: left;
+        box-shadow: 0 6px 12px #ccc;
+        -webkit-box-shadow: 0 6px 12px #ccc;
+        background: linear-gradient(351deg, rgb(194 225 208), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0, 255, 0, 0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);
+      }
+
+      .timeline-steps {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap
+      }
+
+      .timeline-steps .timeline-step {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin: 1rem
+      }
+
+      @media (min-width :768px) {
+        .timeline-steps .timeline-step:not(:last-child):after {
+          content: "";
+          display: block;
+          border-top: .25rem dotted #3b82f6;
+          width: 3.46rem;
+          position: absolute;
+          left: 7.5rem;
+          top: .3125rem
+        }
+
+        .timeline-steps .timeline-step:not(:first-child):before {
+          content: "";
+          display: block;
+          border-top: .25rem dotted #3b82f6;
+          width: 3.8125rem;
+          position: absolute;
+          right: 7.5rem;
+          top: .3125rem
+        }
+      }
+
+      .timeline-steps .timeline-content {
+        width: 10rem;
+        text-align: center
+      }
+
+      .timeline-steps .timeline-content .inner-circle {
+        border-radius: 1.5rem;
+        height: 1rem;
+        width: 1rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #3b82f6
+      }
+
+      .timeline-steps .timeline-content .inner-circle:before {
+        content: "";
+        background-color: #3b82f6;
+        display: inline-block;
+        height: 3rem;
+        width: 3rem;
+        min-width: 3rem;
+        border-radius: 6.25rem;
+        opacity: .5
+      }
+    </style>
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+  </h:head>
+  <h:body class="dark-sidenav">
+    <h:inputText value="#{OrderMissionController.selectedODM.longitude}" id="longitude-input" style="display: none;" />
+    <h:inputText value="#{OrderMissionController.selectedODM.latitude}" id="latitude-input" style="display: none;" />
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml" />
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <h:form class="form-horizontal auth-form my-4" enctype="multipart/form-data" prependId="false">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body p-0">
+                    <div id="user_map" class="pro-map" style="height: 220px"></div>
+                    <h4 class="font-weight-bold " style="text-align: center">Mission N° SN/MIN #{OrderMissionController.selectedODM.odmId}</h4>
+                    <p style="text-align: center">
+                      <i class="fas fa-comment-dots"></i>
+                      <b>Objet de la mission </b> : #{OrderMissionController.selectedODM.objet}
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <div class="dastyle-profile">
+                      <div class="row">
+                        <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                          <div class="dastyle-profile-main">
+                            <div class="dastyle-profile-main-pic">
+                              <img src="assets/images/profil.png" alt="" height="110" class="rounded-circle" />
+                            </div>
+                            <div class="dastyle-profile_user-detail">
+                              <h5 class="dastyle-user-name"> #{OrderMissionController.selectedODM.prenom} #{OrderMissionController.selectedODM.nom}</h5>
+                              <ul class="list-unstyled personal-detail mb-0">
+                                <li class="">
+                                  <i class="las la-home mr-2 text-secondary font-22 align-middle"></i>
+                                  <b>Entité Publique </b> : #{OrderMissionController.connectedUserDetails.entitePublique}
+                                </li>
+                                <li class="mt-2">
+                                  <i class="las la-user text-secondary font-22 align-middle mr-2"></i>
+                                  <b> Service </b> : #{OrderMissionController.connectedUserDetails.service}
+                                </li>
+                                <li class="mt-2">
+                                  <i class="las la-envelope text-secondary font-22 align-middle mr-2"></i>
+                                  <b> Email </b> : #{OrderMissionController.connectedUserDetails.email}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <!--end col-->
+                        <div class="col-lg-4 ml-auto align-self-center">
+                          <ul class="list-unstyled personal-detail mb-0">
+                            <li class="mt-2">
+                              <i class="las la-info text-secondary font-22 align-middle mr-2"></i>
+                              <b> Statut actuel </b> : <a href="javascript:;" class="badge badge-pill #{OrderMissionController.selectedODM.classcss}"> #{OrderMissionController.selectedODM.etatLibelle} </a>
+                            </li>
+                            <li class="mt-2">
+                              <i class="las la-money-bill text-secondary font-22 align-middle mr-2"></i>
+                              <b> Budget </b> : Non renseigné
+                            </li>
+                            <li class="mt-2">
+                              <i class="las la-user text-secondary font-22 align-middle mr-2"></i>
+                              <b> Chef de mission </b> : #{OrderMissionController.selectedODM.nom} #{OrderMissionController.selectedODM.prenom}
+                            </li>
+                          </ul>
+                        </div>
+                        <!--end col-->
+                      </div>
+                      <!--end row-->
+                    </div>
+                    <!--end f_profile-->
+                  </div>
+                  <!--end card-body-->
+                  <!--end card-body-->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="col-12">
+                      <div id="wizard">
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link active" data-toggle="tab" href="#detail" role="tab" aria-selected="true">
+                              <i class="mdi mdi-chat"></i> Détail Mission </a>
+                          </li>
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#participant" role="tab" aria-selected="false">
+                              <i class="fas fa-users"></i> Participants </a>
+                          </li>
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#ordre-mission" role="tab" aria-selected="false">
+                              <i class="fas fa-folder"></i> Ordres de mission </a>
+                          </li>
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#documents-ast" role="tab" aria-selected="false">
+                              <i class="fas fa-folder"></i> Autorisations de sortie </a>
+                          </li>
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#documents" role="tab" aria-selected="false">
+                              <i class="fas fa-folder"></i> Documents </a>
+                          </li>
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#rapport" role="tab" aria-selected="false">
+                              <i class="mdi mdi-book-open-page-variant"></i> Rapport mission </a>
+                          </li>
+                          <li class="nav-item waves-effect waves-light">
+                            <a class="nav-link" data-toggle="tab" href="#historique" role="tab" aria-selected="false">
+                              <i class="mdi mdi-calendar-text-outline"></i> Historique </a>
+                          </li>
+                        </ul>
+                        <div class="tab-content">
+                          <div class="tab-pane p-3 mt-2 active" id="detail" role="tabpanel">
+                            <div class="row">
+                              <div class="col-lg-4">
+                                <div class="form-group row">
+                                  <label class="col-sm-4 col-form-label text-right" for="@next">Destination</label>
+                                  <div class="col-sm-8">
+                                    <div class="field col-12 md:col-4">
+                                      <h:selectOneMenu value="#{OrderMissionController.selectedDestinationUp}" styleClass="custom-select flexselect" id="select-entite-publique">
+                                        <f:selectItem itemLabel=" " itemValue="" />
+                                        <f:selectItems value="#{OrderMissionController.destinationListDTO}" var="d" itemLabel="#{d.destinationLibelle}" itemValue="#{d.dstId}" />
+                                      </h:selectOneMenu>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group row">
+                                  <label for="example-date-input" class="col-sm-4 col-form-label text-right">Date début</label>
+                                  <div class="col-sm-8">
+                                    <p:inputText styleClass="form-control" type="date" value="#{OrderMissionController.selectedODM.dateDebutMission}" id="dateDebutOM" />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group row">
+                                  <label for="example-date-input" class="col-sm-4 col-form-label text-right">Date fin</label>
+                                  <div class="col-sm-8">
+                                    <p:inputText styleClass="form-control" type="date" value="#{OrderMissionController.selectedODM.dateFinMission}" id="dateFinOM" />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h4 class="card-title">TDR </h4>
+                                    <p class="text-muted mb-0">Terme de référence de la mission à éditer </p>
+                                  </div>
+                                  <!--end card-header-->
+                                  <div class="card-body">
+                                    <h:inputTextarea id="elm1" name="area" value="#{OrderMissionController.selectedODM.motif}"></h:inputTextarea>
+                                  </div>
+                                  <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                              </div>
+                              <!-- end col -->
+                            </div>
+                            <div class="row">
+                              <div class="col-sm-4" />
+                              <div class="col-sm-4">
+                                <div class="button-items ">
+                                  <button type="button" class="btn btn-warning waves-effect waves-light">
+                                    <h:commandLink disabled="#{OrderMissionController.updateForm}" action="#{OrderMissionController.annullerUpdateOrderMission()}" style="color: #ffffff;" update="resultFile" value="Annuler"></h:commandLink>
+                                  </button>
+                                  <button type="button" class="btn btn-success waves-effect waves-light">
+                                    <h:commandLink disabled="#{OrderMissionController.updateForm}" action="#{OrderMissionController.updateOrderMission()}" style="color: #ffffff;" ajax="false" update="resultFile" value="Enregistrer"></h:commandLink>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane p-3 mt-2" id="participant" role="tabpanel">
+                            <div class="row">
+                              <div class="col-md-3" />
+                              <div class="col-md-5">
+                                <div class="form-inline">
+                                  <div class="form-group mx-sm-3 mb-2">
+                                    <label style="margin-right: 20px;">Matricule de participant</label>
+                                    <h:selectOneMenu value="#{OrderMissionController.matriculeUp}" styleClass="form-control flexselect" 
+                                      style="width : 200px; padding-left : 10px;" id="select-agent">
+                                      <f:selectItem itemLabel=" " itemValue="0" />
+                                      <f:selectItems value="#{OrderMissionController.listAgentsDto}" var="d" itemLabel="#{d.matricule}" itemValue="#{d.matricule}" />
+                                    </h:selectOneMenu>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <button type="button" id="add-participant-button" class="btn btn-primary mb-2">Ajouter</button>
+                                <p:commandButton id="add-participant-hidden" action="#{OrderMissionController.ajouterAgentUp()}"
+                                  update="agents-table" style="display: none;" ajax="true" value="Ajouter">
+                                </p:commandButton>
+                              </div>
+                            </div>
+                            <h:panelGroup id="agents-table">
+                              <div class="row">
+                                <div class="col-md-12 center">
+                                  <table id="agents-table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;text-align: center;">
+                                    <thead>
+                                      <tr>
+                                        <th>Matricule</th>
+                                        <th>Nom</th>
+                                        <th>Prénom</th>
+                                        <th>Service</th>
+                                        <th>Chef de mission</th>
+                                        <th> Actions</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <p:repeat value="#{OrderMissionController.selectedDtoUpAgents}" var="agent">
+                                        <tr>
+                                          <td>#{agent.matricule}</td>
+                                          <td>#{agent.nom}</td>
+                                          <td>#{agent.prenom}</td>
+                                          <td>#{agent.serviceLibelle}</td>
+                                          <td>
+                                            <h:selectBooleanCheckbox value="#{agent.selectedChefM}" id="tr-#{agent.matricule}" class="b" onchange="cbChange(this)"/>
+                                          </td>
+                                          <td class="text-center">                                      
+                                            <h:commandLink  action="#{OrderMissionController.retirerAgentUp(agent.matricule)}" 
+                                              class="las la-trash-alt text-danger font-18" title="" ajax="true" update="agents-table">
+                                              <f:ajax execute="agents-table" render="agents-table" />
+                                            </h:commandLink >
+                                          </td>
+                                         </tr>
+                                      </p:repeat>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </h:panelGroup>
+                          </div>
+                          <div class="tab-pane p-3 mt-2" id="ordre-mission" role="tabpanel">
+                            <h:panelGroup id="odm-table">
+                              <table id="datatableODM" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;text-align: center;">
+                                <thead>
+                                  <tr>
+                                    <th>Libellé </th>
+                                    <th>Bénéficiaire</th>
+                                    <th>Statut</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <p:repeat value="#{OrderMissionController.listDocumentsOdm}" var="document">
+                                    <tr>
+                                      <td>ODM #{document.matricule} </td>
+                                      <td>#{document.prenom} #{document.nom}</td>
+                                      <td>#{document.statut}</td>
+                                    </tr>
+                                  </p:repeat>
+                                </tbody>
+                              </table>
+                            </h:panelGroup>
+                            <div class="row mt-4">
+                              <div class="col-sm-3" />
+                              <div class="col-sm-9">
+                                <div class="button-items">
+                                  <sec:authorize access="hasAuthority('TBSG')">
+                                    <p:commandButton id="generer-odm-button-hidden" action="#{OrderMissionController.genererLesOdm()}"
+                                      update="odm-table eve-table" style="display: none;" ajax="true" value="Générer les ordres de mission">
+                                    </p:commandButton>
+                                    <button type="button" id="generer-odm-button" class="btn btn-success waves-effect waves-light">
+                                      Générer les ordres de mission
+                                    </button>
+                                  </sec:authorize>
+                                  <sec:authorize access="hasAuthority('TBSG')">
+                                    <p:commandButton id="signer-odm-button-hidden" action="#{OrderMissionController.signerLesOdm()}"
+                                      update="odm-table eve-table" style="display: none;" ajax="true" value="Signer les ordres de mission">
+                                    </p:commandButton>
+                                    <button type="button" id="signer-odm-button" class="btn btn-warning waves-effect waves-light">
+                                      Signer les ordres de mission
+                                    </button>
+                                  </sec:authorize>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane p-3 mt-2" id="documents-ast" role="tabpanel">
+                            <h:panelGroup id="ast-table">
+                              <table id="datatableAST" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;text-align: center;">
+                                <thead>
+                                  <tr>
+                                    <th>Libellé </th>
+                                    <th>Bénéficiaire</th>
+                                    <th>Statut</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <p:repeat value="#{OrderMissionController.listDocumentsAst}" var="document">
+                                    <tr>
+                                      <td>AST #{document.matricule} </td>
+                                      <td>#{document.prenom} #{document.nom}</td>
+                                      <td>#{document.statut}</td>
+                                    </tr>
+                                  </p:repeat>
+                                </tbody>
+                              </table>
+                            </h:panelGroup>
+                            <div class="row mt-4">
+                              <div class="col-sm-3" />
+                              <div class="col-sm-9">
+                                <div class="button-items">
+                                  <sec:authorize access="hasAuthority('TBSG')">
+                                    <p:commandButton id="generer-ast-button-hidden" action="#{OrderMissionController.genererLesAst()}"
+                                      update="ast-table eve-table" style="display: none;" ajax="true" value="Générer les autorisations de sortie">
+                                    </p:commandButton>
+                                    <button type="button" id="generer-ast-button" class="btn btn-success waves-effect waves-light">
+                                      Générer les autorisations de sortie
+                                    </button>
+                                  </sec:authorize>
+                                  <sec:authorize access="hasAuthority('TBSGG')">
+                                    <p:commandButton id="signer-ast-button-hidden" action="#{OrderMissionController.signerLesAst()}"
+                                      update="ast-table eve-table" style="display: none;" ajax="true" value="Signer les autorisations de sortie">
+                                    </p:commandButton>
+                                    <button type="button" id="signer-ast-button" class="btn btn-warning waves-effect waves-light">
+                                      Signer les autorisations de sortie
+                                    </button>
+                                  </sec:authorize>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane p-3 mt-2" id="documents" role="tabpanel">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="card" style="background-image: url(images/auth-bg.png)">
+                                  <div class="card-body">
+                                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;text-align: center;">
+                                        <thead>
+                                          <tr>
+                                            <th>Référence </th>
+                                            <th>Date d'édition</th>
+                                            <th>Type document</th>
+                                            <th>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <p:repeat value="#{OrderMissionController.listDocuments}" var="document">
+                                            <tr>
+                                              <td>#{document.odmId}ODM</td>
+                                              <td>#{document.dateCreationFormatter}</td>
+                                              <td>#{document.typeDocument}</td>
+                                              <td>
+                                                <h:commandLink action="#{OrderMissionController.downloadFile(document.path, document.odmId)}">
+                                                  <i class="las la-file-pdf text-info font-18" title="Télécharger le fichier"></i>
+                                                </h:commandLink>
+                                              </td>
+                                            </tr>
+                                          </p:repeat>
+                                        </tbody>
+                                      </table>
+                                  </div>
+                                  <!--end card-->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane p-3 mt-2" id="rapport" role="tabpanel">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="card">
+                                  <div class="card-header">
+                                    <h4 class="card-title">TDR</h4>
+                                    <p class="text-muted mb-0">Terme de référence de la mission à éditer</p>
+                                  </div>
+                                  <!--end card-header-->
+                                  <div class="card-body">
+                                    <h:inputTextarea id="rapport-odm-texte" name="area"
+                                      value="#{OrderMissionController.rapportMissionToCreate.texteLibre}" />
+                                  </div>
+                                  <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                              </div>
+                              <!-- end col -->
+                            </div>
+                            <div class="row">
+                              <h:form enctype="multipart/form-data">
+                                <div class="col-xl-6">
+                                  <div class="card">
+                                      <div class="card-header">
+                                          <h4 class="card-title" style="text-transform: none;">Rapport d'émission</h4>
+                                      </div><!--end card-header-->
+                                      <div class="card-body">
+                                        <p:fileUpload value="#{OrderMissionController.rapportMissionToCreate.rapportEmission}"
+                                        mode="simple" sizeLimit="1000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/"/>                                                
+                                      </div><!--end card-body-->
+                                  </div><!--end card-->
+                                </div><!--end col-->
+                                <div class="col-xl-6">
+                                  <div class="card">
+                                      <div class="card-header">
+                                          <h4 class="card-title" style="text-transform: none;">Annexes de rapport</h4>
+                                      </div><!--end card-header-->
+                                      <div class="card-body">
+                                        <p:fileUpload value="#{OrderMissionController.rapportMissionToCreate.annexesRapport}"
+                                        mode="simple" sizeLimit="1000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/"/>
+                                      </div><!--end card-body-->
+                                  </div><!--end card-->
+                                </div><!--end col-->
+                              </h:form>
+                            </div><!--end row-->
+
+                            <div class="row">
+                              <div class="col-sm-5" />
+                              <div class="col-sm-4">
+                                <div class="button-items ">
+                                  <button type="button" class="btn btn-success waves-effect waves-light">
+                                    <h:commandLink action="#{OrderMissionController.createRapportOrderMission()}"
+                                      style="color: #ffffff;" value="Enregistrer">
+                                    </h:commandLink>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                            <!--end row-->
+                          </div>
+                          <div class="tab-pane p-3 mt-2" id="historique" role="tabpanel">
+                            <div class="row">
+                              <div class="col-8">
+                                <div class="card" style="background-image: url(images/auth-bg.png)">
+                                  <div class="card-body">
+                                    <h:panelGroup id="eve-table">
+                                      <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                          <tr>
+                                            <th>Acte </th>
+                                            <th>Auteur</th>
+                                            <th>Date</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <p:repeat value="#{OrderMissionController.ordreDeMissionEvenementsJuridique}" var="evenement">
+                                            <tr>
+                                              <td>#{evenement.detailsEvenement} </td>
+                                              <td>#{evenement.auteur.agent.personnePhysique.prenom} #{evenement.auteur.agent.personnePhysique.nom} (#{evenement.auteur.identifiant}) </td>
+                                              <td>
+                                                <h:outputText value="#{evenement.dateEvenement}">
+                                                  <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                                </h:outputText>
+                                              </td>
+                                            </tr>
+                                          </p:repeat>
+                                        </tbody>
+                                      </table>
+                                    </h:panelGroup>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="card">
+                                  <div class="card-body">
+                                    <div class="slimscroll activity-scroll">
+                                      <div class="activity">
+                                        <p:repeat value="#{OrderMissionController.historiqueOrdreDeMissions}" var="hisOdm">
+                                          <div class="activity-info">
+                                            <div class="icon-info-activity">
+                                              <i class="las #{hisOdm.icone} bg-soft-primary #{hisOdm.classCss}" style="background-color: white !important;"></i>
+                                            </div>
+                                            <div class="activity-info-text">
+                                              <div class="d-flex justify-content-between align-items-center">
+                                                <h6 class="m-0 w-75">#{hisOdm.etatOrdreDeMissionDTO.libelleEtat}</h6>
+                                                <span class="text-muted d-block" style="font-size: 11px;">
+                                                  <h:outputText value="#{hisOdm.dateCreation}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                                  </h:outputText>
+                                                </span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </p:repeat>
+                                      </div>
+                                      <!--end activity-->
+                                    </div>
+                                    <!--end activity-scroll-->
+                                  </div>
+                                  <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                              </div>
+                              <!-- end col -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end card-body-->
+                  </div>
+                  <!--end card-->
+                </div>
+              </div>
+            </div>
+            <button style="display: none;" type="button" id="create-odm-topright-error">show alert</button>
+            <h:inputText value="#{OrderMissionController.blocErreurMsg}" id="create-odm-error-text" style="display: none;" />
+            <button style="display: none;" type="button" id="create-odm-topright-success">show alert</button>
+            <h:inputText value="#{OrderMissionController.blocConfirmationMsg}" id="create-odm-succes-text" style="display: none;" />
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-odm-error-text create-odm-succes-text" process="@this" listener="#{OrderMissionController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/plugins/tinymce/tinymce.min.js"></script>
+  <script src="assets/pages/jquery.form-editor.init.js"></script>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+
+  <!-- Sweet-Alert  -->
+  <script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+  <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+
+  <!--Wysiwig js-->
+  <script src="assets/plugins/tinymce/tinymce.min.js"></script>
+  <script src="assets/pages/jquery.form-editor.init.js"></script>
+  <script src="assets/plugins/leaflet/leaflet.js"></script>
+  <script src="assets/plugins/lightpick/lightpick.js"></script>
+  <script src="assets/pages/jquery.profile.init.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <script>
+    $('#datatable').DataTable();
+    $('#datatableODM').DataTable();
+    $('#datatableAST').DataTable();
+    $(document).ready(function() {
+      if ($('#create-odm-error-text').val() !== '') {
+        $('#create-odm-topright-error').click();
+      }
+      if ($('#create-odm-succes-text').val() !== '') {
+        $('#create-odm-topright-success').click();
+        $('#reset-error-msgs').click();
+      }
+      $('#generer-odm-button').click(function () {
+        $('#generer-odm-button-hidden').click(); 
+      });
+      $('#signer-odm-button').click(function () {
+        $('#signer-odm-button-hidden').click(); 
+      });
+      $('#generer-ast-button').click(function () {
+        $('#generer-ast-button-hidden').click(); 
+      });
+      $('#signer-ast-button').click(function () {
+        $('#signer-ast-button-hidden').click(); 
+      });
+      $('#add-participant-button').click(function () {
+        $('#add-participant-hidden').click(); 
+      });
+      $('[id^="delete-participant-"]').click(function () {
+        $('[id^="delete-hidden-"]').click(); 
+      });
+    });
+  </script>
+</html>

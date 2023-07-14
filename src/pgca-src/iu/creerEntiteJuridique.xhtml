@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Ajout Entite Juridique</ui:define>
+
+	<ui:define name="section">
+
+		<div class="container-fluid">
+
+
+
+			<h:form class="row centered-form"
+				style="    margin-top: 70px;margin-bottom: 50px;">
+				<br />
+				<div class="col-md-12">
+					<p:messages id="messages" showDetail="false" />
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">
+								<small>Création d'un point de collecte</small>
+							</h3>
+						</div>
+						<div class="panel-body">
+							<div role="form">
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<p:inputText id="lib" value="#{entiteJMB.enjuDTO.libelle}"
+												styleClass="form-control input-sm" disabled="false"
+												required="true" placeholder="Nom" label="code"
+												requiredMessage="Prenom"
+												title="Entrez le nom du point de Collecte">
+											</p:inputText>
+
+
+										</div>
+									</div>
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+
+											<p:inputText id="code"
+												value="#{entiteJMB.enjuDTO.superficie}"
+												styleClass="form-control input-sm" disabled="false"
+												required="true" placeholder="Nom" type="number" label="code"
+												requiredMessage="Prenom"
+												title="Entrez la superficie du point de Collecte">
+											</p:inputText>
+
+										</div>
+									</div>
+								</div>
+
+
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<p:inputText id="coded"
+												value="#{utilisateurMB.utilisateurDTO.code}"
+												styleClass="form-control input-sm" disabled="false"
+												required="true" placeholder="Prenom" label="code"
+												requiredMessage="Prenom" title="Entrez le libelle">
+											</p:inputText>
+
+										</div>
+									</div>
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+											<p:inputText id="nomf"
+												value="#{utilisateurMB.utilisateurDTO.nom}"
+												style="margin-top : 2px" required="true" label="nom"
+												requiredMessage="Le nom est obilgatoire"
+												styleClass="form-control input-sm"
+												validatorMessage="Le nom saisi est incorrect"
+												placeholder="Nom">
+												<f:validateRegex pattern="[a-zA-Zéèçîï  ]*" />
+											</p:inputText>
+
+										</div>
+									</div>
+								</div>
+
+
+								<div class="form-group">
+
+									<h2 style="text-align: center; margin-bottom: 5px">Type
+										Point de collecte</h2>
+									<p:selectOneMenu value="#{entiteJMB.enjuDTO.idType}"
+										title="Type du point de collecte" label="Selectionnez le type"
+										required="true" styleClass="form-control input-sm">
+										<f:ajax render="@form" />
+										<f:selectItem itemLabel="Selectionnez le type" itemValue="" />
+										<f:selectItems value="#{referentielMB.typeEntityJutiridiques}"
+											var="coupleDTO" itemValue="#{coupleDTO.clef}"
+											itemLabel="#{coupleDTO.valeur}" />
+									</p:selectOneMenu>
+
+									<br />
+									<p:selectOneMenu rendered="#{entiteJMB.enjuDTO.idType == 2}"
+										title="Selectionner le point de collecte principal"
+										requiredMessage="L'entite Juriqique principale est obligatoire"
+										value="#{entiteJMB.enjuDTO.idTypePrincipal}"
+										styleClass="form-control input-sm"
+										label="Selectionnez l'entite juridique principale"
+										required="true">
+										<f:selectItem itemLabel="Selectionnez l'entite Principale"
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.typeEntityJutiridiques}"
+											var="coupleDTO" itemValue="#{coupleDTO.clef}"
+											itemLabel="#{coupleDTO.valeur}" />
+									</p:selectOneMenu>
+
+
+								</div>
+
+
+
+
+								<div class="form-group">
+
+
+									<p:inputText value="#{entiteJMB.enjuDTO.adresse.libelle}"
+										required="true" styleClass="form-control input-sm"
+										placeholder="Adresse Point de collecte"
+										requiredMessage="L'adresse est obilgatoire"
+										title="Entrez l'adresse de point de collecte" />
+
+
+
+								</div>
+
+
+
+								<div class="row">
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+
+											<p:selectOneMenu value="#{entiteJMB.enjuDTO.idPays}"
+												label="Selectionnez le type" required="true"
+												styleClass="form-control input-sm"
+												requiredMessage="L'habilitation est requis"
+												style="margin-top:2px" filter="true" filterText="Filtrez"
+												filterMatchMode="startsWith">
+												<f:selectItem itemLabel="Selectionnez le pays " itemValue="" />
+												<f:selectItems value="#{referentielMB.paysDtos}"
+													var="coupleDTO" itemValue="#{coupleDTO.clef}"
+													itemLabel="#{coupleDTO.valeur}" />
+
+											</p:selectOneMenu>
+
+										</div>
+									</div>
+
+									<div class="col-xs-6 col-sm-6 col-md-6">
+										<div class="form-group">
+
+
+											<p:selectOneMenu id="region"
+												value="#{entiteJMB.enjuDTO.idRegion}"
+												label="Selectionnez le type" style="margin-top:3px"
+												requiredMessage="L'habilitation est requis" filter="true"
+												filterText="Filtrez" filterMatchMode="startsWith"
+												required="true" styleClass="form-control input-sm">
+												<f:selectItem itemLabel="Selectionnez la région "
+													itemValue="" />
+												<f:selectItems value="#{referentielMB.regionDtos}"
+													var="coupleDTO" itemValue="#{coupleDTO.clef}"
+													itemLabel="#{coupleDTO.valeur}" />
+											</p:selectOneMenu>
+
+
+										</div>
+									</div>
+
+								</div>
+
+
+
+								<input type="submit" value="Register"
+									class="btn btn-info btn-block" />
+
+								<div id="buttons">
+									<div class="greenBar" style="width: 526px; margin-left: 10px"></div>
+
+
+									<h:commandButton class="suivant"
+										action="#{entiteJMB.creerEntiteJurique}" value="Valider"
+										name="suivants" styleClass="btn btn-info btn-block" />
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+
+
+
+
+
+
+
+			<!-- 						<h:form class="" id="form" action="dashboardG.html"> -->
+			<!-- 								<p:messages id="messages" showDetail="false" sticky="true" /> -->
+
+
+			<!-- 								<center> -->
+			<!-- 										<h4>#{msg['form.enju.cr']}</h4> -->
+			<!-- 								</center> -->
+			<!-- 								<div class="formulaire_entij"> -->
+
+			<!-- 										<fieldset style="height: 140px;"> -->
+			<!-- 												<LEGEND> Entité juridique</LEGEND> -->
+			<!-- 												<div class="labels" id="labels1"> -->
+			<!-- 														<h:outputLabel value="* Type " /> -->
+			<!-- 														<h:outputLabel rendered="#{entiteJMB.enjuDTO.idType == 2}" value="* E J principale " style="margin-top : 3px" /> -->
+			<!-- 														<h:outputLabel value="* Libelle" /> -->
+			<!-- 														<h:outputLabel value="* Code ou Initiales" /> style="margin-bottom : 2px" -->
+			<!-- 												</div> -->
+			<!-- 												<div class="inputs"> -->
+			<!-- 														<p:selectOneMenu value="#{entiteJMB.enjuDTO.idType}" label="Selectionnez le type" required="true"> -->
+			<!-- 																<f:ajax render="@form" /> -->
+			<!-- 																<f:selectItem itemLabel="Selectionnez le type" itemValue="" /> -->
+			<!-- 																<f:selectItems value="#{referentielMB.typeEntityJutiridiques}" var="coupleDTO" itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" /> -->
+			<!-- 														</p:selectOneMenu> -->
+
+			<!-- 														<p:selectOneMenu id="test" rendered="#{entiteJMB.enjuDTO.idType == 2}" requiredMessage="L'entite Juriqique principale est obligatoire" value="#{entiteJMB.enjuDTO.idTypePrincipal}" -->
+			<!-- 																label="Selectionnez l'entite juridique principale" required="true"> -->
+			<!-- 																<f:selectItem itemLabel="Selectionnez l'entite Principale" itemValue="" /> -->
+			<!-- 																<f:selectItems value="#{referentielMB.typeEntityJutiridiques}" var="coupleDTO" itemValue="#{coupleDTO.clef}" itemLabel="#{coupleDTO.valeur}" /> -->
+			<!-- 														</p:selectOneMenu> -->
+
+			<!-- 														<p:inputText value="#{entiteJMB.enjuDTO.libelle}" required="true" label="liblle" requiredMessage="#{msg['form.enju.reqlib']}" /> -->
+			<!-- 														<p:inputText value="#{entiteJMB.enjuDTO.code3l}" required="true" label="liblle" requiredMessage="Le code 3 lettres est obligatoire" /> -->
+			<!-- 												</div> -->
+
+			<!-- 												<div class="labels" id="labels2"> -->
+			<!-- 														<h:outputLabel value="* Téléphone Fixe " /> -->
+			<!-- 														<h:outputLabel value=" Mobile " /> -->
+			<!-- 														<h:outputLabel value=" Courriel " /> -->
+			<!-- 														<h:outputLabel value=" Site web " /> -->
+			<!-- 												</div> -->
+			<!-- 												<div class="inputs" id="inputs2"> -->
+			<!-- 														<p:inputText value="#{entiteJMB.enjuDTO.contact.fixe}" required="true" label="telfixe" requiredMessage="#{msg['form.enju.reqfix']}  " validatorMessage="votre téléphone fixe est invalide"> -->
+			<!-- 																<f:validateRegex pattern="[0-9]*"></f:validateRegex> -->
+			<!-- 														</p:inputText> -->
+			<!-- 														<p:inputText value="#{entiteJMB.enjuDTO.contact.mobile}" validatorMessage="votre mobile est invalide"> -->
+			<!-- 																<f:validateRegex pattern="[0-9]*"></f:validateRegex> -->
+			<!-- 														</p:inputText> -->
+
+			<!-- 														<p:inputText value="#{entiteJMB.enjuDTO.contact.courriel}" validatorMessage="Email invalide"> -->
+			<!-- 																<f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)"></f:validateRegex> -->
+			<!-- 														</p:inputText> -->
+			<!-- 														<p:inputText value="#{entiteJMB.enjuDTO.contact.site}" validatorMessage="votre site est invalide"> -->
+			<!-- 																<f:validateRegex pattern="((http|https)(:\/\/))?([a-zA-Z0-9]+[.]{1}){2}[a-zA-z0-9]+(\/{1}[a-zA-Z0-9]+)*\/?" /> -->
+			<!-- 														</p:inputText> -->
+
+			<!-- 												</div> -->
+
+
+			<!-- 										</fieldset> -->
+
+
+
+			<!-- 										<fieldset class="formulaire_ohada"> -->
+
+			<!-- 												<LEGEND> Adresse de l'entité juridique</LEGEND> -->
+			<!-- 												<div class="labels" id="labels3"> -->
+			<!-- 														<h:outputLabel value="* Adresse " /> -->
+			<!-- 														<h:outputLabel value="Boite Postale " /> -->
+			<!-- 														<h:outputLabel value="Quartier" /> -->
+			<!-- 												</div> -->
+			<!-- 												<div class="inputs"> -->
+
+			<!-- 												</div> -->
+
+
+
+
+			<!-- 												<div class="labels" id="labels2"> -->
+			<!-- 														<h:outputLabel value="* Ville" /> -->
+			<!-- 														<h:outputLabel value="* Pays " /> -->
+			<!-- 														<h:outputLabel value="* Région " /> -->
+			<!-- 												</div> -->
+			<!-- 												<div class="inputs" id="inputs2"> -->
+
+
+
+			<!-- 												</div> -->
+
+			<!-- 												<br /> -->
+			<!-- 												<br /> -->
+
+			<!-- 										</fieldset> -->
+			<!-- 								</div> -->
+			<!-- 								<div id="buttons"> -->
+			<!-- 										<div class="greenBar" style="width: 526px; margin-left: 10px"></div> -->
+			<!-- 										<h:button class="annuler" value="Acceuil" outcome="dashboardAdmin" name="annuler" /> -->
+			<!-- 										<h:button class="visualiser" value="Liste" outcome="listeEntiteJuridique" name="visualiser" /> -->
+			<!-- 										<h:button class="enregistrer" value="Annuler" outcome="creerEntiteJuridique" name="enregistrer" /> -->
+
+			<!-- 										<h:commandButton class="suivant" action="#{entiteJMB.creerEntiteJurique}" value="Valider" name="suivants" /> -->
+			<!-- 								</div> -->
+
+			<!-- 						</h:form> -->
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

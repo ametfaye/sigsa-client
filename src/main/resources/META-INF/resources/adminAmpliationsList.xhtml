@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>SIGMA | Gestion des ampliations</title>
+    <h:outputStylesheet name="css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css"/>
+
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    
+      <script src="assets/plugins/flexselect/liquidmetal.js" type="text/javascript"></script>
+  <script src="assets/plugins/flexselect/jquery.flexselect.js" type="text/javascript"></script>
+  
+  <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+  
+      <script src="assets/plugins/flexselect/jquery.flexselect.js" type="text/javascript"></script>
+        <link href="assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    
+    
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+    </style>
+  </h:head>
+  
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml"/>
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml"/>
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row mb-2">
+              <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+                  <a class="navbar-brand" href="#">
+                    <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1"/>
+                  </a>
+                  <button class="navbar-toggler"
+                    type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item"><a class="nav-link" href="#">Référentiels / Gestion des ampliations</a></li>
+                    </ul>
+                    <!--end navbar-nav-->
+                    <div class="pull-right">                    
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="#">#{AmpliationController.connectedUserDetails.entitePublique} / #{AmpliationController.connectedUserDetails.service}
+                            / #{AmpliationController.connectedUserDetails.sousService}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--end form-->
+                  </div>
+                  <!--end navbar-collapse-->
+                </nav>
+              </div>
+            </div>
+            <!--end row-->
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+            
+                
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                  
+                   <h4 style="text-align :center"> <i class="las la-list text-secondary font-22 align-middle mr-2"></i>Gestion des ampliations</h4>
+                  		<hr/>
+                    
+                   <div class="row" style="background: #f1f5f9; margin-left : 5%; margin-right : 5% ;">
+                      <div class="col-md-5" style=" margin-top : 30px">
+                        <div class="form-group row">
+                          <label for="entitePublique" class="col-sm-4 col-form-label text-right">Sous Service</label>
+                                <div class="col-sm-8">
+                                  <h:selectOneMenu value="#{AmpliationController.newAmpliationDto.codeSourService}" styleClass="custom-select" id="sousService" 
+                                    style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+                                    <f:selectItem itemLabel="Sélectionner un sous service " itemValue="0" />
+                                    <f:selectItems value="#{AmpliationController.sousServicesDTO}" var="d" itemLabel="#{d.code}" itemValue="#{d.code}" />
+                                  </h:selectOneMenu>
+                                </div>
+                        </div>
+                    
+                      </div>
+                      
+                      <div class="col-md-5" style="margin-top : 25px">
+                        <div class="form-group row">
+                          <label for="entitePublique" class="col-sm-4 col-form-label text-right">Ampliation</label>
+                          <div class="col-sm-8">
+                            <h:inputText styleClass="form-control" value="#{AmpliationController.newAmpliationDto.libelle}" />
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                   
+                
+                      </div>
+                      
+                       <div class="col-sm-2" style="margin-top : 25px">
+                        <div class="button-items ">
+                          <button type="button" class="btn btn-success waves-effect waves-light">
+                            <h:commandLink action="#{AmpliationController.createAmpliation()}" style="color: #ffffff;" ajax="false" value="Ajouter ampliation"></h:commandLink>
+                          </button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  <br/>
+                    
+                    
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                      <thead>
+                        <tr>
+<!--                           <th> Identifiant</th> -->
+                          <th> Code</th>
+                          <th> Sous service de rattachement</th>
+                           <th> Statut</th>
+                          
+                          <th> Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <p:repeat value="#{AmpliationController.ampliations}" var="ampliation">
+                          <tr>
+<!--                             <td>#{ampliation.id}</td> -->
+                            <td>#{ampliation.code}</td>
+                            <td>#{ampliation.libelle}</td>
+                             <td>-</td>
+                            
+                            <td class="text-center">                                                       
+                                <a href="#" data-toggle="modal" data-target="#updateAmpliationModal-#{ampliation.id}">
+                                  <i class="las la-pen text-warning font-18" title="Modifier"></i>
+                                </a>
+                                <a href="#" data-toggle="modal" data-target="#deleteAmpliationModal-#{ampliation.id}">
+                                  <i class="las la-trash-alt text-danger font-18" title="Supprimer"></i>
+                                </a>
+                                
+                                <div class="modal fade bd-example-modal-sm" id="deleteAmpliationModal-#{ampliation.id}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-md" role="deleteAmpliation">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title m-0" id="mySmallModalLabel">Confirmation de la suppression</h6>
+                                            <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"><i class="la la-times"></i></span>
+                                            </button>
+                                        </div><!--end modal-header-->
+                                        <div class="modal-body text-center">
+                                            <h4 class="mb-1">Êtes-vous sûr de vouloir supprimer l'ampliation</h4><br/>
+                                            <h5>#{ampliation.libelle} ? </h5>
+                                        </div><!--end modal-body-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+                                            <button type="button" class="btn btn-primary btn-xs">
+                                              <h:commandLink action="#{AmpliationController.deleteAmpliation(ampliation.id)}" style="color: #ffffff;" ajax="false" value="Confirmer">
+                                              </h:commandLink>
+                                            </button>
+                                        </div><!--end modal-footer-->
+                                        </div><!--end modal-content-->
+                                    </div><!--end modal-dialog-->
+                                </div><!--end modal-->
+
+                                <div class="modal fade bd-example-modal-sm" id="updateAmpliationModal-#{ampliation.id}" tabindex="-1" role="dialog" aria-labelledby="updateAmpliation" aria-hidden="true">
+                                  <div class="modal-dialog modal-md" role="updateAmpliation">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title m-0" id="mySmallModalLabel">Modification de l'ampliation #{ampliation.libelle}</h6>
+                                            <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true"><i class="la la-times"></i></span>
+                                            </button>
+                                        </div><!--end modal-header-->
+                                        <div class="modal-body text-center">
+                                          <div class="row">
+                                            <div class="col-lg-8 center">
+                                                <div class="form-group row">
+                                                  <label class="col-sm-4 col-form-label text-left">Nouveau libellé</label>
+                                                  <div class="col-sm-8">
+                                                    <h:inputText value="#{AmpliationController.updateAmpliationDto.libelle}" name="libelle" class="form-control" />
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          </div>
+                                        </div><!--end modal-body-->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+                                            <button type="button" class="btn btn-primary btn-xs">
+                                              <h:commandLink action="#{AmpliationController.updateAmpliation(ampliation.id)}" style="color: #ffffff;" ajax="false" value="Confirmer">
+                                              </h:commandLink>
+                                            </button>
+                                        </div><!--end modal-footer-->
+                                    </div><!--end modal-content-->
+                                  </div><!--end modal-dialog-->
+                                </div><!--end modal-->
+                            </td>
+                          </tr>
+                        </p:repeat>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <button style="display: none;" type="button" id="create-ampliation-topright-success">show alert</button>
+            <h:inputText value="#{AmpliationController.createAmpliationSuccesMsg}" id="create-ampliation-succes-text" style="display: none;"/>
+            
+            <button style="display: none;" type="button" id="create-ampliation-topright-error">show alert</button>
+            <h:inputText value="#{AmpliationController.createAmpliationErreurMsg}" id="create-ampliation-error-text" style="display: none;"/>
+            
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-ampliation-error-text create-ampliation-succes-text" process="@this"
+                  listener="#{AmpliationController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+            <!-- end row -->
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <link href="assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+  <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  
+  <script>
+    $('#datatable').DataTable({
+      "language": {
+        "sProcessing": "Traitement en cours ...",
+        "sLengthMenu": "Afficher _MENU_ lignes",
+        "sZeroRecords": "Aucun résultat trouvé",
+        "sEmptyTable": "Aucune donnée disponible",
+        "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+        "sInfoEmpty": "Aucune ligne affichée",
+        "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+        "sInfoPostFix": "",
+        "sSearch": "Chercher:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Chargement...",
+        "oPaginate": {
+          "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+        },
+        "oAria": {
+          "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+        }
+      }
+    });
+    $(document).ready(function() {
+      if ($('#create-ampliation-succes-text').val() !== '') {
+        $('#create-ampliation-topright-success').click();
+        $('#reset-error-msgs').click();
+      }
+
+      if ($('#create-ampliation-error-text').val() !== '') {
+        $('#create-ampliation-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+    
+    jQuery(document).ready(function() {
+        $("#sousService").select2();
+     
+      });
+    
+    
+  </script>
+</html>

@@ -1,0 +1,3 @@
+server:
+  context-path: /sigsa
+  port: 9000

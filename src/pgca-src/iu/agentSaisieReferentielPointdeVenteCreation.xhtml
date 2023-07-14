@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	
+	<ui:define name="section">
+		<div class="container-fluid">
+		
+				<br/><br/><br/>
+					<br />
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+						Tableau de bord / Edition Point de vente
+					</p>
+					<hr/>
+			<div id="engraisCreate" class="form-horizontal">
+				<h:form  class="col-md-6 col-md-offset-3" >
+				
+						
+				
+									
+					
+					<p class="titrePage">Edition d'un nouveau  point de vente</p>
+							<p:messages id="messages" showDetail="true" style="width : 60% ; margin-left : 20%" />			
+					
+	
+	
+				<div class="col-sm-6">
+									<div class="form-group">
+										<div class="col-lg-4" style="margin-top: 8px">
+
+											<label for="inputEmail3" class="col-lg-12 control-label">Région</label>
+										</div>
+
+										<div class="col-lg-8">
+
+											<h:selectOneMenu
+												value="#{referentielMB.pointDeVente.idRegion}"
+												required="false"
+												styleClass="form-control input-sm CustomSelect"
+												requiredMessage="La region est requise ">
+												<f:selectItem itemLabel="Selectionnez une region "
+													itemValue="" />
+												<f:selectItems value="#{referentielMB.loadAllRegions()}"
+													var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+													itemLabel="#{CollaborateurDTO.valeur}" />
+
+												<p:ajax event="change"
+													listener="#{referentielMB.refreshDepartementByRegionId()}"
+													update="deptList2" />
+											</h:selectOneMenu>
+										</div>
+									</div>
+								</div>
+
+								<h:panelGroup id="deptList2">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<div class="col-lg-4" style="margin-top: 8px">
+												<label for="inputEmail3" class="col-sm-1 control-label">Département</label>
+											</div>
+
+											<div class="col-lg-8">
+												<h:selectOneMenu
+													value="#{agentSaisieMB.idDepartement}"
+													styleClass="form-control input-sm CustomSelect"
+													requiredMessage="Le departement est requis">
+													<f:selectItem itemLabel="Selectionnez un département"
+														itemValue="" />
+													<f:selectItems value="#{referentielMB.departements}"
+														var="CollaborateurDTO"
+														itemValue="#{CollaborateurDTO.clef}"
+														itemLabel="#{CollaborateurDTO.valeur}" />
+<!-- 													<p:ajax event="change" -->
+<!-- 														listener="#{referentielMB.loadAllPointdeVentesOfDepartemnt()}" -->
+<!-- 														update="communList2" /> -->
+
+												</h:selectOneMenu>
+											</div>
+										</div>
+									</div>
+								</h:panelGroup>
+								
+								
+								
+					<div class="col-xs-6 col-xs-offset-2" style="margin-top : 20px">
+				
+					<div class="form-group">
+							<label for="inputPassword3" class="col-sm-4 control-label">Point de vente
+							</label>
+							<div class="col-sm-8">
+								<p:inputText value="#{agentSaisieMB.communepv}"
+									styleClass="form-control typeahead" title="L'adresse"
+									style="width : 400px ! important ; " required="true"
+									requiredMessage="La commune du point de vente est obligatoire" />
+							</div>
+						</div>
+
+						<div id="buttons" class="pull-right">
+						<br/>
+					<br/>
+					
+					<h:commandButton styleClass="suivant btn btn-validatd pull-right"
+						action="#{agentSaisieMB.createPointdeVenteCommune()}" value="Créer"
+						name="suivants"   style="width : 160px ; margin-left : 12px; " class=" btn btn-success pull-right"/>
+	
+					<a type="submit"
+						href="agentSaisieReferentielPointdeVenteCreation.xhtml?"
+						class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+				</div>
+
+					</div>
+
+
+					
+						
+				
+				</h:form>
+			
+			
+			</div>
+
+			
+
+		</div>
+	</ui:define>
+
+</ui:composition>

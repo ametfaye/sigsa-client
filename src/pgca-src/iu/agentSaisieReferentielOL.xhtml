@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid fullbg">
+			<div id="engraisCreate" class="col-xs-12" style="">
+				<p:messages id="msg" showDetail="true" showIcon="true"
+					style="text-align  : center;     font-size: 15px; color: #253123;letter-spacing: 2px;text-align: center; margin-top : 30px ; margin-right : 15%;  margin-left : 15%" />
+				<h:form
+					rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}">
+
+
+					<br />
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+						Tableau de bord / Gestion des ordres de livraisons
+					</p>
+
+
+					<hr />
+
+					<!--  Fin filtre  -->
+
+
+					<div class="container-fluid">
+
+
+						<h1 class="MainLabelCenter">
+							<i class="fa fa-assistive-listening-systems" aria-hidden="true"></i>
+							Liste des ordres de livraisons
+						</h1>
+
+						<p:dataTable id="ProfilID" var="intrantDTO"
+							value="#{agentSaisieMB.allOLs}"
+							filteredValue="#{agentSaisieMB.filtredallOLs}" reflow="true"
+							rowKey="#{intrantDTO.idOrdre}"
+							emptyMessage="Aucun ordre disponible" paginator="true"
+							cellSeparator="10" widgetVar="carsTable" rows="10"
+							paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+							rowsPerPageTemplate="5,10,15" selectionMode="single"
+							paginatorPosition="bottom"
+							selection="#{agentSaisieMB.commandeDTO}"
+							style="width: 90%; margin-left:5%; font-size:15px;">
+
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Critères de recherche "
+										style="color : #002839" />
+									<i class="fa fa-search" aria-hidden="true"
+										style="color: #80c347" />
+
+									<p:inputText id="globalFilter"
+										onkeyup="PF('carsTable').filter()"
+										style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+										placeholder="Entrez un critère " />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column headerText="Département">
+				          #{profilMB.StringCutter(intrantDTO.libelleProgramme, 40)}
+				        </p:column>
+
+							<p:column headerText="Date " style="width : 150px"
+								filterBy="#{intrantDTO.dateLivraisonSouhaite}"
+								sortBy="#{intrantDTO.dateLivraisonSouhaite}"
+								filterMatchMode="contains">
+				          #{profilMB.StringCutter(intrantDTO.dateLivraisonSouhaite, 40)} 
+				        </p:column>
+
+
+							<p:column headerText="Point de Vente"
+								filterBy="#{intrantDTO.communeLibelle}"
+								sortBy="#{intrantDTO.communeLibelle}" filterMatchMode="contains"
+								ariaHeaderText="awa">
+				          #{profilMB.StringCutter(intrantDTO.communeLibelle, 40)}
+				        </p:column>
+
+							<p:column headerText="Client" filterBy="#{intrantDTO.clientNom}"
+								sortBy="#{intrantDTO.clientNom}" filterMatchMode="contains">
+				          #{profilMB.StringCutter(intrantDTO.clientNom, 60)} 
+				        </p:column>
+
+							<!-- 							<p:column headerText="Téléphone Client"> -->
+							<!-- 				          #{profilMB.StringCutter(intrantDTO.clientTel, 60)}  -->
+							<!-- 				        </p:column> -->
+
+							<p:column headerText="Statut"
+								filterBy="#{intrantDTO.statusLibelle}"
+								sortBy="#{intrantDTO.statusLibelle}" filterMatchMode="contains">
+								<span class="badge #{intrantDTO.styleClassCSSstatusCMD}">
+									<i class="#{intrantDTO.iconFontAwesome}" aria-hidden="true" />
+									#{intrantDTO.statusLibelle}
+								</span>
+							</p:column>
+						</p:dataTable>
+
+						<div class=" pull-right" style="margin-right: 55px">
+							<br />
+
+							<!-- action="#{agentSaisieMB.creationRapportOL()}" -->
+							<h:commandLink title="Télécharger le reçu" immediate="true"
+								target="_blank" styleClass="">
+								<img style="margin-right: 20px; margin-top: -5px" height="60px"
+									src="assets/images/pdf.png" alt="Logo PGCA" />
+
+							</h:commandLink>
+
+
+							<h:commandButton value="Détails de l'ordre"
+								action="#{agentSaisieMB.loadDetailsSelectedOL()}" name="Détails"
+								class="enregistrer a fa-info btn btn-default pull-right btn-success"
+								style="margin-right : 15px" />
+
+
+
+							<h:commandButton value="Editer OL"
+								action="#{agentSaisieMB.redirectToOLEdition()}" name="Détails"
+								class="enregistrer a fa-info btn btn-default pull-right btn-success"
+								style="margin-right : 15px" />
+
+						</div>
+						<br /> <br />
+					</div>
+					<br />
+					<br />
+				</h:form>
+
+				<h:form rendered="#{param.idBlocToShow eq '1b'}">
+
+					<h1 class="labelCustum"
+						style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX;">
+						<span
+							class="badge #{agentSaisieMB.commandeDTO.styleClassCSSstatusCMD}"
+							style="height: 40px; padding-top: 10px; font-size: 20px ! important">
+							<i class="fa #{agentSaisieMB.commandeDTO.styleClassCSSstatusCMD}"
+							aria-hidden="true" /> OL
+							#{agentSaisieMB.commandeDTO.referenceCMD} -
+							#{agentSaisieMB.commandeDTO.statusLibelle}
+						</span>
+					</h1>
+					<br />
+					<div class="container-fluid">
+						<br />
+						<div class="col-lg-7">
+							<br />
+							<div class="col-lg-12">
+								<div class="col-lg-6">
+
+									<div class="form-group ">
+										<i class="fa fa-2x fa-user" aria-hidden="true"></i> <span
+											class="montantCFA" style="color: #7ccca2">Bénéficiaire
+										</span>
+									</div>
+									<hr />
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Client </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.commandeDTO.clientNom} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Tél Client </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.commandeDTO.clientTel} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">CNI Client </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=""
+												value="#{agentSaisieMB.commandeDTO.clientCNI} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Adresse Client
+										</label>
+										<div class="col-xs-8">
+											<h:outputLabel class=""
+												value="#{agentSaisieMB.commandeDTO.clienAdresse} "></h:outputLabel>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="form-group ">
+										<i class="fa fa-2x fa-home" aria-hidden="true"></i> <span
+											class="montantCFA">Origine </span>
+									</div>
+									<hr />
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Origine </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.commandeDTO.pointDeVenteDepartementProvenance} "></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Commune </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.commandeDTO.communeLibelle}" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Responsable </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.commandeDTO.pointDeVenteGerantProvenance}"></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Tél Responsable
+										</label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.commandeDTO.pointDeVenteTelProvenance}"></h:outputLabel>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-5">
+							<p style="text-align: center">Intrant à livrer</p>
+							<br />
+							<p:dataTable var="intrantDTO"
+								value="#{agentSaisieMB.commandeDTO.listProduitsDTOtoCreate}"
+								reflow="true" emptyMessage="Ancun intrant disponible"
+								paginator="true" rows="10" cellSeparator="10"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								paginatorPosition="bottom"
+								selection="#{agentSaisieMB.commandeDTO}"
+								style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+								<p:column headerText="Produit">
+							          #{profilMB.StringCutter(intrantDTO.libelle, 60)} 
+							        </p:column>
+
+								<p:column headerText="Tonnage">
+							          #{profilMB.StringCutter(intrantDTO.quantite, 60)} 
+							        </p:column>
+
+								<p:column headerText="P / U">
+							         #{referentielMB.utils.formatFloatToCFA(intrantDTO.prixUnitaire)} 
+							        </p:column>
+
+								<p:column headerText="Total">
+							         #{referentielMB.utils.formatFloatToCFA(intrantDTO.prixUnitaire * intrantDTO.quantite)} 
+							        </p:column>
+
+
+
+							</p:dataTable>
+
+							<br /> <br />
+						</div>
+
+
+
+
+					</div>
+
+
+					<div id="buttons" class="pull-right" style="margin-top: 10px">
+
+						<a type="submit" style="margin-right: 22px; width: 150px"
+							href="agentSaisieReferentielOL.xhtml?idBlocToShow=1"
+							class="fa fa-undo btn btn-success pull-right"> Retour</a>
+					</div>
+
+				</h:form>
+
+
+				<!-- Fin de la liste des commandes -->
+
+
+				<!-- Modal  BL -->
+				<div class="modal fade" id="BL" role="dialog">
+					<div class="modal-dialog modal-lg"
+						style="width: 1200px; height: auto;">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">X</button>
+								<h4 class="modal-title">
+									<p
+										style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+										Ordre de livraison Nº
+										#{agentSaisieMB.commandeDTO.referenceCMD}</p>
+
+								</h4>
+							</div>
+							<div class="modal-body">
+								<div id="previewBL" class="container-fluid">
+									<br />
+
+									<!-- Header BL -->
+									<div class="row">
+										<div class="col-md-5">
+											<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+											<br />
+											<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+											<br />
+											<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+												5, Bd du Centenaire de la Commune, Dakar</h1>
+											<br />
+											<h1 class="ui-label soflLabel">
+												Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+											</h1>
+											<br />
+											<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+										</div>
+
+										<div class="col-md-2">
+											<img width="110px" height="100px"
+												src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+											<br /> <br />
+										</div>
+
+										<div class="col-md-5 ">
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label soflLabel">Campagne</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{agentSaisieMB.commandeDTO.libelleCampagane}</label>
+												</div>
+											</div>
+											<br />
+
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label soflLabel">Programme</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{agentSaisieMB.commandeDTO.libelleProgramme}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label  soflLabel">Date</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{referentielMB.utils.splitStringDate(agentSaisieMB.commandeDTO.dateLivraisonSouhaite)}</label>
+												</div>
+											</div>
+											<br />
+
+											<div class="form-group">
+												<label for="inputEmail3"
+													class="col-sm-6 control-label soflLabel">Auteur </label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">
+														#{SessionMB.getSessionDataByTag('prenomUser')}
+														#{SessionMB.getSessionDataByTag('nomUser') }</label>
+												</div>
+											</div>
+
+										</div>
+									</div>
+
+									<br /> <br /> <br />
+									<!-- Data BL -->
+									<div class="row"
+										style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+										<br />
+										<div class="col-md-5">
+											<div class="row" style="border-top: 2px solid #80c347;">
+												<br />
+												<p
+													style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+													Bénéficiaire</p>
+												<br />
+											</div>
+
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Nom
+													- Prénom </label>
+
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label ">#{agentSaisieMB.commandeDTO.clientNom}</label>
+												</div>
+											</div>
+											<br />
+
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Téléphone</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label ">#{agentSaisieMB.commandeDTO.clientTel}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Numéro
+													CNI</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label ">#{agentSaisieMB.commandeDTO.clientCNI}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{agentSaisieMB.commandeDTO.communeLibelle}</label>
+												</div>
+											</div>
+											<br />
+										</div>
+
+										<div class="col-md-5 pull-right">
+											<div class="row" style="border-top: 2px solid #80c347;">
+												<br />
+												<p
+													style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+													Origine intrant</p>
+												<br />
+											</div>
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Point
+													de vente </label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{agentSaisieMB.commandeDTO.communeLibelle}
+													</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Responsable</label>
+
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{agentSaisieMB.commandeDTO.clientNom}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Tel
+													Responsable </label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">
+														#{agentSaisieMB.commandeDTO.clientTel}</label>
+												</div>
+											</div>
+											<br />
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-6 control-label ">Adresse
+												</label>
+												<div class="col-sm-6">
+													<label for="inputEmail3" class="control-label">#{agentSaisieMB.commandeDTO.clienAdresse}</label>
+												</div>
+											</div>
+											<br />
+										</div>
+									</div>
+
+									<!-- Marchandises -->
+									<br /> <br /> <br />
+									<div class="row">
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<div class="row" style="border-top: 2px solid #80c347;">
+												<br />
+												<p
+													style="color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+												<br />
+											</div>
+											<h:form id="listOfProductBL2">
+												<p:dataTable var="pvDTO"
+													value="#{agentSaisieMB.listProduitCommande} " reflow="true"
+													rowKey="#{pvDTO.idProduit}"
+													emptyMessage="Ancun produit	 de vente disponible"
+													paginator="false" rows="10" cellSeparator="10"
+													paginatorPosition="bottom"
+													style="width: 90%; margin-left:5%; font-size:15px ; ">
+												</p:dataTable>
+											</h:form>
+										</div>
+										<div class="col-md-2 pull-right"></div>
+									</div>
+									<br /> <br /> <br />
+									<div class="row"
+										style="border-top: 2px solid #ffffff; height: 220px;">
+										<br />
+										<p style="text-align: center">
+											Veuillez livrer à <i>
+												#{agentSaisieMB.commandeDTO.clientNom} </i>, détenteur du numéro
+											de téléphone #{agentSaisieMB.commandeDTO.clientTel} la liste
+											des produits ci-dessous. . <br /> <a href="#"
+												style="color: black;"> </a>
+										</p>
+										<br /> <br />
+										<p:dataTable id="listProduct2dd22" var="pvDTO"
+											value="#{agentSaisieMB.listProduitCommande}" reflow="true"
+											rowKey="#{pvDTO.idProduit}" paginator="false" rows="6"
+											cellSeparator="10"
+											style="width: 70%; margin-left:15%; font-size:15px ; text-align :center ">
+											<p:column headerText="Désignation">
+				          				#{profilMB.StringCutter(pvDTO.libelleProduit, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+											<p:column headerText="QTE/T">
+				          				#{profilMB.StringCutter(pvDTO.quantiteProduitAvendre, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+											<p:column headerText="Observations">
+				          				#{profilMB.StringCutter(pvDTO.quantiteProduitAvendre, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+										</p:dataTable>
+									</div>
+
+
+									<!-- footer BL -->
+									<div class="row">
+										<div class="col-md-4 pull-left"
+											style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+											<p class="titrePage">La direction</p>
+										</div>
+									</div>
+
+									<div class="row">
+										<br /> <br /> <br /> <br /> <br />
+										<h1 class="ui-label pull-left">
+											contact@sedab.com<br />
+										</h1>
+										<h1 class="ui-label pull-right">www.sedab.com</h1>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<img id="awa" width="90px" height="80px"
+									src="assets/images/print.png" title="Imprimer BL" /> <img
+									width="90px" height="80px" src="assets/images/sendBymail.png"
+									title="Envoyer BL par Mail" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>SIGMA | Intrants</title>
+    <h:outputStylesheet name="css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+    </style>
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml" />
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <h:form class="form-horizontal" prependId="false" enctype="multipart/form-data">
+          <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row mb-2">
+              <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+                  <a class="navbar-brand" href="#">
+                    <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+                  </a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Référentiels / Gestion des intrants</a>
+                      </li>
+                    </ul>
+                    <!--end navbar-nav-->
+                    <div class="pull-right">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="#">#{IntrantController.connectedUserDetails.entitePublique} / #{IntrantController.connectedUserDetails.service}
+                            / #{IntrantController.connectedUserDetails.sousService}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--end form-->
+                  </div>
+                  <!--end navbar-collapse-->
+                </nav>
+              </div>
+            </div>
+            <!--end row-->
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                    <h4 style="text-align :center">
+                      <i class="las la-list text-secondary font-22 align-middle mr-2"></i>Gestion des intrants
+                    </h4>
+                    <hr />
+           
+                    <br />
+                    <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                      <thead>
+                        <tr>
+                          <th colspan="4" style="text-align : center"> Liste des variétés d'intrants</th>
+                        </tr>
+                        <tr>
+                          
+                                                    <th style="text-align: center;"> Type</th>
+                          
+                          <th style="text-align: center;"> Catégorie</th>
+                          <th style="text-align: center;"> Variété</th>
+                         	<th style="text-align: center;"> Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <p:repeat value="#{IntrantController.intrants}" var="intrant">
+                          <tr>
+                            
+                             <td>#{intrant.type}</td>
+                            <td>#{intrant.categorie}</td>
+                            <td>#{intrant.libelle}</td>
+                            <td class="text-center">
+                            
+                            	<button type="button"
+																			class="btn btn-soft-info btn-icon-circle-sm mr-2"
+																			title="Voir la fiche">
+																			<i class="mdi mdi-account font-16"></i> <span
+																				class="badge badge-dot offline"></span>
+																		</button>
+																		<button type="button"
+																			class="btn btn-soft-warning btn-icon-circle-sm mr-2"
+																			title="Voir la certofication">
+																			<i class="mdi mdi-bell font-16"></i> <span
+																				class="badge badge-dot online"></span>
+																		</button>
+																		<button type="button"
+																			class="btn btn-soft-danger btn-icon-circle-sm"
+																			title="Suivi / Traçabilité">
+																			<i class="mdi mdi-account font-16"></i> <span
+																				class="badge badge-dot offline"></span>
+																		</button> 
+                            
+<!--                               <a href="#" data-toggle="modal" data-target="#updateIntrantModal-#{intrant.idProduit}"> -->
+<!--                                 <i class="las la-pen text-warning font-18" title="Modifier"></i> -->
+<!--                               </a> -->
+<!--                               <a href="#" data-toggle="modal" data-target="#deleteIntrantModal-#{intrant.idProduit}"> -->
+<!--                                 <i class="las la-trash-alt text-danger font-18" title="Supprimer"></i> -->
+<!--                               </a> -->
+                              <div class="modal fade bd-example-modal-sm" id="deleteIntrantModal-#{intrant.idProduit}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-md" role="deleteIntrant">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h6 class="modal-title m-0" id="mySmallModalLabel">Confirmation de la suppression</h6>
+                                      <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">
+                                          <i class="la la-times"></i>
+                                        </span>
+                                      </button>
+                                    </div>
+                                    <!--end modal-header-->
+                                    <div class="modal-body text-center">
+                                      <h4 class="mb-1">Êtes-vous sûr de vouloir supprimer l'intrant</h4>
+                                      <br />
+                                      <h5>#{intrant.libelle} ? </h5>
+                                    </div>
+                                    <!--end modal-body-->
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+                                      <button type="button" class="btn btn-primary btn-xs">
+                                        <h:commandLink action="#{IntrantController.deleteIntrant(intrant.id)}" style="color: #ffffff;" ajax="false" value="Confirmer"></h:commandLink>
+                                      </button>
+                                    </div>
+                                    <!--end modal-footer-->
+                                  </div>
+                                  <!--end modal-content-->
+                                </div>
+                                <!--end modal-dialog-->
+                              </div>
+                              <!--end modal-->
+                              <div class="modal fade bd-example-modal-sm" id="updateIntrantModal-#{intrant.idProduit}" tabindex="-1" role="dialog" aria-labelledby="updateintrant" aria-hidden="true">
+                                <div class="modal-dialog modal-md" role="updateintrant">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h6 class="modal-title m-0" id="mySmallModalLabel">Modification de l'intrant #{intrant.libelle}</h6>
+                                      <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">
+                                          <i class="la la-times"></i>
+                                        </span>
+                                      </button>
+                                    </div>
+                                    <!--end modal-header-->
+                                    <div class="modal-body text-center">
+                                      <div class="row">
+                                        <div class="col-lg-8 center">
+                                          <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label text-left">Nouvelle quantité</label>
+                                            <div class="col-sm-8">
+                                              <h:inputText value="#{IntrantController.updateIntrantDto.quantite}" name="quantite" class="form-control" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-lg-8 center">
+                                          <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label text-left">Nouveau libellé</label>
+                                            <div class="col-sm-8">
+                                              <h:inputText value="#{IntrantController.updateIntrantDto.libelle}" name="libelle" class="form-control" />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!--end modal-body-->
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+                                      <button type="button" class="btn btn-primary btn-xs">
+                                        <h:commandLink action="#{IntrantController.updateIntrant(intrant.id)}" style="color: #ffffff;" ajax="false" value="Confirmer"></h:commandLink>
+                                      </button>
+                                    </div>
+                                    <!--end modal-footer-->
+                                  </div>
+                                  <!--end modal-content-->
+                                </div>
+                                <!--end modal-dialog-->
+                              </div>
+                              <!--end modal-->
+                            </td>
+                          </tr>
+                        </p:repeat>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- end col -->
+                </div>
+                <!-- end row -->
+              </div>
+            </div>
+            <button style="display: none;" type="button" id="create-intrant-topright-success">show alert</button>
+            <h:inputText value="#{IntrantController.createIntrantSuccesMsg}" id="create-intrant-succes-text" style="display: none;" />
+            <button style="display: none;" type="button" id="create-intrant-topright-error">show alert</button>
+            <h:inputText value="#{IntrantController.createIntrantErreurMsg}" id="create-intrant-error-text" style="display: none;" />
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-intrant-error-text create-intrant-succes-text" process="@this" listener="#{IntrantController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+          </div>  
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml" />
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- Sweet-Alert  -->
+  <script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+  <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    $('#datatable').DataTable({
+      "language": {
+        "sProcessing": "Traitement en cours ...",
+        "sLengthMenu": "Afficher _MENU_ lignes",
+        "sZeroRecords": "Aucun résultat trouvé",
+        "sEmptyTable": "Aucune donnée disponible",
+        "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+        "sInfoEmpty": "Aucune ligne affichée",
+        "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+        "sInfoPostFix": "",
+        "sSearch": "Chercher:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Chargement...",
+        "oPaginate": {
+          "sFirst": "Premier",
+          "sLast": "Dernier",
+          "sNext": "Suivant",
+          "sPrevious": "Précédent"
+        },
+        "oAria": {
+          "sSortAscending": ": Trier par ordre croissant",
+          "sSortDescending": ": Trier par ordre décroissant"
+        }
+      }
+    });
+    $(document).ready(function() {
+      if ($('#create-intrant-succes-text').val() !== '') {
+        $('#create-intrant-topright-success').click();
+        $('#reset-error-msgs').click();
+      }
+      if ($('#create-intrant-error-text').val() !== '') {
+        $('#create-intrant-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+  </script>
+</html>

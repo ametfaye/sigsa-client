@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Modification utilisateur </ui:define>
+
+	<ui:define name="section">
+		<ui:define name="menuG">
+
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="ss" role="button" aria-haspopup="true"
+				aria-expanded="false">Utilisateurs <span class=""></span></a></li>
+
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown" role="button" aria-haspopup="true"
+				aria-expanded="false">Paramétres <span class=""></span></a></li>
+
+
+			<li class="dropdown"><a href="#" class="dropdown-toggle"
+				data-toggle="dropdown" role="button" aria-haspopup="true"
+				aria-expanded="false">Sauvegardes <span class=""></span></a></li>
+                
+       </ui:define>
+
+
+		<div class="creer_user">
+
+			<h:form class="" id="form" action="dashboardG.html">
+				<p:messages id="messages" showDetail="false" />
+				<center>
+					<h4>Modification utilisateur</h4>
+				</center>
+				<div class="formulaire_utilisateur">
+					<br /> <br />
+					<fieldset class="container-fluid">
+
+						<br /> <br />
+
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<div class="form-group">
+									<p:inputText id="code"
+										value="#{utilisateurMB.utilisateurDTO.prenom}"
+										styleClass="form-control input-sm" disabled="false"
+										required="true" placeholder="Prenom" label="code"
+										requiredMessage="Prenom">
+									</p:inputText>
+
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<div class="form-group">
+									<p:inputText id="nom"
+										value="#{utilisateurMB.utilisateurDTO.nom}"
+										style="margin-top : 2px" required="true" label="nom"
+										requiredMessage="Le nom est obilgatoire"
+										styleClass="form-control input-sm"
+										validatorMessage="Le nom saisi est incorrect"
+										placeholder="Nom">
+										<!-- 										<f:validateRegex pattern="[a-zA-Z]*" /> -->
+									</p:inputText>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<input type="text" name="email" id="email"
+								class="form-control input-sm" placeholder="Login " />
+						</div>
+
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<div class="form-group">
+
+									<p:password id="motdepasse" styleClass="form-control input-sm"
+										value="#{utilisateurMB.utilisateurDTO.password}"
+										label="motdepasse " style="margin-top : 2px" required="true"
+										placeholder="Mot de passe"
+										requiredMessage="Veuillez renseigner les champs obligatoires">
+										<f:validateLength minimum="4" />
+									</p:password>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<div class="form-group">
+									<p:password id="motdepasse2" styleClass="form-control input-sm"
+										value="#{utilisateurMB.utilisateurDTO.password}"
+										label="motdepasse " style="margin-top : 2px" required="true"
+										placeholder="Mot de passe"
+										requiredMessage="Veuillez renseigner les champs obligatoires">
+										<f:validateLength minimum="4" />
+									</p:password>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="row">
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<div class="form-group">
+
+									<h:selectOneMenu
+										value="#{utilisateurMB.utilisateurDTO.profilId}" id="profil"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez le profil " itemValue="" />
+										<f:selectItems value="#{referentielMB.refreshProfilDTOs()}"
+											var="coupleDTO" itemValue="#{coupleDTO.clef}"
+											itemLabel="#{coupleDTO.valeur}" />
+
+									</h:selectOneMenu>
+
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6">
+								<div class="form-group">
+
+									<h:selectOneMenu
+										value="#{utilisateurMB.utilisateurDTO.entiteJuridiqueId}"
+										id="entiteJuridique"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="l'entité juridique est requise">
+										<!--  <f:selectItem itemLabel="Selectionnez l'entité juridique" itemValue=""  escape="false"/> -->
+										<f:selectItems 
+											value="#{referentielMB.refreshEntiteJuridiqueDTOs()}"
+											var="coupleDTO" itemValue="#{coupleDTO.clef}"
+											itemLabel="#{coupleDTO.valeur}" />
+									</h:selectOneMenu>
+									<br /> <br /> <br />
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<br />
+						<h:inputHidden id="id" value="#{utilisateurMB.utilisateurDTO.id}"
+							label="id" />
+						<br /> <br /> <br />
+					</fieldset>
+
+				</div>
+				<div id="buttons">
+					<div class="greenBar" style="width: 55%; margin-left: 10px"></div>
+					<h:commandButton class="annulere" value="Changer mot de passe"
+						action="#{utilisateurMB.initModifierMotdePasse}" name="annuler"
+						style="margin-right : 15px" />
+					<h:button class="visualiser" value="Liste"
+						outcome="adminUtilisateurListe" name="visualiser"
+						style="margin-right : 15px" />
+					<h:button class="enregistrer" value="Annuler"
+						outcome="adminUtilisateurListe" name="enregistrer"
+						style="margin-right : 15px" />
+					<h:commandButton class="suivant"
+						action="#{utilisateurMB.updateUtilisateur}" value="Enregistrer "
+						name="suivants" style="margin-right : 15px" />
+				</div>
+
+			</h:form>
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

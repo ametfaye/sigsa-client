@@ -1,0 +1,1170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+		<div class="container-fluid">
+
+
+			<div id="engraisCreate" class="form-horizontal">
+
+				<h:form id="cmdListe" rendered="#{param.idBlocToShow eq '1'  or param.idBlocToShow eq null}" prependId="false">
+					<!--  Paiement par credit -->
+
+					<br />
+					<br />
+					<br />
+
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+						Tableau de bord / Gestion des transferts de stock  entre magasin
+					</p>
+
+					<hr />
+
+
+
+
+					<p:messages id="msg" showDetail="true" showIcon="true"
+						style="text-align  : center;  width : 70%; margin-left : 15%;    font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+
+					<div class="col-md-1" />
+
+					<div class="col-md-10">
+
+
+						<h1 class="MainLabelCenter">
+							<i class="fa fa-send" aria-hidden="true"></i>
+											 Transfert de stock entre point de vente
+						</h1>
+
+						<br />
+					
+ </div>
+
+						<div class="col-md-4">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 15px">Origine </label>
+								<div class="col-sm-8">
+									<br />
+
+										<p:inputText value="#{agentSaisieMB.pointdeVenteAutocomplete}" 
+										styleClass="typeahead form-control" style="width : 450px"	title="La commune du point  devente " requiredMessage="Le point de vente  est requis" >
+												<p:ajax event="change"
+											listener="#{agentSaisieMB.loadStockMagById()}"
+											update="listIntrantOFMagasin" />	
+										</p:inputText>
+								</div>
+							</div>
+							
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 15px">Intrant </label>
+								<div class="col-sm-8">
+									<br />
+
+									<h:selectOneMenu value="#{agentSaisieMB.idIntrantaTransferer}" id="listIntrantOFMagasin"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="L'intrant à transférer est requis">
+										<f:selectItem itemLabel="Selectionnez l'intrant à déplacer" itemValue="" />
+										<f:selectItems value="#{agentSaisieMB.listProduiSelectedMagSource}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.idProduit}"
+											itemLabel="#{CollaborateurDTO.libelle} ***** #{CollaborateurDTO.quantite}T disponible (s)" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							
+								<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 15px">Destination </label>
+								<div class="col-sm-8">
+									<br />
+
+<!-- 									<h:selectOneMenu value="#{agentSaisieMB.idMagasinDestination}" -->
+<!-- 										required="true" -->
+<!-- 										styleClass="form-control input-sm CustomSelect" -->
+<!-- 										requiredMessage="La destination  est requise "> -->
+<!-- 										<f:selectItem itemLabel="Selectionnez un magasin" itemValue="" /> -->
+<!-- 										<f:selectItems value="#{agentSaisieMB.loadReferentielMagasin()}" -->
+<!-- 											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.idStockMagasin}" -->
+<!-- 											itemLabel="#{CollaborateurDTO.magasinNom}" /> -->
+
+<!-- 									</h:selectOneMenu> -->
+									
+										<p:inputText value="#{agentSaisieMB.pointdeVenteAutocompleteDestination}" 
+										styleClass="typeahead form-control" style="width : 450px"	title="La commune du point  devente " requiredMessage="Le point de vente  est requis" >
+												<p:ajax event="change"
+											listener="#{agentSaisieMB.loadStockMagById()}"
+											update="listIntrantOFMagasin" />	
+										</p:inputText>
+										
+								</div>
+							</div>
+							
+
+						
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 5px">LV</label>
+								<div class="col-sm-8">
+									<p:inputText  value="#{agentSaisieMB.numeroLVManuel}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le numéro de Bl est requis" required="true">
+
+									</p:inputText>
+
+								</div>
+							</div>
+							
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 5px">BL</label>
+								<div class="col-sm-8">
+									<p:inputText   value="#{agentSaisieMB.numeroBLManuel}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le numéro de LV est obligatoire" required="true">
+
+									</p:inputText>
+
+								</div>
+							</div>
+							
+
+
+						</div>
+						
+						
+						
+						<div class="col-md-6">
+
+						<script>
+							/*******  Autocompletion liste Transporteur ***/
+							$(document)
+									.ready(
+											function() {
+												var arrayProdut = $(
+														"#listOfTransporteurFromDBInJSON")
+														.val();
+												var cars2 = arrayProdut
+														.split(":");
+												var cars2 = new Bloodhound(
+														{
+															datumTokenizer : Bloodhound.tokenizers.whitespace,
+															queryTokenizer : Bloodhound.tokenizers.whitespace,
+															local : cars2
+														});
+												$('.typeaheadTransport')
+														.typeahead({
+															hint : true,
+															highlight : true, /* Enable substring highlighting */
+															minLength : 1
+														/* Specify minimum characters required for showing result */
+														}, {
+															name : 'cars2',
+															source : cars2
+														});
+											});
+
+							/*******  Autocompletion liste Camion ***/
+							$(document)
+									.ready(
+											function() {
+												var arrayProdut = $(
+														"#listOfCamionFromDBInJSON")
+														.val();
+												var cars2 = arrayProdut
+														.split(":");
+												var cars2 = new Bloodhound(
+														{
+															datumTokenizer : Bloodhound.tokenizers.whitespace,
+															queryTokenizer : Bloodhound.tokenizers.whitespace,
+															local : cars2
+														});
+												$('.typeaheadCamion')
+														.typeahead({
+															hint : true,
+															highlight : true, /* Enable substring highlighting */
+															minLength : 1
+														/* Specify minimum characters required for showing result */
+														}, {
+															name : 'cars2',
+															source : cars2
+														});
+											});
+
+							/*******  Autocompletion liste chauffeur ***/
+							$(document)
+									.ready(
+											function() {
+												var arrayProdut = $(
+														"#listOfTChauffeurFromDBInJSON")
+														.val();
+												var cars2 = arrayProdut
+														.split(":");
+												var cars2 = new Bloodhound(
+														{
+															datumTokenizer : Bloodhound.tokenizers.whitespace,
+															queryTokenizer : Bloodhound.tokenizers.whitespace,
+															local : cars2
+														});
+												$('.typeaheadChauffeur')
+														.typeahead({
+															hint : true,
+															highlight : true, /* Enable substring highlighting */
+															minLength : 1
+														/* Specify minimum characters required for showing result */
+														}, {
+															name : 'cars2',
+															source : cars2
+														});
+											});
+						</script>
+
+						
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 15px">Quantité </label>
+								<div class="col-sm-8">
+									<br />
+									<p:inputText value="#{agentSaisieMB.quantiteAtranferer}" style="width : 380px"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="La quantite est requise" required="true">
+
+									</p:inputText>
+
+								</div>
+							</div>
+							
+						
+						<div class="form-group">
+						
+						
+							<label for="inputEmail3" class="col-sm-4 control-label"
+								style="margin-top: 20px">Transporteur </label>
+							<div class="col-sm-8">
+								<br />
+
+								<p:inputText id="communeCommande" style="min-width : 380px"
+									value="#{agentSaisieMB.transportTotransfert}"
+									styleClass="typeaheadTransport tt-query form-control"
+									title="transporteur ">
+
+								</p:inputText>
+
+							</div>
+						</div>
+
+
+
+
+
+
+
+						<div class="form-group"> 
+							<label for="inputEmail3" class="col-sm-4 control-label"
+								style="margin-top: 20px">Camion </label>
+							<div class="col-sm-8">
+								<br />
+
+								<p:inputText id="cam" style="min-width : 380px"
+									value="#{agentSaisieMB.camionTotransfer}"
+									styleClass="typeaheadCamion tt-query form-control"
+									title="Numéro du camion ">
+
+								</p:inputText>
+
+							</div>
+						</div>
+
+
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-4 control-label"
+								style="margin-top: 20px">Chauffeur </label>
+							<div class="col-sm-8">
+								<br />
+
+								<p:inputText id="cauff" style="min-width : 380px"
+									value="#{agentSaisieMB.chauufeurTotransfer}"
+									styleClass="typeaheadChauffeur tt-query form-control"
+									title="Prenom et Nom du chauffeur du camion">
+
+								</p:inputText>
+
+							</div>
+						</div>
+					</div>
+					
+						
+						
+					
+					<div class="col-md-3"></div>
+
+
+					<div class="col-md-4">
+
+							<div id="buttons" class="pull-right" style="margin-top: 50px; margin-left : 50PX">
+								<h:commandButton styleClass=" btn btn-success pull-right"
+									style="width : 150px ; margin-right : 12px"
+									action="#{agentSaisieMB.deplacerStockFromMagasinToMagasin}"
+									value=" Enregistrer" name="suivants" />
+								<a type="submit"
+									style="margin-right: 22px; width: 150px; height: 45px; color: #006600;"
+									href="dashboardAgentsaisie.xhtml"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+							</div>
+							<br/><br/><br/><br/><br/>
+					</div>
+				<div class="col-md-3"/>
+							
+							
+	</h:form>
+	
+	
+	
+	
+	
+	<!--  Bloc confirmation de transfert -->
+	
+		<h:form  rendered="#{param.idBlocToShow eq '2'}" prependId="false">
+					<div class="modal-body">
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									<div class="col-md-2">
+
+									</div>
+
+									<div class="col-md-8">
+										<img width="110px" height="100px"  style="margin-left : 45% "
+											src="assets/images/valid.png" alt="Logo du Sénégal"></img>
+											
+											
+												<br/>
+																<p style="text-align :center"> Le  transfert est enregistré avec succès avec le numéro de BL <b>#{agentSaisieMB.numBlCREE}</b>  </p>			
+									
+									</div>
+
+
+									<div class="col-md-2 ">
+										
+
+									</div>
+								
+								</div>
+
+
+
+
+								<br /> <br /> <br />
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff;  height: 220px;">
+	
+									<br />
+									<div class="col-md-5">
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Expéditeur</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Magasin
+												</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{agentSaisieMB.expediteurMagasin}
+</label>
+											</div>
+										</div>
+										<br />
+
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Gérant</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">	#{agentSaisieMB.expediteurMagasinGerant}
+												</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Téléphone Gérant</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">	#{agentSaisieMB.expediteurMagasinGerantTel}
+												</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Mail Gérant
+												</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">	#{agentSaisieMB.expediteurMagasinGerantMail}
+												</label>
+											</div>
+										</div>
+										<br />
+									
+
+									</div>
+		
+
+									<div class="col-md-5 pull-right">
+
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Receptionnaire</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label "> Magasin</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.receptionnaireMagasin}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Gérant</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.receptionnaireMagasinGerant}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Téléphone Gérant</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.receptionnaireMagasinGerantTel}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Mail Gérant</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.receptionnaireMagasinGerantMail}</label>
+											</div>
+										</div>
+										<br />
+
+
+									</div>
+								</div>
+
+																							<p style="text-align :center"> Une notification est envoyée à <b> #{agentSaisieMB.expediteurMagasinGerant}</b> pour exécuter le transfert de stock vers le #{agentSaisieMB.receptionnaireMagasin} . </p>			
+							
+
+							</div>
+						</div>
+					
+		
+		</h:form>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- - Confirmaiton mesage transfert  fournisseur vers magins -->
+		
+		
+		<h:form  rendered="#{param.idBlocToShow eq '3'}" prependId="false">
+					<div class="modal-body">
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									<div class="col-md-2">
+
+									</div>
+
+									<div class="col-md-8">
+										<img width="110px" height="100px"  style="margin-left : 45% "
+											src="assets/images/valid.png" alt="Logo du Sénégal"></img>
+						
+												<br/>
+																<p style="text-align :center"> Le  transfert est enregistré avec succès avec le numéro de BL  #{agentSaisieMB.numeroBLManuel} </p>			
+									
+									</div>
+
+
+									<div class="col-md-2 ">
+										
+
+									</div>
+								
+								</div>
+
+
+
+
+								<br /> <br /> <br />
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff;  height: 220px;">
+	
+									<br />
+									<div class="col-md-5">
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Destinataire</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Magasin
+												</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{agentSaisieMB.expediteurMagasin}
+</label>
+											</div>
+										</div>
+										<br />
+
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Gérant</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">	#{agentSaisieMB.expediteurMagasinGerant}
+												</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Téléphone Gérant</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">	#{agentSaisieMB.expediteurMagasinGerantTel}
+												</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Mail Gérant
+												</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">	#{agentSaisieMB.expediteurMagasinGerantMail}
+												</label>
+											</div>
+										</div>
+										<br />
+										
+											<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Chauffeur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.chauufeurTotransfer}</label> 
+											</div>
+										</div>
+										<br />
+									
+
+									</div>
+		
+
+									<div class="col-md-5 pull-right">
+
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Intrant envoyé</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label "> Numéro LV</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.numeroLVManuel}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Numéro BL</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.numeroBLManuel}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Transporteur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.transportTotransfert}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Camion</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{agentSaisieMB.camionTotransfer}</label>
+											</div>
+										</div>
+										<br />
+										
+										
+											<br />
+
+									
+										
+										
+
+
+									</div>
+								</div>
+
+																							<p style="text-align :center"> Une notification est envoyée à <b> #{agentSaisieMB.expediteurMagasinGerant}</b> pour la le transfert d'intrant. </p>			
+							
+
+							</div>
+						</div>
+					
+		
+		</h:form>
+  
+  
+  
+  
+		<!--  ENd confirmation message fournisseur to mag -->
+  
+  			
+  </div>
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<!-- Modal  BL -->
+			<div class="modal fade" id="BL" role="dialog">
+				<div class="modal-dialog modal-lg"
+					style="width: 1200px; height: auto;">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">
+								<p
+									style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+									Lettre de voiture
+									#{referentielMB.bondeLivraisonDTO.referenceBL}</p>
+
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									<div class="col-md-5">
+										<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+										<br />
+										<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+											5, Bd du Centenaire de la Commune, Dakar</h1>
+										<br />
+										<h1 class="ui-label soflLabel">
+											Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+										</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+									</div>
+
+									<div class="col-md-2">
+										<img width="110px" height="100px"
+											src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+										<br /> <br />
+									</div>
+
+
+									<div class="col-md-5 ">
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Campagne</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.campagneLibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label  soflLabel">Programme</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.programmeLibelle}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Agent</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">
+													#{SessionMB.getSessionDataByTag('prenomUser')}
+													#{SessionMB.getSessionDataByTag('nomUser') }</label>
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+
+
+
+								<br /> <br /> <br />
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+									<br />
+									<div class="col-md-5">
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Expéditeur</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Origine
+												Produit</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{referentielMB.bondeLivraisonDTO.provenanceBL}</label>
+											</div>
+										</div>
+										<br />
+
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Transporteur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{referentielMB.bondeLivraisonDTO.transporteurlibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Chauffeur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label ">#{referentielMB.bondeLivraisonDTO.chauffeurlibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Numéro
+												de camion</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.camionnumero}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Date
+												d'expédition</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.dateEdition}</label>
+											</div>
+										</div>
+
+									</div>
+									<!-- 									<div class="col-md-2" -->
+									<!-- 										style="color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"> -->
+									<!-- 										Nº GBFH76 -->
+									<!-- 										<hr /> -->
+									<!-- 									</div> -->
+
+
+									<div class="col-md-5 pull-right">
+
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+												Receptionnaire</p>
+											<br />
+										</div>
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Point
+												de vente</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.libelle}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Receptionnaire</label>
+
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.pointDeVente.gerant}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Region</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.pointDeVente.region}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Departement</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.pointDeVente.departement}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.pointDeVente.commune}</label>
+											</div>
+										</div>
+										<br />
+
+
+
+									</div>
+								</div>
+
+								<!-- Marchandises -->
+								<br /> <br /> <br /> <br /> <br /> <br />
+								<div class="row">
+									<div class="col-md-2"></div>
+
+									<div class="col-md-8">
+
+										<div class="row" style="border-top: 2px solid #80c347;">
+											<br />
+											<p
+												style="color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+											<br />
+										</div>
+										<h:panelGroup id="listOfProductBL">
+
+											<p:dataTable id="listProduct" var="pvDTO"
+												value="#{referentielMB.listProduitsDTOtoCreate}"
+												reflow="true" rowKey="#{pvDTO.idProduit}"
+												emptyMessage="Ancun produit	 de vente disponible"
+												paginator="false" rows="10" cellSeparator="10"
+												paginatorPosition="bottom"
+												style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+
+
+												<p:column headerText="Type Produit">
+								        		  #{profilMB.StringCutter(pvDTO.typeProduit, 80)} 
+								        		</p:column>
+
+												<p:column headerText="Désignation">
+								        		  #{profilMB.StringCutter(pvDTO.libelleProduit, 50)} 
+								        		</p:column>
+
+												<p:column headerText="Quantite" style="width : 150px">
+				          			#{profilMB.StringCutter(pvDTO.quantite, 40)} T
+				        		</p:column>
+
+
+
+											</p:dataTable>
+
+										</h:panelGroup>
+
+									</div>
+									<div class="col-md-2 pull-right"></div>
+								</div>
+								<br /> <br /> <br />
+
+								<!-- footer BL -->
+								<div class="row" style="margin-top: 10%">
+									<div class="col-md-4"
+										style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+										<p class="titrePage">Commission de distribution</p>
+									</div>
+									<div class="col-md-4"
+										style="border: 1px solid white; min-height: 150px">
+										<p class="titrePage">Cachet Sedab</p>
+									</div>
+									<div class="col-md-4 pull-right"
+										style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+										<p class="titrePage">Reserves</p>
+									</div>
+								</div>
+
+								<div class="row">
+
+
+									<br /> <br /> <br /> <br /> <br />
+									<h1 class="ui-label pull-left">
+										contact@sedab.com<br />
+									</h1>
+									<h1 class="ui-label pull-right">www.sedab.com</h1>
+
+
+								</div>
+
+
+							</div>
+						</div>
+
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!--  Modal de Facture  -->
+
+
+			<div class="modal fade" id="Facture" role="dialog">
+				<div class="modal-dialog modal-lg"
+					style="width: 1200px; height: auto;">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">
+								<p
+									style="text-align: center; margin-top: 30px; margin-bottom: 30px; --&amp; amp; amp; amp; amp; amp; gt; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+									Facture Nº FACTH76</p>
+
+							</h4>
+						</div>
+						<div class="modal-body">
+							<br /> <br />
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									<div class="col-md-5">
+										<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+										<br />
+										<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+											5, Bd du Centenaire de la Commune, Dakar</h1>
+										<br />
+										<h1 class="ui-label soflLabel">
+											Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+										</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+									</div>
+
+									<div class="col-md-2">
+										<img width="110px" height="100px"
+											src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+										<br /> <br />
+									</div>
+
+
+
+									<div class="col-md-5 ">
+
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Campagne</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.campagneLibelle}</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label  soflLabel">Programme</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.programmeLibelle}</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Provenance</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.provenanceBL}
+												</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Client</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.libelle}
+												</label>
+											</div>
+										</div>
+										<br />
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label  soflLabel">Receptionnaire</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{referentielMB.pointDeVente.gerant}</label>
+											</div>
+										</div>
+										<br />
+
+										<!-- 										<div class="form-group"> -->
+										<!-- 											<label for="inputEmail3" -->
+										<!-- 												class="col-sm-6 control-label soflLabel">Date</label> -->
+										<!-- 											<div class="col-sm-6">  -->
+										<!-- 												<label for="inputEmail3" class="control-label"> #{referentielMB.utils.chnageDateFormat("-" , referentielMB.bondeLivraisonDTO.dateEdition)}</label> -->
+										<!-- 											</div> -->
+										<!-- 										</div> -->
+									</div>
+								</div>
+
+
+
+
+								<br /> <br /> <br /> <br /> <br /> <br />
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; height: 220px;">
+									<br />
+
+
+									<p:dataTable id="listProduct2" var="pvDTO"
+										value="#{referentielMB.listProduitsDTOtoCreate}" reflow="true"
+										rowKey="#{pvDTO.idProduit}"
+										emptyMessage="Ancun produit	 de vente disponible"
+										paginator="false" rows="10" cellSeparator="10"
+										paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+										paginatorPosition="bottom"
+										style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+										<p:column headerText="Libellé">
+								        		  #{profilMB.StringCutter(pvDTO.libelleProduit, 80)} 
+								        		</p:column>
+
+
+										<p:column headerText="Quantite" style="width : 120px">
+								          			#{profilMB.StringCutter(pvDTO.quantite, 40)} T 
+								        		</p:column>
+
+
+										<p:column headerText="Prix Unitaire">
+													  #{referentielMB.utils.formatFloatToCFA(pvDTO.prixUnitaire)}
+								        		</p:column>
+
+
+										<p:column headerText="Total">
+								        		    #{referentielMB.utils.formatFloatToCFA(pvDTO.prixTotal)}
+								        		</p:column>
+
+									</p:dataTable>
+
+									<br /> <br /> <br />
+									<h1 class="titrePage Margin10 montantCFA ">TOTAL :
+										#{referentielMB.utils.formatFloatToCFA(referentielMB.bondeLivraisonDTO.prixtotal)}
+									</h1>
+
+
+
+								</div>
+
+
+								<br /> <br /> <br />
+
+								<!-- footer BL -->
+								<div class="row" style="margin-top: 20%">
+									<div class="col-md-4" />
+
+									<div class="col-md-4" />
+
+									<div class="col-md-4 pull-right"
+										style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+										<p class="titrePage">Cachet</p>
+									</div>
+
+
+
+								</div>
+
+
+								<div class="row">
+									<br /> <br /> <br /> <br /> <br />
+									<h1 class="ui-label pull-left">
+										contact@sedab.com<br />
+									</h1>
+									<h1 class="ui-label pull-right">www.sedab.com</h1>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="3%"></p:spacer>
+
+		<h:form id="form2" enctype="multipart/form-data">
+
+
+			<div class="col-md-10 col-md-offset-1 fullbg">
+
+				<h:panelGroup
+					rendered="#{magasinierMB.showBlocInfosConfirmation == 0}">
+					<div class="col-md-12">
+
+						
+						
+						<p:messages id="msg" showDetail="true"
+							style="text-align  : center;     font-size: 15px;color: #253123;letter-spacing: 2px; text-align: center;" />
+						<h1
+							style="text-align: center; margin-top: -20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+							Intrant</h1>
+							
+						
+						
+						<p:repeat value="#{magasinierMB.selectedProduitListAvendre}"
+							var="intrant">
+							<h:panelGrid columns="2" style="width:100%"
+								columnClasses="logo,detail">
+
+								<p:outputPanel style="margin-top : -20px">
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-4 control-label"
+											style="margin-top: 10px;"> <i
+											class="fa fa-product-hunt" aria-hidden="true"></i>
+											#{intrant.libelle}
+										</label>
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-4 control-label"
+													style="margin-top: 10px;"> Quantite </label>
+												<div class="col-sm-8">
+													<p:inputText type="double" required="true"
+														requiredMessage="La quantité est requise"
+														value="#{intrant.quantiteProduitAvendre}"
+														styleClass="form-control" title="L'quantite">
+														<p:ajax event="keyup"
+															update="form2:totalVente form2:totalRestant"
+															resetValues="true" />
+													</p:inputText>
+
+												</div>
+											</div>
+
+										</div>
+
+										<div class="col-sm-5">
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-4 control-label"
+													style="margin-top: 10px;"> Prix Unitaire </label>
+												<div class="col-sm-8">
+													<p:inputText requiredMessage="Le prix est requis"
+														value="#{intrant.prixUnitaire} FCFA" styleClass="form-control"
+														title="L'quantite" readonly="true">
+														<p:ajax event="keyup"  
+															update="form2:totalVente form2:totalRestant"
+															resetValues="true" />
+													</p:inputText>
+												</div>
+											</div>
+
+										</div>
+
+
+									</div>
+								</p:outputPanel>
+							</h:panelGrid>
+							<hr />
+						</p:repeat>
+
+
+
+
+
+						<div class="col-xs-6">
+
+							<h1
+								style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+								<i class="fa fa-user" aria-hidden="true"></i> Informations du magasinier
+							</h1>
+
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 10px;"> Prénom </label>
+								<div class="col-sm-8">
+									<p:inputText requiredMessage="Le prenom du client est requis"
+										required="true" value="#{magasinierMB.clientPrenom}"
+										styleClass="form-control" title="Le client">
+									</p:inputText>
+									<br />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 10px;">Nom </label>
+								<div class="col-sm-8">  
+									<p:inputText value="#{magasinierMB.clientNom}"  required="true" 
+										styleClass="form-control" title="Le client" requiredMessage="Le nom du client est requis">
+									</p:inputText>
+									<br />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 10px;">Téléphone </label>
+								<div class="col-sm-8"> 
+									<p:inputText value="#{magasinierMB.clientTel}"
+										styleClass="form-control" title="Le client">
+									</p:inputText>
+									<br />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-4 control-label"
+									style="margin-top: 10px;"> Adresse </label>
+								<div class="col-sm-8">
+									<p:inputText requiredMessage="L'adresse du client est requise"  
+										required="true" value="#{magasinierMB.clientAdresse}"
+										styleClass="form-control" title="Le client">
+									</p:inputText>
+									<br />
+								</div>
+							</div>
+
+
+
+
+
+
+						</div>
+
+						<div class="col-xs-6">
+							<h1
+								style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+								<i class="fa fa-credit-card" aria-hidden="true"></i> Décomposition Paiement
+							</h1>
+
+							<div class="form-group">
+								<br /> <label for="inputEmail3" class="col-sm-6 control-label"
+									style="margin-top: 8px;"> Paiement en espèces </label>
+								<div class="col-sm-6">
+									<p:inputText type="number"
+										requiredMessage="Le poids est requis"
+										value="#{magasinierMB.montantPayeParEspeces}"
+										styleClass="form-control" title="La quantite">
+										<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+									</p:inputText> 
+									<br />
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-6 control-label"
+									style="margin-top: 8px;"> Montant BLP / Numéro	</label>
+								<div class="col-sm-3">
+									<p:inputText type="number"
+										requiredMessage="Le poids est requis"
+										value="#{magasinierMB.montantPayeParBLP}" 
+										styleClass="form-control" title="La quantite">
+										<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+									</p:inputText> 
+									<br />
+								</div>
+								
+								<div class="col-sm-3">
+									<p:inputText value="#{magasinierMB.numeroBLP}"    styleClass="form-control" title="La quantite">
+
+									</p:inputText> 
+								</div>
+								
+								
+							</div>
+							
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-6 control-label"> Paiement par chéque / Numéro</label>
+								<div class="col-sm-3">
+										<p:inputText type="number"
+										value="#{magasinierMB.montantPayeParCheque}"
+										styleClass="form-control" title="L'quantite">
+										<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+									</p:inputText>
+								</div>
+
+								<div class="col-sm-3">
+									<p:inputText
+										value="#{magasinierMB.numeroCheque}"
+										styleClass="form-control" title="La quantite">
+										<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+									</p:inputText>
+									
+								</div>
+							<br />
+							</div>
+							
+							<hr/>
+							
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-6 control-label"
+									style="margin-top: 8px;"> Autre Payement </label>
+								<div class="col-sm-6">
+									<p:inputText type="number"
+										requiredMessage="Le poids est requis"
+										value="#{magasinierMB.montantPayeParBonSubvention}"
+										styleClass="form-control" title="L'quantite">
+										<p:ajax event="keyup" update="totalRestant totalPaye" />
+
+									</p:inputText>
+									<br /> 
+								</div>
+							</div>
+							<hr/>
+							
+							
+	
+								<div class="form-group">
+								<br/>
+														<label for="inputEmail3" class="col-sm-6 control-label">
+															Banque  émettrice  </label>
+														<div class="col-sm-6">
+
+															<h:selectOneMenu
+																value="#{magasinierMB.banqueEmetriceCheque}"
+																required="true"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le moyen de paiement est requis ">
+																<f:selectItem itemLabel="Selectionnez la banque "
+																	itemValue="0" />
+																<f:selectItems value="#{tresoMB.loadBanqueSenegal()}" />
+
+															</h:selectOneMenu>
+														
+															<br />
+														</div>
+													</div>
+													
+							
+							<br />
+							
+
+
+						</div>
+
+					</div>
+
+
+					<div class="row">
+						<div class="col-lg-6"
+							style="text-align: center; margin-top: 20px; margin-bottom: 40px; color: red">
+							<label class="titrePage  Margin10 montantCFA"
+								style="font-size: 20px ! important"> <span
+								style="margin-right: 20px">Montant à payer</span> <h:outputLabel
+									id="totalVente">#{referentielMB.utils.formatFloatToCFA(magasinierMB.getmontantTotalApayer())} </h:outputLabel>
+							</label>
+						</div>
+						<div class="col-lg-6"
+							style="text-align: center; margin-top: 20px; margin-bottom: 40px; color: red">
+							<label class="titrePage  Margin10 montantCFA"
+								style="font-size: 20px ! important"> <span
+								style="margin-right: 20px">Montant payé </span> <h:outputLabel
+									id="totalPaye"> #{referentielMB.utils.formatFloatToCFA(magasinierMB.getmontantTotalpaye())}</h:outputLabel>
+							</label>
+						</div>
+
+					</div>
+
+
+					<div class="row">
+						<div class="container-fluid"
+							style="text-align: center; margin-top: 10px; margin-bottom: 40px;">
+							<label class="titrePage  Margin10 montantCFA"
+								style="font-size: 20px ! important;"> <span
+								style="margin-right: 20px; color: #b0282a">Reste à payé</span> <h:outputLabel
+									id="totalRestant" style="color :  #b0282a"> #{referentielMB.utils.formatFloatToCFA(magasinierMB.getmontantTotalApayer() - magasinierMB.getmontantTotalpaye() )}</h:outputLabel>
+							</label> <br /> <label for="inputEmail3" class="col-sm-6 control-label"
+								style="margin-top: 18px; margin-left: 30%; font-size: 20px">
+								<i class="fa fa-pagelines" aria-hidden="true"></i> Enregistrer
+								le reste comme crédit <!-- 								<h:selectBooleanCheckbox value="#{magasinierMB.payerLeResteParCredit}" -->
+								<!-- 												style="width: 30px; height: 30px;" /> --> <p:selectBooleanCheckbox
+									value="#{magasinierMB.payerLeResteParCredit}"
+									style="width: 30px; height: 30px;" /> <br />
+							</label>
+
+
+						</div>
+
+						<div class="container-fluid">
+
+
+
+							<div id="buttons" class="pull-right" style="margin-top: 30px">
+								<h:commandButton styleClass=" btn btn-success pull-right"
+									disabled="false" style="width : 200px ; margin-right: 30px"
+									action="#{magasinierMB.callVendreProduitService}"
+									value="Enregistrer la vente" name="suivants" />
+							</div>
+
+
+						</div>
+					</div>
+
+
+				</h:panelGroup>
+
+			</div>
+
+			<h:panelGroup id="detailsPV"
+				rendered="#{magasinierMB.showBlocInfosConfirmation == 1}">
+
+				<br />
+				<br />
+
+
+
+				<p:messages id="messages" showDetail="true" />
+				<!-- sticky="true" -->
+
+
+
+				<p style="margin-left: 60px; margin-right: 60px">
+					<i class="fa fa-check  fa-2x" style="color: #80c347;" /> Votre vente
+					est enregistrée avec succès, cliquer sur le bouton ci-dessous pour
+					télécharger la facture
+				</p>
+				<br />
+
+				<br />
+				<br />
+				<br />
+				<br />
+				<br />
+
+				<button type="button" class="btn btn-success  pull-right"
+					style="margin-right: 60px" data-toggle="modal"
+					data-target="#Facture">Télécharger la facture</button>
+
+
+
+
+				<a type="button" class="btn btn-default  pull-right"
+					href="dashboardMagasinier.xhtml" style="margin-right: 60px">Retour</a>
+
+
+
+
+				<br />
+				<br />
+				<br />
+				<br />
+
+
+
+
+
+				<br />
+				<br />
+				<br />
+
+			</h:panelGroup>
+
+			<div class="modal fade" id="Facture" role="dialog">
+				<div class="modal-dialog modal-lg"
+					style="width: 1200px; height: auto;">
+
+					<!-- Modal content-->
+					<div class="modal-content">
+
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">X</button>
+							<h4 class="modal-title">
+								<p
+									style="text-align: center; margin-top: 30px; margin-bottom: 30px; --&amp; amp; gt; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px; color: #30a664;">
+									Facture Nº #{magasinierMB.referenceVentes}</p>   
+
+							</h4>
+						</div>
+						<div class="modal-body">
+							<div id="previewBL" class="container-fluid">
+								<br />
+
+								<!-- Header BL -->
+								<div class="row">
+									<div class="col-md-5">
+										<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+										<br />
+										<h1 class="ui-label soflLabel" style="font-size: 17px">
+											#{SessionMB.getSessionDataByTag('connectedUserPointPhysique')}
+										</h1>
+										<br />
+										<h1 class="ui-label soflLabel">
+											Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+										</h1>
+										<br />
+										<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+									</div>
+
+									<div class="col-md-2">
+										<img width="110px" height="100px"
+											src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+										<br /> <br />
+									</div>
+
+
+									<div class="col-md-5 ">
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Vendeur</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">
+													#{SessionMB.getSessionDataByTag('connectedUserName')} </label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Client</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{magasinierMB.clientPrenom}
+												</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label soflLabel">Tel Client</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{magasinierMB.clientTel}
+												</label>
+											</div>
+										</div>
+										<br />
+
+										<div class="form-group">
+											<label for="inputEmail3"
+												class="col-sm-6 control-label  soflLabel">Date</label>
+											<div class="col-sm-6">
+												<label for="inputEmail3" class="control-label">#{magasinierMB.dateVente}</label>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+
+								<br />
+								<h1 class="titrePage Margin10 montantCFA "
+									style="font-size: 20px ! important">Intrants</h1>
+
+
+
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; height: 220px;">
+									<br />
+
+
+									<p:dataTable id="listProduct2" var="pvDTO"
+										value="#{magasinierMB.selectedProduitListAvendre}"
+										reflow="true" rowKey="#{pvDTO.idProduit}"
+										emptyMessage="Ancun produit	 de vente disponible"
+										paginator="false" rows="10" cellSeparator="10"
+										paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+										paginatorPosition="bottom"
+										style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+										<p:column headerText="Désignation">
+								        		  #{profilMB.StringCutter(pvDTO.libelle, 80)} 
+								        		</p:column>
+
+
+										<p:column headerText="Quantite">
+								          			#{profilMB.StringCutter(pvDTO.quantiteProduitAvendre, 40)} T  
+								        		</p:column>
+
+
+										<p:column headerText="Prix Unitaire">
+													  #{referentielMB.utils.formatFloatToCFA(pvDTO.prixUnitaire)}
+								        		</p:column>
+
+
+										<p:column headerText="Total">
+								        		    #{referentielMB.utils.formatFloatToCFA(pvDTO.prixUnitaire * pvDTO.quantiteProduitAvendre)}
+								        		</p:column>
+
+										<f:facet name="footer">
+											<div class="pull-right lastRow"> 
+												#{referentielMB.utils.formatFloatToCFA(magasinierMB.getmontantTotalApayer())}
+												
+											</div>
+										</f:facet>
+
+									</p:dataTable>
+				
+							<br /> <br /> <br /><br /> <br /> <br />
+										<h1 class="titrePage Margin10 montantCFA "
+											style="font-size: 25px ! important">Le montant de la facture  s'élève à 
+											#{referentielMB.utils.convertChiffreenLettre(magasinierMB.getmontantTotalApayer())} FCFA.</h1>
+								</div>
+
+							<br /> <br /> <br /><br /> <br /> <br />
+
+
+								<!--  Affichier si OPtion credit activer  -->
+								<h:panelGroup
+									rendered="#{magasinierMB.payerLeResteParCredit == true}">
+
+
+									<h1 class="titrePage Margin10 montantCFA "
+										style="font-size: 20px ! important">Acompte</h1>
+
+
+									<div class="row"
+										style="border-top: 2px solid #ffffff; height: 220px;">
+										<br />
+
+
+										<p:dataTable id="Situation" var="pvDTO"
+											value="#{magasinierMB.selectedProduitListAvendre}"
+											reflow="true" rowKey="#{pvDTO.idProduit}"
+											emptyMessage="Ancun produit	 de vente disponible"
+											paginator="false" rows="1" cellSeparator="10"
+											paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+											paginatorPosition="bottom"
+											style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+											<p:column headerText="Espèces ">
+								          		  #{referentielMB.utils.formatFloatToCFA(magasinierMB.montantPayeParEspeces)}	
+								        </p:column>
+
+											<p:column headerText="Chéque">
+								      		  #{referentielMB.utils.formatFloatToCFA(magasinierMB.montantPayeParCheque)}
+								        </p:column>
+
+
+											<p:column headerText="BLP">
+													  #{referentielMB.utils.formatFloatToCFA(magasinierMB.montantPayeParBonSubvention)}
+								        </p:column>
+
+
+											<p:column headerText="Autre payement">
+													  #{referentielMB.utils.formatFloatToCFA(magasinierMB.montantPayeParNature)}
+								        	</p:column>
+
+
+											<!-- 											<p:column headerText="Total"> -->
+											<!-- 								        		    #{referentielMB.utils.formatFloatToCFA(magasinierMB.getmontantTotalpaye())} -->
+											<!-- 								        </p:column> -->
+
+											<f:facet name="footer">
+												<div class="pull-right lastRow">
+													#{referentielMB.utils.formatFloatToCFA(magasinierMB.getmontantTotalpaye())}
+												</div>
+											</f:facet>
+
+										</p:dataTable>
+
+
+										<br /> <br /> <br />
+										<h1 class="titrePage Margin10 montantCFA "
+											style="font-size: 25px ! important">Le crédit contracté s'élève à 
+											#{referentielMB.utils.convertChiffreenLettre(magasinierMB.getmontantTotalApayer()
+											- magasinierMB.getmontantTotalpaye())} FCFA.</h1>
+
+									</div>
+
+								</h:panelGroup>
+
+
+
+
+								<!-- footer BL -->
+								<div class="row">
+									<div class="col-md-4" />
+
+									<div class="col-md-4" />
+
+									
+								</div>
+								<div class="row">
+									<br /> <br /> <br /> <br /> <br />
+									<h1 class="ui-label pull-left">
+										contact@sedab.com<br />
+									</h1>
+									<h1 class="ui-label pull-right">www.sedab.com</h1>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

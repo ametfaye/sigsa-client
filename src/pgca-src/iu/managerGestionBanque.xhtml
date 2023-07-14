@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="3%"></p:spacer>
+
+
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+			<div class="container-fluid fullbg">
+
+				
+
+				<div class="col-md-9">
+					<p:messages id="msg" showDetail="true" />
+
+
+
+					<h:form id="superFormgg" prependId="false" target="_blank">
+
+
+						<h1 class="TitreGeneric">Versement Banque</h1>
+						<br />
+
+
+
+						<p:dataTable var="CreditDTO"
+							value="#{tresoMB.loadAllDepotPointDeVente()}"
+							filteredValue="#{tresoMB.filtredVersement}"  
+							rowKey="#{CreditDTO.idVersment}" reflow="true" row="5"
+							selection="#{tresoMB.versementDTO}" selectionMode="single"
+							style="width: 90%; margin-left:5%; font-size:15px ; "
+							emptyMessage="Aucun credit enregistré !!" paginator="true"
+							paginatorPosition="bottom" rows="8" widgetVar="carsTable"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+							
+							
+							<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('carsTable').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+					
+						
+
+							<p:column headerText="Date "  
+								sortBy="#{CreditDTO.dateDeVersement}" >  
+								     #{entiteJMB.StringCutter(CreditDTO.dateDeVersement,20)} 
+								        </p:column>
+
+							<p:column headerText="Point de vente "   filterBy="#{CreditDTO.zone}"
+								sortBy="#{CreditDTO.zone}" filterMatchMode="contains">  
+								     #{entiteJMB.StringCutter(CreditDTO.zone,60)} 
+								        </p:column>
+							
+							<p:column headerText="Auteur "  filterBy="#{CreditDTO.zone}"
+								sortBy="#{CreditDTO.zone}" filterMatchMode="startsWith">  
+								     #{entiteJMB.StringCutter(CreditDTO.libellePersonneAuteurVersment,60)} 
+								        </p:column>
+								        
+								<p:column headerText="Banque "  filterBy="#{CreditDTO.zone}"
+								sortBy="#{CreditDTO.zone}" filterMatchMode="startsWith">  
+								     #{entiteJMB.StringCutter(CreditDTO.banque,60)} 
+								        </p:column>	        
+								        	        
+							<p:column headerText="Montant" filterBy="#{CreditDTO.montantVersment}"
+								sortBy="#{CreditDTO.montantVersment}" >  		    
+				     #{referentielMB.utils.formatFloatToCFA(CreditDTO.montantVersment)}
+								  </p:column>
+
+							<p:column headerText="Moyen versement">  
+								 #{CreditDTO.moyenVersment}
+								</p:column>
+
+							<p:ajax event="rowDblselect"
+								listener="#{tresoMB.downloadJustificatif()}" global="false" />
+
+
+
+						</p:dataTable>
+
+						<br />
+
+						<div class="col-xs-8 pull-right">
+							<div class="col-xs-12">
+								<!-- 							<button type="button" class="btn btn-success  pull-right" -->
+								<!-- 								style="margin-right: 10px" data-toggle="modal" -->
+								<!-- 								data-target="#Facture">Voir justificatif versement</button> -->
+
+								<h:commandButton styleClass=" btn  pull-right btn-success"
+									style="width : 280px ; margin-right : 43px; " target="_blank"
+									action="#{tresoMB.downloadJustificatif()}"
+									value=" Voir justificatif versement" name="suivants" />
+
+								<br />
+							</div>
+
+
+						</div>
+
+
+
+						<br />
+						<br />
+						<br />
+						<br />
+
+
+
+
+
+						<h:panelGroup id="DetailsSelectCRedit">
+
+
+							<!--   Modal Timeline credit -->
+
+							<!--  Modole TimeLine Credit -->
+
+							<div class="modal fade" id="Facture" role="dialog">
+								<div class="modal-dialog modal-lg"
+									style="width: 1200px; height: auto; margin-bottom: 30px;">
+
+									<!-- Modal content-->
+									<div class="modal-content">
+
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">X</button>
+											<h4 class="modal-title">
+												<p
+													style="text-align: center; margin-top: 30px; margin-bottom: 30px; --&amp; amp; amp; amp; gt; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+													#{tresoMB.versementDTO.libelleVersment}</p>
+
+											</h4>
+										</div>
+										<div class="modal-body">
+											<div id="previewBL" class="container-fluid">
+												<br />
+
+												<!-- Header BL -->
+												<div class="row">
+													<div class="col-md-5" />
+													<div class="col-md-2">
+														<img width="110px" height="100px"
+															src="assets/images/logoSedab.gif" alt="Logo du Sénégal"
+															style="margin-left: 25px"></img> <br /> <br />
+													</div>
+													<div class="col-md-5 " />
+												</div>
+
+												<div class="row">
+													#{tresoMB.versementDTO.libelleVersment}</div>
+
+												<div class="row">
+													#{tresoMB.versementDTO.pathdocumentJustificatif}</div>
+
+
+												<!-- Data BL -->
+
+												<p:media
+													value="http://localhost:8080/rccm-web/filesQuittance/Quittance_000001.pdf" />
+
+
+												<iframe src="" width="600" height="780"
+													style="border: none;" />
+
+
+
+
+												<div class="row"
+													style="border-top: 2px solid #ffffff; height: 220px;">
+													<br />
+
+													<p:repeat
+														value="#{tresoMB.getlistAvanceByDetailsSelectedCredit()}"
+														var="car">
+
+														<div class="col-xs-12">
+															<ul class="timeline">
+																<li class="timeline">
+																	<div class="tl-circ">
+																		<i class="fa fa-chevron-down" aria-hidden="true"></i>
+
+																	</div>
+																	<div class="timeline-panel">
+																		<div class="tl-heading">
+																			<h4>Paiement #{car.moyenPaiement}</h4>
+																			<p>
+																				<br /> <small class="text-muted"><i
+																					class="glyphicon glyphicon-time"></i>
+																					#{car.dateAvance}</small>
+																			</p>
+																		</div>
+																		<br />
+																		<div class="tl-body">
+																			<p>#{car.montanance} CFA payé par
+																				#{car.auteurPaiement}</p>
+
+
+																		</div>
+																	</div>
+																</li>
+															</ul>
+
+														</div>
+
+													</p:repeat>
+
+
+													<br /> <br />
+												</div>
+
+
+												<br />
+											</div>
+										</div>
+										<div class="modal-footer">Justificatif de depot</div>
+									</div>
+								</div>
+							</div>
+
+						</h:panelGroup>
+					</h:form>
+					<!--  Details credits  -->
+				</div>
+			
+				<div class="col-md-3">
+					<div class="col-xs-6 col-sm-2">
+						<div id="ui-widget" style="width: 220px;">
+							<h1 class="ui-value">
+								<a href="#" style="color: #029441; font-size: 20px;"> <i
+									class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+									#{referentielMB.utils.formatFloatToCFA(tresoMB.montantTotalDeposeEnBanque)}
+
+								</a>
+							</h1>
+							<span class="ui-label" style="color: #029441;"> <a
+								href="#" style="color: #029441;"> TOTAL </a></span>
+						</div>
+
+					</div>
+
+				</div>
+				
+			</div>
+
+		</h:panelGroup>
+
+	
+		
+			<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+		
+	</ui:define>
+
+</ui:composition>

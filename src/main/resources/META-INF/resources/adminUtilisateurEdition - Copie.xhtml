@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+  xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <title>SIGMA | Edition  utilisateur</title>
+
+        <h:outputStylesheet name="css/login.css" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+        <!--Form Wizard-->
+        <link rel="stylesheet" href="assets/plugins/jquery-steps/jquery.steps.css"/>
+
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </h:head>
+
+    <h:body class="dark-sidenav">
+        <!-- Left Sidenav -->
+        <ui:include src="./includes/leftSideNav.xhtml"/>
+        <!-- end left-sidenav-->
+        <h:form>
+          <div class="page-wrapper">
+            <!-- Top Bar Start -->
+            <ui:include src="./includes/topBar.xhtml"/>
+              <!-- Top Bar End -->
+              <!-- Page Content-->
+              <div class="page-content">
+                <div class="container-fluid">
+                    <!-- Page-Title -->
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="page-title-box">
+                          <div class="row">
+                            <div class="col">
+                              <h4 class="page-title">Edition utilisateur </h4>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                  <a href="javascript:void(0);">SIGMA MISSIONS</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                  <a href="javascript:void(0);">Utilisateurs</a>
+                                </li>
+                                <li class="breadcrumb-item active">Edition</li>
+                              </ol>
+                            </div>
+                            <!--end col-->
+                          </div>
+                          <!--end row-->
+                        </div>
+                        <!--end page-title-box-->
+                      </div>
+                      <!--end col-->
+                    </div>
+                    <!-- end page title end breadcrumb -->
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="col-4"></div>
+                              <div class="col-4">
+                                  <h:panelGroup class="text-center" rendered="#{UtilisateurController.createUserErreurMsg != null}" id="user-erreur-msg">
+                                      <div class="alert alert-danger border-0" role="alert">
+                                          <strong>#{UtilisateurController.createUserErreurMsg}</strong>
+                                      </div>
+                                  </h:panelGroup>
+                              </div>
+                            </div>
+                            <h:panelGroup id="form-horizontal" class="form-horizontal form-wizard-wrapper">
+                              <h3>Informations utilisateur</h3>
+                              <fieldset>
+                                <div class="row mb-4">
+                                  <div class="col-md-4"></div>
+                                  <label for="identifiant" class="col-lg-1 col-form-label text-left">Matricule</label>
+                                  <div class="col-lg-6">
+                                    <div class="col-lg-5">
+                                      <h:inputText value="#{UtilisateurController.userIdentifiant}" name="identifiant" class="form-control">
+                                        <p:ajax event="valueChange" update="nom-input prenom-input fonction-input grade-input" listener="#{UtilisateurController.changeIdentifiant}"/>
+                                      </h:inputText>
+                                    </div>
+                                  </div>
+                                </div><!--end row-->
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="nom" class="col-lg-2 col-form-label text-left">Nom</label>
+                                        <div class="col-lg-6">
+                                          <h:inputText value="#{UtilisateurController.userNom}" readonly="true" id="nom-input" name="nom" class="form-control" />
+                                        </div>
+                                    </div><!--end form-group-->
+                                  </div><!--end col-->
+                                  <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="grade" class="col-lg-2 col-form-label text-left">Grade</label>
+                                        <div class="col-lg-6">
+                                            <h:inputText value="#{UtilisateurController.userGrade}" readonly="true" id="grade-input" name="grade" class="form-control" />
+                                        </div>
+                                    </div><!--end form-group-->
+                                  </div><!--end col-->
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="prenom" class="col-lg-2 col-form-label text-left">Prénom</label>
+                                        <div class="col-lg-6">
+                                          <h:inputText value="#{UtilisateurController.userPrenom}" readonly="true" id="prenom-input" name="prenom" class="form-control" />
+                                        </div>
+                                    </div><!--end form-group-->
+                                  </div><!--end col-->
+                                  <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="fonction" class="col-lg-2 col-form-label text-left">Fonction</label>
+                                        <div class="col-lg-6">
+                                            <h:inputText value="#{UtilisateurController.userFonction}" readonly="true" id="fonction-input" name="fonction" class="form-control" />
+                                        </div>
+                                    </div><!--end form-group-->
+                                  </div><!--end col-->
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6">
+                                      <div class="form-group row">
+                                          <label for="email" class="col-lg-2 col-form-label text-left">Email</label>
+                                          <div class="col-lg-6">
+                                            <h:inputText value="#{UtilisateurController.userEmail}" name="email" class="form-control" />
+                                          </div>
+                                      </div><!--end form-group-->
+                                  </div><!--end col-->
+                                  <div class="col-md-6">
+                                      <div class="form-group row">
+                                          <label for="telephone" class="col-lg-3 col-form-label text-left" style="max-width: 90px;">Téléphone</label>
+                                          <div class="col-lg-6">
+                                            <h:inputText value="#{UtilisateurController.userTelephone}" name="telephone" class="form-control" />
+                                          </div>
+                                      </div><!--end form-group-->
+                                  </div><!--end col-->
+                                </div><!--end row-->
+                              </fieldset><!--end fieldset-->
+
+                              <h3>Entité publique</h3>
+                              <fieldset>
+                                  <div class="row">
+                                    <div class="col-md-6">
+                                      <div class="form-group row">
+                                        <label for="entitePublique" class="col-lg-3 col-form-label">Entité publique</label>
+                                        <div class="col-lg-7">
+                                          <h:selectOneMenu value="#{UtilisateurController.userEntitePubliqueId}" styleClass="custom-select" id="select-entite-publique"
+                                            style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+                                            <p:ajax process="@this" event="change" update="select-service" listener="#{UtilisateurController.entitePublicRefsSelectionChanged}" />
+                                            <f:selectItem itemLabel="Sélectionner une entité publique " itemValue="0" />
+                                            <f:selectItems value="#{UtilisateurController.entitePublicRefs}" var="d" itemLabel="#{d.libelle}" itemValue="#{d.redId}" />
+                                          </h:selectOneMenu>
+                                        </div>
+                                      </div><!--end form-group-->
+                                    </div><!--end col-->
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="service" class="col-lg-3 col-form-label">Service</label>
+                                            <div class="col-lg-7">
+                                              <h:selectOneMenu value="#{UtilisateurController.userServiceId}" styleClass="custom-select" id="select-service"
+                                                style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+                                                  <f:selectItem itemLabel="Sélectionner un service " itemValue="0" />
+                                                  <f:selectItems value="#{UtilisateurController.services}" var="s" itemLabel="#{s.libelleService}" itemValue="#{s.srvId}" />
+                                              </h:selectOneMenu>
+                                            </div>
+                                        </div><!--end form-group-->
+                                    </div><!--end col-->
+                                  </div><!--end row-->
+                              </fieldset><!--end fieldset-->
+
+                              <h3>Affectation des rôles</h3>
+                              <fieldset>
+                                <div class="row">
+                                  <div class="col-md-7 center">
+                                    <p:dataTable id="roles-table" var="role" value="#{UtilisateurController.roles}"
+                                          selection="#{UtilisateurController.selectedRoles}" rowKey="#{role.id}"
+                                          style="margin-bottom:0" rowSelectMode="checkbox">
+                                      <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+          
+                                      <p:column headerText="Libellé">
+                                          <h:outputText value="#{role.libelle}" />
+                                      </p:column>
+          
+                                      <p:column headerText="Description">
+                                          <h:outputText value="#{role.description}" />
+                                      </p:column>
+                                    </p:dataTable>
+                                  </div>
+                                </div>
+                              </fieldset>
+
+                              <h3>Mot de passe</h3>
+                              <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="motdepasse" class="col-lg-3 col-form-label">Mot de passe</label>
+                                            <div class="col-lg-6">
+                                              <h:inputSecret value="#{UtilisateurController.userPassword}" type="password" class="form-control" name="userPassword" id="userPassword" />
+                                            </div>
+                                        </div><!--end form-group-->
+                                    </div><!--end col-->
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="confirmationmotdepasse" class="col-form-label">Confirmation de mot de passe</label>
+                                            <div class="col-lg-6">
+                                              <h:inputSecret value="#{UtilisateurController.userConfirmPassword}" type="password" class="form-control" name="userConfirmPassword" id="userConfirmPassword" />
+                                            </div>
+                                        </div><!--end form-group-->
+                                    </div><!--end col-->
+                                </div><!--end row-->
+                              </fieldset><!--end fieldset-->
+
+                              <button type="button" style="display: none;">
+                                <h:commandLink  id="submit-hidden-button" action="#{UtilisateurController.createUser()}" ajax="false" value="Enregistrer">
+                                </h:commandLink>
+                              </button>
+                            </h:panelGroup><!--end form-->
+                          </div><!--end card-body-->
+                        </div><!--end card-->
+                      </div><!--end col-->
+                    </div><!--end row-->
+                  </div><!-- container -->
+                  <ui:include src="./includes/footer.xhtml"/>
+              </div>
+              <!-- end page content -->
+          </div>
+          <!-- end page-wrapper -->
+        </h:form>
+    </h:body>
+
+    <!-- jQuery  -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/metismenu.min.js"></script>
+    <script src="assets/js/waves.js"></script>
+    <script src="assets/js/feather.min.js"></script>
+    <script src="assets/js/simplebar.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/moment.js"></script>
+    <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <script src="assets/plugins/jquery-steps/jquery.steps.min.js"></script>
+    <script src="assets/pages/jquery.form-wizard.init.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('#form-horizontal').find('a[href="#next"]').text('Suivant'); 
+        $('#form-horizontal').find('a[href="#previous"]').text('Précédent');
+        $('#form-horizontal').find('a[href="#finish"]').text('Enregistrer'); 
+        $('#form-horizontal').find('a[href="#finish"]').click(function () {
+            document.getElementById("form-horizontal:submit-hidden-button").click(); 
+        });          
+      });
+    </script>
+</html>

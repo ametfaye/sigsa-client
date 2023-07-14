@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+		<p:spacer width="3%"></p:spacer>
+
+		<div class="container-fluid fullbg" >
+
+			<div class="col-md-3">
+				<div id="ui-widget"
+					style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+					<h1 class="ui-value">
+						<a href="#" style="color: #029441; font-size: 20px;"> <i
+							class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+							#{referentielMB.utils.formatFloatToCFA(
+							magasinierMB.montantTotalDeposeEnBanque )}
+
+						</a>
+					</h1>
+					<span class="ui-label" style="color: #029441;"> <a href="#"
+						style="color: #029441; font-size: 17px;"> Banque </a></span>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<h:form id="superFormgg" prependId="false"
+					enctype="multipart/form-data">
+					<p:messages id="msg" showDetail="true" />
+					<br />
+					<br />
+					<h1 class="TitreGeneric">Liste des versements (Banque)</h1>
+
+					<br />
+					<p:dataTable var="VersementDTO"
+						value="#{magasinierMB.callServiceRecuperationDepotBanque()}"
+						rowKey="#{VersementDTO.idVersment}" reflow="true" row="5"
+						selection="#{magasinierMB.versementBanque}" selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucun depot enregistré !!" paginator="true"
+						paginatorPosition="bottom" rows="5"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+							
+						<p:column headerText="Motif " >  
+							 #{VersementDTO.libelleVersment} 
+						 </p:column>
+						 
+						<p:column headerText="Date " >  
+							 #{VersementDTO.dateDeVersement} 
+						 </p:column>
+
+						<p:column headerText="Montant">  								     
+			
+					    		#{referentielMB.utils.formatFloatToCFA(VersementDTO.montantVersment)}
+						</p:column>
+
+						<p:column headerText="Banque">  								     
+					    	#{VersementDTO.banque}
+						</p:column>
+
+						<p:column headerText="Moyen versement">  
+								     #{entiteJMB.StringCutter(VersementDTO.moyenVersment,40)} 
+						</p:column>
+
+
+					</p:dataTable>
+
+					<div id="buttons" class="pull-right" style="margin-right:85px;">
+
+
+<!-- 						<button type="button" class="btn btn-success  pull-right" -->
+<!-- 							style="margin-right: 10px" data-toggle="modal" -->
+<!-- 							data-target="#DetailsVersment">Voir details</button> -->
+
+						<a class="btn btn-success  pull-right" style="margin-right: 10px"
+							href="ACGestionBanque.xhtml?idBlocToShow=2">Nouveau
+							versement</a>
+
+
+						<h:commandLink onclick="return false;"
+							action="#{managerManagedBean.reportListSubvention()}"
+							title="Télécharger la liste des versements au format excel ">
+							<img src="assets/images/exportExcel.png" class="pull-right"
+								style="width: 10%; height: 10%; margin-right: 30px; margin-top: -10px" />
+
+						</h:commandLink>
+
+						<br /> <br /> <br /> <br />
+
+					</div>
+
+
+
+
+
+									<h:form  rendered="#{param.idBlocToShow eq '2' }">
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+											<br />
+											<div class="row">
+												<div class="col-md-5" />
+												<div class="col-md-2">
+													<img width="110px" height="100px"
+														src="assets/images/logoSedab.gif" alt="Logo du Sénégal"
+														style="margin-left: 25px"></img> <br /> <br />
+												</div>
+												<div class="col-md-5 "></div>
+											</div>
+											<!-- Data BL -->
+											<div class="row"
+												style="border-top: 2px solid #ffffff; height: 220px;">
+												<br />
+												<div class="col-xs-3" />
+
+												<div class="col-xs-6">
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Date versement </label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{tresoMB.versementDTO.dateDeVersement}"
+																type="date" styleClass="form-control" title="date"
+																required="true"
+																requiredMessage="La date du versement est  requise">
+															</p:inputText>
+															<br />
+														</div>
+													</div>
+													<br />
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Montant versement </label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{tresoMB.versementDTO.montantVersment}"
+																type="number" styleClass="form-control" title="montant"
+																required="true"
+																requiredMessage="Le montant du versement est  requis">
+															</p:inputText>
+															<br />
+														</div>
+													</div>
+													<br />
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">
+															Moyen Paiement </label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu
+																value="#{tresoMB.versementDTO.moyenVersment}"
+																required="true"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le moyen de paiement est requis ">
+																<f:selectItem itemLabel="Selectionnez un mode  "
+																	itemValue="0" />
+																<f:selectItem itemLabel="Espéces" itemValue="1" />
+																<f:selectItem itemLabel="Chéque " itemValue="2" />
+
+															</h:selectOneMenu>
+															<br />
+														</div>
+													</div>
+													<br />
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">
+															Banque </label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu value="#{tresoMB.versementDTO.banque}"
+																required="true"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le moyen de paiement est requis ">
+																<f:selectItem itemLabel="Selectionnez un produit "
+																	itemValue="0" />
+																<f:selectItems value="#{tresoMB.loadBanqueSenegal()}" />
+
+															</h:selectOneMenu>
+															<br />
+														</div>
+													</div>
+													<br />
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Libelle versement </label>
+														<div class="col-sm-8">
+															<p:inputText
+																value="#{tresoMB.versementDTO.libelleVersment}"
+																styleClass="form-control"
+																title="le motif  du versement ">
+															</p:inputText>
+															<br />
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 10px;">Justificatif de
+															paiement </label>
+														<div class="col-sm-8">
+															<p:fileUpload
+																value="#{tresoMB.versementDTO.documentJustificatif}"
+																mode="simple" skinSimple="true" required="false"
+																requiredMessage="Le fichier de justificatif est requis" />
+
+															<br />
+														</div>
+														
+															
+												<h:commandButton styleClass=" btn  pull-right btn-success"
+											style="width : 250px ; margin-right : 12px"
+											action="#{tresoMB.enregistrerVersementBanque}"
+											value=" Enregistrer versement" name="suivants"  type="submit">
+
+
+										</h:commandButton>
+										
+													</div>
+
+												</div>
+
+
+												<div class="col-xs-4 pull-right " >
+											
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Annuler</button>
+										<br /> <br /> <br />
+										
+												</div>
+
+
+												<br /> <br />
+											</div>
+
+											<br />
+										</div>
+									</div>
+									</h:form>
+
+									<div class="modal-footer" style="border-top: none">
+										<br /> <br /> <br />
+
+										
+									
+
+									</div>
+							
+						
+
+
+						<!-- PREVIEW DOCUMENT SELECTED  -->
+
+						<div class="modal fade" id="confirmation" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto; margin-bottom: 30px;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Confirmation depot</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+											<br />
+
+											<!-- Data BL -->
+
+											<div class="row"
+												style="border-top: 2px solid #ffffff; height: 220px;">
+												<br />
+												<div class="col-xs-3">
+
+													<div id="ui-widget" style="margin-left: 80px">
+														<h1 class="ui-value">
+															<a href="magasisnierGestionBL.xhtml"
+																style="color: #029441;"> 00000</a>
+														</h1>
+														<span class="ui-label"> <i class="fa fa-ravelry"
+															aria-hidden="true"></i> <a
+															href="magasisnierGestionBL.xhtml" style="color: #029441;">BL
+														</a>
+														</span>
+													</div>
+
+												</div>
+
+												<div class="col-xs-6">
+													<text> la situation actuelle de votre comptabilité
+													est le suivant </text>
+													#{magasinierMB.versementBanque.montantVersment}
+													<p:outputLabel> #{magasinierMB.versementBanque.pathdocumentJustificatif} </p:outputLabel>
+
+												</div>
+
+												<div class="col-xs-3">
+													<div id="ui-widget" style="margin-left: 80px">
+														<h1 class="ui-value">
+															<a href="magasisnierGestionBL.xhtml"
+																style="color: #029441;"> 0000000 </a>
+														</h1>
+														<span class="ui-label"> <i class="fa fa-ravelry"
+															aria-hidden="true"></i> <a
+															href="magasisnierGestionBL.xhtml" style="color: #029441;">BL
+														</a>
+														</span>
+													</div>
+													s
+
+												</div>
+
+
+												<br /> <br />
+											</div>
+
+											<br />
+										</div>
+									</div>
+
+									<div class="modal-footer" style="border-top: none">
+										<br /> <br /> <br />
+
+										<h:commandButton styleClass=" btn  pull-right btn-success"
+											style="width : 150px ; margin-right : 12px"
+											action="#{magasinierMB.enregistrerVersementBanque}"
+											value=" Créer" name="suivants">
+
+
+										</h:commandButton>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Annuler</button>
+										<br /> <br /> <br />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- fin Confirmation block -->
+
+
+
+
+
+
+
+
+
+
+						<div class="modal fade" id="DetailsVersment" role="dialog">
+							<div class="modal-dialog modal-lg"
+								style="width: 1200px; height: auto; margin-bottom: 30px;">
+
+								<!-- Modal content-->
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">X</button>
+										<h4 class="modal-title">
+											<p
+												style="text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+												Confirmation XXXX</p>
+
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div id="previewBL" class="container-fluid">
+											<br />
+											<div class="row">
+												<div class="col-md-5" />
+												<div class="col-md-2">
+													<img width="110px" height="100px"
+														src="assets/images/logoSedab.gif" alt="Logo du Sénégal"
+														style="margin-left: 25px"></img> <br /> <br />
+												</div>
+												<div class="col-md-5 "></div>
+											</div>
+											<!-- Data BL -->
+
+
+											<br />
+										</div>
+									</div>
+
+									<div class="modal-footer" style="border-top: none">
+										<br /> <br /> <br />
+
+										<h:commandButton styleClass=" btn  pull-right btn-success"
+											style="width : 150px ; margin-right : 12px"
+											action="#{magasinierMB.enregistrerVersementBanque}"
+											value=" Créer" name="suivants">
+
+
+										</h:commandButton>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Annuler</button>
+										<br /> <br /> <br />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- end confirmation -->
+
+				</h:form>
+				<!--  Details credits  -->
+			</div>
+
+
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

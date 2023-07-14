@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+	<ui:define name="section" >
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+		
+		
+		<div class="container-fluid">
+			<div class="col-md-12 fullbg">
+
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+					<p class="MainLabelCenter">Campagnes Agricoles</p>
+					<br />
+					<p:dataTable id="ProfilID" var="campagneDTO"
+						value="#{referentielMB.loadAllProgrammeAgricol()}" reflow="true"
+						rowKey="#{campagneDTO.idCampagne}"
+						emptyMessage="Ancun engrais disponible" paginator="true" rows="10"
+						cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						selection="#{managerManagedBean.campagneDTO}"
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+						<p:column headerText="Programme" style="width  : 30%">   
+				          #{profilMB.StringCutter(campagneDTO.libelleCampagne, 80)} 
+				        </p:column>
+
+						<p:column headerText="Date début" style="width  : 17%"> 
+				           #{referentielMB.utils.getFormatedDateFromString(campagneDTO.dateOuverture)} 
+				        </p:column>
+
+
+						<p:column headerText="Date Fin" style="width  : 17%">
+				          #{referentielMB.utils.getFormatedDateFromString(campagneDTO.dateFermeture)} 
+				        </p:column>
+
+						<p:column headerText="Statut" style="width : 12%">
+							<span class="badge "><i class=" fa fa-spinner"
+								aria-hidden="true"></i> En cours</span>
+						</p:column>
+
+					</p:dataTable>
+
+					<div class=" pull-right" style="margin-right: 70px">
+						<br /> <a type="submit" href="managerGestionDesCampagnes.xhtml?"
+							class="suivant btn btn-success pull-right"
+							style="margin-right: 15px ; margin-top : 30px"> Ouvrir une campagne</a>
+			
+<!-- 						<h:commandButton value="#{msg['form.btn.sup']}" -->
+<!-- 							onclick="if (!confirm('Etes-vous sûr de vouloir supprimer ce produit ?')) return false" -->
+<!-- 							action="#{managerManagedBean.removeCampagneAgricole}" -->
+<!-- 							name="Télécharger rapport" -->
+<!-- 							class="enregistrer a fa-info btn btn-default pull-right" -->
+<!-- 							style="margin-right : 15px" /> -->
+							
+							
+
+								<h:commandLink onclick="return false;" action="#{managerManagedBean.downloadRapportCampagne()}"  title="Télécharger le rapport détaillé de la campagne en cours">
+									<img src="assets/images/exportExcel.png" 
+										style="width: 20%; height: 20%; margin-left: 10px" />
+									<br />
+									
+
+								</h:commandLink>
+					</div>
+					
+				
+					
+					<br />
+					<br />
+				
+					
+				</h:form>
+
+				<h:form id="engraisCreate" rendered="#{param.idBlocToShow eq null}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select"><a
+										href="managerGestionDesCampagnes.xhtml"> Campagne </a> </span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"><span
+									class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_hosting_options">Programmes</span></li>
+
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"><span
+									class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_hosting_options">Confirmation</span></li>
+								<!---->
+							</ol>
+						</div>
+					</div>
+
+					<div class="col-xs-3" />
+
+
+					<div class="col-xs-6"
+						style="margin-top: -60px; margin-bottom: 30px; ">
+						<p class="titrePage" style=" font-size  : 20px">Ouverture d'une campagne agricole</p>
+						
+
+						<p:messages id="msg" showDetail="true" />
+
+						<br />
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Date
+									début</label>
+								<div class="col-sm-8 ">
+									<p:inputText
+										value="#{managerManagedBean.campagneDTO.dateOuverture}"
+										type="date" styleClass="form-control "
+										title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true">
+										<f:convertDateTime pattern="yyyy-MM-dddd"></f:convertDateTime>
+									</p:inputText>
+								</div>
+							</div>
+
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Date
+									Fin</label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{managerManagedBean.campagneDTO.dateFermeture}"
+										type="date" styleClass="form-control"
+										title="La quantité  est requise"
+										requiredMessage="La quantité  est requise" required="true">
+
+										<f:convertDateTime pattern="yyyy-MM-dddd" locale="fr"></f:convertDateTime>
+									</p:inputText>
+
+								</div>
+							</div>
+
+
+
+							<div id="buttons" class="pull-right">
+								
+								<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.createCampagneAgricole}"
+										value="Confirmer " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+										
+<!-- 								<h:commandButton -->
+<!-- 									styleClass="suivant  btn btn-validatd pull-right" -->
+<!-- 									action="#{managerManagedBean.navigateToUrl('2b')}" -->
+<!-- 									value="Suivant " name="suivants" -->
+<!-- 									style="width : 200px ; margin-right : 0px; " -->
+<!-- 									class="fa fa-undo  btn   pull-right btn-success" /> -->
+
+								<a type="submit"
+									href="managerGestionDesCampagnes.xhtml?idBlocToShow=1"
+									style="margin-right: 15px; margin-top: -2px"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+
+							</div>
+						</div>
+
+					</div>
+
+				</h:form>
+
+
+
+
+				<h:form rendered="#{param.idBlocToShow eq '2b'}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select"><a
+										href="managerGestionDesCampagnes.xhtml"> Campagne </a> </span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Programme</span></li>
+								<!---->
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"><span
+									class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_hosting_options">Confirmation</span></li>
+								<!---->
+							</ol>
+
+							<br />
+							<p style="margin-top: 50px; color: black; font-size: 23px;">Selectionner
+								les programmes de la campagne</p>
+
+						</div>
+					</div>
+
+					<div class="col-xs-5" />
+
+
+					<div class="col-xs-4" style="margin-top: -40px">
+
+						<br />
+						<div class="col-xs-6">
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Collectes</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmeCollecte}"
+												style="width: 30px; height: 30px;" />
+										</label> <br />
+
+
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Phytosanitaires</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmePhyto}"
+												style="width: 30px; height: 30px;" />
+
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Arachides</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmeArachide}"
+												style="width: 30px; height: 30px;" />
+
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Semences</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmeAutres}"
+												style="width: 30px; height: 30px;" />
+
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+
+								<div id="buttons" class="pull-right">
+
+									<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.createCampagneAgricole}"
+										value="Confirmer " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+					<br />
+
+				</h:form>
+
+
+				<h:form rendered="#{param.idBlocToShow eq '2c'}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Campagne</span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Programme</span></li>
+								<!---->
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Confirmation</span></li>
+
+								<!---->
+							</ol>
+
+							<br />
+							<p style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX; margin-top: 5% ;">La
+								Le programme agricole
+								#{managerManagedBean.campagneDTO.libelleCampagne}
+								est ouvert avec succès.</p>
+
+
+
+							<div class="row" style="margin-top: 5% ; ">
+
+								<h1 class=""
+									style=" color: black; font-size: 28px ; margin-bottom : 2%" >
+									Marketing &amp; Prospection</h1>
+
+
+								<div class="col-xs-6">
+
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux clients</label>
+
+									</div>
+
+								</div>
+
+
+								<div class="col-xs-6">
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-commenting-o" aria-hidden="true"></i>
+											 Envoyer
+											SMS aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-commenting-o" aria-hidden="true"></i>
+											Envoyer
+											SMS aux clients</label>
+
+									</div>
+									
+									
+								</div>
+
+
+
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+					<div class="col-xs-5" />
+
+					<div class="col-xs-4" style="margin-top: -40px">
+						<br />
+						<div class="col-xs-12">
+						
+
+
+
+							<div class="form-group ">
+								<div id="buttons" class="pull-left">
+									<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.navigateToUrl('1')}"
+										value="Retour " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+										
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<br />
+
+				</h:form>
+
+
+
+
+
+
+<h:form rendered="#{param.idBlocToShow eq '3c'}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Ouverture</span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class=" current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Programme</span></li>
+								<!---->
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Confirmation</span></li>
+
+								<!---->
+							</ol>
+
+							<br />
+							<p style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX; margin-top: 5% ;">
+								Campagne ouverte avec succès, Merci de créer les programmes de la campagne. 
+								.</p>
+
+
+
+							<div class="row" style="margin-top: 5% ; ">
+
+								<h1 class=""
+									style=" color: black; font-size: 28px ; margin-bottom : 2%" >
+									Marketing &amp; Prospection</h1>
+
+
+								<div class="col-xs-6">
+
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux clients</label>
+
+									</div>
+
+								</div>
+
+
+								<div class="col-xs-6">
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-commenting-o" aria-hidden="true"></i>
+											 Envoyer
+											SMS aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-commenting-o" aria-hidden="true"></i>
+											Envoyer
+											SMS aux clients</label>
+
+									</div>
+									
+									
+								</div>
+
+
+
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+					<div class="col-xs-5" />
+
+					<div class="col-xs-4" style="margin-top: -40px">
+						<br />
+						<div class="col-xs-12">
+						
+
+
+
+							<div class="form-group ">
+								<div id="buttons" class="pull-left">
+									<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.navigateToUrl('1')}"
+										value="Retour " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+										
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<br />
+
+				</h:form>
+
+
+
+
+
+
+
+<h:form rendered="#{param.idBlocToShow eq '4c'}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Ouverture</span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class=" current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Programme</span></li>
+								<!---->
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Ouverture</span></li>
+
+								<!---->
+							</ol>
+
+							<br />
+							<p style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX; margin-top: 5% ;">
+								Programme ouvert avec succès.fahye
+								.</p>
+
+
+
+							<div class="row" style="margin-top: 5% ; ">
+
+								<h1 class=""
+									style=" color: black; font-size: 28px ; margin-bottom : 2%" >
+									Marketing &amp; Prospection</h1>
+
+
+								<div class="col-xs-6">
+
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux clients</label>
+
+									</div>
+
+								</div>
+
+
+								<div class="col-xs-6">
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-commenting-o" aria-hidden="true"></i>
+											 Envoyer
+											SMS aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-commenting-o" aria-hidden="true"></i>
+											Envoyer
+											SMS aux clients</label>
+
+									</div>
+									
+									
+								</div>
+
+
+
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+					<div class="col-xs-5" />
+
+					<div class="col-xs-4" style="margin-top: -40px">
+						<br />
+						<div class="col-xs-12">
+						
+
+
+
+							<div class="form-group ">
+								<div id="buttons" class="pull-left">
+									<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.navigateToUrl('1')}"
+										value="Retour " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+										
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<br />
+
+				</h:form>
+
+
+
+
+
+
+				<!--********************************************************************** 
+				
+						Bloc  Modification d'engrais
+				
+				************************************************************************** -->
+
+				<h:form id="engraisDetails" rendered="#{param.idBlocToShow eq '3'}"
+					class="form-horizontal" prependId="false">
+
+					<div class="row">
+						<p class="titrePage">Modification Engrais
+							#{referentielMB.selectedIntrantDTO.libelleProduit}"</p>
+						<br />
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Type
+								</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{referentielMB.selectedEngraisDTO.idTypeEngrais}"
+										id="profilListe" required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez une categorie "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.loadTypesIntrant()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+											itemLabel="#{CollaborateurDTO.libelle}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Libéllé</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{referentielMB.selectedEngraisDTO.libelleProduit}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true" />
+								</div>
+							</div>
+
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Stock</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{referentielMB.selectedEngraisDTO.idPointStock}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un point de collecte "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.loadAllStock()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Quantité</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{referentielMB.selectedEngraisDTO.quantite}"
+										styleClass="form-control" title="La quantité  est requise"
+										requiredMessage="La quantité  est requise" required="true" />
+
+								</div>
+							</div>
+
+
+							<div id="buttons" class="pull-right">
+
+
+
+								<h:commandButton
+									styleClass="suivant btn btn-validatd pull-right"
+									action="#{referentielMB.updateEngrais}" value="Modifier "
+									name="suivants" />
+
+								<a type="submit" href="gestionDesEngrais.xhtml?idBlocToShow=1"
+									class="fa fa-info btn btn-default pull-right"> Annuler</a>
+
+
+
+							</div>
+						</div>
+					</div>
+
+
+					<br />
+					<br />
+				</h:form>
+
+				<!--  FIn de recherche  ***************************************************-->
+
+
+
+				<br /> <br />
+			</div>
+		
+			
+		</div>
+		</h:panelGroup>
+		
+		
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+
+				
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>

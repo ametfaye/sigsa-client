@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>SIGSA | Edition d'une campagne Agricole </title>
+    <h:outputStylesheet name="css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+    </style>
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml" />
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+          <a class="navbar-brand" href="#">
+            <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Administration / Campagne /  Ouverture Campagne</a>
+              </li>
+            </ul>
+            <!--end navbar-nav-->
+            <div class="pull-right">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="#">#{AgentController.connectedUserDetails.entitePublique} / #{AgentController.connectedUserDetails.service}
+                    / #{AgentController.connectedUserDetails.sousService}</a>
+                </li>
+              </ul>
+            </div>
+            <!--end form-->
+          </div>
+          <!--end navbar-collapse-->
+        </nav>
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <!-- Page-Title -->
+            <!--end row-->
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-12">
+                               <p style="text-align :center"> <i class="las la-users text-secondary font-22 align-middle mr-2"></i>Ouverture d'une campagne Agricole</p>
+                  		<hr/>
+                        </div>
+                      </div>
+                      <br />
+                      <div id="wizard">
+                      
+
+											
+											
+                        <section>
+                        
+                        
+                        				<div class="col-xs-6"
+						style="margin-top: -60px; margin-bottom: 30px; ">
+						<p class="titrePage" style=" font-size  : 20px">Ouverture d'une campagne agricole</p>
+						
+
+						<p:messages id="msg" showDetail="true" />
+
+						<br />
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Date
+									début</label>
+								<div class="col-sm-8 ">
+									<p:inputText
+										value="#{managerManagedBean.campagneDTO.dateOuverture}"
+										type="date" styleClass="form-control "
+										title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true">
+										<f:convertDateTime pattern="yyyy-MM-dddd"></f:convertDateTime>
+									</p:inputText>
+								</div>
+							</div>
+
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Date
+									Fin</label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{managerManagedBean.campagneDTO.dateFermeture}"
+										type="date" styleClass="form-control"
+										title="La quantité  est requise"
+										requiredMessage="La quantité  est requise" required="true">
+
+										<f:convertDateTime pattern="yyyy-MM-dddd" locale="fr"></f:convertDateTime>
+									</p:inputText>
+
+								</div>
+							</div>
+
+
+
+							<div id="buttons" class="pull-right">
+								
+								<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.createCampagneAgricole}"
+										value="Confirmer " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+										
+<!-- 								<h:commandButton -->
+<!-- 									styleClass="suivant  btn btn-validatd pull-right" -->
+<!-- 									action="#{managerManagedBean.navigateToUrl('2b')}" -->
+<!-- 									value="Suivant " name="suivants" -->
+<!-- 									style="width : 200px ; margin-right : 0px; " -->
+<!-- 									class="fa fa-undo  btn   pull-right btn-success" /> -->
+
+								<a type="submit"
+									href="managerGestionDesCampagnes.xhtml?idBlocToShow=1"
+									style="margin-right: 15px; margin-top: -2px"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+
+							</div>
+						</div>
+
+					</div>
+					
+					
+                          <br />
+                          <div class="row">
+                            <div class="col-lg-4">
+                          		<div class="form-group row">
+                                <label for="service" class="col-sm-4 col-form-label text-right">Date de Debut </label>
+                                <div class="col-sm-8">
+                                   <p:inputText styleClass="form-control " type="date" value="#{OrderMissionController.omAcrer.dateDebutMission}"  style="box-shadow: none ! important;" />
+                                </div>
+                              </div>
+                            </div>
+                            
+                             <div class="col-lg-4">
+                          		<div class="form-group row">
+                                <label for="service" class="col-sm-4 col-form-label text-right">Date de Fin </label>
+                                <div class="col-sm-8">
+                                   <p:inputText styleClass="form-control " type="date" value="#{OrderMissionController.omAcrer.dateDebutMission}"  style="box-shadow: none ! important;" />
+                                </div>
+                              </div>
+                            </div>
+                            
+                            
+                             <div class="col-12">
+	                            <div class="card-body">
+	                              <p class="page-title " style="text-align : center">Veuiller saisir les termes de référence de la mission</p>
+	                              <h:inputTextarea id="elm1" name="area" value="#{OrderMissionController.omAcrer.motif}"></h:inputTextarea>
+	                            </div>
+	                        
+	                          </div>
+                          
+                          
+                          </div>
+                          
+                          
+                        </section>
+                        
+                        <section>
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <center>
+                                <div class="col-sm-4">
+                                  <div class="button-items ">
+                                    <button type="button" class="btn btn-warning waves-effect waves-light">
+                                      <h:commandLink action="#{AgentController.annulerCreationAgent()}" style="color: #ffffff;" update="resultFile" value="Annuler"></h:commandLink>
+                                    </button>
+                                    <button type="button" class="btn btn-success waves-effect waves-light">
+                                      <h:commandLink action="#{AgentController.createAgent()}" style="color: #ffffff;" ajax="false" update="resultFile" value="Enregistrer"></h:commandLink>
+                                    </button>
+                                  </div>
+                                </div>
+                              </center>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+            <button style="display: none;" type="button" id="create-agent-topright-error">show alert</button>
+            <h:inputText value="#{AgentController.createAgentErreurMsg}" id="create-agent-error-text" style="display: none;" />
+
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-agent-error-text" process="@this"
+                  listener="#{AgentController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <!-- Sweet-Alert  -->
+  <script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+  <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+  <script>
+    $(document).ready(function() {
+      if ($('#create-agent-error-text').val() !== '') {
+        $('#create-agent-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+  </script>
+</html>

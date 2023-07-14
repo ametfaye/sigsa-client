@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+<h:head>
+
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous" />
+
+	<!-- Optional theme -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+		crossorigin="anonymous" />
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+
+	<script defer="true"
+		src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+	<!-- - DATA TABLE  -->
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+
+	<link rel="stylesheet"
+		href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" />
+
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		crossorigin="anonymous" />
+
+
+	<script src="datatables.js"></script>
+
+
+
+	<script src="js/gauge.min.js"></script>
+
+	<title>Outil de Gestion des perceptions du Trésor Public
+		Sénégalais</title>
+	<h:outputStylesheet name="/css/main.css" />
+
+
+	<script src="js/gauge.min.js"></script>
+
+	<script src="js/iziToast/iziToast.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="css/iziToast/iziToast.min.css" />
+	<script src="js/iziToast/iziToast.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="css/iziToast/iziToast.min.css" />
+
+
+
+	<script>
+		var globalMessageService;
+		var iziToastMode;
+
+		function gotojc() {
+			window.location.replace("jcliste.xhtml?idBlocToShow=0");
+		}
+
+		function gotohome() {
+			window.location.replace("dashboard.xhtml");
+		}
+
+		function gotojournal() {
+			window.location.replace("journal.xhtml");
+		}
+
+		function gotoparametre() {
+			window.location.replace("parametres.xhtml");
+		}
+
+		$(document).ready(function() {
+			$('#loadingDiv').hide();
+
+			d = new Date();
+			$("#curunTime").html(d.toLocaleDateString());
+
+			globalMessageService = $("#glabalMessageService").val();
+			iziToastMode = $("#iziToastMode").val();
+
+			if (globalMessageService != "") {
+				if (iziToastMode == "0")
+					iziToastModesSuccess();
+				else if (iziToastMode == "1")
+					iziToastModesWarning();
+				else
+					iziToastModesError()
+			}
+		});
+
+		$(document).ready(function() {
+			$('.collapse').collapse();
+
+			$("#modal").iziModal({
+				title : '',
+				subtitle : '',
+				headerColor : '#88A0B9',
+				background : null,
+				theme : '', // light
+				icon : 'icon-home',
+				iconText : null,
+				iconColor : '',
+				rtl : false,
+				width : 1600,
+				top : null,
+				bottom : null,
+				borderBottom : true,
+				padding : 0,
+				radius : 8,
+				zindex : 2,
+
+			});
+
+		});
+
+		$(document).ready(function() {
+			$('#faye').DataTable();
+			$('#versementTable').DataTable();
+			$('#posteTable').DataTable();
+			$('#listeDesJourneeComptable').DataTable();
+
+			$('#tableEncaisse').DataTable();
+			$('#tableUser').DataTable();
+
+		});
+
+		$(document).ready(function() {
+			$('#agentsExclus').DataTable();
+		});
+
+		$(document).ready(function() {
+			$('#agentsIM').DataTable();
+
+		});
+
+		function iziToastModesSuccess() {
+			iziToast.success({
+				title : 'Information',
+				position : 'center',
+				timeout : 3000,
+				zindex : 2,
+				rtl : false,
+				animateInside : true,
+				drag : true,
+				pauseOnHover : true,
+				resetOnHover : false,
+				progressBar : true,
+				progressBarEasing : 'linear',
+				overlay : false,
+				overlayClose : false,
+				overlayColor : 'rgba(0, 0, 0, 0.6)',
+				transitionIn : 'fadeInUp',
+				transitionOut : 'fadeOut',
+				transitionInMobile : 'fadeInUp',
+				transitionOutMobile : 'fadeOutDown',
+				title : 'e-caisse',
+				drag : true,
+				close : true,
+				messageSize : 30,
+				titleSize : 35,
+				message : globalMessageService,
+			});
+		}
+
+		function iziToastModesWarn() {
+			iziToast.warn({
+				title : 'Information',
+				position : 'center',
+				timeout : 3000,
+				zindex : 2,
+				rtl : false,
+				animateInside : true,
+				drag : true,
+				pauseOnHover : true,
+				resetOnHover : false,
+				progressBar : true,
+				progressBarEasing : 'linear',
+				overlay : false,
+				overlayClose : false,
+				overlayColor : 'rgba(0, 0, 0, 0.6)',
+				transitionIn : 'fadeInUp',
+				transitionOut : 'fadeOut',
+				transitionInMobile : 'fadeInUp',
+				transitionOutMobile : 'fadeOutDown',
+				title : 'Message Ecaisse',
+				drag : true,
+				close : true,
+				messageSize : 30,
+				titleSize : 35,
+				message : globalMessageService,
+			});
+		}
+
+		function iziToastModesError() {
+			iziToast.error({
+				title : 'Information',
+				position : 'center',
+				timeout : 3000,
+				zindex : 2,
+				rtl : false,
+				animateInside : true,
+				drag : true,
+				pauseOnHover : true,
+				resetOnHover : false,
+				progressBar : true,
+				progressBarEasing : 'linear',
+				overlay : false,
+				overlayClose : false,
+				overlayColor : 'rgba(0, 0, 0, 0.6)',
+				transitionIn : 'fadeInUp',
+				transitionOut : 'fadeOut',
+				transitionInMobile : 'fadeInUp',
+				transitionOutMobile : 'fadeOutDown',
+				title : 'Message Ecaisse',
+				drag : true,
+				close : true,
+				messageSize : 30,
+				titleSize : 35,
+				message : globalMessageService,
+			});
+		}
+
+		// Admin
+		function updateposteuser(idUser, nom, prenom, identifiant, fonctionId,
+				posteComtableId) {
+			$('#updateposteuser').modal('show');
+
+			$("#selectUserToUpdate").val(idUser);
+			$("#prenomUser").val(nom);
+			$('#nomUser').val(prenom);
+			$('#prenomUseridentifiant').val(identifiant);
+			$('#fonctionUpdate').val(fonctionId);
+			$('#posteComptableUpdate').val(posteComtableId);
+			$('#posteCreationUpdate').val(posteComtableId);
+		}
+
+		// User 
+		function updateposteforUSERFromAdmin(idUser, nom, prenom, identifiant,
+				fonctionId, posteComtableId) {
+			$('#updateposteforUSERFromAdmin').modal('show');
+
+			$("#selectUserToUpdate2Update").val(idUser);
+			$("#idUserUpdate").val(idUser);
+
+			$("#prenomUser2Update").val(nom);
+			$('#nomUser2Update').val(prenom);
+			$('#prenomUseridentifiant2Update').val(identifiant);
+			$('#fonctionUpdate2Update').val(fonctionId);
+			$('#posteComptableUpdate2Update').val(posteComtableId);
+			$('#posteCreationUpdate2Update').val(posteComtableId);
+		}
+
+		function updateposteforUSER(idUser, nom, prenom, identifiant,
+				fonctionId, posteComtableId) {
+			$('#updateposteforUSER').modal('show');
+
+			$("#selectUserToUpdate2").val(idUser);
+			$("#prenomUser2").val(nom);
+			$('#nomUser2').val(prenom);
+			$('#prenomUseridentifiant2').val(identifiant);
+			$('#fonctionUpdate2').val(fonctionId);
+			$('#posteComptableUpdate2').val(posteComtableId);
+			$('#posteCreationUpdate2').val(posteComtableId);
+		}
+
+		function safeLoad(val) {
+			if (typeof val != "undefined")
+				return val;
+			else
+				return "";
+
+		}
+
+		function switchToBlockPieces() {
+			$("#blocBillets").removeClass("show").addClass("hide");
+			$("#blocPieces").removeClass("hide").addClass("show");
+			$("#BlocUsers").removeClass("hide").addClass("show");
+
+		}
+
+		function switchToBlockBillets() {
+			$("#blocBillets").removeClass("hide").addClass("show");
+			$("#blocPieces").removeClass("show").addClass("hide");
+		}
+
+		function initAllFields() {
+			location.reload();
+		}
+
+		function disconnect() {
+			$("#disconnect").click();
+		}
+
+		function returnHome() {
+			$("#BlocEncaisse").removeClass("show").addClass("hide");
+			$("#BlocVersments").removeClass("show").addClass("hide");
+			$("#BlocUsers").removeClass("show").addClass("hide");
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#BlocCalpin").removeClass("show").addClass("hide");
+
+			$("#homeBloc").removeClass("hide").addClass("show");
+
+		}
+
+		function showVersment() {
+			$("#BlocVersments").removeClass("hide").addClass("show");
+
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#BlocUsers").removeClass("show").addClass("hide");
+			$("#BlocEncaisse").removeClass("show").addClass("hide");
+			$("#blocConsolidationVersement").removeClass("show").addClass(
+					"hide");
+			$("#homeBloc").removeClass("show").addClass("hide");
+
+			$("#blocCaisse").removeClass("show").addClass("hide");
+			$("#blocVersement").removeClass("hide").addClass("show");
+			$("#BlocCalpin").removeClass("show").addClass("hide");
+		}
+
+		function redirecJS() {
+			window.location.replace("rapport.xhtml");
+		}
+
+		function redirecToDepense() {
+			window.location.replace("gestionDepenses.xhtml");
+		}
+
+		function redirecJSProfil() {
+			window.location.replace("profil.xhtml");
+		}
+
+		function gotoEncaisse() {
+			window.location.replace("edashboard.xhtml");
+		}
+
+		function showEnaisse() {
+			$("#BlocEncaisse").removeClass("hide").addClass("show");
+
+			$("#BlocVersments").removeClass("show").addClass("hide");
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#BlocUsers").removeClass("show").addClass("hide");
+			$("#blocConsolidationVersement").removeClass("show").addClass(
+					"hide");
+			$("#homeBloc").removeClass("show").addClass("hide");
+
+			$("#blocCaisse").removeClass("hide").addClass("show");
+			$("#blocVersement").removeClass("show").addClass("hide");
+			$("#BlocCalpin").removeClass("show").addClass("hide");
+
+		}
+
+		function showPostes() {
+			$("#BlocPoste").removeClass("hide").addClass("show");
+			$("#blocConsolidationVersement").removeClass("hide").addClass(
+					"show");
+
+			$("#BlocVersments").removeClass("show").addClass("hide");
+			$("#BlocUsers").removeClass("show").addClass("hide");
+			$("#BlocEncaisse").removeClass("show").addClass("hide");
+			$("#blocVersement").removeClass("show").addClass("hide");
+			$("#BlocCalpin").removeClass("show").addClass("hide");
+			$("#homeBloc").removeClass("show").addClass("hide");
+
+		}
+
+		function showUsers() {
+
+			$("#BlocUsers").removeClass("hide").addClass("show");
+
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#BlocVersments").removeClass("show").addClass("hide");
+			$("#BlocEncaisse").removeClass("show").addClass("hide");
+			$("#blocConsolidationVersement").removeClass("show").addClass(
+					"hide");
+			$("#BlocCalpin").removeClass("show").addClass("hide");
+			$("#homeBloc").removeClass("show").addClass("hide");
+
+		}
+
+		function showBlocCalpin() {
+
+			$("#BlocCalpin").removeClass("hide").addClass("show");
+
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#blocCaisse").removeClass("show").addClass("hide");
+			$("#homeBloc").removeClass("show").addClass("hide");
+
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#blocConsolidationVersement").removeClass("hide").addClass(
+					"show");
+
+			$("#BlocVersments").removeClass("show").addClass("hide");
+			$("#BlocUsers").removeClass("show").addClass("hide");
+			$("#BlocEncaisse").removeClass("show").addClass("hide");
+			$("#blocVersement").removeClass("show").addClass("hide");
+		}
+
+		function switchUser() {
+
+			$("#BlocUsersCreation").removeClass("hide").addClass("show");
+			$("#BlocUsersListe").removeClass("show").addClass("hide");
+
+		}
+
+		function switchUserListe() {
+
+			$("#BlocUsersCreation").removeClass("show").addClass("hide");
+			$("#BlocUsersListe").removeClass("hide").addClass("show");
+
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#blocCaisse").removeClass("show").addClass("hide");
+			$("#homeBloc").removeClass("show").addClass("hide");
+
+			$("#BlocPoste").removeClass("show").addClass("hide");
+			$("#blocConsolidationVersement").removeClass("hide").addClass(
+					"show");
+
+			$("#BlocVersments").removeClass("show").addClass("hide");
+			$("#BlocUsers").removeClass("show").addClass("hide");
+			$("#BlocEncaisse").removeClass("show").addClass("hide");
+			$("#blocVersement").removeClass("show").addClass("hide");
+
+		}
+
+		function switchToVersment() {
+			$("#blocAvertissement").removeClass("show").addClass("hide");
+			$("#blocBilletsAfterSeuil").removeClass("hide").addClass("show");
+
+			$("#blocVersementAfterSeuil").removeClass("hide").addClass("show");
+			$("#blocCaisse").removeClass("show").addClass("hide");
+
+		}
+
+		function switchToBlockPiecesAfterSeul() {
+			$("#blocPiecesAfterSeuil").removeClass("hide").addClass("show");
+			$("#blocBilletsAfterSeuil").removeClass("show").addClass("hide");
+
+			$("#blocVersementAfterSeuil").removeClass("hide").addClass("show");
+			//$( "#blocCaisse").removeClass( "show" ).addClass( "hide" );	
+
+		}
+		function switchToBlockBilletsAfterSeul() {
+
+			$("#blocPiecesAfterSeuil").removeClass("show").addClass("hide");
+			$("#blocBilletsAfterSeuil").removeClass("hide").addClass("show");
+
+			$("#blocVersementAfterSeuil").removeClass("hide").addClass("show");
+			//	$( "#blocCaisse").removeClass( "show" ).addClass( "hide" );	
+
+		}
+	</script>
+
+
+
+
+
+
+
+
+
+</h:head>
+<h:body style="    background-color: #2b2b29c2;">
+	<p:inputText styleClass="form-control hide" id="glabalMessageService"
+		value="#{DashboardController.glabalMessageService}" />
+
+	<p:inputText styleClass="form-control hide" id="iziToastMode"
+		value="#{DashboardController.iziToastMode}" />
+
+
+
+
+	<div class="contanier" style="">
+
+		<h:form onsubmit="this.action='#{request.contextPath}/logout';"
+			prependId="false" class="logout-form">
+
+
+			<h:commandLink styleClass="pull-right hide" value="Deconnexion | "
+				id="disconnect" ajax="false">
+
+				<i class="fas fa-sign-in-alt pull-left"
+					style="margin-top: 3px; margin-right: 6px"></i>
+
+			</h:commandLink>
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<h:form enctype="multipart/form-data" method="POST" id="awa"
+			prependId="false" action="/spring-mvc-xml/uploadFile">
+
+			<hr />
+
+
+
+
+
+			<div class="row " style="width: 90%; margin-left: 5%">
+
+				<span class="pull-right"
+					style="color: white ! important; margin-left: auto; color: white; font-size: 2.5rem; margin-top: -18px; color: #faf7ee !important; margin-left: auto; color: white; font-size: 2.5rem; margin-bottom: -50px; maring-right: 10px;">
+
+
+
+					<i class="fas fa-user"></i>
+					#{DashboardController.connectedUserDetails.prenom}
+					#{DashboardController.connectedUserDetails.nom} <i
+					class="fas fa-id-card" style="margin-left: 30px"></i> <text
+						style="margin-right : 10PX  ;">Poste : </text>
+					#{DashboardController.connectedUserDetails.posteConcerneLibelle} <i
+					class="fas fa-power-off" style="margin-left: 30px"></i> <a
+					style="cursor: pointer;" onclick="redirecJSProfil()"> Mot de
+						passe </a> <i class="fas fa-id-card" style="margin-left: 30px"></i> <small
+					onclick="disconnect()" style="cursor: pointer;">Deconnexion</small>
+				</span>
+			</div>
+
+
+
+
+			<br />
+			<br />
+			<br />
+			<div class="row"
+				style="width: 90%; margin-left: 5%; background-image: url('bg2.jpg'); background-repeat: no-repeat; background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #edf6e5), color-stop(25%, #8ab566), color-stop(91%, #eac13e)) ! important;">
+				<hr />
+				<br /> <br /> <br /> <br />
+
+				<div
+					style="border-bottom: 10px solid #5d5d5c; width: 100%; border-radius: 40px 40px 40px 40px; !mportant">
+					<img src="ecaisse2.png"
+						style="width: 10%; margin-left: 1%; height: 230px; margin-left: 0%;" />
+					<img src="bannerTresor.png"
+						style="width: 60%; margin-left: 1%; height: 200px; margin-left: 8%;" />
+				</div>
+
+
+
+				<h:panelGroup>
+					<div class="container-fluid">
+						<h:panelGroup rendered="#{DashboardController.messageServiceShow}">
+							<br />
+							<div
+								class="alert #{DashboardController.messageServiceClassAlert} "
+								role="alert"
+								style="margin-left: 10%; width: 50%; BACKGROUND: #e9c13d;">
+								<h4 class="alert-heading">
+									<i class="fas fa-exclamation-triangle"></i>
+									#{DashboardController.messageServiceTitle}
+								</h4>
+								<p></p>
+								<hr />
+								<p class="mb-0">#{DashboardController.messageService} ....</p>
+							</div>
+						</h:panelGroup>
+					</div>
+
+					<sec:authorize access="hasRole('ROLE_USER')">
+
+
+					</sec:authorize>
+
+
+
+
+
+
+					<!-- Bloc HOME  ADMIN ET NOT ADMIN-->
+
+					<sec:authorize access="!hasRole('ROLE_ADMINISTRATEUR')">
+
+
+						<div class="container-fluid ">
+
+							<div class="col-md-6">
+							</div>
+
+							<div class="col-md-6 ">
+								<h1 class="pull-right plafond" style="margin-right: 10%;">
+									<br /> <i class="fab fa-maxcdn"></i> Plafond de poste : <b>#{DashboardController.formatCFA(DashboardController.connectedUserDetails.postePlafond)}F</b>
+								</h1>
+
+							</div>
+
+							<p:growl showSummary="true" id="msgssss" showDetail="true" />
+
+
+							<br /> <br /> <br />
+
+							<p:growl showSummary="true" id="msg2" showDetail="true" />
+
+
+							<div class="col-md-8">
+
+
+								<!-- 								<h1 class=" plafond" style="text-align: center"> -->
+								<!-- 									<br /> <i class="fas fa-info"></i> Situation actuelle du -->
+								<!-- 									calpin de votre poste <br/><br/> -->
+								<!-- 								</h1> -->
+
+								<!-- MENU CHEF DE POSTE -->
+								<sec:authorize access="hasRole('ROLE_CHEF_DE_POSTE')">
+
+
+									<span onclick="showPostes()"
+										style="color: #040404 !important; font-size: 30px; margin-left: 20px; cursor: pointer"><i
+										class="fas fa-university"></i> Encaisse en attente de
+										validation </span>
+
+
+
+									<span onclick="showEnaisse()"
+										style="color: #040404 !important; font-size: 30px; margin-left: 40px; cursor: pointer"><i
+										class="fas fa-braille"></i> Détails Calpin Poste </span>
+
+								</sec:authorize>
+
+								<br />
+								<br />
+								<br /> <br />
+
+								<sec:authorize access="hasRole('ROLE_CHEF_DE_POSTE')">
+									<div class="form-group col-md-12">
+
+
+										<table id="listeDesJourneeComptable"
+											class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th style="font-size: 25px">Réference</th>
+													<th style="margin-left: 30px; font-size: 25px">Date
+														saisie</th>
+													<th style="margin-left: 30px; font-size: 25px">Date
+														opération</th>
+
+													<th style="margin-left: 30px; font-size: 25px">Recette</th>
+													<th style="margin-left: 30px; font-size: 25px">Dépense</th>
+													<th style="margin-left: 30px; font-size: 25px">Solde</th>
+													<th style="margin-left: 30px; font-size: 25px">Statut</th>
+													<th style="margin-left: 30px; font-size: 25px">Actions</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<p:repeat
+													value="#{DashboardController.loadlistDesJcEnAttenteDeValidation()}"
+													var="agent">
+													<tr>
+														<td style="text-align: center"><a
+															style="cursor: pointer; font-size: 25px"
+															onclick="detailsJourneeComptable('#{agent.getDetailsVersementJSON()}' , '{agent.idJourrneeComptable}');">
+																#JP00#{agent.idJourrneeComptable} </a></td>
+														<td style="text-align: center; font-size: 25px">
+															#{agent.datesaisie}</td>
+
+														<td style="text-align: center; font-size: 25px">#{agent.dateOperation}</td>
+
+														<td style="text-align: center; font-size: 25px">#{DashboardController.formatCFA(agent.montantTotalRecette)}F</td>
+
+														<td style="text-align: center; font-size: 25px">#{DashboardController.formatCFA(agent.montantTotalDepense)}F
+														</td>
+
+														<td style="text-align: center; font-size: 25px">
+															#{DashboardController.formatCFA(agent.montantTotalRecette
+															- agent.montantTotalDepense)}F</td>
+
+
+
+														<td style="text-align: center; font-size: 25px">
+															#{agent.statutLibelle}</td>
+
+														<td style="text-align: center; font-size: 25px"><h:commandLink
+																action="#{DashboardController.validerEncaisse()}"
+																title="Valider l'encaisse " styleClass="btn"
+																style="cursor: pointer;  color : #8e1d07 ; margin-right : 40px">
+																<f:param name="idSelectedJC"
+																	value="#{agent.idJourrneeComptable}" />
+																<img src="accept.png"
+																	style="margin-top: -15px; margin-right: 10px;" />
+																<span style="color: #191710; font-size: 3.5rem;">
+																	Valider</span>
+
+															</h:commandLink> <h:commandLink
+																action="#{DashboardController.refuserEncaisse()}"
+																title="Refuser l'encaisse avec motif de refus"
+																styleClass="btn"
+																style="cursor: pointer;  color : #8e1d07">
+																<f:param name="idSelectedJC"
+																	value="#{agent.idJourrneeComptable}" />
+																<img src="refus.png"
+																	style="margin-top: -15px; margin-right: 10px;" />
+																<span style="color: #191710; font-size: 3.5rem;">
+																	Refuser</span>
+
+															</h:commandLink></td>
+													</tr>
+												</p:repeat>
+											</tbody>
+										</table>
+
+
+									</div>
+
+								</sec:authorize>
+
+
+
+								<!-- MENU AGENT COMPTABLE  -->
+
+								<sec:authorize access="hasRole('ROLE_USER')">
+
+									<span onclick="gotohome()"
+										style="color: #040404 !important; font-size: 40px; margin-left: 40px; cursor: pointer"><i
+										class="fas fa-braille"></i> Accueil </span>
+
+									<span onclick="gotojc()"
+										style="color: #040404 !important; font-size: 40px; margin-left: 40px; cursor: pointer; text-decoration: none"><i
+										class="fas fa-briefcase"></i> Gestion des encaisses </span>
+
+
+									<span onclick="gotojournal()"
+										style="color: #040404 !important; font-size: 40px; margin-left: 40px; cursor: pointer"><i
+										class="fas fa-cubes"></i> Journal comptable </span>
+
+									<span onclick="gotoparametre()"
+										style="color: #040404 !important; font-size: 40px; margin-left: 40px; cursor: pointer"><i
+										class="fas fa-cubes"></i> Paramétrage </span>
+
+								</sec:authorize>
+
+
+								<!-- MENU ADMIN -->
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<span onclick="showPostes()"
+										style="color: #040404 !important; font-size: 30px; margin-left: 20px; cursor: pointer"><i
+										class="fas fa-university"></i> Postes comptables </span>
+
+
+
+									<span onclick="showEnaisse()"
+										style="color: #040404 !important; font-size: 30px; margin-left: 40px; cursor: pointer"><i
+										class="fas fa-braille"></i> Consolidation des encaisses </span>
+
+									<span onclick="showVersment()"
+										style="color: #040404 !important; font-size: 30px; margin-left: 40px; cursor: pointer"><i
+										class="fas fa-briefcase"></i> Consolidation des versements </span>
+
+
+									<span onclick="showBlocCalpin()"
+										style="color: #040404 !important; font-size: 30px; margin-left: 30px; cursor: pointer"><i
+										class="fas fa-align-center"></i> Calepin </span>
+								</sec:authorize>
+
+
+
+
+
+
+
+								<br /> <br /> <br /> <br /> <br /> <br />
+
+
+								<sec:authorize access="hasRole('ROLE_USER')">
+
+									<div class="form-group col-md-6">
+
+										<div class="box-body">
+
+
+
+											<div class="col-sm-2">
+
+
+
+												<br />
+												<!-- /input-group -->
+											</div>
+
+											<div class="col-sm-10 ">
+
+
+												<h4 style="" id="idPopDetailsPH7Nom"></h4>
+												<!-- 															 <span><p id="idPopDetailsPH7Etablissement">ETB : CHU BORDEAUX</p></span> -->
+												<span><p id="idPopDetailsPH7Mat" /></span> <span><p
+														id="idPopDetailsPH7Cat" /></span>
+
+											</div>
+
+											<div class="col-md-12 hide">
+
+
+
+												<div class="container-fluid " id="BlocUsers">
+
+													<br /> <br />
+
+
+													<div class="container-fluid " id="BlocUsersListe">
+
+
+														<hr />
+
+
+													</div>
+
+													<div class="container-fluid  " id="BlocUsersCreation">
+														<h1
+															style="text-align: center; color: #232f19 ! important; font-size: 50px !important;">
+															Modification utilisateur</h1>
+														<br />
+
+
+														<div class="form-row">
+															<div class="form-group col-md-6">
+																<label for="inputEmail4">Nom</label>
+																<p:inputText styleClass="form-control" id="nomUser2"
+																	disabled="true" />
+
+															</div>
+															<div class="form-group col-md-6">
+																<label for="inputPassword4">Prenom</label>
+																<p:inputText styleClass="form-control" id="prenomUser2"
+																	disabled="true" />
+															</div>
+														</div>
+
+														<div class="form-row">
+															<div class="form-group col-md-12">
+																<label for="inputEmail4">Poste comptable</label>
+																<p:inputText styleClass="form-control"
+																	id="prenomUseridentifiant2" disabled="true"
+																	style="height : 50px ; text-align : center" />
+
+															</div>
+
+
+														</div>
+
+
+
+
+														<br /> <span class="pull-right"
+															style="font-size: 4.5rem; font-size: 30px; margin-right: 10%; margin-bottom: 25px; cursor: pointer; margin-right: 40px">
+
+														</span>
+													</div>
+
+												</div>
+
+												<div class="form-group col-md-8 col-md-offset-2">
+													<label for="inputPassword4">Saisir votre nouveau
+														mot de passe</label>
+													<p:password styleClass="form-control"
+														value="#{DashboardController.newPassword}" />
+												</div>
+
+
+
+												'
+												<table id="calpin1"
+													class="table table-striped table-bordered" style="">
+													<thead>
+
+													</thead>
+												</table>
+
+												<h1
+													style="text-align: center; color: #56771b ! important; font-size: 40PX ! important;"
+													id="totalAggregation"></h1>
+
+											</div>
+
+											<!-- /.box-body -->
+										</div>
+
+
+									</div>
+
+								</sec:authorize>
+
+							</div>
+
+
+							<div class=" col-md-4" style="border: 1px solid transparent">
+
+
+								<div class="col-lg-12 " style="height: auto; margin-left: -20px">
+
+									<hr />
+
+									<div class="col-lg-6">
+										<div class="col-lg-	4 plafondLabel">
+											<i class="fas fa-adjust"></i> SOLDE INITIAL
+										</div>
+
+										<div class="col-lg-8 plafondVule ">
+											#{DashboardController.formatCFA(
+											DashboardController.soldeInitialeduPoste ) } F</div>
+									</div>
+
+									<div class="col-lg-6">
+										<div class="col-lg-	4 plafondLabel">
+											<i class="fas fa-adjust"></i> SOLDE DU JOUR
+										</div>
+
+										<div class="col-lg-8 plafondVule ">
+											#{DashboardController.formatCFA(
+											DashboardController.soldeInitialeDujour ) } F</div>
+									</div>
+
+
+
+									<h1
+										style="font-size: 20px; width: 100%; text-align: center; margin-top: 20PX">
+										<i class="fa fa-bars" style="color: #dac478"></i> <br /> <br />
+										<br /> SOLDE FINAL APRES ENCAISSE DU <span id="curunTime" />
+									</h1>
+
+									<h1 id="totalVersment" class=""
+										style="margin-bottom: 20px; text-align: center; line-height: 1; font-size: 28px; font-weight: bold; color: #284a0c; font-size: 7.5rem; font-size: 70PX ! important;">
+										<br /> #{DashboardController.formatCFA(
+										DashboardController.soldeInitialeduPoste +
+										DashboardController.soldeInitialeDujour ) } F CFA
+									</h1>
+
+									<hr />
+									<br /> <br /> <br /> <br />
+									<div id="carouselExampleControls" class="carousel slide"
+										data-ride="carousel">
+
+										<div class="carousel-inner">
+
+
+											<div class="carousel-item active contenercoursel">
+												<div class="row"></div>
+												<div class="row"
+													style="text-align: center ! important; margin-left: 20%">
+													<br />
+													<p class="imgCenterLegende" style="margin-left: 30%">Votre
+														Calepin !</p>
+												</div>
+											</div>
+
+
+											<p:repeat value="#{DashboardController.listSlider}"
+												var="slider">
+
+												<div class="carousel-item  contenercoursel">
+													<div class="row">
+														<img src="#{slider.icon}" alt="..." class="imgCenter" />
+													</div>
+													<div class="row" style="text-align: center ! important">
+														<br />
+														<p class="imgCenterLegende" style="text-align: center">#{slider.nombre}
+															X #{slider.libelle} = #{slider.totalString}F</p>
+													</div>
+												</div>
+
+											</p:repeat>
+
+
+
+
+										</div>
+
+
+										<a class="carousel-control-prev"
+											href="#carouselExampleControls" role="button"
+											data-slide="prev"> <span
+											class="carousel-control-prev-icon" aria-hidden="true"></span>
+											<span class="sr-only">Previous</span>
+										</a> <a class="carousel-control-next"
+											href="#carouselExampleControls" role="button"
+											data-slide="next"> <span
+											class="carousel-control-next-icon" aria-hidden="true"></span>
+											<span class="sr-only">Next</span>
+										</a>
+									</div>
+									<hr />
+									<br />
+									<h:panelGroup rendered="#{DashboardController.showDashboard}">
+
+									</h:panelGroup>
+
+								</div>
+							</div>
+						</div>
+					</sec:authorize>
+				</h:panelGroup>
+			</div>
+
+
+
+			<hr style="margin-top: 6%; width: 10%;" />
+			<img src="tresor.png"
+				style="width: 250px; height: 130px; margin-left: 47%;" />
+			<br />
+			<br />
+			<br />
+			<p class="footerText">e-Caisse - v3.0</p>
+
+		</h:form>
+
+
+
+
+		<br />
+
+
+
+
+
+	</div>
+</h:body>
+</html>

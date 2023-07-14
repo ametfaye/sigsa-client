@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>SIGMA | Paramètrage mission</title>
+    <h:outputStylesheet name="css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css"/>
+
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+    </style>
+  </h:head>
+  
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml"/>
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml"/>
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row mb-2">
+              <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+                  <a class="navbar-brand" href="#">
+                    <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1"/>
+                  </a>
+                  <button class="navbar-toggler"
+                    type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item"><a class="nav-link" href="#">Paramétrages / Mission</a></li>
+                    </ul>
+                    <!--end navbar-nav-->
+                    <div class="pull-right">                    
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="#">#{ParametragesController.connectedUserDetails.entitePublique} / #{ParametragesController.connectedUserDetails.service}
+                            / #{ParametragesController.connectedUserDetails.sousService}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--end form-->
+                  </div>
+                  <!--end navbar-collapse-->
+                </nav>
+              </div>
+            </div>
+            <!--end row-->
+            <!-- end page title end breadcrumb -->
+            
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                  
+                   <h4 style="text-align :center"> <i class="las la-list text-secondary font-22 align-middle mr-2"></i>Liste des paramètres mission</h4>
+                    <hr/>
+                          <span style="text-align : center">               		
+                           <small id="emailHelp" class="form-text text-muted">Ces paramètres sont utilisés lors de la création d'une mission.</small>
+                           <br/>
+                         </span> 
+                         
+                    <div class="row">
+                   
+                         
+                      <div class="col-md-3">
+                     
+                      
+                        <div class="form-group row">
+                          <label for="example-libelle-input" class="col-form-label text-left">Code</label>
+                          <div class="col-sm-8">
+                            <h:inputText styleClass="form-control" value="#{ParametragesController.newParametreModuleDto.code}"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group row">
+                          <label for="example-libelle-input" class="col-form-label text-left">Libellé</label>
+                          <div class="col-sm-8">
+                            <h:inputText styleClass="form-control" value="#{ParametragesController.newParametreModuleDto.libelle}"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group row">
+                          <label for="example-libelle-input" class="col-form-label text-left">Valeur</label>
+                          <div class="col-sm-8">
+                            <h:inputText styleClass="form-control" value="#{ParametragesController.newParametreModuleDto.valeur}"/>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-4">
+                        <div class="form-group row">
+                          <label for="service" class="col-form-label text-left">Service</label>
+                          <div class="col-sm-8">
+                            <h:selectOneMenu value="#{ParametragesController.serviceToCreateId}" styleClass="custom-select" id="select-service"
+                              style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+                              <f:selectItem itemLabel="Sélectionner un service" itemValue="0" />
+                              <f:selectItems value="#{ParametragesController.services}" var="d" itemLabel="#{d.libelle}" itemValue="#{d.srvId}" />
+                            </h:selectOneMenu>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                    <div class="row mb-4">
+                      <div class="col-sm-12">
+                        <center>
+                          <div class="col-sm-4">
+                            <div class="button-items ">
+                              <button type="button" class="btn btn-success waves-effect waves-light">
+                                <h:commandLink action="#{ParametragesController.createParametreModule()}" style="color: #ffffff;" ajax="false" value="Enregistrer"></h:commandLink>
+                              </button>
+                            </div>
+                          </div>
+                        </center>
+                      </div>
+                    </div>
+                    <p:dataTable id="parametres" var="parametre" value="#{ParametragesController.parametres}"
+                     editable="true" editMode="cell" widgetVar="cellparametres" emptyMessage="Aucun paramètre trouvé" style="text-align: center;"
+                     rowKey="#{parametre.id}" rows="10" paginator="true" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+                      <p:ajax event="cellEdit" listener="#{ParametragesController.onCellEdit(parametre)}"/>
+
+                      <p:column headerText="Code">
+                          <p:cellEditor>
+                              <f:facet name="output">
+                                  <h:outputText value="#{parametre.pamCode}"/>
+                              </f:facet>
+                              <f:facet name="input">
+                                  <p:inputText value="#{parametre.pamCode}" style="width:100%" label="Code"/>
+                              </f:facet>
+                          </p:cellEditor>
+                      </p:column>
+
+                      <p:column headerText="Libellé">
+                          <p:cellEditor>
+                              <f:facet name="output">
+                                  <h:outputText value="#{parametre.pamLibelle}"/>
+                              </f:facet>
+                              <f:facet name="input">
+                                  <p:inputText value="#{parametre.pamLibelle}" style="width:100%" label="Libellé"/>
+                              </f:facet>
+                          </p:cellEditor>
+                      </p:column>
+
+                      <p:column headerText="Valeur">
+                          <p:cellEditor>
+                              <f:facet name="output">
+                                <h:outputText value="#{parametre.pamChaineValeur}"/>
+                              </f:facet>
+                              <f:facet name="input">
+                                  <p:inputText value="#{parametre.pamChaineValeur}" style="width:100%" label="Valeur"/>
+                              </f:facet>
+                          </p:cellEditor>
+                      </p:column>
+
+                      <p:column headerText="Service">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                              <h:outputText value="#{parametre.service.libelle}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{parametre.service.libelle}" style="width:100%" label="Service"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                      <p:column headerText="Action">
+                        <a href="#" data-toggle="modal" data-target="#deleteParametreModal-#{parametre.pamCode}">
+                          <i class="las la-trash-alt text-danger font-18" title="Supprimer"></i>
+                        </a>
+                        <div class="modal fade bd-example-modal-sm" id="deleteParametreModal-#{parametre.pamCode}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-md" role="deleteParametre">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6 class="modal-title m-0" id="mySmallModalLabel">Confirmation de la suppression</h6>
+                                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><i class="la la-times"></i></span>
+                                    </button>
+                                </div><!--end modal-header-->
+                                <div class="modal-body text-center">
+                                    <h4 class="mb-1">Êtes-vous sûr de vouloir supprimer le paramètre</h4><br/>
+                                    <h5>#{parametre.pamLibelle} ? </h5>
+                                </div><!--end modal-body-->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+                                    <button type="button" class="btn btn-primary btn-xs">
+                                      <h:commandLink action="#{ParametragesController.deleteParametre(parametre.pamCode)}" style="color: #ffffff;" ajax="false" value="Confirmer">
+                                      </h:commandLink>
+                                    </button>
+                                </div><!--end modal-footer-->
+                                </div><!--end modal-content-->
+                            </div><!--end modal-dialog-->
+                        </div><!--end modal-->
+                      </p:column>
+                    </p:dataTable>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+           
+            <button style="display: none;" type="button" id="create-parametrages-topright-success">show alert</button>
+            <h:inputText value="#{ParametragesController.createParametragesSuccesMsg}" id="create-parametrages-succes-text" style="display: none;"/>
+            
+            <button style="display: none;" type="button" id="create-parametrages-topright-error">show alert</button>
+            <h:inputText value="#{ParametragesController.createParametragesErreurMsg}" id="create-parametrages-error-text" style="display: none;"/>
+            
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-parametrages-error-text create-parametrages-succes-text" process="@this"
+                  listener="#{ParametragesController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+            <!-- end row -->
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Sweet-Alert  -->
+  <script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+  <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  
+  <script>
+    $('#datatable').DataTable({
+      "language": {
+        "sProcessing": "Traitement en cours ...",
+        "sLengthMenu": "Afficher _MENU_ lignes",
+        "sZeroRecords": "Aucun résultat trouvé",
+        "sEmptyTable": "Aucune donnée disponible",
+        "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+        "sInfoEmpty": "Aucune ligne affichée",
+        "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+        "sInfoPostFix": "",
+        "sSearch": "Chercher:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Chargement...",
+        "oPaginate": {
+          "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+        },
+        "oAria": {
+          "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+        }
+      }
+    });
+    $(document).ready(function() {
+      if ($('#create-parametrages-succes-text').val() !== '') {
+        $('#create-parametrages-topright-success').click();
+        $('#reset-error-msgs').click();
+      }
+
+      if ($('#create-parametrages-error-text').val() !== '') {
+        $('#create-parametrages-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+
+      var elements = document.querySelectorAll('th[id^="parametres:"]');
+      for (i=0;i&lt;elements.length;i++) {
+        elements[i].classList.remove("ui-state-default");
+        elements[i].style.cssText += 'border: solid 1px #e9e9e9;background-color: #e9e9e9';
+      }
+    });
+  </script>
+</html>

@@ -1,0 +1,1309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+		<h:form id="MEPForm">
+			<input id="cumulSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}" />
+			<input id="reliquatSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}" />
+			<input id="intrantSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}" />
+
+
+			<div class="container-fluid  fullbg">
+
+				<br /> <br /> <br />
+				<!--  Liste des points des ventes trouvés dans la commune -->
+
+
+
+				<h:panelGroup id="ListPVOfCommune">
+					<p:messages id="messages" showDetail="true"
+						style="width : 60% ; margin-left : 20%" />
+
+
+
+					<br />
+					<br />
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+						Tableau de bord / Gestion des mises en place
+					</p>
+
+					<hr />
+
+
+					<h1 class="MainLabelCenter">
+						<i class="fa fa-bus" aria-hidden="true"></i> Mises en place en
+						cours d'exécution
+					</h1>
+
+
+					<p:dataTable id="tableStateDT" var="car"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						value="#{agentSaisieMB.loadAggregationMiseEnPlace()}"
+						widgetVar="carsTable" rows="10" paginator="true"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+						rowsPerPageTemplate="5,10,15" selectionMode="single"
+						selection="#{agentSaisieMB.selectedMiseEnplaceAgregation}"
+						rowKey="#{car.idMep}" emptyMessage="Aucune mise en place trouvée "
+						filteredValue="#{agentSaisieMB.filtredMiseEnplaceAgregation}"
+						paginatorPosition="bottom">
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('carsTable').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:ajax event="rowSelect" update="MEPForm:ALLPOP"
+							listener="#{agentSaisieMB.updatelistMiseEnplace()}" />
+
+
+
+
+
+						<p:column headerText="Département"
+							filterBy="#{car.departementGroup}"
+							sortBy="#{car.departementGroup}" filterMatchMode="contains">
+							<h:outputText value="#{car.departementGroup}" />
+						</p:column>
+
+						<p:column headerText="Commune" filterBy="#{car.commune}"
+							sortBy="#{car.commune}" filterMatchMode="contains">
+							<h:outputText value="#{car.commune}" />
+						</p:column>
+
+
+						<p:column headerText="Variété / Formule"
+							filterBy="#{car.nomIntrant}" sortBy="#{car.nomIntrant}"
+							filterMatchMode="contains">
+							<h:outputText value="#{car.nomIntrant}" />
+						</p:column>
+
+
+
+
+						<p:column headerText="Quota" filterBy="#{car.totalQuota}"
+							sortBy="#{car.totalQuota}" filterMatchMode="startsWith">
+							<h:outputText value="#{car.totalQuota}" />
+						</p:column>
+
+						<p:column headerText="Reliquat" filterBy="#{car.totalreliquat}"
+							sortBy="#{car.totalreliquat}" filterMatchMode="exact">
+
+							<h:outputText value="#{car.totalreliquat}" />
+						</p:column>
+
+
+						<p:column headerText="Mise en place"
+							filterBy="#{car.nombreDePointDeVente}"
+							sortBy="#{car.nombreDePointDeVente}" filterMatchMode="exact">
+
+							<h:outputText value="#{car.stockResiduel}" />
+						</p:column>
+
+
+
+					</p:dataTable>
+
+
+
+
+					<div id="buttons" class="pull-right" style="margin-right: 140px;">
+
+					
+						
+<!-- 						<h:commandLink action="#{agentSaisieMB.exportQuotaMiseEnPlace}" -->
+<!-- 							immediate="true" target="_blank"> -->
+<!-- 							<img style="margin-right: 20px; margin-top: -30px" height="80px" -->
+<!-- 								src="assets/images/pdf.png" alt="Logo PGCA" /> -->
+<!-- 						</h:commandLink> -->
+						
+						<button type="button" class="btn btn-success  "
+							style="margin-left: 10px; margin-top : -60px; margin-right: -10px; border-color: #9ad667 ! important; color: black; height: 55px ; margin-right : 40px"
+							data-toggle="modal" data-target="#miseEffectuee">
+
+							<i class="fa fa-eye" aria-hidden="true" style="color: #93c766 ; "></i>
+							Voir mises en place
+						</button>
+
+
+
+
+						<h:commandLink styleClass="  btn btn-success " style="margin-left: 10px; margin-top : -65px;"
+							action="#{agentSaisieMB.redirectoTolistListPointdeVenteForMiseEnPlace}">
+
+							<i class="fa fa-save " style="margin-top: 12px; color: #93c766 ;" 
+								aria-hidden="true"></i>
+						Enregistrer une mise en place  
+						</h:commandLink>
+
+
+
+
+					</div>
+
+				</h:panelGroup>
+
+
+				<h:panelGroup id="ALLPOP">
+					<!-- Edition Quota  -->
+					<div class="modal fade fullbg" id="BL" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Edition Quota de Mise en place</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+										<br />
+
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; height: 250px;">
+											<br />
+
+											<div class="col-md-12">
+
+
+												<div class="container-fluid">
+
+
+													<p:messages id="msg" showDetail="true" showIcon="true"
+														style="text-align  : center;     font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+
+												</div>
+
+												<div class="col-xs-1" id="blocPV" />
+
+												<div class="col-xs-5" id="blocPV">
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label"
+															style="margin-top: 8px">Programmme </label>
+														<div class="col-sm-8">
+															<h:selectOneMenu value="#{agentSaisieMB.mPprogramme}"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le programme est obligatoire ">
+																<f:selectItem itemLabel="Selectionnez un programme"
+																	itemValue="" />
+																<f:selectItems
+																	value="#{agentSaisieMB.loadAllProgrammeOuvert()}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.clef} - #{CollaborateurDTO.valeur}"
+																	itemLabel="#{CollaborateurDTO.valeur}" />
+
+															</h:selectOneMenu>
+															<hr />
+														</div>
+													</div>
+
+
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">Point
+															de Vente</label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu value="#{agentSaisieMB.mPpointDeVente}"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le point de vente est obligatoire ">
+																<f:selectItem
+																	itemLabel="Selectionnez un point de vente "
+																	itemValue="" />
+																<f:selectItems
+																	value="#{referentielMB.loadAllPointDeVentes('0')}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.idPv}"
+																	itemLabel="#{CollaborateurDTO.libelle}" />
+
+															</h:selectOneMenu>
+															<hr />
+														</div>
+													</div>
+
+
+
+												</div>
+
+
+
+												<div class="col-xs-5" id="blocPV">
+
+
+													<div class="form-group">
+														<label for="inputEmail3" style="margIn-top: 10px"
+															class="col-sm-4 control-label">Catégorie </label>
+														<div class="col-sm-8">
+															<h:selectOneMenu
+																value="#{referentielMB.selectedIntrantDTO.idtypeProduit}"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="La catégorie est requise ">
+																<f:selectItem itemLabel="Selectionnez une categorie " />
+																<f:selectItems
+																	value="#{referentielMB.loadReferentielTypeIntrant()}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.id}"
+																	itemLabel="#{CollaborateurDTO.libelle}" />
+
+																<p:ajax event="change"
+																	listener="#{referentielMB.refresshListProduitFromTypeProduitSelected()}"
+																	update="listeIntrantFiltred" />
+															</h:selectOneMenu>
+															<br />
+
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="inputPassword3" style="margIn-top: 10px"
+															class="col-sm-4 control-label">Intrant</label>
+														<div class="col-sm-8">
+															<h:selectOneMenu id="listeIntrantFiltred"
+																value="#{agentSaisieMB.mPintrant}"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="L'intrant est requis">
+																<f:selectItem itemLabel="Selectionner un intrant"
+																	itemValue="" />
+
+																<f:selectItems
+																	value="#{referentielMB.listReferentielfiltred}"
+																	var="CollaborateurDTO"
+																	itemValue="#{CollaborateurDTO.idProduit}"
+																	itemLabel="#{CollaborateurDTO.libelleProduit}" />
+
+															</h:selectOneMenu>
+															<br />
+
+														</div>
+													</div>
+
+													<div class="form-group">
+														<label for="inputPassword3" style="margIn-top: 10px"
+															class="col-sm-4 control-label">Quantité</label>
+														<div class="col-sm-8">
+															<p:inputText type="number"
+																value="#{agentSaisieMB.quantiteAmettreEnPlace}"
+																styleClass="form-control"
+																title="La quantité  est requise"
+																requiredMessage="La quantité  est requise" />
+
+														</div>
+													</div>
+
+
+													<div id="buttons" class="pull-right">
+														<h:commandButton
+															styleClass="suivant  btn btn-validatd pull-right"
+															action="#{agentSaisieMB.saveAndPreviewPlanMiseEnPlace()}"
+															value="Enregistrer " name="suivants"
+															style="width : 200px ;"
+															class="fa fa-undo  btn   pull-right btn-success" />
+
+														<a href="gestionDesQuotasdeMEP.xhtml"
+															style="margin-right: 15px; margin-top: -2px"
+															class="fa fa-undo btn btn-default pull-right">
+															Annuler</a>
+
+													</div>
+
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ENd Edition Quota  -->
+
+
+
+
+
+
+
+
+
+					<!-- Génération feuille de rapport de suivi -->
+
+					<div class="modal fade" id="miseEffectuee" role="dialog">
+						<div class="modal-dialog modal-lg fullbg"
+							style="width: 75%; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Liste des mises en place effectuées
+											#{agentSaisieMB.selectedMiseEnplaceAgregation.nomIntrant}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+										<br />
+
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; height: 320px;">
+											<br />
+
+											<div class="col-md-2">
+
+												<p style="text-align: center; margin-top: -30px">#{agentSaisieMB.pictosIntrnat}
+												</p>
+												<br /> <img
+													src="assets/images/pictosIntrant/#{agentSaisieMB.pictosIntrnat}.png"
+													style="width: 100%; height: 100%" />
+
+											</div>
+
+
+											<div class="col-lg-10">
+
+
+												<p:dataTable var="intrantDTO" widgetVar="listMEP"
+													value="#{agentSaisieMB.listedesMiseEnplacedejaEffectue}"
+													reflow="true" emptyMessage="Ancun intrant disponible"
+													paginator="true" rows="10" cellSeparator="10"
+													paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+													paginatorPosition="bottom" style=" font-size:15px ; ">
+
+
+													<f:facet name="header">
+														<p:outputPanel>
+															<h:outputText value="Critères de recherche "
+																style="color : #002839" />
+															<i class="fa fa-search" aria-hidden="true"
+																style="color: #80c347" />
+
+															<p:inputText id="globalFilter"
+																onkeyup="PF('listMEP').filter()"
+																style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+																placeholder="Entrez un critère " />
+														</p:outputPanel>
+													</f:facet>
+
+													<p:column headerText="Date"
+														filterBy="#{intrantDTO.dateMiseEnplaceEffective}"
+														sortBy="#{intrantDTO.dateMiseEnplaceEffective}"
+														filterMatchMode="exact">
+							          #{profilMB.StringCutter(intrantDTO.dateMiseEnplaceEffective, 60)} 
+							        </p:column>
+
+
+
+													<p:column headerText="Département"
+														filterBy="#{intrantDTO.pointdeVenteLibelleDepartement}"
+														sortBy="#{intrantDTO.pointdeVenteLibelleDepartement}"
+														filterMatchMode="exact">
+							          #{profilMB.StringCutter(intrantDTO.pointdeVenteLibelleDepartement, 30)} 
+							        </p:column>
+
+													<p:column headerText="Point de vente"
+														filterBy="#{intrantDTO.pointdeVenteLibelle}"
+														sortBy="#{intrantDTO.pointdeVenteLibelle}"
+														filterMatchMode="exact">
+							          #{profilMB.StringCutter(intrantDTO.pointdeVenteLibelle, 30)} 
+							        </p:column>
+													<p:column headerText="Quantite"
+														filterBy="#{intrantDTO.quantiteAmettreEnplace}"
+														sortBy="#{intrantDTO.quantiteAmettreEnplace}"
+														filterMatchMode="exact">
+							          #{intrantDTO.quantiteAmettreEnplace} 
+							        </p:column>
+
+													<!-- 													<p:column headerText="Fournisseur" style="width : 120px" -->
+													<!-- 														filterBy="#{intrantDTO.fournisseur}" -->
+													<!-- 													sortBy="#{intrantDTO.fournisseur}" filterMatchMode="exact"> -->
+													<!-- 							          #{profilMB.StringCutter(intrantDTO.fournisseur, 15)}  -->
+													<!-- 							        </p:column> -->
+
+													<p:column headerText="N° BL" filterBy="#{intrantDTO.bl}"
+														sortBy="#{intrantDTO.bl}" filterMatchMode="exact">
+							          #{profilMB.StringCutter(intrantDTO.bl, 60)} 
+							        </p:column>
+
+													<p:column headerText="N° LV"
+														filterBy="#{intrantDTO.lvManuel}"
+														sortBy="#{intrantDTO.lvManuel}" filterMatchMode="exact">
+							          #{profilMB.StringCutter(intrantDTO.lvManuel, 60)} 
+							        </p:column>
+													<p:column headerText="Transporteur"
+														filterBy="#{intrantDTO.transporteur}"
+														sortBy="#{intrantDTO.transporteur}"
+														filterMatchMode="exact">
+							          #{profilMB.StringCutter(intrantDTO.transporteur, 60)} 
+							        </p:column>
+
+													<p:column headerText="camion"
+														filterBy="#{intrantDTO.camion}"
+														sortBy="#{intrantDTO.camion}" filterMatchMode="exact">
+							          #{intrantDTO.camion} 
+							        </p:column>
+
+
+
+												</p:dataTable>
+
+												<br />
+												<hr style="margin-right: 20%" />
+
+
+
+	
+						<h:commandLink action="#{agentSaisieMB.exportMiseEnPlacesEffectues}"
+							immediate="true" target="_blank" styleClass="pull-right" value="Télécharger">
+							<img style="margin-right: 20px; margin-top: -30px" height="80px"
+								src="assets/images/pdf.png" alt="Logo PGCA" />
+						</h:commandLink>
+						
+						
+<!-- 												<h:commandLink styleClass="pull-right" -->
+<!-- 													style="color : #002839 ; font-size: 18px; margin-right : 0px; padding-top : 25px ; margin-right : 0px" -->
+<!-- 													action="#{agentSaisieMB.reportRechercheMiseEnplaceBypdfFormat}" -->
+<!-- 													value=" Telecharger le journal de mise en place " -->
+<!-- 													target="_blank"> -->
+<!-- 													<img src="assets/images/exportExcel.jpg" class="pull-left" -->
+<!-- 														style="width: 16%; height: 16%; margin-top: -15px" /> -->
+<!-- 												</h:commandLink> -->
+
+											</div>
+
+
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- End Génération feuille de rapport de suivi -->
+
+
+
+
+
+
+
+
+
+
+					<!-- Liste des mises en place effectués -->
+
+					<div class="modal fade" id="MEPEFFECTUE" role="dialog">
+
+						<div class="modal-dialog modal-lg"
+							style="width: 75%; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content"
+								style="background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(25%, #eef4ed), color-stop(56%, #ffffff)) ! important;">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomPointDeVente}
+
+										</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+										<br />
+
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; height: 400px;">
+											<br />
+
+											<div class="col-md-12">
+
+
+
+												<div class="container-fluid">
+
+													<div class="col-lg-5">
+														<div
+															style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+															<span class="ui-label"> <i class="fa fa-ravelry"
+																aria-hidden="true"></i> <a href="#"
+																style="font-size: 17px;"><i class="fa fa-user"
+																	style="color: red" aria-hidden="true"></i> Gérant du
+																	point de vente </a>
+															</span>
+
+															<h1 class="ui-value">
+																<a href="#" style="color: #029441; margin-top: 10px"
+																	class="pull-right">
+																	#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomGerant}</a>
+															</h1>
+
+														</div>
+													</div>
+
+
+
+													<div class="col-md-2">
+														<img width="110px" height="100px"
+															style="margin-left: 25px"
+															src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+														<br />
+													</div>
+
+
+													<div class="col-lg-5">
+														<div
+															style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+															<span class="ui-label"> <i class="fa fa-ravelry"
+																aria-hidden="true"></i> <a href="#"
+																style="font-size: 17px;"><i
+																	class="fa fa-balance-scale" style="color: red"
+																	aria-hidden="true"></i> Intrant à mettre en place </a>
+															</span>
+
+															<h1 class="ui-value">
+																<a href="#" style="color: #029441; margin-top: 10px"
+																	class="pull-right">
+																	#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}</a>
+															</h1>
+
+														</div>
+													</div>
+
+												</div>
+
+												<h:form>
+
+
+													<div class="container-fluid">
+
+														<div class="col-lg-12">
+															<br /> <br /> <br />
+															<h3 style="text-align: center">Liste des mises en
+																place effectuées</h3>
+															<br />
+															<p:dataTable var="intrantDTO" id="lmepeff"
+																value="#{agentSaisieMB.listedesMiseEnplacedejaEffectue}"
+																reflow="true" emptyMessage="Ancun intrant disponible"
+																paginator="true" rows="10" cellSeparator="10"
+																paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+																paginatorPosition="bottom" style=" font-size:15px ; ">
+
+																<p:column headerText="Date">
+														          #{profilMB.StringCutter(intrantDTO.dateMiseEnplaceEffective, 60)} 
+														        </p:column>
+
+																<p:column headerText="Quantite">
+																	          #{intrantDTO.quantiteAmettreEnplace} 
+																	        </p:column>
+
+																<p:column headerText="N° BL">
+																	          #{profilMB.StringCutter(intrantDTO.blManuel, 60)} 
+																	        </p:column>
+
+																<p:column headerText="N° LV">
+																	          #{profilMB.StringCutter(intrantDTO.lvManuel, 60)} 
+																	        </p:column>
+																<p:column headerText="Transporteur">
+																	          #{profilMB.StringCutter(intrantDTO.transporteur, 60)} 
+																	        </p:column>
+
+																<p:column headerText="camion">
+																	          #{intrantDTO.camion} 
+																	        </p:column>
+
+																<p:column headerText="Chauffeur">
+																	          #{intrantDTO.chauffeur} 
+														        </p:column>
+
+															</p:dataTable>
+
+															<br />
+															<hr />
+
+
+															<div id="walla"
+																style="min-width: 210px; height: 300px; max-width: 400px; margin: 0 auto; margin-top: 50px"></div>
+
+
+
+															<h:commandLink styleClass="pull-right"
+																onclick="return false"
+																style="color : #002839 ; font-size: 18px; margin-right : 10px"
+																action="#{managerManagedBean.redirectSpecifiquePointdeVente}"
+																value=" Telecharger le journal de mise en place ">
+
+																<f:setPropertyActionListener
+																	target="#{managerManagedBean.selectedPointDeVente}"
+																	value="#{pvDTO.libelle}" />
+
+
+															</h:commandLink>
+														</div>
+
+
+
+														<script>
+															var cumul = parseFloat($(
+																	"#MEPForm #cumulSELECT")
+																	.val());
+															var reliquat = parseFloat($(
+																	"#MEPForm #reliquatSELECT")
+																	.val());
+															var intrant = $(
+																	"#MEPForm #intrantSELECT")
+																	.val();
+
+															Highcharts
+																	.chart(
+																			'walla',
+																			{
+																				chart : {
+																					type : 'pie',
+																					options3d : {
+																						enabled : true,
+																						alpha : 45,
+																						beta : 0
+																					}
+																				},
+																				title : {
+																					text : 'Evolution mise en place de '
+																							+ intrant
+																				},
+																				tooltip : {
+																					pointFormat : '{series.name}: <b>{point.percentage:.1f}%</b>'
+																				},
+																				plotOptions : {
+																					pie : {
+																						allowPointSelect : true,
+																						cursor : 'pointer',
+																						depth : 35,
+																						dataLabels : {
+																							enabled : true,
+																							format : '{point.name}'
+																						}
+																					}
+																				},
+																				series : [ {
+																					type : 'pie',
+																					name : 'Evolution',
+																					data : [
+																							[
+																									'Cumul',
+																									cumul ],
+																							[
+																									'Reliquat',
+																									reliquat ] ]
+																				} ]
+																			});
+
+															Highcharts.theme = {
+																colors : [
+																		'#80c347',
+																		'#feeb03' ],
+																chart : {
+																	backgroundColor : {
+																	//color : '#FF9655'
+																	},
+																},
+																title : {
+																	style : {
+																		color : '#000',
+																		font : 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+																	}
+																},
+																subtitle : {
+																	style : {
+																		color : '#666666',
+																		font : 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+																	}
+																},
+
+																legend : {
+																	itemStyle : {
+																		font : '9pt Trebuchet MS, Verdana, sans-serif',
+																		color : 'black'
+																	},
+																	itemHoverStyle : {
+																		color : 'gray'
+																	}
+																}
+															};
+
+															// Apply the theme
+															Highcharts
+																	.setOptions(Highcharts.theme);
+														</script>
+
+
+
+													</div>
+												</h:form>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer"></div>
+							</div>
+						</div>
+
+					</div>
+
+					<!-- ENd liste de mise en place  -->
+
+
+
+
+
+
+
+
+
+					<!--  Enregistrement mise en place -->
+					<div class="modal fade" id="ENRMEP" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Enregistrer Mise en place de
+											#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}
+											au
+											#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.nomPointDeVente}</p>
+
+									</h4>
+								</div>
+
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+
+										<!-- Header BL -->
+										<div class="row">
+
+											<script>
+												/*******  Autocompletion liste Transporteur ***/
+												$(document)
+														.ready(
+																function() {
+																	var arrayProdut = $(
+																			"#listOfTransporteurFromDBInJSON")
+																			.val();
+																	var cars2 = arrayProdut
+																			.split(":");
+																	var cars2 = new Bloodhound(
+																			{
+																				datumTokenizer : Bloodhound.tokenizers.whitespace,
+																				queryTokenizer : Bloodhound.tokenizers.whitespace,
+																				local : cars2
+																			});
+																	$(
+																			'.typeaheadTransport')
+																			.typeahead(
+																					{
+																						hint : true,
+																						highlight : true, /* Enable substring highlighting */
+																						minLength : 1
+																					/* Specify minimum characters required for showing result */
+																					},
+																					{
+																						name : 'cars2',
+																						source : cars2
+																					});
+																});
+
+												/*******  Autocompletion liste Camion ***/
+												$(document)
+														.ready(
+																function() {
+																	var arrayProdut = $(
+																			"#listOfCamionFromDBInJSON")
+																			.val();
+																	var cars2 = arrayProdut
+																			.split(":");
+																	var cars2 = new Bloodhound(
+																			{
+																				datumTokenizer : Bloodhound.tokenizers.whitespace,
+																				queryTokenizer : Bloodhound.tokenizers.whitespace,
+																				local : cars2
+																			});
+																	$(
+																			'.typeaheadCamion')
+																			.typeahead(
+																					{
+																						hint : true,
+																						highlight : true, /* Enable substring highlighting */
+																						minLength : 1
+																					/* Specify minimum characters required for showing result */
+																					},
+																					{
+																						name : 'cars2',
+																						source : cars2
+																					});
+																});
+
+												/*******  Autocompletion liste chauffeur ***/
+												$(document)
+														.ready(
+																function() {
+																	var arrayProdut = $(
+																			"#listOfTChauffeurFromDBInJSON")
+																			.val();
+																	var cars2 = arrayProdut
+																			.split(":");
+																	var cars2 = new Bloodhound(
+																			{
+																				datumTokenizer : Bloodhound.tokenizers.whitespace,
+																				queryTokenizer : Bloodhound.tokenizers.whitespace,
+																				local : cars2
+																			});
+																	$(
+																			'.typeaheadChauffeur')
+																			.typeahead(
+																					{
+																						hint : true,
+																						highlight : true, /* Enable substring highlighting */
+																						minLength : 1
+																					/* Specify minimum characters required for showing result */
+																					},
+																					{
+																						name : 'cars2',
+																						source : cars2
+																					});
+																});
+											</script>
+
+
+											<div class="col-lg-5">
+												<div
+													style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+													<span class="ui-label"> <i class="fa fa-ravelry"
+														aria-hidden="true"></i> <a href="#"
+														style="font-size: 17px;"><i
+															class="fa fa-balance-scale" style="color: red"
+															aria-hidden="true"></i> CUMUL </a>
+													</span>
+
+													<h1 class="ui-value">
+														<a href="#" style="color: #029441; margin-top: 10px"
+															class="pull-right">
+															#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.quotaIntrantAMettreEnplace
+															-
+															agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}
+														</a>
+													</h1>
+
+												</div>
+											</div>
+
+
+
+											<div class="col-md-2">
+												<img width="110px" height="100px" style="margin-left: 25px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+
+											</div>
+
+
+											<div class="col-lg-5">
+												<div
+													style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+													<span class="ui-label"> <i class="fa fa-ravelry"
+														aria-hidden="true"></i> <a href="#"
+														style="font-size: 17px;"><i
+															class="fa fa-balance-scale" style="color: red"
+															aria-hidden="true"></i> RELIQUAT </a>
+													</span>
+
+													<h1 class="ui-value">
+														<a href="#" style="color: #029441; margin-top: 10px"
+															class="pull-right">
+															#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}
+														</a>
+													</h1>
+
+												</div>
+											</div>
+
+
+										</div>
+
+
+
+
+										<br /> <br /> <br />
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; height: auto; margin-top: -35Px;">
+											<br />
+											<div style="text-align: center; color: red">
+												<h:outputLabel id="stockDispo"
+													styleClass="#{agentSaisieMB.executionMiseEnPlace.fournisseurInfosDisponibiliteCSS}">
+													<i class="fa fa-info-circle" aria-hidden="true"></i>
+												 #{agentSaisieMB.executionMiseEnPlace.fournisseurInfosDisponibilite} </h:outputLabel>
+											</div>
+											<br />
+
+											<div class="col-md-4">
+
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 25px">Transporteur </label>
+													<div class="col-sm-6">
+														<br />
+
+														<p:inputText id="communeCommande"
+															style="min-width : 200px"
+															value="#{agentSaisieMB.executionMiseEnPlace.transporteur}"
+															styleClass="typeaheadTransport tt-query form-control"
+															title="transporteur ">
+
+														</p:inputText>
+
+													</div>
+												</div>
+
+
+
+
+
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 25px">Camion </label>
+													<div class="col-sm-6">
+														<br />
+
+														<p:inputText id="cam" style="min-width : 200px"
+															value="#{agentSaisieMB.executionMiseEnPlace.camion}"
+															styleClass="typeaheadCamion tt-query form-control"
+															title="Numéro du camion ">
+
+														</p:inputText>
+
+													</div>
+												</div>
+
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 25px">Chauffeur </label>
+													<div class="col-sm-6">
+														<br />
+
+														<p:inputText id="cauff" style="min-width : 200px"
+															value="#{agentSaisieMB.executionMiseEnPlace.chauffeur}"
+															styleClass="typeaheadChauffeur tt-query form-control"
+															title="Prenom et Nom du chauffeur du camion">
+
+														</p:inputText>
+
+													</div>
+												</div>
+
+
+											</div>
+
+
+
+											<div class="col-md-4 ">
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 5px">Numéro LV</label>
+													<div class="col-sm-8">
+
+														<p:inputText
+															value="#{agentSaisieMB.executionMiseEnPlace.lvMiseEnPlace}"
+															styleClass="form-control">
+
+														</p:inputText>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 10px;">Scan LV </label>
+													<div class="col-sm-8" style="margin-top: 4px">
+														<p:fileUpload label="Selectionner"
+															value="#{tresoMB.versementDTO.documentJustificatif}"
+															mode="simple" skinSimple="true" required="true"
+															requiredMessage="Le fichier de justificatif est requis" />
+
+														<br />
+													</div>
+												</div>
+
+												<hr />
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 5px">Numéro BL</label>
+													<div class="col-sm-8">
+
+														<p:inputText
+															value="#{agentSaisieMB.executionMiseEnPlace.blMiseEnPlace}"
+															styleClass="form-control">
+
+														</p:inputText>
+													</div>
+												</div>
+
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label"
+														style="margin-top: 10px;">Scan BL </label>
+													<div class="col-sm-8" style="margin-top: 4px">
+														<p:fileUpload label="Selectionner"
+															value="#{tresoMB.versementDTO.documentJustificatif}"
+															mode="simple" skinSimple="true" required="true"
+															requiredMessage="Le fichier de justificatif est requis" />
+
+														<br />
+													</div>
+												</div>
+
+											</div>
+
+											<div class="col-md-4 ">
+
+
+
+												<!--  Update demande par Niang : changement liste par auto input complete  
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label">Transporteur</label>
+													<div class="col-sm-8">
+
+														<h:selectOneMenu value="#{referentielMB.idTransporteur}"
+															styleClass="form-control input-sm CustomSelect">
+															<f:selectItem itemLabel="Selectionnez une region "
+																itemValue="" />
+															<f:selectItems
+																value="#{referentielMB.loadAllTransporteur()}"
+																var="CollaborateurDTO"
+																itemValue="#{CollaborateurDTO.clef}"
+																itemLabel="#{CollaborateurDTO.valeur}" />
+
+															<p:ajax event="change"
+																listener="#{referentielMB.updateListCamionByTransporteur()}"
+																update="transporteur chauffeur" />
+														</h:selectOneMenu>
+													</div>
+												</div>
+												<hr />
+												<div class="form-group">
+													<label for="inputPassword3" class="col-sm-4 control-label">N°
+														Camion</label>
+													<div class="col-sm-8">
+														<h:selectOneMenu value="#{referentielMB.idCamion}"
+															id="transporteur"
+															styleClass="form-control input-sm CustomSelect">
+															<f:selectItem itemLabel="Selectionnez un département"
+																itemValue="" />
+															<f:selectItems value="#{referentielMB.listCamion}"
+																var="CollaborateurDTO"
+																itemValue="#{CollaborateurDTO.clef}"
+																itemLabel="#{CollaborateurDTO.valeur}" />
+								
+														</h:selectOneMenu>
+													</div>
+												</div>
+												<hr />
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-4 control-label">Chauffeur</label>
+													<div class="col-sm-8">
+														<h:selectOneMenu value="#{referentielMB.idChauffeur}"
+															id="chauffeur"
+															styleClass="form-control input-sm CustomSelect"
+															requiredMessage="La commune est requise">
+															<f:selectItem itemLabel="Selectionnez une commune"
+																itemValue="" />
+															<f:selectItems value="#{referentielMB.listChauffeur}"
+																var="CollaborateurDTO"
+																itemValue="#{CollaborateurDTO.clef}"
+																itemLabel="#{CollaborateurDTO.valeur}" />
+														</h:selectOneMenu>
+													</div>
+													<hr />
+														-->
+												<div class="form-group">
+
+
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">Fournisseur</label>
+														<div class="col-sm-8">
+
+															<h:selectOneMenu
+																value="#{agentSaisieMB.executionMiseEnPlace.fournisseurId}"
+																styleClass="form-control input-sm CustomSelect"
+																requiredMessage="Le fournisseur est requis">
+																<f:selectItem itemLabel="Selectionnez un programme "
+																	itemValue="" />
+																<f:selectItems
+																	value="#{agentSaisieMB.listFoutnisseurSpecificInstrant}"
+																	var="CoupleDTO" itemValue="#{CoupleDTO.idFounisseur}"
+																	itemLabel="#{CoupleDTO.libelle}" />
+
+
+
+																<p:ajax event="change"
+																	listener="#{agentSaisieMB.verifierStockDisponibleAupresDuFournisseur()}"
+																	update="stockDispo" />
+
+															</h:selectOneMenu>
+
+														</div>
+													</div>
+													<hr />
+
+													<!-- 												<div class="form-group"> -->
+													<!-- 													<label for="inputPassword3" class="col-sm-4 control-label">Distributeur</label> -->
+													<!-- 													<div class="col-sm-8"> -->
+													<!-- 														<p:inputText -->
+													<!-- 															value="#{agentSaisieMB.executionMiseEnPlace.distributeur}" -->
+													<!-- 															styleClass="form-control"> -->
+
+													<!-- 														</p:inputText> -->
+													<!-- 													</div> -->
+
+													<!-- 												</div> -->
+													<hr />
+													<div class="form-group">
+														<label for="inputEmail3" class="col-sm-4 control-label">Quantité</label>
+														<div class="col-sm-8">
+
+															<p:inputText
+																value="#{agentSaisieMB.executionMiseEnPlace.quantiteIntrantAMettreEnplace}"
+																styleClass="form-control">
+
+															</p:inputText>
+														</div>
+													</div>
+
+													<hr />
+
+
+
+													<hr />
+
+
+													<div id="buttons" class="pull-right">
+														<button type="submit" class="fa fa-info btn btn-default ">
+															Annuler</button>
+
+														<h:commandButton value="Enregistrer "
+															styleClass=" fa fa-plus btn btn-success pull-right"
+															action="#{agentSaisieMB.executeMiseEnplace}"
+															style=" color: black; ackground-color: #b8db9c ! important; border-color: #f1f6f0 ! important">
+
+
+															<!-- 														<f:setPropertyActionListener -->
+															<!-- 															target="#{agentSaisieMB.executionMiseEnPlace.transporteur}" -->
+															<!-- 															value="#{referentielMB.transporteur}" /> -->
+															<!-- 														<f:setPropertyActionListener -->
+															<!-- 															target="#{agentSaisieMB.executionMiseEnPlace.chauffeur}" -->
+															<!-- 															value="#{referentielMB.chauffeur}" /> -->
+															<!-- 														<f:setPropertyActionListener -->
+															<!-- 															target="#{agentSaisieMB.executionMiseEnPlace.camion}" -->
+															<!-- 															value="#{referentielMB.camion}" /> -->
+														</h:commandButton>
+
+													</div>
+
+												</div>
+												<hr />
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer"></div>
+							</div>
+						</div>
+					</div>
+					<!--  END Enregistrement mise en place-->
+
+				</h:panelGroup>
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

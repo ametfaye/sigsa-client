@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+
+		<div id="engraisCreate" class="form-horizontal">
+
+
+
+			<h:form id="cc" class="container-fluid fullbg">
+
+
+				<p class="pull-right" style="margin-right: 5%; color: #002839">
+					<i class="fa fa-home" aria-hidden="true"
+						style="margin-right: 5px; color: #80c347" /> Tableau de bord /
+					Recherche de mise en place
+				</p>
+				<hr />
+
+
+
+				<p:messages id="messages" showDetail="true"
+					style="width : 60% ; margin-left : 20%" />
+				<br />
+				<br />
+				<br />
+
+				<div class="col-sm-8  col-sm-offset-2">
+				
+									<p class="titrePage">Recherche avancée de mises en places </p>
+				
+
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label"
+								style="margin-top: 25px"><i class="fa fa-lemon-o" aria-hidden="true"></i>
+								 Intrant</label>
+							<div class="col-sm-9">
+								<br />
+
+
+								<p:inputText id="communeCommande23" style="min-width : 400px ; text-align : center"
+									value="#{rechercheMB.intrantMEP}" maxlength="4"
+									styleClass="listeIntrant tt-query form-control"
+									title="L'intrant à rechercher chez le fournisseur"
+									requiredMessage="L'intrant à rechercher est obligatoire"
+									required="true">
+								</p:inputText>
+							</div>
+						</div>
+
+
+
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label"
+								style="margin-top: 25px"><i class="fa fa-share-alt" aria-hidden="true"></i>
+								 Programme</label>
+							<div class="col-sm-9">
+								<br />
+
+
+								<p:inputText style="min-width : 400px ; text-align : center"
+									value="#{rechercheMB.intrnatMETProg}" maxlength="4"
+									styleClass="ProgAutoComplete tt-query form-control"
+									title="L'intrant à acheter chez le fournisseur"
+									requiredMessage="L'intrant à rechercher est obligatoire"
+									>
+								</p:inputText>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label"
+								style="margin-top: 25px ; "> <i class="fa fa-map-pin" aria-hidden="true"></i>
+								 Département</label>
+							<div class="col-sm-9">
+								<br />
+
+
+								<p:inputText style="min-width : 400px ; text-align : center"
+									value="#{rechercheMB.intrnatMETDepartement}" maxlength="4"
+									styleClass="deptComplet tt-query form-control"
+									title="L'intrant à acheter chez le fournisseur"
+									>
+								</p:inputText>
+							</div>
+
+						</div>
+
+					</div>
+
+
+					<div class="col-sm-6">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label"
+									style="margin-top: 25px "> <i class="fa fa-calendar"
+									aria-hidden="true"></i> Date début
+								</label>
+								<div class="col-sm-9">
+									<br />
+									<p:inputText style="width : 400px ; text-align : center " type="date"
+										value="#{rechercheMB.intrnatMETDateDEbut}"
+										styleClass="  form-control"
+										title="L'intrant à acheter chez le fournisseur" >
+									</p:inputText>
+								</div>
+							</div>
+
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label" 
+								style="margin-top: 25px ; "> <i class="fa fa-calendar"
+								aria-hidden="true"></i> Date de Fin
+							</label>
+							<div class="col-sm-9">
+								<br />
+								<p:inputText style="width : 400px ! important; text-align : center " type="date"
+									value="#{rechercheMB.intrnatMETDateFin}" 
+									styleClass="  form-control"
+									title="L'intrant à acheter chez le fournisseur">
+								</p:inputText>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-3 control-label"
+								style="margin-top: 25px"> <i class="fa fa-bus" aria-hidden="true"></i>
+								 Transporteur</label>
+							<div class="col-sm-9">
+								<br />
+
+
+								<p:inputText style="min-width : 400px ; text-align : center"
+									value="#{rechercheMB.intrnatMETTransporteur}" maxlength="4"
+									styleClass="transportAutocomplete tt-query form-control"
+									title="L'intrant à acheter chez le fournisseur"
+									requiredMessage="L'intrant à rechercher est obligatoire"
+									>
+								</p:inputText>
+							</div>
+
+						</div>
+
+
+					</div>
+
+
+
+
+					<div class="col-sm-7" style="margin-top: 20px">
+
+						<h:commandButton value="Rechercher  "  
+							styleClass=" fa fa-plus btn btn-success pull-right"
+							action="#{rechercheMB.rechercherMepParPeriode()}"
+							style=" color: black; ackground-color: #b8db9c ! important; border-color: #f1f6f0 ! important" >
+							
+							<img src="assets/images/searchP.png" class="pull-right"
+												style="width: 8%; height: 8%; margin-top: -15px" />
+							</h:commandButton>
+					</div>
+
+					<!--  Liste des points des ventes trouvés dans la commune -->
+
+					<br /> <br /> <br /> <br />
+					
+					
+				</div>
+
+
+
+				<div class="col-md-12">
+
+					
+								 
+					<br /> 
+
+
+									<h:commandLink  rendered="#{rechercheMB.showResultBloc}" 
+									style="color: #924969 color: #924969; margin-left  : 35%; margin-top: 40px; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 100%; color: #924969; font-weight: bold;">
+									<i class="fa fa-comments" aria-hidden="true"></i> #{rechercheMB.intrnatMEResultatSizeInfosMessages} 
+								
+								</h:commandLink>
+								<br /> <br />
+							
+	
+
+
+					<p:dataTable id="ProfilIDDD" var="utilisateurProviver"  
+						value="#{rechercheMB.intrnatMEResultat}" reflow="true" row="5"
+						paginator="true" rows="10" cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						style="width: 90%; margin-left:5%; font-size:15px"
+						widgetVar="carsTable"
+						rowsPerPageTemplate="5,10,15" emptyMessage="Aucune MEP trouvée  "
+						filteredValue="#{rechercheMB.intrnatMEResultatFiltred}">
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('carsTable').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+
+						<p:column headerText="Programme"
+							filterBy="#{utilisateurProviver.nomProgramme}"
+							sortBy="#{utilisateurProviver.nomProgramme}"
+							filterMatchMode="contains">
+														          #{profilMB.StringCutter(utilisateurProviver.nomProgramme, 60)} 
+														        </p:column>
+
+						<p:column headerText="Date"
+							filterBy="#{utilisateurProviver.dateMEPSTR}"
+							sortBy="#{utilisateurProviver.dateMEPSTR}">
+														          #{profilMB.StringCutter(utilisateurProviver.dateMEPSTR, 60)} 
+														        </p:column>
+
+						<p:column headerText="Point de vente" filterBy="#{utilisateurProviver.nomPointDeVente}"
+							sortBy="#{utilisateurProviver.nomPointDeVente}">
+																	          #{utilisateurProviver.nomPointDeVente} 
+																	        </p:column>
+
+
+						<p:column headerText="Quantite" filterBy="#{utilisateurProviver.quantiteIntrantAMettreEnplace}"
+							sortBy="#{utilisateurProviver.quantiteIntrantAMettreEnplace}">
+																	          #{utilisateurProviver.quantiteIntrantAMettreEnplace} 
+																	        </p:column>
+
+						<p:column headerText="N° BL" filterBy="#{utilisateurProviver.blMiseEnPlace}"
+							sortBy="#{utilisateurProviver.blMiseEnPlace}">
+																	          #{profilMB.StringCutter(utilisateurProviver.blMiseEnPlace, 60)} 
+																	        </p:column>
+
+						<p:column headerText="N° LV" filterBy="#{utilisateurProviver.lvMiseEnPlace}"
+							sortBy="#{utilisateurProviver.lvMiseEnPlace}">
+																	          #{profilMB.StringCutter(utilisateurProviver.lvMiseEnPlace, 60)} 
+																	        </p:column>
+						<p:column headerText="Transporteur" filterBy="#{utilisateurProviver.transporteur}"
+							sortBy="#{utilisateurProviver.transporteur}">
+																	          #{profilMB.StringCutter(utilisateurProviver.transporteur, 60)} 
+																	        </p:column>
+
+						<p:column headerText="camion" filterBy="#{utilisateurProviver.camion}"
+							sortBy="#{utilisateurProviver.camion}">
+																	          #{utilisateurProviver.camion} 
+																	        </p:column>
+
+						<p:column headerText="Chauffeur" filterBy="#{utilisateurProviver.chauffeur}"
+							sortBy="#{utilisateurProviver.chauffeur}">
+																	          #{utilisateurProviver.chauffeur} 
+														        </p:column>
+
+
+					</p:dataTable>
+
+
+					<h:commandLink action="#{rechercheMB.reportRechercheMiseEnplaceBypdfFormat}" immediate="true" target="_blank" value=" Telecharger le resultat "  style="margin-left : 89%"> 
+								<img style="margin-right : 20px ; margin-left : 85% ;   margin-top : -27px" height="80px" src="assets/images/pdf.png" 
+									alt="Logo PGCA" />
+					</h:commandLink>
+
+<!-- 												<br/><br/><br/> -->
+<!-- 				<h:commandLink     action="#{rechercheMB.reportRechercheMiseEnplaceBypdfFormat}" -->
+<!-- 											style="background : url('assets/images/pdf2.ico'); color : #002839 ; font-size: 18px; margin-left : 87.5%; padding-top : 25px ; padding-bottom : 30px ; " -->
+<!-- 											value=" Telecharger le resultat " -->
+<!-- 											target="_blank"> -->
+
+
+										
+<!-- 			  </h:commandLink> -->
+			
+			
+			
+			
+		
+			
+			
+			
+										<br/>
+
+				</div>
+
+			</h:form>
+
+
+
+
+
+
+
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de collecte</ui:define>
+
+	<ui:define name="section">
+		<h:form class="container-fluid" id="blform">
+			<div class="col-md-12">
+
+		
+
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true" style="margin-right: 5px" />
+						Tableau de bord / Gestion des BL
+					</p>
+					<hr />
+
+
+
+					<h1 class="MainLabelCenter">
+						<i class="fa fa-assistive-listening-systems" aria-hidden="true"></i>
+						Liste des BL
+					</h1>
+
+
+					<!--  Filtre des ordres -->
+					<div class="col-md-10 pull-right "></div>
+
+
+
+
+					<p:dataTable id="tableStateDT" var="ProduitDTO"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						value="#{magasinierMB.listStock}" widgetVar="carsTable" rows="10"
+						paginator="true"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+						rowsPerPageTemplate="5,10,15" selectionMode="single"
+						selection="#{magasinierMB.selectedBLDTO}"
+						rowKey="#{ProduitDTO.id}"
+						emptyMessage="Aucun bon de livraison à valider !!"
+						filteredValue="#{agentSaisieMB.filtredMiseEnplaceAgregation}"
+						paginatorPosition="bottom">
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('carsTable').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+
+						<h:inputHidden id="id" value="#{agentSaisieMB.selectedBLDTO.id}"
+							style="margin-top:-1px" required="false" label="code" />
+
+						<p:column headerText="Référence" filterBy="#{ProduitDTO.id}"
+							sortBy="#{ProduitDTO.id}" filterMatchMode="contains">  
+								     BL#{entiteJMB.StringCutter(ProduitDTO.id, 10)} 
+								        </p:column>
+
+
+						<!-- 	<p:column headerText="Origine" -->
+						<!-- 							filterBy="#{ProduitDTO.provenanceBL}" -->
+						<!-- 							sortBy="#{ProduitDTO.provenanceBL}" filterMatchMode="contains">   -->
+						<!-- 								     #{entiteJMB.StringCutter(ProduitDTO.provenanceBL,60)}  -->
+						<!-- 								</p:column> -->
+
+						<p:column headerText="Destination"
+							filterBy="#{ProduitDTO.pointdeVentelibelle}"
+							sortBy="#{ProduitDTO.pointdeVentelibelle}"
+							filterMatchMode="contains">  
+								     #{entiteJMB.StringCutter(ProduitDTO.zoneDeReception, 50)} 
+								        </p:column>
+
+
+
+
+						<p:column headerText="Chauffeur"
+							filterBy="#{ProduitDTO.chauffeurlibelle}"
+							sortBy="#{ProduitDTO.chauffeurlibelle}"
+							filterMatchMode="contains"> 
+								       #{entiteJMB.StringCutter(ProduitDTO.chauffeurlibelle, 20)} 
+		                                </p:column>
+
+
+						<p:column headerText="Camion"
+							filterBy="#{ProduitDTO.camionnumero}"
+							sortBy="#{ProduitDTO.camionnumero}" filterMatchMode="contains">  
+								        #{entiteJMB.StringCutter(ProduitDTO.camionnumero, 20)} 
+								        </p:column>
+
+						<p:column headerText="Transporteur"
+							filterBy="#{ProduitDTO.transporteurlibelle}"
+							sortBy="#{ProduitDTO.transporteurlibelle}"
+							filterMatchMode="contains">  
+												#{entiteJMB.StringCutter(ProduitDTO.transporteurlibelle,20)}
+								        </p:column>
+
+						<p:ajax event="rowSelect" update="blform:detailsblInfos"
+							listener="#{magasinierMB.getDetailsOfSelectedBL()}">
+						</p:ajax>
+
+					</p:dataTable>
+
+					<div class="row  pull-right" style="margin-right: 5%">
+
+				
+				
+
+
+		
+				
+
+					<h:panelGroup class="col-md-10 col-md-offset-1" id="detailsblInfos">
+					
+					
+
+						<br />
+						<hr />
+						
+						
+						<h1 class="titleCenter" style="text-align: center">
+							
+							Détails du
+							bon de Livraison #{magasinierMB.selectedBLDTO.libelle}
+						</h1>
+							
+						
+						<h1 class="titleCenter" style="text-align: center">
+							
+									<img src="assets/images/pictosIntrant/#{magasinierMB.selectedBLDTO.picto}.png" style="width: 200PX; height : 120PX  ; margin-bottom : 10PX"  />
+					
+							</h1>
+							
+						<h1 style="text-align: center; color: #92c666; display: none"
+							class="titleCenter">XXXXXXXX XXXXXXX ico tacking car style
+							voyage from -> to : car in vuillejuif Produit en provenance de
+							#{magasinierMB.selectedBLDTO.provenanceBL}</h1>
+						<hr />
+						<br /> <br /> <br />
+
+						<div class="row">
+						
+								
+							<div class="col-md-6">
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-6 control-label">Expediteur
+									</label>
+									<div class="col-sm-6">
+										<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedBLDTO.auteurBl}</label>
+									</div>
+								</div>
+								<br />
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-6 control-label ">Contact</label>
+									<div class="col-sm-6">
+										<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedBLDTO.contactAuteurBl}</label>
+									</div>
+								</div>
+								<br />
+									<div class="form-group">
+									<label for="inputEmail3" class="col-sm-6 control-label">Statut
+									</label>
+
+									<div class="col-sm-6">
+										<label for="inputEmail3" class="control-label "> <span
+											class="label label-warning"> <i
+												class=" fa fa-spinner " aria-hidden="true"></i> En attente
+										</span>
+										</label>
+									</div>
+								</div>
+								<br />
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-6 control-label">Tel
+										Chauffeur</label>
+									<div class="col-sm-6">
+										<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedBLDTO.contactChauffeur}</label>
+									</div>
+								</div>
+								
+								<br />
+<!-- 										<div class="form-group"> -->
+<!-- 									<label for="inputEmail3" class="col-sm-6 control-label"> -->
+<!-- 										Poids Total </label> -->
+<!-- 									<div class="col-sm-6"> -->
+<!-- 										<label for="inputEmail3" class="control-label "> -->
+<!-- 											#{magasinierMB.selectedBLDTO.poids} (T) </label> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<br /> -->
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-6 control-label ">Valeur</label>
+									<div class="col-sm-6">
+										<label for="inputEmail3" class="control-label ">#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedBLDTO.prixtotal)}
+										</label>
+									</div>
+								</div>
+								<br />
+								
+
+							</div>
+
+
+
+							<div class="col-md-6">
+
+								<p:dataTable var="ProduitDTO"
+							value="#{magasinierMB.selectedBLDTO.listProduitsOfBL}"
+							reflow="true" row="5" rowKey="#{ProduitDTO.id}"
+							style=" font-size:15px ; "
+							emptyMessage="Aucun produit à valider !!" paginator="true"
+							paginatorPosition="bottom" rows="5"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} ">
+
+							<p:column headerText="Intrant envoyé">  
+								         #{entiteJMB.StringCutter(ProduitDTO.libelle,20)} 
+								        </p:column>
+							<p:column headerText="Quantité">  
+								         #{entiteJMB.StringCutter(ProduitDTO.quantite,20)}  (T)
+								        </p:column>
+
+							<p:column headerText="Prix Unitaire" >  
+												#{referentielMB.utils.formatFloatToCFA(ProduitDTO.prixUnitaire)}
+								        </p:column>
+<!-- 							<p:column headerText="Campagne" style="width : 25%">   -->
+<!-- 								         #{entiteJMB.StringCutter(ProduitDTO.libelleCampagne,30)}  -->
+<!-- 								        </p:column> -->
+<!-- 							<p:column headerText="Programme">   -->
+<!-- 								         #{entiteJMB.StringCutter(ProduitDTO.libelleProgramme,20)}  -->
+<!-- 								        </p:column> -->
+
+
+						</p:dataTable>
+						
+
+
+							</div>
+
+		<br /> <br /> <br /> 
+				
+						</div>
+				
+
+					</h:panelGroup>
+
+
+
+	</div>
+
+					<br />
+					<br />
+	
+
+
+
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

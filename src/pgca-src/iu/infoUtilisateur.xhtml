@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Ajout Entite Juridique</ui:define>
+
+	<ui:define name="section">
+
+
+
+
+		<h:form class="" id="form" action="dashboardG.html">
+			<p:messages id="messages" showDetail="false" />
+
+
+
+			<div class="formulaire_utilisateur">
+				<br /> <br />
+				<h:inputHidden
+					value="#{utilisateurMB.utilisateurDTO.numeroFonctionnel}" />
+
+				<fieldset class="formulaire_ohada"
+					style="margin-top: 50px; min-height: 400px">
+
+
+					<div class="row" style="margin-bottom: 25%">
+						<h1 class="communDashboardTitle">#{utilisateurMB.utilisateurDTO.nom}
+						</h1>
+						<br />
+						<br />
+						<br />
+
+						<p style="text-align: center">Dernière Connexion connue :
+							22/12/2016 à 16:23:23</p>
+
+
+						<div class="row"
+							style="margin-right: 20%; margin-left: 20%; margin-top: 2%">
+
+
+
+							<div class="list-group ">
+
+								<a href="#" class="list-group-item "><span
+									class="pull-right ">#{utilisateurMB.utilisateurDTO.nom}</span>Nom</a>
+								  <br /> <a href="#" class="list-group-item "><span
+									class="pull-right ">#{utilisateurMB.utilisateurDTO.prenom}</span>Prénom</a>
+								  <br /> <a href="#" class="list-group-item "><span
+									class="pull-right ">#{utilisateurMB.utilisateurDTO.libelle}</span>Profil</a>
+								  <br /> <a href="#" class="list-group-item "><span
+									class="pull-right ">3</span>Point de collecte</a>  
+								<!-- 								<br/> -->
+								<!-- 								<a	href="#" class="list-group-item"><span class="badge">1</span>Prénom</a>  -->
+
+								<br />                     
+							</div>
+							<br />
+							<br />
+							<br />
+
+						</div>
+
+
+
+						<br /> <br />
+						<br />
+
+					</div>
+
+
+
+
+				</fieldset>
+
+			</div>
+			<!-- 								<div id="buttons"> -->
+			<!-- 										<div class="greenBar"></div> -->
+			<!-- 										<h:button class="annuler" value="Accueil" outcome="dashboardAdmin" name="annuler"  style="margin-right : 15px"/> -->
+			<!-- 										<h:button class="visualiser" value="Liste" outcome="listeUtilisateur" name="visualiser" style="margin-right : 15px"/> -->
+			<!-- 										<h:button class="enregistrer" value="Ajouter" outcome="creerUtilisateur" name="enregistrer" style="margin-right : 15px"/> -->
+
+			<!-- 										<h:commandLink class="suivant" action="#{utilisateurMB.downloadChangePassword}"  -->
+			<!-- 												rendered="#{utilisateurMB.utilisateurDTO.gedDocumentDTO!=null}"> -->
+			<!--                        						<h:outputText value="Imprimer PDF" style="color:white; font-family: 'PTSans Bold';" /> -->
+			<!--                     				 </h:commandLink> -->
+			<!-- 										<h:outputLink styleClass="suivant" name="suivants" value="#" rendered="#{utilisateurMB.utilisateurDTO.gedDocumentDTO==null}"> -->
+			<!-- 												<h:outputText value="Imprimer PDF" style="color:white; font-family: 'PTSans Bold';" /> -->
+			<!-- 										</h:outputLink> -->
+			<!-- 								</div> -->
+
+
+			<p:toolbarGroup align="center" id="buttonGroup">
+				<div id="buttons">
+					<div class="greenBar"></div>
+
+					<h:button styleClass="suivant" outcome="listeUtilisateur"
+						value="Retour" name="suivants" />
+				</div>
+				<br />
+			</p:toolbarGroup>
+
+
+		</h:form>
+
+		<br />
+		<br />
+		<br />
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

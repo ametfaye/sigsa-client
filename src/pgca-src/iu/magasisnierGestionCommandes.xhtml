@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="3%"></p:spacer>
+
+
+
+		<div class="container-fluid">
+
+			<div class="col-md-12">
+				<p:messages id="msg" showDetail="true" style="text-align  : center;     font-size: 15px; color: #253123;letter-spacing: 2px;text-align: center; margin-top : 30px ; margin-right : 15%;  margin-left : 15%"  />
+
+				<h:form id="superFormgg" prependId="false"
+					rendered="#{param.idBlocToShow eq null}">
+					<h1
+						style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+						Liste des commandes</h1>
+
+					<p:dataTable id="ProfilID" var="intrantDTO"
+						value="#{magasinierMB.callServiceRecuperationCommandes()}"
+						reflow="true" rowKey="#{intrantDTO.idCommande}"
+						emptyMessage="Ancun intrant disponible" paginator="true" rows="10"
+						cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						selection="#{magasinierMB.selectedCommandeDTO}"
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px;">
+
+						<p:column headerText="Référence">
+							<a> #{profilMB.StringCutter(intrantDTO.referenceCMD, 40)} </a>
+						</p:column>
+
+						<p:column headerText="Date ">
+				          #{profilMB.StringCutter(intrantDTO.dateLivraisonSouhaite, 40)} 
+				        </p:column>
+
+						<p:column headerText="Client">
+				          #{profilMB.StringCutter(intrantDTO.clientNom, 60)} 
+				        </p:column>
+
+						<p:column headerText="Téléphone Client">
+				          #{profilMB.StringCutter(intrantDTO.clientTel, 60)} 
+				        </p:column>
+						<p:column headerText="Statut" style="text-align : center">
+							<span class="badge #{intrantDTO.styleClassCSSstatusCMD}">
+								<i class=" fa fa-spinner" aria-hidden="true" />
+								#{intrantDTO.statusLibelle}
+							</span>
+						</p:column>
+					</p:dataTable>
+
+					<br />
+					<br />
+					<br />
+
+					<h:commandButton value="Traiter la commande"
+						action="#{magasinierMB.loadDetailsSelectedCMD}" name="Détails"
+						class="enregistrer a fa-info btn btn-success pull-right"
+						style="margin-right : 80px" />
+
+					<br />
+					<br />
+					<br />
+					<br />
+
+
+
+				</h:form>
+
+
+				<h:form rendered="#{param.idBlocToShow eq '2'}" id="ff">
+
+					<h1 class="labelCustum"
+						style="text-align: center; color: TEXT-ALIGN: center; FONT-SIZE: 18PX;">
+						<span
+							class="badge #{magasinierMB.selectedCommandeDTO.styleClassCSSstatusCMD}"
+							style="height: 40px; padding-top: 8px; padding: 8px 15px 5px 15px ! important; font-size: 18px ! important;">
+							<i class=" fa fa-spinner" aria-hidden="true" /> Commande
+							#{magasinierMB.selectedCommandeDTO.referenceCMD} -
+							#{magasinierMB.selectedCommandeDTO.statutCMD}
+						</span>
+					</h1>
+
+					<div class="container-fluid">
+						<br /> <br />
+
+						<div class="col-lg-8">
+							<div class="row">
+
+
+								<div class="col-lg-12" style="border: 1PX solid #f0f9f4">
+									<br />
+
+							
+									<br />
+									<div class="col-lg-6">
+										<div class="form-group ">
+											<i class="fa fa-3x fa-user" aria-hidden="true"></i> <span
+												class="montantCFA">Bénéficiaire </span>
+										</div>
+										<hr />
+
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Nom </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCommandeDTO.clientNom} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Téléphone </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCommandeDTO.clientTel} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Commune </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=""
+													value="#{magasinierMB.selectedCommandeDTO.auteurCommandePointdeVenteZone} "></h:outputLabel>
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Adresse </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=""
+													value="#{magasinierMB.selectedCommandeDTO.clienAdresse} "></h:outputLabel>
+											</div>
+										</div>
+
+
+									</div>
+
+									<div class="col-lg-6">
+										<div class="form-group ">
+											<i class="fa fa-3x fa-home" aria-hidden="true"></i> <span
+												class="montantCFA">Origine </span>
+										</div>
+										<hr />
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Zone </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCommandeDTO.auteurCommandeProvenance} "></h:outputLabel>
+											</div>
+										</div>
+										
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Programme </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCommandeDTO.libelleProgramme}"></h:outputLabel>
+											</div>
+										</div>
+									
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label"> Auteur </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCommandeDTO.auteurCommandeNom}" />
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Téléphone </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{magasinierMB.selectedCommandeDTO.auteurCommandeProvenanceTel}"></h:outputLabel>
+											</div>
+										</div>
+										
+										
+											<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Montant Total </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCommandeDTO.montantTotaldelaCommande)}"></h:outputLabel>
+											</div>
+										</div>
+
+										
+										
+										<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Montant payé </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCommandeDTO.montantPayeInitialement)}"></h:outputLabel>
+											</div>
+										</div>
+										
+										
+											<div class="form-group row">
+											<label class="col-xs-4 col-form-label">Crédit contracté </label>
+											<div class="col-xs-8">
+												<h:outputLabel class=" "
+													value="#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCommandeDTO.creditLieeAlaCMD.montantRestantApayer)}"></h:outputLabel>
+																						<a> Voir détails credit </a>
+											
+											</div>
+										</div>
+
+
+									</div>
+
+			<hr/>
+								</div>
+
+
+
+
+								<div class="col-md-8" style="display: none">
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Stock Sedab :
+										</label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage Margin10"
+												value="#{magasinierMB.selectedCommandeDTO.pointDeVenteDepartementProvenance} "></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Programme : </label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage Margin10"
+												value="#{magasinierMB.selectedCommandeDTO.libelleProgramme} "></h:outputLabel>
+										</div>
+									</div>
+
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Commande </label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage Margin10"
+												value="#{magasinierMB.selectedCommandeDTO.auteurCommandeNom} "></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Mode de
+											paiement </label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage Margin10"
+												value="#{magasinierMB.selectedCommandeDTO.modeDePaiement} "></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Montant payé:</label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage Margin10"
+												value="#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCommandeDTO.montantPayeInitialement)}" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Crédit
+											Contracté </label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage Margin10"
+												value="#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCommandeDTO.creditLieeAlaCMD.montantRestantApayer)}"></h:outputLabel>
+											<a> Voir détails credit </a>
+										</div>
+									</div>
+									<hr />
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Montant de la
+											commande </label>
+										<div class="col-xs-8">
+											<h:outputLabel class="titrePage  Margin10 montantCFA"
+												value="#{referentielMB.utils.formatFloatToCFA(magasinierMB.selectedCommandeDTO.montantTotaldelaCommande)}">
+												<i class="fa fa-arrow-up" aria-hidden="true"></i>
+											</h:outputLabel>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+						
+							<p style="text-align :center"> Produit (s) de la commande</p> <br/>
+							<p:dataTable var="intrantDTO"
+								value="#{magasinierMB.selectedCommandeDTO.listProduitsDTOtoCreate}"
+								reflow="true" rowKey="#{intrantDTO.idProduit}"
+								emptyMessage="Ancun intrant disponible" paginator="true"
+								rows="10" cellSeparator="10"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								paginatorPosition="bottom"
+								selection="#{agentSaisieMB.selecteProduiFromCMD}"
+								selectionMode="single"
+								style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+								<p:column headerText="Intrant">
+							          #{profilMB.StringCutter(intrantDTO.libelle, 120)} 
+							        </p:column>
+
+								<p:column headerText="Tonnage">
+							          #{profilMB.StringCutter(intrantDTO.quantite, 30)} 
+							        </p:column>
+
+								<p:column headerText="P/U">
+							          #{profilMB.StringCutter(intrantDTO.prixUnitaire, 60)} 
+							        </p:column>
+
+
+								<p:column headerText="Total">
+							          #{(intrantDTO.prixUnitaire *  intrantDTO.quantite)} 
+							        </p:column>
+								 <p:ajax event="rowSelect" update="ff"> </p:ajax>
+							</p:dataTable>
+
+							<br /> <br />
+						</div>
+
+
+					</div>
+
+
+					<div class=" pull-right" style="margin-right: 55px">
+						<br />
+
+
+						<h:panelGroup 
+							rendered="#{magasinierMB.showbtnValidationsCMD == true}">
+							<h:commandButton value="Accepter la commande"
+								action="#{magasinierMB.accepterCommande}"
+								class="enregistrer a fa-info btn btn-success pull-right"
+								style="margin-right : 15px; color : white " />
+
+						</h:panelGroup>
+						
+						
+							<h:commandButton value="Retour "
+								action="magasisnierGestionCommandes.xhtml" name="Modifier" 
+								class="enregistrer a fa-info btn btn-default pull-right"
+								style="margin-right : 15px; " />
+					</div>
+
+
+				</h:form>
+
+				
+				
+				<!--  Confiramtion validation de commande  -->
+				
+				
+					<!-- Preview BL  -->
+					<h:form rendered="#{param.idBlocToShow eq '3'}">
+						<br />
+						<br />
+
+						<p
+							style="text-align: center; margin-top: 10px; margin-bottom: 18px; text-transform: uppercase; font-size: 16px; font-family: 'PTSans Bold'; color: #22a058; letter-spacing: 2px; text-align: center">
+							<i class="fa fa-check  fa-2x" style="color: #22a058;" /> Votre commande est validée avec succès	<a href="#"
+								style="color: #22a058;">
+								#{magasinierMB.selectedCommandeDTO.referenceCMD} </a>.
+						
+						</p>
+						<br />
+						<br />
+
+						<p style="margin-left: 60px; margin-right: 60px">Vous pouvez
+							imprimer ou envoyer par mail les documents liés à votre commande
+							(Bordereau de commande, facture, ...)</p>
+						<br />
+
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+
+<!-- 						<button type="button" class="btn btn-success  pull-right" -->
+<!-- 							style="margin-right: 60px" data-toggle="modal" -->
+<!-- 							data-target="#Facture2">Voir la facture</button> -->
+
+						<button type="button" class="btn btn-success  pull-right"
+							style="margin-right: 90px" data-toggle="modal" data-target="#BL">Voir l'ordre</button>
+
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+					</h:form>
+
+				
+				
+			</div>
+		</div>
+
+
+
+		<!--  message  de confirmation commande -->
+			<!-- Modal  BL -->
+					<div class="modal fade" id="BL" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Ordre de livraison Nº
+											#{magasinierMB.selectedCommandeDTO.referenceCMD}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+										<br />
+
+										<!-- Header BL -->
+										<div class="row">
+											<div class="col-md-5">
+												<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+												<br />
+												<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+													5, Bd du Centenaire de la Commune, Dakar</h1>
+												<br />
+												<h1 class="ui-label soflLabel">
+													Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+												</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+											</div>
+
+											<div class="col-md-2">
+												<img width="110px" height="100px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+												<br /> <br />
+											</div>
+
+											<div class="col-md-5 ">
+										
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Programme</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.selectedCommandeDTO.libelleProgramme}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label  soflLabel">Date</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{referentielMB.utils.splitStringDate(magasinierMB.selectedCommandeDTO.dateLivraisonSouhaite)}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Auteur </label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">
+															#{SessionMB.getSessionDataByTag('prenomUser')}
+															#{SessionMB.getSessionDataByTag('nomUser') }</label>
+													</div>
+												</div>
+
+											</div>
+										</div>
+
+										<br /> <br /> <br />
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+											<br />
+											<div class="col-md-5">
+												<div class="row" style="border-top: 2px solid #80c347;">
+													<br />
+													<p
+														style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+														Bénéficiaire</p>
+													<br />
+												</div>
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Nom
+														- Prénom </label>
+
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedCommandeDTO.clientNom}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Téléphone</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedCommandeDTO.clientTel}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Numéro
+														CNI</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label ">#{magasinierMB.selectedCommandeDTO.clientCNI}</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Commune</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.selectedCommandeDTO.communeLibelle}</label>
+													</div>
+												</div>
+												<br />
+
+
+											</div>
+
+											<div class="col-md-5 pull-right">
+
+												<div class="row" style="border-top: 2px solid #80c347;">
+													<br />
+													<p
+														style="text-align: center; color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">
+														Origine intrant</p>
+													<br />
+												</div>
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Point
+														de vente </label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.selectedCommandeDTO.communeLibelle}
+														</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Responsable</label>
+
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.selectedCommandeDTO.clientNom}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Tel
+														Responsable </label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">
+															#{magasinierMB.selectedCommandeDTO.clientTel}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3" class="col-sm-6 control-label ">Adresse
+													</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.selectedCommandeDTO.clienAdresse}</label>
+													</div>
+												</div>
+
+												<br />
+											</div>
+
+
+										</div>
+
+										<!-- Marchandises -->
+										<br /> <br /> <br />
+										<div class="row">
+											<div class="col-md-2"></div>
+
+											<div class="col-md-8">
+
+												<div class="row" style="border-top: 2px solid #80c347;">
+													<br />
+													<p
+														style="color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+													<br />
+												</div>
+												<h:form id="listOfProductBL2">
+
+													<p:dataTable var="pvDTO"
+														value="#{magasinierMB.selectedCommandeDTO.listProduitsDTOtoCreate} " reflow="true"
+														rowKey="#{pvDTO.idProduit}"
+														emptyMessage="Ancun produit	 de vente disponible"
+														paginator="false" rows="10" cellSeparator="10"
+														paginatorPosition="bottom"
+														style="width: 90%; margin-left:5%; font-size:15px ; ">
+														
+														
+
+													</p:dataTable>
+
+												</h:form>
+
+											</div>
+											<div class="col-md-2 pull-right"></div>
+										</div>
+										<br /> <br /> <br />
+
+										<div class="row"
+											style="border-top: 2px solid #ffffff; height: 220px;">
+											<br />
+
+
+											<p style="text-align: center">
+												Veuillez livrer à <i>
+													#{magasinierMB.selectedCommandeDTO.clientNom} </i>, détenteur du numéro
+												de téléphone #{magasinierMB.selectedCommandeDTO.clientTel} la liste
+												des produits ci-dessous. . <br /> <a href="#"
+													style="color: black;"> </a>
+
+											</p>
+											<br /> <br />
+
+
+
+											<p:dataTable id="listProduct2dd22" var="pvDTO"
+												value="#{magasinierMB.selectedCommandeDTO.listProduitsDTOtoCreate}" reflow="true"
+												rowKey="#{pvDTO.idProduit}" paginator="false" rows="6"
+												cellSeparator="10"
+												style="width: 70%; margin-left:15%; font-size:15px ; text-align :center ">
+												<p:column headerText="Désignation">
+				          				#{profilMB.StringCutter(pvDTO.libelle, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+												<p:column headerText="Quantité">
+				          				#{profilMB.StringCutter(pvDTO.quantite, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+												
+											</p:dataTable>
+										</div>
+
+
+
+										<!-- footer BL -->
+										<div class="row">
+											<div class="col-md-4 pull-left"
+												style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+												<p class="titrePage">La direction</p>
+											</div>
+
+
+										</div>
+
+										<div class="row">
+
+
+											<br /> <br /> <br /> <br /> <br />
+											<h1 class="ui-label pull-left">
+												contact@sedab.com<br />
+											</h1>
+											<h1 class="ui-label pull-right">www.sedab.com</h1>
+
+
+										</div>
+
+
+									</div>
+								</div>
+
+								<div class="modal-footer">
+
+									<img id="awa" width="90px" height="80px"
+										src="assets/images/print.png" title="Imprimer BL" /> <img
+										width="90px" height="80px" src="assets/images/sendBymail.png"
+										title="Envoyer BL par Mail" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<!--  Modal de Facture  -->
+
+
+					<div class="modal fade" id="Facture2" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; --&amp; amp; amp; amp; amp; amp; amp; amp; amp; gt; font-family: 'PTSans Bold'; font-size: 12px; */ color: #253123; letter-spacing: 2px; */ text-align: center text-transform: uppercase; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Commande Nº #{magasinierMB.commandeDTO.referenceCMD}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid ">
+										<br />
+
+										<!-- Header BL -->
+										<div class="row">
+											<div class="col-md-5">
+												<h1 class="ui-label    soflLabel">SEDAB - SARL</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Immeuble Beau Rivage</h1>
+												<br />
+												<h1 class="ui-label soflLabel" style="font-size: 17px">Km
+													5, Bd du Centenaire de la Commune, Dakar</h1>
+												<br />
+												<h1 class="ui-label soflLabel">
+													Tel <span style="margin-left: 7px">:</span> +221 832 56 09
+												</h1>
+												<br />
+												<h1 class="ui-label soflLabel">Fax : +221 832 27 94</h1>
+											</div>
+
+											<div class="col-md-2">
+												<img width="110px" height="100px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+												<br /> <br />
+											</div>
+
+
+											<div class="col-md-5 ">
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Provenance</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.commandeDTO.pointDeVenteLibelleProvenance}
+														</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Gerant</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.commandeDTO.pointDeVenteGerantProvenance}
+														</label>
+													</div>
+												</div>
+												<br />
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label  soflLabel">Tel
+														Gerant</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{magasinierMB.commandeDTO.pointDeVenteTelProvenance}</label>
+													</div>
+												</div>
+												<br />
+
+												<div class="form-group">
+													<label for="inputEmail3"
+														class="col-sm-6 control-label soflLabel">Date</label>
+													<div class="col-sm-6">
+														<label for="inputEmail3" class="control-label">#{referentielMB.bondeLivraisonDTO.dateEdition}</label>
+													</div>
+												</div>
+
+
+											</div>
+										</div>
+
+
+
+
+										<br /> <br /> <br />
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; height: 220px;">
+											<br />
+
+
+
+											<p:dataTable id="listProduct222" var="pvDTO"
+												value="#{magasinierMB.commandeDTO.listProduitsDTOtoCreate}" reflow="true"
+												rowKey="#{pvDTO.idProduit}" paginator="false" rows="6"
+												cellSeparator="10"
+												style="width: 70%; margin-left:15%; font-size:15px ; text-align :center ">
+
+
+												<p:column headerText="Libelle" >
+				          				#{profilMB.StringCutter(pvDTO.libelle, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+
+
+												<p:column headerText="Tonnage" >
+				          				#{profilMB.StringCutter(pvDTO.quantite, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+
+												<p:column headerText="P U" >  
+				          				#{profilMB.StringCutter(pvDTO.prixUnitaire, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+
+												<p:column headerText="Prix Total" >
+				          				#{profilMB.StringCutter(pvDTO.prixTotal, 20)} #{pvDTO.uniteDeMesure} 
+				        			</p:column>
+
+
+											</p:dataTable>
+											<h1 class="titrePage Margin10 montantCFA ">TOTAL :
+												#{referentielMB.utils.formatFloatToCFA(referentielMB.bondeLivraisonDTO.prixtotal)}
+											</h1>
+
+
+
+										</div>
+
+
+										<br /> <br /> <br />
+
+										<!-- footer BL -->
+										<div class="row">
+											<div class="col-md-4" />
+
+											<div class="col-md-4" />
+
+											<div class="col-md-4 pull-right"
+												style="border: 1px solid #80c347; min-height: 200px; min-height: 200px">
+												<p class="titrePage">Cachet</p>
+											</div>
+										</div>
+										<div class="row">
+											<br /> <br /> <br /> <br /> <br />
+											<h1 class="ui-label pull-left">
+												contact@sedab.com<br />
+											</h1>
+											<h1 class="ui-label pull-right">www.sedab.com</h1>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<img id="awa" width="90px" height="80px"
+										src="assets/images/print.png" title="Imprimer BL" /> <img
+										width="90px" height="80px" src="assets/images/sendBymail.png"
+										title="Envoyer BL par Mail" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+			
+		<!--  end message -->
+
+	</ui:define>
+
+</ui:composition>

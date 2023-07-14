@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:sec="http://www.springframework.org/security/tags">
+  <h:head>
+    <title>SIGMA | Documents</title>
+    <link href="/assets/css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+    </style>
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml" />
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="col-md-12 mb-2">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+              <a class="navbar-brand" href="#">
+                <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Documents </a>
+                  </li>
+                </ul>
+                <!--end navbar-nav-->
+                <div class="pull-right">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                      <a class="nav-link" href="#">#{DocumentController.connectedUserDetails.entitePublique} / #{DocumentController.connectedUserDetails.service}
+                        / #{DocumentController.connectedUserDetails.sousService}</a>
+                    </li>
+                  </ul>
+                </div>
+                <!--end form-->
+              </div>
+              <!--end navbar-collapse-->
+            </nav>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card" style="background-image: url(images/auth-bg.png)">
+                <div class="card-body">
+                  <h:form id="odm-search">
+                    <h:panelGroup id="form-horizontal" class="form-horizontal form-wizard-wrapper">
+                      <p style="text-align :center"> 
+                        <i class="las la-file text-secondary font-22 align-middle mr-2"></i>Rechercher les documents d'une mission
+                      </p>
+                  		<hr/>
+                  		
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="reference" class="col-sm-4 col-form-label text-right">Référence ODM</label>
+                            <div class="col-lg-6">
+                              <h:inputText value="#{DocumentController.searchRapportOdm.referenceOdm}" name="referenceOdm" class="form-control"/>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">Matricule</label>
+                            <div class="col-lg-6">
+                              <h:inputText value="#{DocumentController.searchRapportOdm.matricule}" name="matricule" class="form-control"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="nom" class="col-sm-4 form-label text-right">Nom</label>
+                            <div class="col-lg-6">
+                              <h:inputText styleClass="form-control" value="#{DocumentController.searchRapportOdm.nom}" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="prenom" class="col-sm-4 form-label text-right">Prénom</label>
+                            <div class="col-lg-6">
+                              <h:inputText styleClass="form-control" value="#{DocumentController.searchRapportOdm.prenom}" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-4 mb-3">
+                        <div class="col-lg-5"></div>
+                        <div class="col-lg-5">
+                          <button type="button" class="btn btn-warning waves-effect waves-light">
+                            <h:commandLink action="#{DocumentController.annulerSearchRapportOdm()}" update="resultFile" value="Annuler" style="color: #ffffff;"></h:commandLink>
+                          </button>
+                          <button type="button" class="btn btn-success waves-effect waves-light">
+                            <h:commandLink action="#{DocumentController.searchRapportOdm()}" style="color: #ffffff;" ajax="false" update="resultFile" value="Rechercher"></h:commandLink>
+                          </button>
+                        </div>
+                      </div>
+                    </h:panelGroup>
+                    <!--end form-->
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card" style="background-image: url(images/auth-bg.png)">
+                          <div class="card-body">
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;text-align: center;">
+                                <thead>
+                                  <tr>
+                                    <th>Référence ODM</th>
+                                    <th>Date d'édition</th>
+                                    <th>Type document</th>
+                                    <th>Statut document</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <p:repeat value="#{DocumentController.listDocumentsSearch}" var="document">
+                                    <tr>
+                                      <td>#{document.odmId}ODM</td>
+                                      <td>#{document.dateCreationFormatter}</td>
+                                      <td>#{document.typeDocument}</td>
+                                      <td>#{document.statutDocument}</td>
+                                      <td>
+                                        <h:commandLink action="#{DocumentController.downloadFile(document.path, document.odmId)}">
+                                          <i class="las la-file-pdf text-info font-18" title="Télécharger le fichier"></i>
+                                        </h:commandLink>
+                                      </td>
+                                    </tr>
+                                  </p:repeat>
+                                </tbody>
+                              </table>
+                          </div>
+                          <!--end card-->
+                        </div>
+                      </div>
+                    </div>
+                  </h:form>
+                  <!--end card-body-->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- container -->
+        <ui:include src="./includes/footer.xhtml"/>
+        <!--end footer-->
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    $('#datatable').DataTable({
+      "language": {
+        "sProcessing": "Traitement en cours ...",
+        "sLengthMenu": "Afficher _MENU_ lignes",
+        "sZeroRecords": "Aucun résultat trouvé",
+        "sEmptyTable": "Aucune donnée disponible",
+        "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+        "sInfoEmpty": "Aucune ligne affichée",
+        "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+        "sInfoPostFix": "",
+        "sSearch": "Chercher:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Chargement...",
+        "oPaginate": {
+          "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+        },
+        "oAria": {
+          "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+        }
+      }
+    });
+  </script>
+</html>

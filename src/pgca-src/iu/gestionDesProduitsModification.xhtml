@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div id="engraisCreate" class="form-horizontal">
+
+
+				<!--********************************************************************** 
+				
+						Bloc  Modification d'engrais
+				
+				************************************************************************** -->
+				
+					<h:form id="form1b" rendered="#{param.idBlocToShow eq '1'}">
+
+						<p class="titrePage" style="color : white !important">.</p>
+						<br />
+						<h1 class="titrePage">Modification intrant</h1>
+						<br />
+
+						<div class="container-fluid">
+							<p:messages id="msg" showDetail="true" showIcon="true"
+								style="text-align  : center;  width : 70%; margin-left : 15%;    font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+						</div>
+						<br />
+						
+						
+						<div class="col-xs-5" id="blocPV">
+
+							<h:panelGroup id="detailsPV"
+								rendered="#{agentSaisieMB.modeBl == 0}">
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-6 control-label">Catégorie
+									</label>
+									<div class="col-sm-6">
+										<h:selectOneMenu disabled="true"
+											value="#{agentSaisieMB.selectedIntrantDTO.idtypeProduit}"
+											required="true"
+											styleClass="form-control input-sm CustomSelect"
+											requiredMessage="Le Profil est requis">
+											<f:selectItem itemLabel="Selectionnez une categorie "
+												itemValue="" />
+											<f:selectItems
+												value="#{agentSaisieMB.loadReferentielTypeIntrant()}"
+												var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+												itemLabel="#{CollaborateurDTO.libelle}" />
+
+											<p:ajax event="change"
+												listener="#{agentSaisieMB.refresshListProduitFromTypeProduitSelected()}"
+												update="listeIntrant" />
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword3" class="col-sm-6 control-label">Intrant</label>
+									<div class="col-sm-6">
+										<h:selectOneMenu disabled="true"
+											value="#{agentSaisieMB.selectedIntrantDTO.idProduit}"
+											id="listeIntrant" 
+											styleClass="form-control input-sm CustomSelect"
+											>
+											<f:selectItem itemLabel="#{agentSaisieMB.selectedIntrantDTO.libelleProduit}"
+												itemValue="" />
+											
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="inputPassword3" class="col-sm-6 control-label">Quantité</label>
+									<div class="col-sm-6">
+										<p:inputText
+											value="#{agentSaisieMB.selectedIntrantDTO.quantiteInitaile}"
+											styleClass="form-control" title="La quantité  est requise"
+											converterMessage="La quantite est invalide" type="number"
+											requiredMessage="La quantité  est requise" required="true" disabled="true" />
+
+									</div>
+								</div>
+
+							</h:panelGroup>
+
+
+						</div>
+
+
+
+
+					
+						<!--  right bloc -->
+						<div class="col-xs-5">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-6 control-label">Programme</label>
+								<div class="col-sm-6">
+									<h:selectOneMenu
+										value="#{agentSaisieMB.selectedIntrantDTO.idCampagneProgramme}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un programme "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.getlistProgramme()}"
+											var="CoupleDTO" itemValue="#{CoupleDTO.clef}"
+											itemLabel="#{CoupleDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+						
+								<div class="form-group">
+								<label for="inputEmail3" class="col-sm-6 control-label">Fournisseur</label>
+								<div class="col-sm-6">
+									<h:selectOneMenu
+										value="#{agentSaisieMB.selectedIntrantDTO.idFournisseur}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le programme est requis">
+										<f:selectItem itemLabel="Selectionnez un programme "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.loadAllFornisseurs()}"
+											var="CoupleDTO" itemValue="#{CoupleDTO.idFounisseur}"
+											itemLabel="#{CoupleDTO.libelle}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							
+							<br /> <br /> <br />
+						</div>
+
+							
+<!-- 					<h:panelGroup id="blocFactureModif"  >   -->
+<!-- 						<div class="row" > -->
+
+<!-- 							<div class="col-md-3" /> -->
+
+<!-- 							<div class="col-md-6"> -->
+<!-- 								<h1 class="labelCustum" -->
+<!-- 									style="text-align: center; color: #0c9848; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">Tarification </h1> -->
+<!-- 								<br /> -->
+								
+<!-- 								<h:panelGroup id="subvention2" -->
+<!-- 								rendered="#{referentielMB.modeBl == 0}"> -->
+
+
+<!-- 								<div class="form-group"> -->
+<!-- 								<label for="inputEmail3" class="col-sm-4 control-label">Subvention </label> -->
+<!-- 								<div class="col-sm-8"> -->
+<!-- 										<h:selectOneMenu -->
+<!-- 										value="#{referentielMB.selectedIntrantDTO.subventionne}" -->
+<!-- 										required="true" -->
+<!-- 										styleClass="form-control input-sm CustomSelect" -->
+<!-- 										requiredMessage="Le Profil est requis"> -->
+<!-- 										<f:selectItem itemLabel="Selectionnez une categorie " -->
+<!-- 											itemValue="0" /> -->
+<!-- 										<f:selectItem itemLabel="Intrant Subventionné " -->
+<!-- 											itemValue="1" /> -->
+<!-- 										<f:selectItem itemLabel="Intrant non Subventionné " -->
+<!-- 											itemValue="2" />	 -->
+									
+									
+												
+<!-- 									</h:selectOneMenu> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
+<!-- 							<h:panelGroup id="taux" > -->
+<!-- 							<div class="form-group"> -->
+<!-- 								<label for="inputPassword3" class="col-sm-4 control-label">Taux de subvention</label> -->
+<!-- 								<div class="col-sm-2">									 -->
+<!-- 											<p:inputText value="#{referentielMB.selectedIntrantDTO.tauxSubvention}" styleClass="form-control" -->
+<!-- 											title="Le libelle est requis" -->
+<!-- 												requiredMessage="Le libelle est est requis" /> -->
+<!-- 								</div> -->
+<!-- 								<label for="inputPassword3" class="col-sm-6 control-label">(Taux de subvention en % à déduire sur le prix )</label> -->
+								
+<!-- 							</div> -->
+							
+<!-- 							</h:panelGroup> -->
+							
+							
+<!-- 							<div class="form-group"> -->
+<!-- 								<label for="inputPassword3" class="col-sm-4 control-label">Prix Unitaire</label> -->
+<!-- 								<div class="col-sm-8"> -->
+<!-- 									<p:inputText value="#{referentielMB.selectedIntrantDTO.prixNonSubventionne}" styleClass="form-control" -->
+<!-- 											title="La quantité  est requise" -->
+<!-- 												requiredMessage="La quantité  est requise" required="true" /> -->
+										
+<!-- 								</div> -->
+<!-- 							</div> -->
+							
+
+<!-- 							</h:panelGroup> -->
+								
+<!-- 							</div> -->
+
+<!-- 							<div class="col-md-2" /> -->
+<!-- 						</div> -->
+						
+<!-- 				</h:panelGroup>		 -->
+
+						<div id="buttons" class="pull-right" style="margin-top: 30px; margin-right : 17%">
+							<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 150px ; margin-right : 12px"
+								action="#{agentSaisieMB.updateIntranOfStock}"
+								value=" Enregistrer" name="suivants" />
+							<a type="submit" style="margin-right: 22px; width: 150px"
+								href="gestionDesProduits.xhtml?idBlocToShow=1"
+								class="fa fa-info btn btn-default pull-right"> Retour</a>
+						</div>
+					</h:form>
+
+			
+			</div>
+
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

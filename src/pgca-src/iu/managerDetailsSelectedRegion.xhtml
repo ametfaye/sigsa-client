@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+	<ui:define name="section">
+
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+
+		<h:form style=" margin-right : 15px">
+
+			<div class="container-fluid">
+				<h4 class="titleLevel4">Informations générales de la région de
+					#{managerManagedBean.mapRegion}</h4>
+				<br />
+				<br />
+				<br />
+				<hr />
+
+				<div class="row">
+					<div class="row">
+						<div class="col-md-6" id="DetailsSelectedZone">
+						
+							<div id="ui-widget"
+								style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+								<h1 class="ui-value">
+									<a href="#" style="color: #029441; font-size: 20px;"> <i
+										class="fa fa-caret-up" aria-hidden="true" style="color: green"></i>
+										0
+
+									</a>
+								</h1>
+								<span class="ui-label"> <a href="#"
+									style="color: #029441; font-size: 17px;">Mise en place </a></span>
+
+							</div>
+
+
+							<div id="ui-widget"
+								style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+								<h1 class="ui-value">
+									<a href="#" style="color: #029441; font-size: 20px;"> <i
+										class="fa fa-caret-down" aria-hidden="true" style="color: red"></i>
+									0
+									</a>
+								</h1>
+								<span class="ui-label"> <a href="#"
+									style="color: #029441; font-size: 17px;">Reliquats </a></span>
+
+							</div>
+
+							<div id="ui-widget"
+								style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+								<h1 class="ui-value">
+									<a href="#" style="color: #029441; font-size: 20px;"> <i
+										class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+										0
+									</a>
+								</h1>
+								<span class="ui-label"> <a href="#"
+									style="color: #029441; font-size: 17px;">Ordre de livraisons </a></span>
+
+							</div>
+							
+							
+							<div id="ui-widget"
+								style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+								<h1 class="ui-value">
+									<a href="#" style="color: #029441; font-size: 20px;"> <i
+										class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+									0
+
+									</a>
+								</h1>
+								<span class="ui-label"> <a href="#"
+									style="color: #029441; font-size: 17px;">Commandes </a></span>
+							</div>
+							
+							
+							
+						
+						</div>
+						
+						<div class="col-md-1">
+							<div id="container22"
+								style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
+
+						</div>
+
+						<div class="col-md-5">
+
+							<h4 class="highcharts-title"
+								style="color: #333333; font-size: 18px; fill: #333333; width: 770px;">
+								Liste des points de vente de la region</h4>
+
+							<br />
+
+
+							<p:dataTable var="pvDTO"
+								value="#{managerManagedBean.allpointdeVenteOfSelectedRegion}"
+								reflow="true" emptyMessage="Ancun produit	 de vente disponible"
+								paginator="true" rows="6" cellSeparator="10"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								paginatorPosition="bottom"
+								style="font-size:15px ; text-align :center ; ">
+
+
+								<p:column headerText="Zone">
+
+									<h:commandLink
+										style="color : #002839 ; font-size: 18px; margin-right : 10px"
+										action="#{managerManagedBean.redirectSpecifiquePointdeVente}"
+										value="#{pvDTO.libelle}">
+
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVente}"
+											value="#{pvDTO.libelle}" />
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVenteId}"
+											value="#{pvDTO.idPv}" />
+
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVenteCommune}"
+											value="#{pvDTO.commune}" />
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVenteDepartement}"
+											value="#{pvDTO.departement}" />
+
+										<!-- 								<h:inputText value="#{managerManagedBean.selectedPointDeVente}" tabindex="" /> -->
+
+
+									</h:commandLink>
+
+
+
+
+								</p:column>
+
+
+<!-- 								<p:column headerText="Departement"> -->
+<!-- 				          				#{profilMB.StringCutter(pvDTO.departement, 100)}  -->
+<!-- 				        			</p:column> -->
+
+								<p:column headerText="Commune">
+				          				#{profilMB.StringCutter(pvDTO.commune, 100)} 
+				        			</p:column>
+
+
+								<p:column headerText="Gerant">
+				          				#{profilMB.StringCutter(pvDTO.gerant, 100)} 
+				        			</p:column>
+
+								<p:column headerText="Telephone">
+				          				#{profilMB.StringCutter(pvDTO.contactGerant, 100)} 
+				        			</p:column>
+				        			
+				        				<p:column headerText="Inventaire">
+				          		
+							
+				          						<h:commandLink
+										style="color : #002839 ; font-size: 18px; margin-right : 10px"
+										action="#{managerManagedBean.redirectSpecifiquePointdeVente}"
+										>
+											<img  title="Voir les détails de l'intrant sélectionné"
+							style="width : 40px ; height : 40px; " src="assets/images/inventaire.png"
+							alt="Logo PGCA"/>
+							
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVente}"
+											value="#{pvDTO.libelle}" />
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVenteId}"
+											value="#{pvDTO.idPv}" />
+
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVenteCommune}"
+											value="#{pvDTO.commune}" />
+										<f:setPropertyActionListener
+											target="#{managerManagedBean.selectedPointDeVenteDepartement}"
+											value="#{pvDTO.departement}" />
+
+										<!-- 								<h:inputText value="#{managerManagedBean.selectedPointDeVente}" tabindex="" /> -->
+
+
+									</h:commandLink>
+									
+				        			</p:column>
+
+							</p:dataTable>
+
+
+							<div class="col-xs-1">
+								<!-- 						<div id="container22" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div> -->
+
+
+							</div>
+
+						</div>
+
+
+<!-- 						<h:commandButton styleClass=" btn  pull-right btn_success_TA" -->
+<!-- 							update=" form1:totalCharge" -->
+<!-- 							style="width : 250px ; margin-right :10% ; margin-top : 5%" -->
+<!-- 							action="#{managerManagedBean.reportDataPOI()}" -->
+<!-- 							value=" Télécharger rapport de Zone" name="suivants"> -->
+
+
+<!-- 						</h:commandButton> -->
+
+
+					</div>
+
+				</div>
+
+
+
+			</div>
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

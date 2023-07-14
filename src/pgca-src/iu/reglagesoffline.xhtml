@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgcanoMenu.xhtml" 
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de collecte</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div class="col-md-8  col-md-offset-2  fullbg">
+
+				<p:messages id="msg" showDetail="false"
+					style="width: 80% ! important; margin-left : 10% ! important; text-align  : center; margin-top: 40px;    font-size: 15px;color: #253123; letter-spacing: 2px; text-align: center;" />
+				<h:form id="engraisList" >
+					<br />
+
+
+					<p class="titrePage">Changment de mot de passe </p>
+					<br />
+			
+
+					<h:panelGroup id="pform1">
+					
+							
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Compte Utilisateur</label>
+									<div class="col-sm-9">
+										<br />
+										<p:inputText
+											value="#{SessionMB.getSessionDataByTag('connectedUserName')}" maxlength="4"
+											styleClass=" form-control"
+											title="Point de vente"
+											
+											disabled="true" readonly="true">
+										</p:inputText>
+									</div>
+								</div>
+								
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="inputEmail3" class="col-sm-3 control-label" -->
+<!-- 										style="margin-top: 25px"> actuel mot de passe</label> -->
+<!-- 									<div class="col-sm-9"> -->
+<!-- 										<br /> -->
+<!-- 										<p:inputText style="min-width : 500px" -->
+<!-- 											value="#{SessionMB.getSessionDataByTag('nomUtilisateur')}  #{SessionMB.getSessionDataByTag('nomUser')}" maxlength="4" -->
+<!-- 											styleClass="listeFournisseurs tt-query form-control" -->
+<!-- 											title="Point de vente" -->
+											
+<!-- 											disabled="true" readonly="true"> -->
+<!-- 										</p:inputText> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+								
+
+
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px"> Mot de actuel</label>
+									<div class="col-sm-9">
+										<br />
+										<p:password  
+											value="#{connexionMB.motdePasseActuel}" 
+											styleClass="form-control"
+											title="votre de passe actuel"
+											requiredMessage="votre mot de passe actuel est requis" required="true">
+										</p:password>
+									</div>
+								</div>
+								
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Nouveau mot de passe</label>
+									<div class="col-sm-9">
+										<br />
+										<p:password  
+											value="#{connexionMB.nouveauMotDePasse}" 
+											styleClass="form-control"
+											title="votre nouveau mot de passe"
+											requiredMessage="votre nouveau mot de passe est requis" required="true">
+										</p:password>
+									</div>
+								</div>
+
+							
+									<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label"
+										style="margin-top: 25px">Répéter nouveau mot de passe</label>
+									<div class="col-sm-9">
+										<br />
+										<p:password  
+											value="#{connexionMB.nouveauMotDePasseRepeat}" 
+											styleClass="form-control"
+											title="répétition de votre nouveau mot de passe"
+											requiredMessage="La répétition de votre nouveau mot de passe est requise" required="true">
+										</p:password>
+									</div>
+								</div>
+							
+
+							<BR />
+
+
+
+							<div class="col-md-6 col-md-offset-4">
+
+								<div id="buttons" class="pull-right" style="margin-top: 30px;">
+									<h:commandButton
+										styleClass=" fa fa-plus btn btn-success pull-right"
+										style="width : 150px ; "
+										action="#{connexionMB.updatePasswordModeOffline()}"
+										value=" Enregistrer" name="suivants">
+									</h:commandButton>
+									<a type="submit" style="margin-right: 22px; width: 150px"
+										href="#{connexionMB.redirectDashboard()}"
+										class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+								</div>
+
+							</div>
+
+					
+
+					</h:panelGroup>
+
+<!-- 	<p class="titrePage">Le module d'inventaire permet de réajuster le stock des intrants disponibles dans votre point de vente.  <br/> Ce réajustement permet  de préparer les campagnes de collecte et de donner une visibilité sur l'ensemble des stocks de la SEDAB en temps réel </p> -->
+	
+					<br />
+
+
+				</h:form>
+
+
+
+		</div>
+		
+		</div>
+
+	</ui:define>
+
+</ui:composition>

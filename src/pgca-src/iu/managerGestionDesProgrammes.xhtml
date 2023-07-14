@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+	<ui:define name="section" >
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+		<div class="container-fluid">
+		
+		
+		
+			<div class="col-md-12 fullbg">
+
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+				
+				
+					<br />
+					<p class="titrePage">Gestion des Programmes </p>
+					<br />
+					<p:dataTable id="ProfilID" var="campagneDTO"
+						value="#{referentielMB.loadAllProgrammeAgricoleDTO()}" reflow="true"
+						rowKey="#{campagneDTO.programmeId}"
+						emptyMessage="Ancun engrais disponible" paginator="true" rows="10"
+						cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+				
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+
+						<p:column headerText="Programme" style="width  : 15%">   
+				          #{profilMB.StringCutter(campagneDTO.programmelibelle, 80)} 
+				        </p:column>
+				        
+				        <p:column headerText="Programme" style="width  : 15%">   
+				          #{profilMB.StringCutter(campagneDTO.campagnelibelle, 80)} 
+				        </p:column>
+
+						<p:column headerText="Date début" style="width  : 17%"> 
+				           #{referentielMB.utils.getFormatedDateFromString(campagneDTO.dateOuverture)} 
+				        </p:column>
+
+
+						<p:column headerText="Date Fin" style="width  : 17%">
+				          #{referentielMB.utils.getFormatedDateFromString(campagneDTO.dateFermeture)} 
+				        </p:column>
+				        
+				      
+
+						<p:column headerText="Statut" style="width : 12%">
+							<span class="badge "><i class=" fa fa-spinner"
+								aria-hidden="true"></i> En cours</span>
+						</p:column>
+
+					</p:dataTable>
+
+					<div class=" pull-right" style="margin-right: 70px">
+						<br /> 
+						
+			
+							
+							<a type="submit" href="managerGestionDesProgrammes.xhtml?"
+							class="suivant btn btn-success pull-right"
+							style="margin-right: 15px ; margin-top : 30px"> Créer un programme</a>
+							
+							
+											<a type="submit" href="#"
+							class="suivant btn btn-success pull-right"
+							style="margin-right: 15px ; margin-top : 30px"> Rapport Programme </a>
+			
+
+								<h:commandLink onclick="return false;" action="#{managerManagedBean.downloadRapportCampagne()}"  title="Télécharger le rapport détaillé du programme ">
+									<img src="assets/images/exportExcel.png" 
+										style="width: 20%; height: 20%; margin-left: 10px" />
+									<br />
+									
+
+								</h:commandLink>
+					</div>
+					
+				
+					
+					<br />
+					<br />
+				
+					
+				</h:form>
+
+				<h:form id="engraisCreate" rendered="#{param.idBlocToShow eq null}"
+					class="form-horizontal">
+
+<p:messages id="msg" showDetail="true" showIcon="true"
+					style="text-align  : center;     font-size: 15px; color: #253123;letter-spacing: 2px;text-align: center; margin-top : 30px ; margin-right : 15%;  margin-left : 15%" />
+				  
+<br/>
+			  <div class="col-xs-2"/>
+					<div class="col-xs-8">
+						
+						<p class="titrePage">Edition Programme</p>
+					
+						<div class="col-xs-6">
+						
+						
+						<div class="row">
+						<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">Campagne </label>
+								<div class="col-sm-8">
+									<h:selectOneMenu
+										value="#{managerManagedBean.campagneDTO.idCampagne}"
+										styleClass="form-control input-sm ">
+										<f:selectItem itemLabel="Selectionner une Campagne" itemValue="0" />
+										
+										<f:selectItems
+											value="#{managerManagedBean.loadAllACampagne()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+									</h:selectOneMenu>
+
+								</div>
+							</div>
+							</div>
+							
+							<div class="row">
+						<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">
+									 Nom Programme 
+								</label>
+								<div class="col-sm-8">
+									<p:inputText
+										value="#{managerManagedBean.campagneDTO.libelleCampagne}"
+										styleClass="form-control"
+										title="La quantité  est requise"
+										requiredMessage="Le nom du programme est obligatoire" required="true">
+
+									</p:inputText>
+
+								</div>
+							</div>
+							</div>
+							
+							
+							
+								<div class="row">
+						<div class="form-group">
+								<label for="inputPassword3" class="col-sm-4 control-label">
+									Description  
+								</label>
+								<div class="col-sm-8">
+									<p:inputTextarea
+										value="#{managerManagedBean.campagneDTO.descriptionlibelleCampagne}"
+										 styleClass="form-control">
+									</p:inputTextarea>
+
+								</div>
+							</div>
+							</div>
+							
+							
+							
+							
+							
+						
+						</div>
+						
+						
+						
+						
+						<div class="col-xs-6">
+						<div class="row">
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-6 control-label">Date
+									Debut</label>
+								<div class="col-sm-6">
+									<p:inputText
+										value="#{managerManagedBean.campagneDTO.dateOuverture}"
+										type="date" styleClass="form-control"
+										title="La quantité  est requise"
+										requiredMessage="La date de début   est requise" required="true">
+
+										<f:convertDateTime pattern="yyyy-MM-dddd" locale="fr"></f:convertDateTime>
+									</p:inputText>
+
+								</div>
+							</div>
+							</div>
+							
+							<div class="row">
+						<div class="form-group">
+								<label for="inputPassword3" class="col-sm-6 control-label">Date
+									Fin</label>
+								<div class="col-sm-6">
+									<p:inputText placeholder="date debut"
+										value="#{managerManagedBean.campagneDTO.dateFermeture}"
+										type="date" styleClass="form-control"
+										title="La quantité  est requise"
+										requiredMessage="La date de fin  est requise" required="true">
+
+										<f:convertDateTime pattern="yyyy-MM-dddd" locale="fr"></f:convertDateTime>
+									</p:inputText>
+
+								</div>
+							</div>
+							</div>
+							
+							
+						
+							
+						</div>
+						
+							
+							<div id="buttons" class="pull-right">
+								
+								<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.createProgrammeAgricole}"
+										value="Confirmer " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />							
+<!-- 								<h:commandButton -->
+<!-- 									styleClass="suivant  btn btn-validatd pull-right" -->
+<!-- 									action="#{managerManagedBean.navigateToUrl('2b')}" -->
+<!-- 									value="Suivant " name="suivants" -->
+<!-- 									style="width : 200px ; margin-right : 0px; " -->
+<!-- 									class="fa fa-undo  btn   pull-right btn-success" /> -->
+
+								<a type="submit"
+									href="managerGestionDesProgrammes.xhtml?idBlocToShow=1"
+									style="margin-right: 15px; margin-top: -2px"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+							</div>
+					</div>					
+				</h:form>
+
+
+
+
+				<h:form rendered="#{param.idBlocToShow eq '2b'}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select"><a
+										href="managerGestionDesCampagnes.xhtml"> Campagne </a> </span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Programme</span></li>
+								<!---->
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"><span
+									class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_hosting_options">Confirmation</span></li>
+								<!---->
+							</ol>
+
+							<br />
+							<p style="margin-top: 50px; color: black; font-size: 23px;">Selectionner
+								les programmes de la campagne</p>
+
+						</div>
+					</div>
+
+					<div class="col-xs-5" />
+
+
+					<div class="col-xs-4" style="margin-top: -40px">
+
+						<br />
+						<div class="col-xs-6">
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Collectes</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmeCollecte}"
+												style="width: 30px; height: 30px;" />
+										</label> <br />
+
+
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Phytosanitaires</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmePhyto}"
+												style="width: 30px; height: 30px;" />
+
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Arachides</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmeArachide}"
+												style="width: 30px; height: 30px;" />
+
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="form-group row">
+								<label class="col-sm-10"
+									style="color: #80c347; font-size: 25px; margin-top: 10px;">Semences</label>
+								<div class="col-sm-2">
+									<div class="form-check">
+										<label class="form-check-label"> <h:selectBooleanCheckbox
+												value="#{managerManagedBean.campagneDTO.programmeAutres}"
+												style="width: 30px; height: 30px;" />
+
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group row">
+
+								<div id="buttons" class="pull-right">
+
+									<h:commandButton styleClass="  btn btn-validatd pull-right"
+										action="#{managerManagedBean.createCampagneAgricole}"
+										value="Confirmer " name="suivants"
+										style="width : 200px ; margin-right : 0px; "
+										class="btn   pull-right btn-success" />
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+					<br />
+
+				</h:form>
+
+
+				<h:form rendered="#{param.idBlocToShow eq '2c'}"
+					class="form-horizontal">
+
+
+					<div class="progress-tracker">
+						<div class="container">
+							<div class="hidden-lg currentStep"
+								data-translate="legacy_domain_step_tunnel_domain_select">Campagne</div>
+							<ol>
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Ouverture</span></li>
+								<!---->
+								<!---->
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Programme</span></li>
+								<!---->
+
+								<li data-ng-repeat="item in $ctrl.flow track by $index"
+									ng-class="{ active : item.active, current : item.current }"
+									class="active current"><span class="visible-lg"
+									data-translate="legacy_domain_step_tunnel_domain_select">Ouverture</span></li>
+
+								<!---->
+							</ol>
+
+							<br />
+							<p style="text-align: center; color: #80c347; TEXT-ALIGN: center; FONT-SIZE: 25PX; margin-top: 5% ;">
+							Votre programme est ouvert avec succès
+								.</p>
+
+
+
+							<div class="row" style="margin-top: 5% ; ">
+
+								<h1 class=""
+									style=" color: black; font-size: 28px ; margin-bottom : 2%" >
+									Marketing &amp; Prospection</h1>
+
+
+								<div class="col-xs-6">
+
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+											Envoyer
+											Mail aux clients</label>
+
+									</div>
+
+								</div>
+
+
+								<div class="col-xs-6">
+									<div class="form-group ">
+										<label class="col-lg-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"> <i class="fa fa-commenting-o" aria-hidden="true"></i>
+											 Envoyer
+											SMS aux collaborateurs </label>
+
+									</div>
+
+									<div class="form-group ">
+										<label class="col-sm-10"
+											style="color: #80c347; font-size: 18px; margin-top: 10px;"><i class="fa fa-commenting-o" aria-hidden="true"></i>
+											Envoyer
+											SMS aux clients</label>
+
+									</div>
+									
+									
+								</div>
+
+
+
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+
+
+					<div class="col-xs-5" />
+
+					<div class="col-xs-4" style="margin-top: -40px">
+						<br />
+						<div class="col-xs-12">
+						
+
+
+
+							<div class="form-group ">
+								<div id="buttons" class="pull-left">
+									<a 
+											href="managerGestionDesProgrammes.xhtml?idBlocToShow=1"
+								
+										style="width : 200px ; margin-right : 0px; "
+										class="btn  btn-validatd   btn-success pull-right" />
+										
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<br />
+
+				</h:form>
+
+
+
+
+
+
+				<!--********************************************************************** 
+				
+						Bloc  Modification d'engrais
+				
+				************************************************************************** -->
+
+				
+				<!--  FIn de recherche  ***************************************************-->
+
+
+
+				<br /> <br />
+			</div>
+		
+			
+		</div>
+		</h:panelGroup>
+		
+		
+		<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+
+				
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>

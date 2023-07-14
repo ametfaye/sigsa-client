@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" 
+ xmlns:sec="http://www.springframework.org/security/tags" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>SIGMA | Producteurs</title>
+    <h:outputStylesheet name="css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- FlexSELECT -->
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+    <link rel="stylesheet" href="assets/plugins/flexselect/flexselect.css" type="text/css" media="screen" />
+    <!--     <script src="assets/plugins/flexselect/jquery.min.js" type="text/javascript"></script> -->
+    <script src="assets/plugins/flexselect/liquidmetal.js" type="text/javascript"></script>
+    <script src="assets/plugins/flexselect/jquery.flexselect.js" type="text/javascript"></script>
+    
+    <link href="assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+    
+    <script>
+      
+    jQuery(document).ready(function() {
+        $("select.flexselect").flexselect();
+        $("#agentaAjouter").select2();
+        $("#select-agent").select2();
+      });
+      
+      function cbChange(obj) {
+ 
+    	        if (obj.checked == true)
+    	        {
+    	        	var cbs = document.getElementsByClassName("b");
+    	      	     for (var i = 0; i &lt; cbs.length; i++) {
+    	      	        cbs[i].checked = false;
+    	               console.log(obj.id);
+    	        }
+    	    }
+    	  obj.checked   = true;
+      }
+      
+    </script>
+
+    <style>
+      .custumInput {
+        display: block;
+        width: 100%;
+        height: calc(1.8em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.8;
+        color: #303e67;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        box-shadow: none ! important;
+      }
+
+      .custom-select {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        background: #fffurl(data:image/svg+xml,%3csvg
+ xmlns='http://www.w3.org/2000/svg'viewBox='0 0 4 5'%3e%3cpath fill='%232c3652'd='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+      }
+
+      .flexselect_dropdown {
+        display: none;
+        position: absolute;
+        z-index: 999999;
+        margin: 0;
+        padding: 0;
+        border: 1px solid WindowFrame;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: Window;
+        color: WindowText;
+        text-align: left;
+        box-shadow: 0 6px 12px #ccc;
+        -webkit-box-shadow: 0 6px 12px #ccc;
+        background: linear-gradient(351deg, rgb(194 225 208), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0, 255, 0, 0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);
+      }
+
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+
+      .custom-select {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        background: #fffurl(data:image/svg+xml,%3csvg
+ xmlns='http://www.w3.org/2000/svg'viewBox='0 0 4 5'%3e%3cpath fill='%232c3652'd='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+      }
+
+      .flexselect_dropdown {
+        display: none;
+        position: absolute;
+        z-index: 999999;
+        margin: 0;
+        padding: 0;
+        border: 1px solid WindowFrame;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: Window;
+        color: WindowText;
+        text-align: left;
+        box-shadow: 0 6px 12px #ccc;
+        -webkit-box-shadow: 0 6px 12px #ccc;
+        background: linear-gradient(351deg, rgb(194 225 208), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0, 255, 0, 0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);
+      }
+
+      .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        display: block;
+        width: 100%;
+        height: calc(1.8em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.8;
+        color: #303e67;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+      }
+
+      .ui-state-active .ui-icon {
+          background-image: url(/odm/javax.faces.resource/images/ui-icons_38667f_256x240.png.xhtml?ln=primefaces-aristo);
+          background: #468526;
+      }
+
+    </style>
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml" />
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+          <a class="navbar-brand" href="#">
+            <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Enrollement / Distributeur</a>
+              </li>
+            </ul>
+            <!--end navbar-nav-->
+            <div class="pull-right">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="#">#{ProducteurController.connectedUserDetails.entitePublique} / #{ProducteurController.connectedUserDetails.service}
+                    / #{ProducteurController.connectedUserDetails.sousService}</a>
+                </li>
+              </ul>
+            </div>
+            <!--end form-->
+          </div>
+          <!--end navbar-collapse-->
+        </nav>
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4"></div>
+                      </div>
+                      <div id="wizard">
+                        <p style="text-align :center"> <i class="las la-edit text-secondary font-22 align-middle mr-2"></i>Édition d'un producteur
+                        </p>
+                        <hr />
+                        <div class="row mb-4">
+                          <div class="col-md-2"></div>
+                          <div class="col-md-2"></div>
+                          <div class="col-lg-6">
+                            <p:selectOneRadio id="tpPersonne" value="#{ProducteurController.typeProducteur}">
+                              <f:selectItem itemLabel="Personne morale" itemValue="PersonneMorale" />
+                              <f:selectItem itemLabel="Personne hysique" itemValue="PersonnePhysique" />
+                              <p:ajax event="valueChange" update="producteurForm personneForm"
+                                listener="#{ProducteurController.selectTypeProducteur}"/>
+                            </p:selectOneRadio>
+                          </div>
+                        </div>
+                        <h:panelGroup id="producteurForm" rendered="#{ProducteurController.typeProducteur == 'PersonneMorale'}">
+                          <div class="row">
+                            <div class="col-1" />
+                            <div class="col-5">
+                              <div class="form-group">
+                                <label for="numNinea"> Numéro NINEA</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.numNinea}" />
+                              </div>
+                              <div class="form-group">
+                                <label for="dateImmatriculation">Date d'immatriculation</label>
+                                <p:inputText styleClass="form-control " type="date" value="#{ProducteurController.producteurAcrer.dateImmatriculation}" id="dateImm"
+                                style="box-shadow: none ! important;" />
+                              </div>
+                            </div>
+                            <div class="col-5">
+                              <div class="form-group">
+                                <label for="nomCommercial"> Nom commercial</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.nomCommercial}" />
+                              </div>
+                              <div class="form-group">
+                                <label for="adresse"> Adresse</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.adresse}" />
+                              </div>
+                            </div>
+                            <div class="col-1" />
+                          </div>
+                        </h:panelGroup>
+                        <h:panelGroup id="personneForm" rendered="#{ProducteurController.typeProducteur == 'PersonnePhysique'}">
+                          <div class="row">
+                            <div class="col-1" />
+                            <div class="col-5">
+                              <div class="form-group">
+                                <label for="nom"> Nom</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.nom}" />
+                              </div>
+                              <div class="form-group">
+                                <label for="email">Email</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.email}" />
+                              </div>
+                            </div>
+                            <div class="col-5">
+                              <div class="form-group">
+                                <label for="prenom"> Prénom</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.prenom}" />
+                              </div>
+                              <div class="form-group">
+                                <label for="adresse"> Adresse</label>
+                                <h:inputText styleClass="form-control" type="text" value="#{ProducteurController.producteurAcrer.adresse}" />
+                              </div>
+                            </div>
+                            <div class="col-1" />
+                          </div>
+                        </h:panelGroup>
+                        
+                        <div class="row">
+                          <br />
+                          <div class="col-12">
+                            <!--end card-header-->
+                            <div class="card-body">
+                              <p class="page-title " style="text-align : center">Veuiller saisir le descriptif du producteur</p>
+                              <h:inputTextarea id="elm1" name="area" value="#{ProducteurController.producteurAcrer.descriptif}"></h:inputTextarea>
+                            </div>
+                            <!--end card-body-->
+                            <!--end card-->
+                          </div>
+                          <!-- end col -->
+                        </div>
+                        <div class="mb-3">
+                          <center>
+                            <a href="#" data-toggle="modal" data-target="#addRepresentantModal">
+                              <button class="btn btn-primary">Ajouter un représentant</button>
+                            </a>
+                          </center>
+  
+                        </div>
+                        <h:panelGroup id="representants-table">
+                          <div class="row">
+                            <div class="col-md-7 center">
+                              <table id="representants-table" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;text-align: center;">
+                                <thead>
+                                  <tr>
+                                    <th>Nom</th>
+                                    <th>Prénom</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <p:repeat value="#{ProducteurController.selectedPphs}" var="representant">
+                                    <tr>
+                                      <td>#{representant.nom}</td>
+                                      <td>#{representant.prenom}</td>
+                                      <td>#{representant.email}</td>
+                                      <td class="text-center">
+                                        <h:commandLink  action="#{ProducteurController.retirerRepresentant(representant.pphId)}" 
+                                        class="las la-trash-alt text-danger font-18" title="" ajax="true" update="representants-table">
+                                          <f:ajax execute="representants-table" render="representants-table" />
+                                        </h:commandLink >
+                                      </td>
+                                    </tr>
+                                  </p:repeat>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </h:panelGroup>
+                        
+												<div class="modal fade bd-example-modal-sm" id="addRepresentantModal" tabindex="-1" role="dialog" aria-labelledby="addRepresentant" aria-hidden="true">
+                          <div class="modal-dialog modal-md" role="addRepresentant"
+                            style="min-width: 80% !important;  margin-left: 10%  !important;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h6 class="modal-title m-0" id="mySmallModalLabel">Représentants</h6>
+                                <button type="button" class="close "
+                                  data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true"> <i class="la la-times"></i>
+                                  </span>
+                                </button>
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="card">
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <div class="card">
+                                          <div class="card-body">
+                                            <div class="col-12">
+                                              <div id="wizard">
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                  <li class="nav-item waves-effect waves-light">
+                                                    <a class="nav-link active" data-toggle="tab"
+                                                      href="#addPphTab" role="tab" aria-selected="false"> 
+                                                      <i class="fas fa-users"></i> Créer un nouveau représentant
+                                                    </a>
+                                                  </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                  <div class="tab-pane p-3 mt-2" id="addPphTab"
+                                                    role="tabpanel">
+                                                    <div id="wizard">
+                                                      <section> <br />
+                                                      <div class="row">
+                                                        <div class="col-lg-6">
+                                                          <div class="form-group row">
+                                                            <label for="example-text-input"
+                                                              class="col-sm-4 col-form-label text-right">Nom</label>
+                                                            <div class="col-sm-8">
+                                                              <h:inputText name="nom"
+                                                                class="form-control"
+                                                                value="#{ProducteurController.pphToCreateDto.nom}" />
+                                                            </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                            <label for="example-prenom-input"
+                                                              class="col-sm-4  col-form-label text-right">Prénom</label>
+                                                            <div class="col-sm-8">
+                                                              <h:inputText name="prenom"
+                                                                class="form-control"
+                                                                value="#{ProducteurController.pphToCreateDto.prenom}" />
+                                                            </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                            <label for="example-email-input"
+                                                              class="col-sm-4  col-form-label text-right">Email</label>
+                                                            <div class="col-sm-8">
+                                                              <h:inputText name="email"
+                                                                class="form-control"
+                                                                value="#{ProducteurController.pphToCreateDto.email}" />
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                          <div class="form-group row">
+                                                            <label for="example-sexe-input"
+                                                              class="col-sm-4 col-form-label text-right">Sexe</label>
+                                                            <div class="col-sm-8">
+                                                              <h:selectOneMenu
+                                                                value="#{ProducteurController.pphToCreateDto.sexe}"
+                                                                styleClass="custom-select"
+                                                                id="select-sexe"
+                                                                style="height: 45PX ! important">
+                                                                <f:selectItem itemLabel="Masculin"
+                                                                  itemValue="M" />
+                                                                <f:selectItem itemLabel="Feminin"
+                                                                  itemValue="F" />
+                                                              </h:selectOneMenu>
+                                                            </div>
+                                                          </div>
+                                                          <div class="form-group row">
+                                                            <label for="example-telephone-input"
+                                                              class="col-sm-4  col-form-label text-right">Téléphone</label>
+                                                            <div class="col-sm-8">
+                                                              <h:inputText name="telephone"
+                                                                class="form-control"
+                                                                value="#{ProducteurController.pphToCreateDto.telephone}" />
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      </section>
+                                                      <section>
+                                                      <div class="row" style="margin-bottom: 2%;">
+                                                        <div class="col-sm-12">
+                                                          <center>
+                                                            <div class="col-sm-4">
+                                                              <div class="button-items ">
+                                                                
+                                                                  <h:commandLink styleClass="btn btn-warning waves-effect waves-light"
+                                                                    action="#{ProducteurController.annulerCreationPph()}"
+                                                                    style="color: #ffffff;"
+                                                                    value="Annuler"></h:commandLink>
+                                                              
+                                                                  <h:commandLink styleClass="btn btn-success waves-effect waves-light"
+                                                                    action="#{ProducteurController.createPph()}"
+                                                                    style="color: #ffffff;" ajax="false"
+                                                                    value="Enregistrer"></h:commandLink>
+                                                              </div>
+                                                            </div>
+                                                          </center>
+                                                        </div>
+                                                      </div>
+                                                      </section>
+                                                    </div>
+
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <!--end card-body-->
+                                          </div>
+                                          <!--end card-->
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!--end card-->
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                            <!--end modal-content-->
+                          </div>
+                          <!--end modal-dialog-->
+                        </div>
+                        <section>
+                          <div class="row" style="margin-top : 20px">
+                            <div class="col-sm-5" />
+                            <div class="col-sm-4">
+                              <div class="button-items ">
+                                <button type="button" class="btn btn-warning waves-effect waves-light">
+                                  <h:commandLink action="#{ProducteurController.annulerProducteur()}" style="color: #ffffff;" ajax="false" value="Annuler"></h:commandLink>
+                                </button>
+                                <button type="button" class="btn btn-success waves-effect waves-light">
+                                  <h:commandLink action="#{ProducteurController.saveProducteur()}" style="color: #ffffff;" ajax="false" value="Enregistrer"></h:commandLink>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+            <button style="display: none;" type="button" id="create-producteur-topright-error">show alert</button>
+            <h:inputText value="#{ProducteurController.blocErreurMsg}" id="create-producteur-error-text" style="display: none;" />
+            <h:inputText value="#{ProducteurController.blocConfirmationMsg}" id="create-producteur-succes-text" style="display: none;" />
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-producteur-error-text create-producteur-succes-text"
+                 process="@this" listener="#{ProducteurController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <!-- Sweet-Alert  -->
+  <script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+  <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+  <!--Wysiwig js-->
+  <script src="assets/plugins/tinymce/tinymce.min.js"></script>
+  <script src="assets/pages/jquery.form-editor.init.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      if ($('#create-producteur-error-text').val() !== '') {
+        $('#create-producteur-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+  </script>
+</html>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:c="http://java.sun.com/jstl/core"  template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+	<ui:define name="section">
+
+		<div class="container-fluid">
+		
+		
+		<br/>  <br/>  <br/>  <br/>
+			<br/> 
+		<p class="pull-right" style=" margin-right:5% ; color : #002839"> <i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px"/>
+					   Tableau de bord  /  Liste des points de vente </p>
+					   <hr/>
+		
+			<br />
+			
+			
+						
+							<h1 class="MainLabelCenter"><i class="fa fa-database" aria-hidden="true"></i>
+							Liste des magasins</h1>
+			
+			
+			<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+
+				<p:messages id="messages" showDetail="true" />
+	
+	
+				<p:dataTable id="ProfilID" var="pvDTO"
+					value="#{referentielMB.loadAllPointDeVentes('0')}" reflow="true"
+					rowKey="#{pvDTO.idPv}" widgetVar="carsTableF"
+					emptyMessage="Ancun point de vente disponible" paginator="true"
+					rows="10" cellSeparator="10"
+						paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+					paginatorPosition="bottom"
+					filteredValue="#{referentielMB.filtredPointdeVente}"
+					selection="#{referentielMB.pointDeVente}" selectionMode="single"
+					style="width: 90%; margin-left:5%; font-size:15px ; ">
+<!-- 					<p:column headerText="Libelle"> -->
+<!-- 				          #{profilMB.StringCutter(pvDTO.libelle, 40)}  -->
+<!-- 				        </p:column> -->
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter"
+									onkeyup="PF('carsTableF').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+						
+					<p:column headerText="Point de Vente"
+					filterBy="#{pvDTO.libelle}" sortBy="#{pvDTO.libelle}"
+							filterMatchMode="contains">
+				          #{profilMB.StringCutter(pvDTO.libelle, 40)} 
+				        </p:column>
+				        
+					<p:column headerText="Département" filterBy="#{pvDTO.departement}" sortBy="#{pvDTO.departement}"
+							filterMatchMode="contains">
+				          #{profilMB.StringCutter(pvDTO.departement, 40)} 
+				        </p:column>
+					<p:column headerText="Commune" filterBy="#{pvDTO.commune}" sortBy="#{pvDTO.commune}"
+							filterMatchMode="contains">
+				          #{profilMB.StringCutter(pvDTO.commune, 40)} 
+				        </p:column>
+
+					<p:column headerText="Gérant" filterBy="#{pvDTO.gerant}" sortBy="#{pvDTO.gerant}"
+							filterMatchMode="contains">
+				          #{profilMB.StringCutter(pvDTO.gerant, 40)} 
+				        </p:column>
+					<p:column headerText="Contact Gérant" >
+				          #{profilMB.StringCutter(pvDTO.contactGerant, 40)} 
+				        </p:column>
+				</p:dataTable>
+
+				<div id="buttons" class="pull-right" style="margin-right: 55px">
+					<br /> <a type="submit"
+						href="gestionDesPointsdeVenteCreation.xhtml?idBlocToShow=2"
+						class="fa fa-plus btn btn-success pull-right"
+						style="margin-left: 15px;margin-right : 30px;  width : 120px"> Créer</a>
+			
+						
+
+					<h:commandButton styleClass=" btn btn-success pull-right"
+						action="#{referentielMB.initUpdatePointDeVente}" value="Modifier"
+						name="suivants" />
+<!-- 					<h:commandButton value="Supprimer"  -->
+<!-- 						onclick="if (!confirm('Etes-vous sûr de vouloir supprimer ce point de vente ?')) return false" -->
+<!-- 						action="#{referentielMB.deleteEngraisBis}" name="Supprimer" -->
+<!-- 						styleClass="suivants btn btn-warn pull-right" -->
+<!-- 						style="margin-right : 15px" /> -->
+
+
+
+					<br /> <br />
+				</div>
+			</h:form>
+
+
+			<h:form id="pvList"   rendered="#{param.idBlocToShow eq '2'}">
+				<div class="container-fluid">
+					<div id="engraisCreate" class="form-horizontal">
+				<p:messages id="messages" showDetail="true" />
+
+				<p class="titrePage">Modification point de vente  #{referentielMB.pointDeVente.libelle}</p>
+				<br />
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="inputPassword3" class="col-sm-2 control-label">Libellé</label>
+						<div class="col-sm-10">
+							<p:inputText value="#{referentielMB.pointDeVente.libelle}"
+								styleClass="form-control" title="Le libelle est requis"
+								requiredMessage="Le libelle est  requis" required="true" />
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Région</label>
+						<div class="col-sm-10">
+							<h:selectOneMenu value="#{referentielMB.pointDeVente.idRegion}"
+								required="true" styleClass="form-control input-sm CustomSelect"
+								requiredMessage="Le Profil est requis">
+								<f:selectItem itemLabel="Selectionnez une region " itemValue="" />
+								<f:selectItems value="#{referentielMB.regionDtos}"
+									var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+									itemLabel="#{CollaborateurDTO.valeur}" />
+
+								<p:ajax event="change"
+									listener="#{referentielMB.refreshDepartementByRegionId()}"
+									update="deptList communList" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+
+
+					<h:panelGroup id="communList">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Commune</label>
+							<div class="col-sm-10">
+								<h:selectOneMenu value="#{referentielMB.pointDeVente.idCommune}"
+									required="true" styleClass="form-control input-sm CustomSelect"
+									requiredMessage="La commmune est requise">
+									<f:selectItem itemLabel="Selectionnez une commune" itemValue="" />
+									<f:selectItems value="#{referentielMB.communes}"
+										var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+										itemLabel="#{CollaborateurDTO.valeur}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGroup>
+
+				</div>
+
+
+				<!--  right bloc -->
+				<div class="col-xs-6">
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Gérant
+						</label>
+						<h:panelGroup class="col-sm-10">
+							<h:selectOneMenu value="#{referentielMB.pointDeVente.idGerant}"
+								id="profilListe" required="true"
+								styleClass="form-control input-sm CustomSelect"
+								requiredMessage="Le gerant est requis">
+								<f:selectItem itemLabel="Selectionnez un gérant " itemValue="" />
+								<f:selectItems value="#{referentielMB.loadCollaborateurDTOs()}"
+									var="CollaborateurDTO"
+									itemValue="#{CollaborateurDTO.idPersonne}"
+									itemLabel="#{CollaborateurDTO.prenom} #{CollaborateurDTO.nom}" />
+
+							</h:selectOneMenu>
+						</h:panelGroup>
+					</div>
+
+
+					<h:panelGroup id="deptList">
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Département</label>
+
+							<div class="col-sm-10">
+								<h:selectOneMenu
+									value="#{referentielMB.pointDeVente.idDepartement}"
+									required="true" styleClass="form-control input-sm CustomSelect"
+									requiredMessage="Le departement est requis">
+									<f:selectItem itemLabel="Selectionnez un département"
+										itemValue="" />
+									<f:selectItems value="#{referentielMB.departements}"
+										var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+										itemLabel="#{CollaborateurDTO.valeur}" />
+									<p:ajax event="change"
+										listener="#{referentielMB.refreshCommunesByDepratementId()}"
+										update="communList" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+					</h:panelGroup>
+
+
+					<div class="form-group">
+						<label for="inputPassword3" class="col-sm-2 control-label">Adresse</label>
+						<div class="col-sm-10">
+							<p:inputText value="#{referentielMB.pointDeVente.libelleAdresse}"
+								styleClass="form-control" title="L'adresse" required="false" />
+						</div>
+					</div>
+
+
+				</div>
+				<div id="buttons" class="pull-right">
+					<h:commandButton styleClass="suivant btn btn-validatd pull-right"
+						action="#{referentielMB.ddd}" value="Créer"
+						name="suivants" /> 
+			
+			
+					<a type="submit"
+						href="gestionDesPointsdeVente.xhtml?idBlocToShow=1"
+						class="fa fa-info btn btn-default pull-right"> Annuler</a>
+				</div>
+
+				</div>
+				</div>
+			</h:form>
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

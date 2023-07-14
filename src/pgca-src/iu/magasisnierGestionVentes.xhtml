@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="3%"></p:spacer>
+
+
+
+		<div class="container-fluid ">
+			
+			
+			<div class="col-md-2">
+				<div id="ui-widget" style="margin-left: 10px;  box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0,0,0,.25)">
+								<h1 class="ui-value"> <a href="magasisnierGestionCredits.xhtml" style="color: #029441;     font-size: 20px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( magasinierMB.getMontantTotalventes() )} 
+								
+								 </a></h1>
+								<span class="ui-label" style="color: #029441;"> <a href="#" style="color: #029441; font-size: 17px;"> Montant Caisse </a></span>
+							</div>
+	
+			</div>
+			
+			<div class="col-md-10 fullbg">
+							<p:messages id="msg" showDetail="true" />
+
+
+
+				<h:form id="superFormgg" prependId="false">
+
+				
+						<h1
+							style="text-align: center; margin-top: 20px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+							Liste des ventes</h1>
+
+						   
+						<p:dataTable var="venteDTO"  
+							value="#{magasinierMB.callServiceRecuperationVentes()}" reflow="true"
+							row="20" rowKey="#{venteDTO.ventes_id}"
+							style="width: 90%; margin-left:5%; font-size:15px ; "
+							emptyMessage="Aucun bon de livraison à valider !!"
+							paginator="true" paginatorPosition="bottom" rows="15"
+							selection="#{magasinierMB.venteDTO}"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+							selectionMode="single">
+								<p:column headerText="Référence" >  
+								    
+								    VT#{venteDTO.ventes_id}
+								 </p:column>
+								 
+								<p:column headerText="Date" >  
+								     #{entiteJMB.StringCutter(venteDTO.dateVente,20)} 
+								        </p:column>
+							
+								<p:column headerText="Montant vente">  
+								    
+								     #{referentielMB.utils.formatFloatToCFA(venteDTO.montantVente)}
+								 </p:column>
+								 
+								 
+								<p:column headerText="Montant encaisse">  
+								    
+								     #{referentielMB.utils.formatFloatToCFA(venteDTO.montantEncaisse)}
+								 </p:column>
+							
+								<p:column headerText="Client">  
+							     #{entiteJMB.StringCutter(venteDTO.client,20)} 
+								    
+								  </p:column> 
+								
+							
+<!-- 							<p:ajax event="rowSelect" update="DetailsSelectedBL listProductBL " listener="#{magasinierMB.getDetailsOfSelectedBL}"> </p:ajax> -->
+
+						</p:dataTable>
+						
+					
+					<br/><br/><br/>
+							<h:commandButton styleClass=" btn btn-success pull-right"
+								style="width : 300px ; margin-right : 80px"
+								 value="retour" action="dashboardMagasinier.xhtml"
+								name="suivants" />
+								
+										<h:commandLink  onclick ="return false" action="#{managerManagedBean.reportListSubvention()}"  title="Télécharger le rapport détaillé des  ventes en excel ">
+									<img src="assets/images/exportExcel.png"   class="pull-right"
+										style="width: 6%; height: 6%; margin-right: 80px; margin-top : -20px" />
+									<br />
+								</h:commandLink>
+								
+								<br/> 	<br/> 	<br/> <br/>
+								
+							
+					
+					</h:form>
+						
+			</div>
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

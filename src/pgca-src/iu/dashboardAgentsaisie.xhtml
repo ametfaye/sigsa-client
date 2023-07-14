@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+	<ui:define name="section">
+
+		<h:inputText id="StockParFounisseurJSONFomrat"
+			value="#{agentSaisieMB.stockParFounisseurJSONFomrat}"
+			style="display : none" />
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAgentSaisie}"
+			id="containerrr">
+
+			<div class="container-fluid fullbg">
+				<!-- Bloc Liste des engrais -->
+				<div class="col-md-12"
+					style="margin-top: 20px; margin-bottom: 20px; border: 0; width: 94%; margin-left: 2%">
+
+
+					<div class="col-md-5 dashboardIndicateursInverse">
+						<div class="row">
+
+							<div class="col-md-3 " style="text-align: center">
+
+								<span class="" style="color: #002839"> <i
+									class="fa fa-retweet" aria-hidden="true" style="color: #80c347" />
+									Nb Quotas : <span style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.nbQuotas}</span>
+								</span>
+							</div>
+
+							<div class="col-md-3 " style="text-align: center">
+
+								<span class="pull-left" style="color: #002839"> <i
+									class="fa fa-balance-scale" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> Nb MEP : <span
+									style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.nbMiseEnPlace} </span>
+								</span>
+							</div>
+
+							<div class="col-md-3 " style="text-align: center">
+								<span class="" style="margin-left: 10%; color: #002839">
+									<i class="fa fa-registered" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> Reliquat : <span
+									style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.nbReliquat}</span>
+								</span>
+							</div>
+
+							<div class="col-md-3 " style="text-align: center">
+								<span class="" style="margin-left: 10%; color: #002839">
+									<i class="fa fa-chain-broken" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> Litiges : <span
+									style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.nbLitiges}</span>
+								</span>
+							</div>
+
+						</div>
+					</div>
+
+
+					<div class="col-md-1 " style="text-align: center">
+
+						<hr />
+					</div>
+
+					<div class="col-md-6 dashboardIndicateursInverse">
+
+						<div class="row">
+
+							<div class="col-md-3 " style="text-align: center">
+								<h:form>
+
+									<h:commandLink action="#{agentSaisieMB.redirectToListBon()}">
+										<span class="pull-left"
+											style="margin-right: 5%; color: #002839"> <i
+											class="fa fa-clone" aria-hidden="true"
+											style="margin-right: 5px; color: #80c347" /> BL édités : <span
+											style="font-size: 30px;">
+												#{agentSaisieMB.indicateurs.nbBl}</span>
+										</span>
+									</h:commandLink>
+								</h:form>
+
+							</div>
+
+							<div class="col-md-3 " style="text-align: center">
+								<span class="pull-left" style="color: #002839"> <i
+									class="fa fa-adjust" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> OL en attente : <span
+									style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.olEnAttentes} </span>
+								</span>
+							</div>
+
+							<div class="col-md-3 " style="text-align: center">
+								<span class="pull-left" style="color: #002839"> <i
+									class="fa fa-check-circle" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> OL Acceptés : <span
+									style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.olAcceptes}</span>
+								</span>
+							</div>
+
+							<div class="col-md-3 " style="text-align: center">
+								<span class="pull-left" style="color: #002839"> <i
+									class="fa fa-check-square-o" aria-hidden="true"
+									style="margin-right: 5px; color: #80c347" /> OL Traités : <span
+									style="font-size: 30px;">
+										#{agentSaisieMB.indicateurs.olTraites}</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<br />
+				</div>
+
+
+				<h:form prependId="false">
+					<div class="col-lg-12">
+						<div class="row" id="allOptions">
+							<div class="col-md-3">
+
+								<h:commandLink action="#{agentSaisieMB.initCreationIntrant()}"
+									id="appro"
+									title="Enregistrement des intrants disponibles auprès des fournisseurs ">
+
+									<img src="assets/images/pep.png"
+										style="height: 130px; height: 111px; margin-left: 35px; margin-top: -10px" />
+									<br />
+									<span
+										style="text-align: center; margin-left: 20px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Approvisionnement </span>
+
+								</h:commandLink>
+							</div>
+
+
+							<div class="col-md-3">
+
+								<a data-toggle="modal" data-target="#popProgramme"
+									title="Gestion des quotas et mise en place"> <img
+									src="assets/images/appro.png"
+									style="height: 100px; height: 100px; margin-left: 20px" /> <br />
+									<span
+									style="text-align: center; margin-left: 5px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Gestion des Quotas </span> <!-- 											<span class="notification">5</span> -->
+								</a>
+
+
+							</div>
+
+
+
+							<div class="col-md-3">
+								<a href="gestionDesMisesEnplace.xhtml"> <img
+									src="assets/images/collecte.png"
+									style="height: 100px;; margin-left: -30px" /> <br /> <span
+									style="text-align: center; margin-left: -55px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Gestion des mises en place </span>
+
+								</a>
+
+							</div>
+
+
+
+							<div class="col-md-3">
+								<a href="gestionDesOL.xhtml?idBlocToShow=1"> <h:commandLink
+										title="Envoyer des ordre de livraison aux magasiniers "
+										action="#{agentSaisieMB.initloadAllOrdresDeLivraion()}">
+										<img src="assets/images/order2.png"
+											style="height: 130px; height: 100px; margin-left: 50px" />
+										<br />
+										<span
+											style="text-align: center; margin-left: -20px; float: left; color: #FFFFFFF; font-size: 23px;">
+											Gestion des ordres de livraisons</span>
+									</h:commandLink>
+								</a>
+							</div>
+						</div>
+						<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+						<div class="row" id="allOptions">
+							<div class="col-md-3">
+								<h:commandLink action="#{agentSaisieMB.redirectToListLitiges()}"
+									title="Voir la liste des litiges en cours  ">
+									<img src="assets/images/litige.png"
+										style="height: 130px; height: 90px; margin-left: 35px" />
+									<br />
+									<span
+										style="text-align: center; margin-left: 10px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Gestion des litiges</span>
+									<!-- 										<span class="notification">0</span> -->
+								</h:commandLink>
+							</div>
+
+
+
+							<div class="col-md-3">
+								<a
+									href="agentSaisieReferentielPointdeVente.xhtml?idBlocToShow=1">
+									<img src="assets/images/pv2.png"
+									style="height: 92px; margin-left: 25px" /> <br /> <span
+									style="text-align: center; margin-left: -10px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Gestion des Points de vente</span>
+								</a>
+							</div>
+
+
+							<div class="col-md-3">
+								<h:commandLink action="#{agentSaisieMB.redirectToListBon()}"
+									title="Edition des bons de livraions pour les camions ">
+									<img src="assets/images/mep.jpg"
+										style="height: 130px; height: 90px; margin-left: 10px" />
+									<br />
+									<span
+										style="text-align: center; margin-left: -25px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Edition bon de livraison </span>
+
+								</h:commandLink>
+							</div>
+
+
+							<div class="col-md-3" data-toggle="modal"
+								data-target="#miseEffectuee">
+								<a href="#"> <img src="assets/images/mepp.png"
+									style="height: 90px; margin-left: 20px" /> <br /> <span
+									style="text-align: center; margin-left: 10px; float: left; color: #FFFFFFF; font-size: 23px;">
+										Transferts de Stock </span>
+								</a>
+
+							</div>
+
+
+
+							<!--  Modele Mise en place -->
+							<!-- Modal  BL -->
+							<div class="modal fade" id="BL" role="dialog">
+								<div class="modal-dialog modal-lg fullbg"
+									style="width: 1200px; height: auto;">
+
+									<!-- Modal content-->
+									<div class="modal-content">
+
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">X</button>
+											<div class="col-md-5"></div>
+
+											<div class="col-md-2">
+												<img width="90px" height="80px" style="margin-top: 2px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+												<br /> <br />
+											</div>
+
+											<div class="col-md-5 "></div>
+										</div>
+										<div class="modal-body">
+											<div id="previewBL" class="container-fluid">
+												<!-- Header BL -->
+												<h4 class="modal-title">
+													<p
+														style="text-align: center; margin-top: 3px; margin-bottom: 13px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+														Edition Quota de mise en place</p>
+													<br />
+
+												</h4>
+
+												<div class="row"
+													style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 280px;">
+													<div class="col-md-3" />
+													<div class="col-md-6" id="blocMiseEnPlace">
+														<!-- Bloc plan  -->
+														<h:panelGroup>
+															<br />
+
+															<div class="form-group">
+																<label for="inputEmail3" class="col-sm-3 control-label"
+																	style="margin-top: 8px">Programmme </label>
+																<div class="col-sm-9">
+																	<h:selectOneMenu
+																		value="#{referentielMB.libelleAndProg}"
+																		styleClass="form-control input-sm CustomSelect"
+																		requiredMessage="Le programme est obligatoire ">
+																		<f:selectItem itemLabel="Selectionnez un programme"
+																			itemValue="" />
+																		<f:selectItems
+																			value="#{agentSaisieMB.loadAllProgrammeOuvert()}"
+																			var="CollaborateurDTO"
+																			itemValue="#{CollaborateurDTO.clef} - #{CollaborateurDTO.valeur}"
+																			itemLabel="#{CollaborateurDTO.valeur}" />
+
+																	</h:selectOneMenu>
+																	<hr />
+																</div>
+															</div>
+
+
+															<div class="form-group">
+																<label for="inputEmail3" class="col-sm-3 control-label"
+																	style="margin-top: 8px">Catégorie </label>
+																<div class="col-sm-9">
+																	<h:selectOneMenu id="cat"
+																		value="#{referentielMB.selectedIntrantDTO.idtypeProduit}"
+																		styleClass="form-control input-sm CustomSelect"
+																		requiredMessage="La categorie  est requise">
+																		<f:selectItem itemLabel="Selectionnez une categorie "
+																			itemValue="" />
+																		<f:selectItems
+																			value="#{referentielMB.loadReferentielTypeIntrant()}"
+																			var="CollaborateurDTO"
+																			itemValue="#{CollaborateurDTO.id}"
+																			itemLabel="#{CollaborateurDTO.libelle}" />
+
+																		<p:ajax event="change"
+																			listener="#{referentielMB.refresshListProduitFromTypeProduitSelected()}"
+																			update="listeIntrant" />
+
+																	</h:selectOneMenu>
+																	<hr />
+																</div>
+															</div>
+
+															<br />
+															<div class="form-group">
+																<label for="inputPassword3"
+																	class="col-sm-3 control-label" style="margin-top: 8px">Intrant</label>
+																<div class="col-sm-9">
+																	<h:selectOneMenu
+																		value="#{referentielMB.selectedIntrantDTO.idProduit}"
+																		id="listeIntrant"
+																		styleClass="form-control input-sm CustomSelect"
+																		requiredMessage="L'intrant  est requis">
+																		<f:selectItem itemLabel="Selectionnez une categorie "
+																			itemValue="" />
+																		<f:selectItems
+																			value="#{referentielMB.listReferentielfiltred}"
+																			var="CollaborateurDTO"
+																			itemValue="#{CollaborateurDTO.idProduit}"
+																			itemLabel="#{CollaborateurDTO.libelleProduit}" />
+
+																	</h:selectOneMenu>
+																</div>
+
+																<hr />
+																<div class="form-group">
+																	<label for="inputPassword3"
+																		class="col-sm-3 control-label" style="margin-top: 8px">Date
+																		Souhaitée </label>
+																	<div class="col-sm-9">
+																		<p:inputText type="date"
+																			value="#{referentielMB.selectedIntrantDTO.dateMiseEnPlaceString}"
+																			styleClass="form-control"
+																			title="La date de mise en place souhaitée" />
+
+																	</div>
+																</div>
+															</div>
+															<br />
+															<br />
+															<div class="form-group">
+																<br />
+																<div class="col-sm-12">
+																	<h:commandButton
+																		styleClass=" btn btn-success pull-right"
+																		style="width : 250px ; margin-right : 100px; margin-top : 20px"
+																		action="#{referentielMB.initMiseEnplace}"
+																		value=" Enregistrer" name="suivants" />
+																</div>
+															</div>
+
+														</h:panelGroup>
+														<br /> <br /> <br />
+
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!--  Fin Modal -->
+						</div>
+						<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+					</div>
+
+					<div class="col-lg-12" style="margin-top: -100px;">
+						<br /> <br /> <br /> <br /> <br />
+
+						<div class="row"
+							style="min-width: 500px; height: 400px; max-width: 100%; margin-top: -10px; margin-left: 15px;">
+							<h:panelGroup id="Suivi">
+								<div id="myCarousel" class="carousel slide" data-ride="carousel">
+									<!-- Indicators -->
+									<ol class="">
+										<ui:repeat var="slider"
+											value="#{managerManagedBean.loadAllMiseEnplace()}">
+											<li data-target="#myCarousel"
+												data-slide-to="#{slider.idMiseEnPlace}" class="active"></li>
+										</ui:repeat>
+									</ol>
+
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner">
+
+
+
+										<ui:repeat var="mepSlider"
+											value="#{agentSaisieMB.loadAllMiseEnplace()}">
+											<div class="item #{mepSlider.activeCss}"
+												id="#{mepSlider.idMiseEnPlace}">
+
+												<div class="carousel-caption">
+													<h3 style="color: black"></h3>
+													<!--         <img src="assets/images/#{mepSlider.statusIcon}.png"   /> -->
+
+													<!-- 												<img src="assets/images/sliderOK.png" /> -->
+
+													<!--                         <img src="assets/images/slideWarn.png"   /> -->
+
+													<!-- 												<p style="color: black">0 litiges</p> -->
+													<!--         <p style="color : black">#{mepSlider.statusText}</p> -->
+												</div>
+
+												<div class="row">
+													<div class="col-md-12">
+
+
+														<div class="row fullbg">
+
+															<div class="col-lg-2" />
+															<br /> <br />
+															<div class="col-md-3 fixed"
+																style="background: url('assets/images/pictosIntrant/#{mepSlider.pictoImages}.png'); height: 300px; background-size: cover; background-size: 100% 100%;">
+
+															</div>
+															<div class="col-lg-9">
+
+																<div style="width: 100%;">
+																	<h3 class="ui-label sliderInfosMEP"
+																		style="text-align: center; font-size: 30px; coloor: #46692a">
+																		<i class="fa fa-info-circle"></i> Mise en place de
+																		#{mepSlider.libelleIntrantAMettreEnplace} au Point de
+																		vente de #{mepSlider.nomPointDeVente}
+																	</h3>
+																	<br />
+
+
+																</div>
+																<br />
+
+
+																<div class="col-lg-12">
+																	<div class="col-lg-7">
+																		<div class="form-group ">
+																			<span class="titrePage" style="font-size: 20px">Rapport
+																			</span>
+																		</div>
+																		<hr />
+
+																		<div class="form-group row">
+																			<label class="col-xs-4 col-form-label"><i
+																				style="color: #d6ce35" class="fa fa-check"
+																				aria-hidden="true"></i> Quota </label>
+																			<div class="col-xs-8">
+																				<h:outputLabel styleClass="sliderInfosMEP"
+																					value="#{mepSlider.quotaIntrantAMettreEnplace} (T)"></h:outputLabel>
+																			</div>
+																		</div>
+
+																		<br />
+																		<!-- 																	<div class="form-group row"> -->
+																		<!-- 																		<label class="col-xs-4 col-form-label"> <i -->
+																		<!-- 																			class="fa fa fa-check" style="color: #d6ce35" -->
+																		<!-- 																			aria-hidden="true"></i> Reliquat -->
+																		<!-- 																		</label> -->
+																		<!-- 																		<div class="col-xs-8"> -->
+																		<!-- 																			<h:outputLabel styleClass="sliderInfosMEP" -->
+																		<!-- 																				value="#{mepSlider.reliquatIntrantAMettreEnplace} (T)"></h:outputLabel> -->
+																		<!-- 																		</div> -->
+																		<!-- 																	</div> -->
+
+																		<br />
+
+																		<div class="form-group row">
+																			<label class="col-xs-4 col-form-label"> <i
+																				class="fa fa fa-check" style="color: #d6ce35"
+																				aria-hidden="true"></i> Mise en place
+																			</label>
+																			<div class="col-xs-8">
+																				<h:outputLabel styleClass="sliderInfosMEP"
+																					value="#{mepSlider.quotaIntrantAMettreEnplace - mepSlider.reliquatIntrantAMettreEnplace} (T)"></h:outputLabel>
+																			</div>
+																		</div>
+																	</div>
+
+																	<div class="col-lg-5">
+																		<div class="form-group ">
+																			<span class="titrePage">Stock disponible </span>
+																		</div>
+																		<hr />
+
+																		<div class="form-group row">
+																			<label class="col-xs-4 col-form-label">
+																				Fournisseur </label>
+																			<div class="col-xs-8">
+																				<h:outputLabel styleClass="sliderInfosMEP"
+																					value="#{mepSlider.stockFournisseurIntrnantEncours}" />
+																			</div>
+																		</div>
+																		<!-- 																	<div class="form-group row"> -->
+																		<!-- 																		<label class="col-xs-4 col-form-label"> Sedab -->
+																		<!-- 																		</label> -->
+																		<!-- 																		<div class="col-xs-8"> -->
+																		<!--  																			<h:outputLabel styleClass="sliderInfosMEP"  -->
+																		<!--  																				value="#{mepSlider.stockSedabIntrnantEncours}" />  -->
+																		<!-- 																		</div> -->
+																		<!-- 																	</div> -->
+
+																		<hr />
+																		<div class="form-group row">
+																			<label class="col-xs-4 col-form-label sliderInfosMEP">Reliquat
+																			</label>
+																			<div class="col-xs-8">
+																				<i class="fa fa-long-arrow-down" aria-hidden="true"
+																					style="color: red; margin-right: 5px"></i>
+																				<!-- 																			<h:outputLabel styleClass="sliderInfosMEP" -->
+																				<!-- 																				value="#{mepSlider.stockFournisseurIntrnantEncours + mepSlider.stockFournisseurIntrnantEncours}" /> -->
+																			</div>
+
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-lg-4" />
+																		<div class="col-lg-4">
+																			<div
+																				style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+																				<span class="ui-label"> <i
+																					class="fa fa-ravelry" aria-hidden="true"></i>
+																				</span>
+
+																				<h1 class="ui-value">
+																					<a href="#"
+																						style="color: #029441; margin-top: 10px; font-size: 30PX"
+																						class="pull-right">
+																						#{mepSlider.stockFournisseurIntrnantEncours }
+																						Tonne(s)</a>
+																				</h1>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</ui:repeat>
+									</div>
+									<!-- Left and right controls -->
+									<a class="left carousel-control" href="#myCarousel"
+										data-slide="prev"> <span
+										class="glyphicon glyphicon-chevron-left"></span> <span
+										class="sr-only">Précédent</span>
+									</a> <a class="right carousel-control" href="#myCarousel"
+										data-slide="next"> <span
+										class="glyphicon glyphicon-chevron-right"></span> <span
+										class="sr-only">Suivant</span>
+									</a>
+								</div>
+								<br />
+								<!--  Liste des points des ventes trouvés dans la commune -->
+							</h:panelGroup>
+						</div>
+					</div>
+
+					<!--  POP UP transfert de stock -->
+
+
+
+					<div class="modal fade" id="miseEffectuee" role="dialog">
+						<div class="modal-dialog modal-lg fullbg"
+							style="width: 75%; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content fullbg">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Transfert de stock d'intrant
+											#{agentSaisieMB.selectedMiseEnplaceAgregation.nomIntrant}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body fullbg">
+									<div class="container-fluid ">
+										<br />
+
+
+										<div class="col-md-10 col-md-offset-2"
+											style="min-height: 200px">
+
+
+
+											<a href="gestionDesTransferts.xhtml?idBlocToShow=1">
+												<div
+													class="col-md-5 transferBlocType transferBlocTypeColorBlack">
+													<br />
+													<h1
+														style="color: black; text-align: center; font-size: 30PX">
+														Fournisseur vers Magasin</h1>
+													<img src="assets/images/swtch.png" class="pull-left"
+														style="width: 30%; height: 30%; margin-top: 15px; margin-left: 40%" />
+
+												</div>
+
+											</a>
+
+
+											<div class="col-md-2" />
+
+											<h:commandLink
+												action="#{agentSaisieMB.redirectTransferMagasin()}">
+
+												<div
+													class="col-md-5 transferBlocType transferBlocTypeColorBase">
+													<br />
+													<h1
+														style="color: black; text-align: center; font-size: 30PX">
+														Point de vente vers Point de vente</h1>
+													<img src="assets/images/swtch.png" class="pull-left"
+														style="width: 30%; height: 30%; margin-top: 15px; margin-left: 40%" />
+												</div>
+											</h:commandLink>
+
+											<div class="col-md-1" />
+											<div class="col-md-1" />
+										</div>
+
+									</div>
+								</div>
+								<br /> <br /> <br />
+
+								<div class="modal-footer fullbg"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- End Génération feuille de rapport de suivi -->
+
+
+
+
+
+
+
+					<!--  POP UP PROGRAMME -->
+
+					<div class="modal fade" id="popProgramme" role="dialog">
+						<div class="modal-dialog modal-lg fullbg"
+							style="width: 50%; height: auto;">
+							<!-- Modal content-->
+							<div class="modal-content fullbg">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											selectionner un programme
+											#{agentSaisieMB.selectedMiseEnplaceAgregation.nomIntrant}</p>
+									</h4>
+								</div>
+								<div class="modal-body fullbg">
+									<div class="container-fluid ">
+										<br />
+
+										<div class="col-md-10 col-md-offset-2"
+											style="min-height: 200px">
+
+											<div class="form-group">
+												<label for="inputEmail3" class="col-sm-3 control-label"
+													style="margin-top: 25px">Programme</label>
+												<div class="col-sm-6">
+													<br />
+													<p:inputText id="popProgramme11" style="min-width : 400px"
+														value="#{agentSaisieMB.programmeFromAutoComplete}"
+														maxlength="4"
+														styleClass="ProgAutoComplete tt-query form-control"
+														title="Programme affilié"
+														requiredMessage="Le programme  est requis" >
+													</p:inputText>
+												</div>
+
+
+
+												<div class="col-sm-3"
+													style="background-color: #cfdcc4; color: black; text-align: center; height: 50px; width: 160px;; border-right: 10px solid #2e441a; margin-top: 20px; text-align: CENTER ! important; box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+													<a href="gestionDesQuotasdeMEP.xhtml"> <h:commandLink
+															title="Gestion des quotas et mise en place  "
+															action="#{agentSaisieMB.redirectToListMEP()}">
+															<br />
+															<span
+																style="text-align: center; margin-left: 5px; float: left; color: #FFFFFFF; font-size: 23px;">
+																Rechercher </span>
+															<!-- 											<span class="notification">5</span> -->
+														</h:commandLink>
+													</a>
+
+												</div>
+											</div>
+
+
+
+										</div>
+
+									</div>
+								</div>
+								<br /> <br /> <br />
+
+								<div class="modal-footer fullbg"></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- End POP UP PROGRAMME feuille de rapport de suivi -->
+
+
+
+
+					<!-- Fin POP transferrt de stock -->
+
+				</h:form>
+
+
+
+
+			</div>
+
+
+
+		</h:panelGroup>
+
+
+
+
+
+
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAgentSaisie == false}">
+			<div class="container-fluid">
+				<div class="col-md-12">
+
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+					<h1>Votre profil ne vous donne pas accès à cette ressource
+						demandée</h1>
+
+					<img src="assets/images/restrict.png" alt="Logo du Sénégal" />
+
+
+				</div>
+			</div>
+		</h:panelGroup>
+
+
+
+	</ui:define>
+
+</ui:composition>

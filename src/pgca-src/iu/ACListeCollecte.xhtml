@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de collecte</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div class="col-md-12">
+
+				<h:form id="engraisList" rendered="#{param.idBlocToShow eq '1'}">
+					<br />
+					<p class="titrePage">Liste des ventes enregistrées</p>
+					<br />
+					<div class="col-md-2">
+						<div id="ui-widget"
+							style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+							<h1 class="ui-value">
+								<a href="magasisnierGestionCredits.xhtml"
+									style="color: #029441; font-size: 20px;"> <i
+									class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+									#{referentielMB.utils.formatFloatToCFA(
+									magasinierMB.totalVentePV )}
+
+								</a>
+							</h1>
+							<span class="ui-label" style="color: #029441;"> <a
+								href="#" style="color: #029441; font-size: 17px;"> TOTOL </a></span>
+						</div>
+
+					</div>
+
+
+
+
+					<p:dataTable var="venteDTO"  widgetVar="ventes"
+						value="#{magasinierMB.callServiceRecuperationVentes()}"
+						reflow="true" row="5" rowKey="#{venteDTO.ventes_id}"
+						style="font-size:15px ; "
+						emptyMessage="Aucune vente  !!"
+						filteredValue="#{magasinierMB.filteredVentes}"
+						paginator="true" paginatorPosition="bottom" rows="5"
+						selection="#{magasinierMB.venteDTO}"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						selectionMode="single" >
+
+					
+						<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Critères de recherche "
+										style="color : #002839" />
+									<i class="fa fa-search" aria-hidden="true"
+										style="color: #80c347" />
+
+									<p:inputText id="globalFilterdd" onkeyup="PF('ventes').filter()"
+										style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+										placeholder="Entrez un critère " />
+								</p:outputPanel>
+					</f:facet>
+							
+
+						<p:column headerText="Point de vente ">  
+								     #{entiteJMB.StringCutter(venteDTO.zoneVente,80)} 
+								        </p:column>
+						<p:column headerText="Intrant / Variété ">  
+								     #{entiteJMB.StringCutter(venteDTO.libelleProduitVentes,80)} 
+						</p:column>
+						
+				    	<p:column headerText="Date">  
+								     #{entiteJMB.StringCutter(venteDTO.dateVente,20)} 
+						</p:column>
+								        
+						<p:column headerText="Quantité">  
+								     #{entiteJMB.StringCutter(venteDTO.quantiteProduitVendu,20)} 
+						</p:column>
+						
+						<p:column headerText="Prix unitaire ">  
+								     #{referentielMB.utils.formatFloatToCFA(venteDTO.prixUnitaire)} 
+						</p:column>	
+							
+						<p:column headerText="Montant vente">  
+								    
+								     #{referentielMB.utils.formatFloatToCFA(venteDTO.montantVente)}
+								 </p:column>
+
+
+						<!-- 								<p:column headerText="Montant encaisse">   -->
+
+						<!-- 								     #{referentielMB.utils.formatFloatToCFA(venteDTO.montantEncaisse)} -->
+						<!-- 								 </p:column> -->
+
+<!-- 						<p:column headerText="Client">   -->
+<!-- 							     #{entiteJMB.StringCutter(venteDTO.client,20)}  -->
+								    
+<!-- 								  </p:column> -->
+
+
+						<!-- 							<p:ajax event="rowSelect" update="DetailsSelectedBL listProductBL " listener="#{magasinierMB.getDetailsOfSelectedBL}"> </p:ajax> -->
+
+					</p:dataTable>
+
+
+
+					<div class=" pull-right" style="margin-right: 55px">
+						<br />
+
+
+						<!-- 						<h:commandButton value="#{msg['form.btn.sup']}" -->
+						<!-- 							onclick="if (!confirm('Etes-vous sûr de vouloir supprimer cet intrant ?')) return false" -->
+						<!-- 							action="#{agentCollecteMB.deleteIntrant}" name="Supprimer" -->
+						<!-- 							class="enregistrer a fa-info btn btn-default pull-right" -->
+						<!-- 							style="margin-right : 15px" /> -->
+
+						<!-- 						<h:commandButton value="Détails" -->
+						<!-- 							action="#{agentCollecteMB.getDetailsIntrant}" name="Détails" -->
+						<!-- 							class="enregistrer btn btn-success pull-right" -->
+						<!-- 							style="margin-right : 15px" /> -->
+
+						<!-- 							<a type="submit" -->
+						<!-- 							href="ACListeCollecte.xhtml?idBlocToShow=2" -->
+						<!-- 							class="suivant fa fa-success btn btn-success pull-right" -->
+						<!-- 							style="margin-right: 15px"> Enregistrer collecte</a> -->
+
+
+						<!-- 						<h:commandButton value="Modifier" -->
+						<!-- 							action="#{agentCollecteMB.initUpdateIntrant}" name="Modifier" -->
+						<!-- 							class="enregistrer a fa-info btn btn-default pull-right" -->
+						<!-- 							style="margin-right : 15px" /> -->
+
+					</div>
+
+					<br />
+					<br />
+
+				</h:form>
+
+
+				<!--********************************************************************** 
+				
+						Bloc  Enregistrement Collecte
+				
+				************************************************************************** -->
+				<h:form id="engraisCreate" rendered="#{param.idBlocToShow eq '2'}"
+					class="form-horizontal">
+
+					<p class="titrePage">INTRANT A AJOUTER</p>
+					<br />
+
+
+					<br />
+					<div class="col-xs-4" id="blocPV" />
+					<div class="col-xs-8" id="blocPV">
+
+						<div class="form-group">
+
+							<div class="col-sm-8">
+								<div class="row" style="margin-left: 3%">
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label"
+											style="margin-top: 17px">Intrant</label>
+										<div class="col-sm-8">
+											<br />
+
+											<p:inputText style="min-width : 400px"
+												value="#{agentCollecteMB.intrantDtoToCreate.vendeurIntrantVendu}"
+												maxlength="3" styleClass="typeahead2 tt-query form-control"
+												title="Point de vente"
+												requiredMessage="Le point de vente est requis"
+												required="true">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputEmail3" class="col-sm-2 control-label"
+											style="margin-top: 17px">Commune</label>
+										<div class="col-sm-8">
+											<br />
+
+											<p:inputText style="min-width : 400px"
+												value="#{agentCollecteMB.intrantDtoToCreate.vendeurCommune}"
+												maxlength="3"
+												styleClass="typeahead tt-query form-control CustomSelect"
+												title="Commune du fournisseur"
+												requiredMessage="La commune du fournisseur est requise"
+												required="true">
+
+											</p:inputText>
+
+										</div>
+									</div>
+
+
+
+								</div>
+
+							</div>
+
+
+
+
+						</div>
+					</div>
+
+					<div class="row">
+
+
+
+						<div class="col-xs-6">
+
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Programme</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{agentCollecteMB.intrantDtoToCreate.idCampagneProgramme}"
+										required="false"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un programme "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.getlistProgramme()}"
+											var="CoupleDTO" itemValue="#{CoupleDTO.clef}"
+											itemLabel="#{CoupleDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+
+							<!-- 							<div class="form-group"> -->
+							<!-- 								<label for="inputEmail3" class="col-sm-2 control-label">Type -->
+							<!-- 								</label> -->
+							<!-- 								<div class="col-sm-10"> -->
+							<!-- 									<h:selectOneMenu -->
+							<!-- 										value="#{agentCollecteMB.intrantDtoToCreate.idtypeProduit}" -->
+							<!-- 										id="profilListe" required="true" -->
+							<!-- 										styleClass="form-control input-sm CustomSelect" -->
+							<!-- 										requiredMessage="Le Profil est requis"> -->
+							<!-- 										<f:selectItem itemLabel="Selectionnez une categorie " -->
+							<!-- 											itemValue="" /> -->
+							<!-- 										<f:selectItems value="#{referentielMB.loadTypesIntrant()}" -->
+							<!-- 											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}" -->
+							<!-- 											itemLabel="#{CollaborateurDTO.libelle}" /> -->
+
+							<!-- 									</h:selectOneMenu> -->
+							<!-- 								</div> -->
+							<!-- 							</div> -->
+
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Quantité</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.quantite}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true" />
+								</div>
+							</div>
+
+						</div>
+
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Fournisseur</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.vendeur}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Fournisseur
+									Tel</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.vendeurTel}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true" />
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Prix
+									Unitaire</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.prixUnitaire}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le prix unitaire est est requis"
+										required="true" />
+								</div>
+							</div>
+
+
+
+
+
+							<div id="buttons" class="pull-right">
+
+
+
+								<h:commandButton
+									styleClass="suivant btn btn-validatd pull-right"
+									style="color: white; margin-right : 50PX ; margin-top : 50PX ; width : 200px"
+									action="#{agentCollecteMB.enregistrerCollecte}" value="Créer "
+									name="suivants" />
+
+								<a type="submit" href="ACListeCollecte.xhtml?idBlocToShow=1"
+									style="margin-right: 50PX; margin-top: 50PX; width: 200px"
+									class="fa fa-home btn btn-default pull-right"> Annuler</a>
+
+
+
+							</div>
+						</div>
+					</div>
+
+				</h:form>
+
+				<!--********************************************************************** 
+				
+						Bloc  Modification d'engrais
+				
+				************************************************************************** -->
+
+				<h:form id="engraisDetails" rendered="#{param.idBlocToShow eq '3'}"
+					class="form-horizontal">
+					<div class="row">
+						<p class="titrePage">#{agentCollecteMB.intrantDtoToCreate.libelleProduit}</p>
+						<br />
+						<div class="col-xs-6">
+
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Type
+								</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{agentCollecteMB.intrantDtoToCreate.idtypeProduit}"
+										id="profilListe" required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le type est requis">
+										<f:selectItem itemLabel="Selectionnez une categorie "
+											itemValue="" />
+										<f:selectItems value="#{agentCollecteMB1.loadTypesIntrant()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+											itemLabel="#{CollaborateurDTO.libelle}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Libéllé</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.libelleProduit}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Provenance</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.provenance}"
+										styleClass="form-control" title="Le libelle est requis"
+										requiredMessage="Le libelle est est requis" required="true" />
+								</div>
+							</div>
+
+						</div>
+
+
+						<!--  right bloc -->
+						<div class="col-xs-6">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Programme</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{agentCollecteMB1.intrantDtoToCreate.idCampagneProgramme}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un programme "
+											itemValue="" />
+										<f:selectItems value="#{agentCollecteMB.getlistProgramme()}"
+											var="CoupleDTO" itemValue="#{CoupleDTO.clef}"
+											itemLabel="#{CoupleDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Stock</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{agentCollecteMB.intrantDtoToCreate.idStock}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un point de collecte "
+											itemValue="" />
+										<f:selectItems value="#{agentCollecteMB1.loadAllStock()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Quantité</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{agentCollecteMB.intrantDtoToCreate.quantite}"
+										styleClass="form-control" title="La quantité  est requise"
+										requiredMessage="La quantité  est requise" required="true" />
+
+								</div>
+							</div>
+
+
+							<div id="buttons" class="pull-right">
+
+
+
+								<h:commandButton
+									styleClass="suivant btn btn-validatd pull-right"
+									style="color: #5cc08b; margin-right : 50PX ; margin-top : 100PX ; width : 200px"
+									action="#{agentCollecteMB.updateIntrantForCampagne}"
+									value="Modifier " name="suivants" />
+
+								<a type="submit" href="gestionDesProduits.xhtml?idBlocToShow=1"
+									class="fa fa-info btn btn-default pull-right"> Annuler</a>
+
+
+
+							</div>
+						</div>
+					</div>
+
+				</h:form>
+
+				<!--  FIn de recherche  ***************************************************-->
+
+
+
+
+
+				<!--********************************************************************** 
+				
+						BLOC  DETAILS PRODUITS
+				
+				************************************************************************** -->
+
+				<h:form id="engraisInfos" rendered="#{param.idBlocToShow eq '4'}"
+					class="form-horizontal">
+					<div class="row">
+						<p class="titrePage montantCFA">Détails
+							#{agentCollecteMB.selectedIntrantDto.libelleProduit}</p>
+
+
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-4 fixed"
+							style="background: url('assets/images/#{agentCollecteMB.selectedIntrantDto.pictoImages}'); height: 250px; float: left; background-color: #fff;">
+						</div>
+
+						<div class="col-md-8">
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"> Catégorie : </label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10"
+										value="#{agentCollecteMB.selectedIntrantDto.typeProduit} "></h:outputLabel>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"> Programme : </label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10"
+										value="#{agentCollecteMB.selectedIntrantDto.libelleProgramme} "></h:outputLabel>
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"> Tonnage
+									disponible :</label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10"
+										value="#{agentCollecteMB.selectedIntrantDto.quantite} Tonnes "></h:outputLabel>
+								</div>
+							</div>
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label">Provenance</label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage Margin10"
+										value="#{agentCollecteMB.selectedIntrantDto.provenance}"></h:outputLabel>
+								</div>
+							</div>
+							<hr />
+
+							<div class="form-group row">
+								<label class="col-xs-4 col-form-label"> Total
+									décaissement </label>
+								<div class="col-xs-8">
+									<h:outputLabel class="titrePage  Margin10 montantCFA"
+										value="{referentielMB.utils.formatFloatToCFA(agentCollecteMB.selectedIntrantDto.totauxGlobalVentesToutlesPV)}">
+										<i class="fa fa-arrow-up" aria-hidden="true"></i>
+									</h:outputLabel>
+								</div>
+							</div>
+
+							<div class=" pull-right" style="margin-right: 50px;">
+
+								<a type="submit" class="fa fa-undo btn btn-success pull-right"
+									href="ACListeCollecte.xhtml?idBlocToShow=1"> retour</a> <br />
+							</div>
+						</div>
+					</div>
+
+
+				</h:form>
+
+				<!--  FIn de recherche  ***************************************************-->
+				<br /> <br />
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

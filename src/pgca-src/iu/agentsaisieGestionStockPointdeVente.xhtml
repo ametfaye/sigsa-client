@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<h:form id="MEPForm">
+			<input id="cumulSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}" />
+			<input id="reliquatSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}" />
+			<input id="intrantSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}" />
+
+
+			<div class="container-fluid fullbg">
+
+
+
+				<!--  Liste des points des ventes trouvés dans la commune -->
+
+
+
+				<h:panelGroup id="ListPVOfCommune">
+					<p:messages id="messages" showDetail="true"
+						style="width : 60% ; margin-left : 20%" />
+
+
+
+
+
+
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true"
+							style="margin-right: 5px; color: #80c347" /> Tableau de bord
+						/Journal
+					</p>
+					<hr />
+
+					<h1 class="titrePage">Liste des stocks résiduels par point de
+						vente</h1>
+
+					<p:dataTable id="ProfilID" var="stock" widgetVar="stock"
+						value="#{agentSaisieMB.stockResiduel}" reflow="true"
+						rowKey="#{stock.idProduit}"
+						selection="#{agentSaisieMB.stockResiduelSelected}"
+						filteredValue="#{agentSaisieMB.stockResiduelFiltred}"
+						selectionMode="single"
+						emptyMessage="Ancun  stock résiduel disponible" paginator="true"
+						rows="10" cellSeparator="10"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+						paginatorPosition="bottom"
+						style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter" onkeyup="PF('stock').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column headerText="Famille" filterBy="#{stock.libelleProduit}"
+							sortBy="#{stock.libelleProduit}" filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(stock.libelleProduit, 40)} 
+				        </p:column>
+
+						<p:column headerText="Variété / Formule"
+							filterBy="#{stock.libelleProduit}"
+							sortBy="#{stock.libelleProduit}" filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(stock.libelleProduit, 40)} 
+				        </p:column>
+
+						<!-- 						<p:column headerText="Commune" filterBy="#{stock.libelleCommune}" -->
+						<!-- 							sortBy="#{stock.libelleCommune}" filterMatchMode="startsWith"> -->
+						<!-- 				          #{profilMB.StringCutter(stock.libelleCommune, 40)}  -->
+						<!-- 				        </p:column> -->
+
+						<p:column headerText="Tonnage " filterBy="#{stock.quantite}"
+							sortBy="#{stock.quantite}">
+				          #{profilMB.StringCutter(stock.quantite, 10)} 
+				        </p:column>
+
+
+
+						<p:ajax event="rowSelect"
+							listener="#{agentSaisieMB.loadAllIntrantResiduelByIntrantId()}"
+							update=":MEPForm:filterMEPP  :MEPForm:indicateur" />
+
+					</p:dataTable>
+
+
+					<h:panelGroup id="indicateur">
+
+						<div class="modal-dialog modal-lg"
+							style="width: 80%; height: auto;">
+							<div class="container-fluid">
+							
+								<div class="col-lg-4">
+									<div
+										style="height: 90px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+										<br />
+										<h1>L'intrant
+											#{agentSaisieMB.stockResiduelSelected.libelleProduit} est
+											disponible dans #{agentSaisieMB.stockResiduelByIntrantSize}
+											point (s) de vente</h1>
+									</div>
+								</div>
+
+								<div class="col-lg-4">
+									<div class="col-lg-2" />
+									<div class="col-md-8 fixed"
+										style="background: url('assets/images/#{agentSaisieMB.stockResiduelSelected.pictoImages}'); height: 250px; float: left; background-color: #fff;">
+
+									</div>
+									<div class="col-lg-2" />
+								</div>
+								
+								
+								<div class="col-lg-4">
+								<div
+										style="height: 90px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+										<br />
+									<h1>#{agentSaisieMB.stockResiduelSelected.quantite} (T) de
+										stock résiduel disponible dans les points de vente ci-dessous
+									</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<div class="modal-dialog modal-lg"
+						style="width: 90%; height: auto;">
+
+						<!-- Modal content-->
+
+
+						<h:panelGroup id="filterMEPP">
+							<div id="previewBL" class="container-fluid">
+
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; height: 400px;">
+
+
+
+
+
+
+									<div class="col-lg-10 col-lg-offset-1">
+										<br />
+
+										<h3 style="text-align: center">Répartition des
+											#{agentSaisieMB.stockResiduelSelected.quantite} (T) de stock
+											résiduel de
+											#{agentSaisieMB.stockResiduelSelected.libelleProduit}</h3>
+										<br />
+
+										<p:dataTable id="residuel" var="StockResi"
+											widgetVar="residuelF"
+											style="width: 90%; margin-left:5%; font-size:15px ; "
+											value="#{agentSaisieMB.stockResiduelByIntrant}" rows="10"
+											paginator="true"
+											paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+											rowsPerPageTemplate="5,10,15"
+											emptyMessage="Aucun  intrant résiduel "
+											filteredValue="#{agentSaisieMB.stockResiduelSelectedByIntrant}"
+											paginatorPosition="bottom">
+
+
+											<f:facet name="header">
+												<p:outputPanel>
+													<h:outputText value="Critères de recherche "
+														rendered="false" style="color : #002839" />
+													<i class="fa fa-search" aria-hidden="true"
+														style="color: #80c347" />
+
+													<p:inputText id="globalFilter"
+														onkeyup="PF('residuelF').filter()"
+														style="width:350px; margin-bottom  : 40px; margin-left : 20px; display  : none "
+														placeholder="Entrez un critère " />
+												</p:outputPanel>
+											</f:facet>
+
+
+											<p:column headerText="Département"
+												filterBy="#{StockResi.libellePointdeStock}"
+												sortBy="#{StockResi.libellePointdeStock}"
+												filterMatchMode="startsWith">
+										          #{profilMB.StringCutter(StockResi.libellePointdeStock, 40)} 
+						</p:column>
+
+											<!-- 		<p:column headerText="Variété / Formule" filterBy="#{intrantDTO.libelle}" -->
+											<!-- 								sortBy="#{intrantDTO.libelle}" -->
+											<!-- 								filterMatchMode="exact"> -->
+											<!-- 				          #{profilMB.StringCutter(intrantDTO.libelleProduit, 40)}  -->
+											<!-- 				        </p:column> -->
+
+											<p:column headerText="Commune"
+												sortBy="#{StockResi.libelleCommune}"
+												filterMatchMode="startsWith">
+				          #{StockResi.libelleCommune} 
+				        </p:column>
+
+
+											<p:column headerText="Quantite"
+												filterBy="#{StockResi.quantite}"
+												sortBy="#{StockResi.quantite}" filterMatchMode="exact">
+				          #{profilMB.StringCutter(StockResi.quantite, 40)} 
+				        </p:column>
+
+
+
+
+
+
+											<!-- 							<p:column headerText="Responsable" filterBy="#{intrantDTO.libelle}" -->
+											<!-- 								sortBy="#{StockResi.libelleCommune}}" -->
+											<!-- 								filterMatchMode="exact"> -->
+											<!-- 				          Mouhamed FAYE -->
+											<!-- 				        </p:column> -->
+
+
+
+
+											<!-- 							<p:column headerText="Tarif" sortBy="#{intrantDTO.prixUnitaire}">  -->
+											<!-- 								#{intrantDTO.prixUnitaire}  -->
+
+											<!-- 							</p:column> -->
+
+										</p:dataTable>
+
+
+
+											<h:commandLink styleClass="  btn btn-success pull-right hide"   style=" margin-right : 100px;"
+							action="#{agentSaisieMB.redirectoTolistListPointdeVenteForMiseEnPlace}">
+							
+						<i class="fa fa-save "  style="margin-top : 12px ;  color : #93c766 " aria-hidden="true"></i>
+						Transferer Stock résiduel
+						</h:commandLink>	
+						
+										<br /> <br /> <br />
+
+									</div>
+
+
+
+								</div>
+							</div>
+
+
+						</h:panelGroup>
+					</div>
+				</h:panelGroup>
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

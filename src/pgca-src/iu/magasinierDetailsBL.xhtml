@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+	<ui:define name="menuG">
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="ss" role="button" aria-haspopup="true"
+			aria-expanded="false">Stock <span class=""></span></a></li>
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Comptabilité <span class=""></span></a></li>
+
+
+		<li class="dropdown"><a href="#" class="dropdown-toggle"
+			data-toggle="dropdown" role="button" aria-haspopup="true"
+			aria-expanded="false">Toc <span class=""></span></a></li>
+                
+       </ui:define>
+
+	<ui:define name="section">
+
+
+
+		<p:spacer width="3%"></p:spacer>
+
+
+
+		<div class="container-fluid">
+
+			<div class="col-md-12">
+
+				<h:form id="superForm" prependId="false">
+					  detail bl
+					#{magasinierMB.selectedBLDTO.chauffeurlibelle}
+					
+					#{magasinierMB.selectedBLDTO.id}
+                 </h:form>
+				<p class="titrePage"
+					style="background: url('assets/images/small_shadow.jpg')">.</p>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" style="margin-top: 5%" id="myModal"
+			role="dialog">
+			<div class="modal-dialog modal-lg">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">dddd</button>
+						<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body">
+						<p>Some text in the #{magasinierMB.selectedBLDTO.libelle} dd.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+	</ui:define>
+
+</ui:composition>

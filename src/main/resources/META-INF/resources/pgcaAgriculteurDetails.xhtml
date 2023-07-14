@@ -1,0 +1,2523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<h:head>
+	<title>SIGMA | Détails de l'ordre de mission</title>
+	<link href="/assets/css/login.css" />
+	<!-- Sweet Alert -->
+	<link href="assets/plugins/sweet-alert2/sweetalert2.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/animate/animate.css" rel="stylesheet"
+		type="text/css" />
+	<!-- DataTables -->
+	<link href="assets/plugins/datatables/dataTables.bootstrap4.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/datatables/buttons.bootstrap4.min.css"
+		rel="stylesheet" type="text/css" />
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico" />
+	<!-- DataTables -->
+	<link href="assets/plugins/leaflet/leaflet.css" rel="stylesheet" />
+	<link href="assets//plugins/lightpick/lightpick.css" rel="stylesheet" />
+	<!-- App css -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/metisMenu.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/plugins/daterangepicker/daterangepicker.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+	<style>
+.red {
+	color: red !important;
+}
+
+.green {
+	color: green !important;
+}
+
+.gray {
+	color: gray !important;
+}
+
+.orange {
+	color: #eea200 !important;
+}
+
+.blue {
+	color: blue !important;
+}
+
+breadcrumb-item.active {
+	color: #bdb1ab ! important;
+}
+
+.badge.badge-soft-success {
+	color: #354840 !important;
+}
+
+.badge.badge-soft-warning {
+	color: #252118 !important;
+}
+
+.badge.badge-soft-danger {
+	color: #564448 !important;
+}
+
+button.ui-button {
+	margin-right: .5rem;
+}
+
+.timeline-steps {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap
+}
+
+.timeline-steps .timeline-step {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	margin: 1rem
+}
+
+@media ( min-width :768px) {
+	.timeline-steps .timeline-step:not(:last-child):after {
+		content: "";
+		display: block;
+		border-top: .25rem dotted #3b82f6;
+		width: 3.46rem;
+		position: absolute;
+		left: 7.5rem;
+		top: .3125rem
+	}
+	.timeline-steps .timeline-step:not(:first-child):before {
+		content: "";
+		display: block;
+		border-top: .25rem dotted #3b82f6;
+		width: 3.8125rem;
+		position: absolute;
+		right: 7.5rem;
+		top: .3125rem
+	}
+}
+
+.timeline-steps .timeline-content {
+	width: 10rem;
+	text-align: center
+}
+
+.timeline-steps .timeline-content .inner-circle {
+	border-radius: 1.5rem;
+	height: 1rem;
+	width: 1rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #3b82f6
+}
+
+.timeline-steps .timeline-content .inner-circle:before {
+	content: "";
+	background-color: #3b82f6;
+	display: inline-block;
+	height: 3rem;
+	width: 3rem;
+	min-width: 3rem;
+	border-radius: 6.25rem;
+	opacity: .5
+}
+
+
+
+.card-container {
+  background: #34495e;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.1); 
+  border-bottom: 6px solid #2c3e50;
+  border-right: 6px solid #2c3e50;
+}
+
+.cardCB {
+  position: relative;
+  padding-top: 60%;
+  overflow: hidden;
+}
+
+
+.chip {
+  position: absolute;
+  top: 35%;
+  left: 5%;
+  height: 23%;
+}
+
+.contactless {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+  height: 15%;
+  transform: rotate(90deg);
+}
+
+.visa {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  height: 30%;
+}
+
+.card-number {
+  position: absolute;
+  top: 61%;
+  left: 5%;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+  color: white;
+  text-shadow: 0px 0px 5px black;
+}
+
+
+.arrow {
+  position: absolute;
+  top: 80%;
+  left: 5%;
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent; 
+  border-right:17px solid white; 
+}
+
+.card-name, .card-expire {
+  position: absolute;
+  left: 10%;
+  font-family: sans-serif;
+  color: white;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 3px black;
+}
+
+.card-name {
+  top: 74%;
+  font-size: 1.3rem;
+}
+
+.card-expire {
+  top: 82%;
+  font-size: 1rem;
+}
+
+.bank-name {
+  margin: 0;
+  display: inline-block;
+  padding: 10px 20px;
+  padding-left: 5%;
+  position: absolute;
+  top: 10%;
+  left: 0;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+  color: black;
+  font-weight: bold;
+  background-color: white;
+  min-width: 30%;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  background-color: white;
+  width: 50%;
+  height: 5%;
+  left: 0;
+  top: 26%;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  opacity: 0.5;
+}
+
+.cardCB::after {
+  content: "";
+  position: absolute;
+  display: block;
+  background-color: white;
+  width: 200px;
+  height: 200px;
+  right: -75px;
+  top:-75px;
+  border-radius: 50%;
+  opacity: 0.05;
+}
+
+.card-container {
+  ...
+  transition: 0.5s transform, 0.5s box-shadow;
+}
+
+.card-container:hover {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 10px 10px 10px 5px rgba(0,0,0,0.3); 
+}
+
+
+@media screen and (max-width: 580px){
+  :root {
+    font-size: 12px;
+  }
+  .bank-name {
+    padding: 8px 15px;
+  }
+  .arrow {
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent; 
+    border-right:15px solid white; 
+  }
+}
+
+@media screen and (max-width: 460px){
+  :root {
+    font-size: 10px;
+  }
+  .bank-name {
+    padding: 5px 12px;
+  }
+  .arrow {
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent; 
+    border-right:11px solid white; 
+  }
+}
+
+@media screen and (max-width: 360px){
+  :root {
+    font-size: 8px;
+  }
+
+  .card-container {
+    border-bottom: 3px solid #2c3e50;
+    border-right: 3px solid #2c3e50;
+  }
+
+  .bank-name {
+    padding: 3px 8px;
+  }
+
+  .arrow {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right:8px solid white; 
+  }
+}
+</style>
+</h:head>
+<h:body class="dark-sidenav">
+	<h:inputText value="13.68333" id="longitude-input"
+		style="display: none;" />
+	<h:inputText value="-16.41667" id="latitude-input"
+		style="display: none;" />
+	<!-- Left Sidenav -->
+	<ui:include src="./includes/leftSideNav.xhtml" />
+	<!-- end left-sidenav-->
+	<div class="page-wrapper">
+		<!-- Top Bar Start -->
+		<ui:include src="./includes/topBar.xhtml" />
+		<!-- Top Bar End -->
+		<!-- Page Content-->
+		<div class="page-content">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+			<a class="navbar-brand" href="#"> <img
+				src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Gestion
+							des ODM / Détails ODM N°
+							#{OrderMissionController.selectedODM.odmId}</a></li>
+				</ul>
+				<!--end navbar-nav-->
+				<div class="pull-right">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item "><a class="nav-link" href="#">#{OrderMissionController.connectedUserDetails.entitePublique}
+								/ #{OrderMissionController.connectedUserDetails.service} /
+								#{OrderMissionController.connectedUserDetails.sousService}</a></li>
+					</ul>
+				</div>
+				<!--end form-->
+			</div>
+			<!--end navbar-collapse--> </nav>
+			<h:form enctype="multipart/form-data"
+				class="form-horizontal auth-form my-4" prependId="false">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+
+								<div class="card-body">
+									<div class="dastyle-profile">
+										<div class="row">
+
+											<div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+												<div class="dastyle-profile-main">
+													<div class="dastyle-profile-main-pic">
+														<img src="assets/images/profil.png" alt=""
+															height="110" class="rounded-circle" /> <span
+															class="dastyle-profile_main-pic-change"> <i
+															class="fas fa-camera"></i>
+														</span>
+													</div>
+													<div class="dastyle-profile_user-detail">
+														<h4 class="dastyle-user-name">#{EnrollementAgriculture.createdProducteurDTO.nom}
+															#{EnrollementAgriculture.createdProducteurDTO.prenom}</h4>
+														<p class="mb-0 dastyle-user-name-post">
+															198675690563478</p>
+													</div>
+												</div>
+											</div>
+											<!--end col-->
+
+
+
+											<!--end col-->
+											<div class="col-lg-4 ml-auto align-self-center">
+												<ul class="list-unstyled personal-detail mb-0">
+													<li class="mt-2"><i
+														class="las la-info text-secondary font-22 align-middle mr-2"></i>
+														<b> Catégorie </b> :
+														#{EnrollementAgriculture.createdProducteurDTO.categorie}</li>
+													<li class="mt-2"><i
+														class="las la-money-bill text-secondary font-22 align-middle mr-2"></i>
+														<b> Numéro NUA </b> :
+														#{EnrollementAgriculture.createdProducteurDTO.numeroProd}
+													</li>
+													<li class="mt-2"><i
+														class="las la-user text-secondary font-22 align-middle mr-2"></i>
+														<b> Date d'immatriculation </b> : <a href="#"
+														style="color: red">
+															#{EnrollementAgriculture.createdProducteurDTO.dateImmatriculation}
+													</a></li>
+												</ul>
+											</div>
+
+											<div class="col-lg-4 ml-auto align-self-center">
+												<ul class="list-unstyled personal-detail mb-0">
+													<li class="mt-2"><i
+														class="las la-info text-secondary font-22 align-middle mr-2"></i>
+														<b> Zone </b> :
+														#{EnrollementAgriculture.createdProducteurDTO.commune}</li>
+													<li class="mt-2"><i
+														class="las la-user text-secondary font-22 align-middle mr-2"></i>
+														<b> Commission rattachement </b> : <a href="#"
+														style="color: red">
+															#{EnrollementAgriculture.createdProducteurDTO.departement}
+													</a></li>
+
+													<li class="mt-2"><i
+														class="las la-user text-secondary font-22 align-middle mr-2"></i>
+														<b> Droits </b> : Ouvert incomplet /</li>
+												</ul>
+											</div>
+
+
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end f_profile-->
+								</div>
+								<!--end card-body-->
+								<!--end card-body-->
+							</div>
+							<!--end card-->
+						</div>
+						<!--end col-->
+						<div class="modal fade" id="poptransmettreAuCP" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalDanger1"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Transmission de la mission N°
+											SN/MIN #{OrderMissionController.selectedODM.odmId}</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h5>Confirmer la transmission au chef de service</h5>
+												<span class="badge bg-soft-secondary">Données
+													visibles Services</span> <small class="text-muted ml-2">#{OrderMissionController.selectedODM.dateCreation}</small>
+												<ul class="mt-3 mb-0">
+													<li>TDR de la mission.</li>
+													<li>Liste des participants de la mission</li>
+													<li>Documents annexes</li>
+												</ul>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<h:commandButton
+											actionListener="#{OrderMissionController.changerStatusMissionController('1')}"
+											ajax="true" update="agents-table" value="Confirmer"
+											styleClass="btn btn-success btn-sm"></h:commandButton>
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+						<!--end modal-->
+						<!--  POP SGG -->
+						<div class="modal fade" id="accepterODM" tabindex="-1"
+							role="dialog" aria-labelledby="accepterODM" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Approbation de la mission N°
+											SN/MIN #{OrderMissionController.selectedODM.odmId} au SGG</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h5>Votre approbation aura les impacts ci-dessous</h5>
+												<span class="badge bg-soft-secondary"> Liste</span> <small
+													class="text-muted ml-2">#{OrderMissionController.selectedODM.dateCreation}</small>
+												<ul class="mt-3 mb-0">
+													<li>La génération des autorisations de sortie.</li>
+													<li>La génération des ordres de missions</li>
+													<li>La notification du chef de services</li>
+													<li>La recherche des billets auprès des voyagistes
+														partenaires</li>
+												</ul>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<h:commandButton
+											actionListener="#{OrderMissionController.approuverMissionSGG()}"
+											ajax="true" update="agents-table" value="Confirmer"
+											styleClass="btn btn-success btn-sm"></h:commandButton>
+										<h:commandButton
+											actionListener="#{OrderMissionController.approuverMissionSG()}"
+											ajax="true" update="agents-table" value="Confirmer"
+											styleClass="btn btn-danger btn-sm"></h:commandButton>
+
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+						<!--end modal-->
+						<div class="modal fade" id="refuserODM" tabindex="-1"
+							role="dialog" aria-labelledby="accepterODM" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-danger">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Refus de la mission N° SN/MIN
+											#{OrderMissionController.selectedODM.odmId} au SGG</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h5>Confirmer la refus de la mission</h5>
+												<span class="badge bg-soft-secondary"> Sélectionner
+													un motif de refus</span> <small class="text-muted ml-2">#{OrderMissionController.selectedODM.dateCreation}</small>
+												<div class="row">
+													<div class="col-md-12">
+														<p:selectManyMenu styleClass="custom-select"
+															id="select-entite-publique"
+															value="#{OrderMissionController.motifRefusSelected}"
+															style="box-shadow : inset 0 2px 2px white ;  height: 80PX ! important;max-width:350px"
+															showCheckbox="true">
+															<f:selectItems
+																value="#{OrderMissionController.motifRefus}" var="motif"
+																itemValue="#{motif.code}" itemLabel="#{motif.libelle}" />
+														</p:selectManyMenu>
+													</div>
+													<br />
+												</div>
+												<div class="row" style="margin-top: 14%;">
+													<div class="col-lg-12">
+														<br /> <label for="motif" class="">Motif libre</label>
+														<h:inputTextarea
+															value="#{UtilisateurController.userMatricule}"
+															name="motif" class="form-control">
+															<p:ajax event="valueChange"
+																listener="#{UtilisateurController.changeMatricule}" />
+														</h:inputTextarea>
+													</div>
+												</div>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<sec:authorize access="hasAuthority('ADMIN')">
+											<h:commandButton
+												actionListener="#{OrderMissionController.refuserODM('ADMIN','ADMIN')}"
+												ajax="true" update="agents-table" value="Confirmer"
+												styleClass="btn btn-danger btn-sm"></h:commandButton>
+										</sec:authorize>
+										<sec:authorize access="hasAuthority('ADMIN')">
+											<h:commandButton
+												actionListener="#{OrderMissionController.refuserODM('RD','RM')}"
+												ajax="true" update="agents-table" value="Confirmer"
+												styleClass="btn btn-danger btn-sm"></h:commandButton>
+										</sec:authorize>
+										<sec:authorize access="hasAuthority('TBADMINSG')">
+											<h:commandButton
+												actionListener="#{OrderMissionController.refuserODM('RSG','RMSG')}"
+												ajax="true" update="agents-table" value="Confirmer"
+												styleClass="btn btn-danger btn-sm"></h:commandButton>
+										</sec:authorize>
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+						<div class="modal fade" id="accepODM" tabindex="-1" role="dialog"
+							aria-labelledby="accepterODM" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Acceptation de la mission N°
+											SN/MIN #{OrderMissionController.selectedODM.odmId} au SGG</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h5>Confirmer l'acceptation de la misson</h5>
+												<small class="text-muted ml-2">#{OrderMissionController.selectedODM.dateCreation}</small>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<h:commandButton
+											actionListener="#{OrderMissionController.accepterOrderMission()}"
+											ajax="true" value="Confirmer"
+											styleClass="btn btn-success btn-sm"></h:commandButton>
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+						<div class="modal fade" id="signeODM" tabindex="-1" role="dialog"
+							aria-labelledby="signeODM" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Téléchargement de le carte  N° 4975X43</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h4>Confirmer l'impression de la carte  ? </h4>
+												<br/>
+												<p>Imprimante cible : CANON-2eme-ETAGE</p>
+												
+												<small class="text-muted ml-2" style="color : red"></small>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<h:commandButton
+											actionListener="#{OrderMissionController.signerOrderMission()}"
+											ajax="true" value="Confirmer"
+											styleClass="btn btn-success btn-sm"></h:commandButton>
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+						<!--FIN POP SGG-->
+						<!-- DIRECTEUR POP -->
+						<div class="modal fade" id="transmettreauSGG" tabindex="-1"
+							role="dialog" aria-labelledby="transmettreauSGG"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Transmission de la mission N°
+											SN/MIN #{OrderMissionController.selectedODM.odmId} au SGG</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h5>Confirmer la transmission de la mission</h5>
+												<span class="badge bg-soft-secondary"> Donnéees
+													visible</span> <small class="text-muted ml-2">#{OrderMissionController.selectedODM.dateCreation}</small>
+												<ul class="mt-3 mb-0">
+													<li>TDR de la mission.</li>
+													<li>Liste des participants</li>
+													<li>Budget de la mission</li>
+												</ul>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<h:commandButton
+											actionListener="#{OrderMissionController.transmettreODM('TSGG','TSGG')}"
+											ajax="true" update="agents-table" value="Confirmer"
+											styleClass="btn btn-success btn-sm"></h:commandButton>
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+						<!-- SG POP -->
+						<div class="modal fade" id="transmettreauSG" tabindex="-1"
+							role="dialog" aria-labelledby="transmettreauSG"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header bg-success">
+										<h6 class="modal-title m-0 text-white"
+											id="exampleModalDanger1">Transmission de la mission N°
+											SN/MIN #{OrderMissionController.selectedODM.odmId} au SG</h6>
+										<button type="button" class="close " data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true"> <i
+												class="la la-times text-white"></i>
+											</span>
+										</button>
+									</div>
+									<!--end modal-header-->
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-lg-3 text-center align-self-center">
+												<img src="assets/images/widgets/btc.png" alt=""
+													class="img-fluid" />
+											</div>
+											<!--end col-->
+											<div class="col-lg-9">
+												<h5>Confirmer la transmission de la mission</h5>
+												<span class="badge bg-soft-secondary"> Donnéees
+													visible</span> <small class="text-muted ml-2">#{OrderMissionController.selectedODM.dateCreation}</small>
+												<ul class="mt-3 mb-0">
+													<li>TDR de la mission.</li>
+													<li>Liste des participants</li>
+													<li>Budget de la mission</li>
+												</ul>
+											</div>
+											<!--end col-->
+										</div>
+										<!--end row-->
+									</div>
+									<!--end modal-body-->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm"
+											data-dismiss="modal">Annuler</button>
+										<h:commandButton
+											actionListener="#{OrderMissionController.transmettreODM('TSG','TSG')}"
+											ajax="true" update="agents-table" value="Confirmer"
+											styleClass="btn btn-success btn-sm"></h:commandButton>
+									</div>
+									<!--end modal-footer-->
+								</div>
+								<!--end modal-content-->
+							</div>
+							<!--end modal-dialog-->
+						</div>
+					</div>
+					<!--end row-->
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="row">
+									<div class="col-12">
+										<div class="card">
+											<div class="card-body">
+												<div class="col-12">
+													<div id="wizard">
+														<ul class="nav nav-tabs" role="tablist">
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link active" data-toggle="tab" href="#fiche"
+																role="tab" aria-selected="false"> <i
+																	class="mdi mdi-tooltip-account"></i> Fiche agriculteur
+															</a></li>
+															
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link " data-toggle="tab" href="#detail"
+																role="tab" aria-selected="false"> <i
+																	class="mdi mdi-chat"></i> Patrimoines
+															</a></li>
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link" data-toggle="tab" href="#participant"
+																role="tab" aria-selected="false"> <i
+																	class="fas fa-users"></i> Subventions
+															</a></li>
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link" data-toggle="tab" href="#ordre-mission"
+																role="tab" aria-selected="false"> <i
+																	class="fas fa-folder"></i> Documents
+															</a></li>
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link" data-toggle="tab" href="#documents-ast"
+																role="tab" aria-selected="false"> <i
+																	class="fas fa-folder"></i> Contrôles
+															</a></li>
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link" data-toggle="tab" href="#documents"
+																role="tab" aria-selected="false"> <i
+																	class="fas fa-folder"></i> Finances
+															</a></li>
+															<li class="nav-item waves-effect waves-light"><a
+																class="nav-link" data-toggle="tab" href="#historique"
+																role="tab" aria-selected="false"> <i
+																	class="mdi mdi-calendar-text-outline"></i> Historique
+															</a></li>
+
+
+														</ul>
+														<div class="tab-content">
+														
+														
+															<div class="tab-pane p-3 mt-2 active" id="fiche"
+																role="tabpanel">
+
+																<div class="row">
+																	<div class="col-12">
+																		<div class="card">
+																			<div class="card-header">
+																				<h4 class="card-title">Fiche Agriculteur </h4>
+																				<p class="text-muted mb-0">Derniere mise à jour : 21/11/2023</p>
+																			</div>
+																			<!--end card-header-->
+																			<div class="card-body">
+																				
+																				<div class="row">
+																				
+																				
+																					<div class="col-md-6">		
+																						<div class="card-container">
+																							 <div class="cardCB">
+																						        <p class="bank-name"> Carte SIGSA</p>
+																						        <img class="chip" src="assets/images/agria3.jpeg"/>
+<!-- 																						        <img class="contactless" src="assets/images/nfc3.png"/> -->
+																						        <p class="card-number">#{EnrollementAgriculture.createdProducteurDTO.numeroProdCarte} 3123  #{EnrollementAgriculture.createdProducteurDTO.numeroProdCarte}</p>
+																						        <div class="arrow"></div>
+																						        <p class="card-name">#{EnrollementAgriculture.createdProducteurDTO.prenom} #{EnrollementAgriculture.createdProducteurDTO.nom}</p>
+																						        <p class="card-expire">EXPIRE 12/25</p>
+																						        <img class="visa" src="assets/images/qr.svg"/>
+																						      </div>
+																						</div>
+																						
+																						<br/>
+																						<div class="row">
+																					<div class="col-md-6">
+																						<button type="button" data-toggle="modal"
+																							data-target="#signeODM"
+																							class="btn btn-success  btn-round waves-effect waves-light">
+																							Télécharger la carte <i class="fa fa-check"></i>
+																						</button>
+																						<h4 class="m-0 font-weight-bold">
+																							<span
+																								class="text-muted font-12 font-weight-normal"
+																								style="margin-left: 10px"></span>
+																						</h4>
+																					</div>
+																					<div class="col-md-6">
+																						<button type="button" data-toggle="modal"
+																							data-target="#refuserODM"
+																							class="btn btn-danger  btn-round waves-effect waves-light">
+																							Suspendre la carte <i class="fa fa-times"></i>
+																						</button>
+																						<h4 class="m-0 font-weight-bold">
+																							<span
+																								class="text-muted font-12 font-weight-normal"
+																								style="margin-left: 10px"></span>
+																						</h4>
+																					</div>
+																				</div>
+																				
+																					</div>
+																					
+																			<div class="col-md-6">
+																						<h2> Infos fiche here  ..... </h2>
+																			</div>
+																				
+																				
+																				
+																				</div>
+																			</div>
+																			
+																			<!--end card-body-->
+																		</div>
+																		<!--end card-->
+																	</div>
+																	<!-- end col -->
+																</div>
+																<div class="row">
+																	<div class="col-sm-4" />
+																	<div class="col-sm-5">
+																		
+																				
+																		
+																	</div>
+																</div>
+																<!-- end row -->
+															</div>
+															<!-- FIN PANEL DETAILS -->
+															
+															
+															
+															
+															
+														
+														
+														
+															<!-- PANEL DETAILS -->
+															<div class="tab-pane p-3 mt-2" id="detail"
+																role="tabpanel">
+
+																<div class="row">
+																	<div class="col-12">
+																		<div class="card">
+																			<div class="card-header">
+																				<h4 class="card-title">Liste de biens agricoles
+																					connus</h4>
+																				<p class="text-muted mb-0">Terme de référence de
+																					la mission</p>
+																			</div>
+																			<!--end card-header-->
+																			<div class="card-body">
+
+																				<table id="datatable"
+																					class="table table-bordered dt-responsive nowrap"
+																					style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+																					<thead>
+																						<tr>
+																							<th>Référence</th>
+																							<th>Catégorie</th>
+																							<th>Titre de propriété</th>
+																							<th>Superficie</th>
+																							<th>Département</th>
+																							<th>Commune</th>
+																							<th>C. GPS</th>
+																							<th>Statut</th>
+																							<th>Certificat</th>
+
+																						</tr>
+																					</thead>
+
+																					<tbody>
+																						<p:repeat
+																							value="#{EnrollementAgriculture.createdProducteurDTO.listBiensAgricoles}"
+																							var="ba">
+
+																							<tr>
+																								<td><h:commandLink
+																										action="#{EnrollementAgriculture.initLoadDetailsAgriculteurs()}"
+																										value="#{ba.numeroProd}"
+																										style="cursor: pointer;  color : #8e1d07 ; margin-right : 5px">
+																										<f:param name="idSelectedProdId"
+																											value="#{ba.numeroProd}" />
+																									</h:commandLink></td>
+
+																								<td>#{ba.categorieBien}</td>
+																								<td>Notification mairie</td>
+																								<td>#{ba.superficieBien} m2</td>
+																								<td>#{ba.departement}</td>
+																								<td>#{ba.commune}</td>
+																								<td>#{ba.gpsLatitute} - #{ba.gpsLongitude}</td>
+
+																								<td><a href="javascript:;"
+																									class="badge badge-pill badge-success">
+																										Vérifié </a></td>
+																								<td><h:commandLink
+																										title="Télécharger les TDR de la mission">
+																										<i
+																											class="las la-file-pdf text-success font-18"></i>
+																									</h:commandLink>
+
+																									<div class="modal fade bd-example-modal-sm"
+																										id="deleteOrderModal-#{ba.prodId}"
+																										tabindex="-1" role="dialog"
+																										aria-labelledby="mySmallModalLabel"
+																										aria-hidden="true">
+																										<div class="modal-dialog modal-md"
+																											role="deleteOrder">
+																											<div class="modal-content">
+																												<div class="modal-header">
+																													<h6 class="modal-title m-0"
+																														id="mySmallModalLabel">Confirmation
+																														de la suppression</h6>
+																													<button type="button" class="close "
+																														data-dismiss="modal" aria-label="Close">
+																														<span aria-hidden="true"> <i
+																															class="la la-times"></i>
+																														</span>
+																													</button>
+																												</div>
+																												<!--end modal-header-->
+																												<div class="modal-body text-center">
+																													<h4 class="mb-1">Voulez-vous supprimer
+																														cet ordre de mission #{odm.prodId}ODM ?</h4>
+																												</div>
+																												<!--end modal-body-->
+																												<div class="modal-footer">
+																													<button type="button"
+																														class="btn btn-secondary btn-xs"
+																														data-dismiss="modal">Annuler</button>
+																													<button type="button"
+																														class="btn btn-primary btn-xs">
+																														<h:commandLink
+																															action="#{OrderMissionController.deleteOrderMission(odm.prodId)}"
+																															style="color: #ffffff;" ajax="false"
+																															value="Confirmer">
+																														</h:commandLink>
+																													</button>
+																												</div>
+																												<!--end modal-footer-->
+																											</div>
+																											<!--end modal-content-->
+																										</div>
+																										<!--end modal-dialog-->
+																									</div> <!--end modal--></td>
+																							</tr>
+
+																						</p:repeat>
+																					</tbody>
+
+
+																				</table>
+																			</div>
+																			<!--end card-body-->
+																		</div>
+																		<!--end card-->
+																	</div>
+																	<!-- end col -->
+																</div>
+																<div class="row">
+																	<div class="col-sm-4" />
+																	<div class="col-sm-5">
+																		<h:panelGroup
+																			rendered="#{OrderMissionController.selectedODM.etatCode == 'TCP'}">
+																			<sec:authorize access="hasAuthority('TBCHS')">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<button type="button" data-toggle="modal"
+																							data-target="#accepODM"
+																							class="btn btn-success  btn-round waves-effect waves-light">
+																							Valider la mission <i class="fa fa-check"></i>
+																						</button>
+																						<h4 class="m-0 font-weight-bold">
+																							<span
+																								class="text-muted font-12 font-weight-normal"
+																								style="margin-left: 10px"></span>
+																						</h4>
+																					</div>
+																					<div class="col-md-6">
+																						<button type="button" data-toggle="modal"
+																							data-target="#refuserODM"
+																							class="btn btn-danger  btn-round waves-effect waves-light">
+																							Refuser la mission <i class="fa fa-times"></i>
+																						</button>
+																						<h4 class="m-0 font-weight-bold">
+																							<span
+																								class="text-muted font-12 font-weight-normal"
+																								style="margin-left: 10px"></span>
+																						</h4>
+																					</div>
+																				</div>
+																			</sec:authorize>
+																		</h:panelGroup>
+																		<h:panelGroup
+																			rendered="#{OrderMissionController.selectedODM.type == 'International'}">
+																			<h:panelGroup
+																				rendered="#{OrderMissionController.selectedODM.etatCode == 'TSG'}">
+																				<sec:authorize access="hasAuthority('TBSG')">
+																					<button type="button" data-toggle="modal"
+																						data-target="#signeODM"
+																						class="btn btn-success btn-round waves-effect waves-light"
+																						style="margin-right: 4%;">
+																						Valider <i class="fa fa-check"></i>
+																					</button>
+																					<button type="button" data-toggle="modal"
+																						data-target="#refuserODM"
+																						class="btn btn-danger  btn-round waves-effect waves-light"
+																						style="margin-right: 4%;">
+																						Annuler <i class="fa fa-times"></i>
+																					</button>
+																				</sec:authorize>
+																			</h:panelGroup>
+																		</h:panelGroup>
+																	</div>
+																</div>
+																<!-- end row -->
+															</div>
+															<!-- FIN PANEL DETAILS -->
+															
+															
+															
+															
+															
+															
+															
+															<!-- PANEL PARTICIPANTS -->
+															<div class="tab-pane p-3 mt-2" id="participant"
+																role="tabpanel">
+																<div class="row">
+																	<div class="col-12">
+																		<div class="card"
+																			style="background-image: url(images/auth-bg.png)">
+																			<div class="card-body">
+
+
+
+																				<table id="datatable2"
+																					class="table table-bordered dt-responsive nowrap"
+																					style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+																					<thead>
+																						<tr>
+																							<th>Campagne</th>
+																							<th>Programme</th>
+																							<th>Intrant</th>
+																							<th>Date</th>
+																							<th>Statut</th>
+
+																						</tr>
+																					</thead>
+
+																					<tbody>
+																						<p:repeat
+																							value="#{EnrollementAgriculture.createdProducteurDTO.listBiensAgricoles}"
+																							var="ba">
+
+																							<tr>
+																								<td><h:commandLink
+																										action="#{EnrollementAgriculture.initLoadDetailsAgriculteurs()}"
+																										value="Campagne 2024"
+																										style="cursor: pointer;  color : #8e1d07 ; margin-right : 5px">
+																										<f:param name="idSelectedProdId"
+																											value="#{ba.numeroProd}" />
+																									</h:commandLink></td>
+
+																								<td>Horticulture</td>
+																								<td>23/10/2023</td>
+																								<td>ARTAL H2</td>
+
+
+																								<td><a href="javascript:;"
+																									class="badge badge-pill badge-warning"> En
+																										attente de validation </a></td>
+																								<td><h:commandLink
+																										title="Télécharger les TDR de la mission">
+																										<i
+																											class="las la-file-pdf text-success font-18"></i>
+																									</h:commandLink>
+
+																									<div class="modal fade bd-example-modal-sm"
+																										id="deleteOrderModal-#{ba.prodId}"
+																										tabindex="-1" role="dialog"
+																										aria-labelledby="mySmallModalLabel"
+																										aria-hidden="true">
+																										<div class="modal-dialog modal-md"
+																											role="deleteOrder">
+																											<div class="modal-content">
+																												<div class="modal-header">
+																													<h6 class="modal-title m-0"
+																														id="mySmallModalLabel">Confirmation
+																														de la suppression</h6>
+																													<button type="button" class="close "
+																														data-dismiss="modal" aria-label="Close">
+																														<span aria-hidden="true"> <i
+																															class="la la-times"></i>
+																														</span>
+																													</button>
+																												</div>
+																												<!--end modal-header-->
+																												<div class="modal-body text-center">
+																													<h4 class="mb-1">Voulez-vous supprimer
+																														cet ordre de mission #{odm.prodId}ODM ?</h4>
+																												</div>
+																												<!--end modal-body-->
+																												<div class="modal-footer">
+																													<button type="button"
+																														class="btn btn-secondary btn-xs"
+																														data-dismiss="modal">Annuler</button>
+																													<button type="button"
+																														class="btn btn-primary btn-xs">
+																														<h:commandLink
+																															action="#{OrderMissionController.deleteOrderMission(odm.prodId)}"
+																															style="color: #ffffff;" ajax="false"
+																															value="Confirmer">
+																														</h:commandLink>
+																													</button>
+																												</div>
+																												<!--end modal-footer-->
+																											</div>
+																											<!--end modal-content-->
+																										</div>
+																										<!--end modal-dialog-->
+																									</div> <!--end modal--></td>
+																							</tr>
+
+																						</p:repeat>
+																					</tbody>
+
+
+																				</table>
+
+
+
+																			</div>
+																		</div>
+																		<h:panelGroup>
+																			<div class="row">
+																				<div class="col-12">
+																					<center>
+																						<button type="button" class="btn btn-secondary">
+																							<h:commandLink
+																								action="#{OrderMissionController.transfererODM(agent.matricule)}"
+																								style="color: #ffffff;" ajax="false"
+																								value="Transférer les ODMs aux participants"></h:commandLink>
+																						</button>
+																						<button type="button" class="btn btn-primary">
+																							<h:commandLink
+																								action="#{OrderMissionController.transfererAST(agent.matricule)}"
+																								style="color: #ffffff;" ajax="false"
+																								value="Transférer les ASTs aux participants"></h:commandLink>
+																						</button>
+																					</center>
+																				</div>
+																			</div>
+																		</h:panelGroup>
+																	</div>
+																	<!-- end col -->
+																</div>
+															</div>
+															<!-- FIN PANNEL PARTICIPANTS -->
+															
+															
+															
+															<!-- Panel ODM -->
+															<div class="tab-pane p-3 mt-2" id="ordre-mission"
+																role="tabpanel">
+																<h:panelGroup id="odm-table">
+																	<div class="row">
+																		<div class="col-12">
+																			<div class="card"
+																				style="background-image: url(images/auth-bg.png)">
+																				<div class="card-body">
+
+
+
+																					<div class="page-content">
+																						<div class="container-fluid">
+																							<!-- Page-Title -->
+																							<div class="row">
+																								<div class="col-sm-12">
+																									<div class="page-title-box">
+																										<div class="row">
+																											<div class="col">
+																												<h4 class="page-title">Justificatifs</h4>
+																												<ol class="breadcrumb">
+																													<li class="breadcrumb-item"><a
+																														href="javascript:void(0);">Producteurs</a></li>
+																													<li class="breadcrumb-item"><a
+																														href="javascript:void(0);">Pièces</a></li>
+																													<li class="breadcrumb-item active">Fichiers</li>
+																												</ol>
+																											</div>
+																											<!--end col-->
+
+																										</div>
+																										<!--end row-->
+																									</div>
+																									<!--end page-title-box-->
+																								</div>
+																								<!--end col-->
+																							</div>
+																							<!--end row-->
+																							<!-- end page title end breadcrumb -->
+																							<div class="row">
+																								<div class="col-lg-3">
+																									<div class="card">
+																										<div class="card-header">
+																											<div class="row align-items-center">
+																												<div class="col">
+																													<h4 class="card-title">Categories</h4>
+																												</div>
+																												<!--end col-->
+																												<div class="col-auto">
+																													<div class="dropdown">
+																														<a href="#"
+																															class="btn btn-sm btn-outline-light dropdown-toggle"
+																															data-toggle="dropdown"
+																															aria-haspopup="true"
+																															aria-expanded="false"> <i
+																															data-feather="more-horizontal"
+																															class="align-self-center text-muted icon-xs"></i>
+																														</a>
+																														<div
+																															class="dropdown-menu dropdown-menu-right">
+																															<a class="dropdown-item" href="#">Pieces
+																																d'identités </a> <a class="dropdown-item"
+																																href="#">Justificatifs biens</a> <a
+																																class="dropdown-item" href="#">autres
+																																documents</a>
+																														</div>
+																													</div>
+																												</div>
+																												<!--end col-->
+																											</div>
+																											<!--end row-->
+																										</div>
+																										<!--end card-header-->
+																										<div class="card-body">
+																											<div class="files-nav">
+																												<div class="nav flex-column nav-pills"
+																													id="files-tab" aria-orientation="vertical">
+																													<a class="nav-link active"
+																														id="files-projects-tab" data-toggle="pill"
+																														href="#files-projects"
+																														aria-selected="true"> <i
+																														data-feather="folder"
+																														class="align-self-center icon-dual-file mr-3"></i>
+																														<div
+																															class="d-inline-block align-self-center">
+																															<h5 class="m-0">ETAT CIVIL</h5>
+																															<small>80GB/200GB Used</small>
+																														</div>
+																													</a> <a class="nav-link" id="files-pdf-tab"
+																														data-toggle="pill" href="#files-pdf"
+																														aria-selected="false"> <i
+																														data-feather="folder"
+																														class="align-self-center icon-dual-file mr-3"></i>
+																														<div
+																															class="d-inline-block align-self-center">
+																															<h5 class="m-0">Titre de Propriétés</h5>
+																															<small>80GB/200GB Used</small>
+																														</div>
+																													</a> <a class="nav-link  align-items-center"
+																														id="files-documents-tab"
+																														data-toggle="pill" href="#files-documents"
+																														aria-selected="false"> <i
+																														data-feather="folder"
+																														class="align-self-center icon-dual-file mr-3"></i>
+																														<div
+																															class="d-inline-block align-self-center">
+																															<h5 class="m-0">Autres documents</h5>
+																															<small>80GB/200GB utilisé</small>
+																														</div> <span
+																														class="badge badge-success ml-auto font-10">8</span>
+																													</a> <a class="nav-link mb-0" href="#"
+																														data-toggle="modal"
+																														data-animation="bounce"
+																														data-target=".hide-modal"> <i
+																														data-feather="lock"
+																														class="align-self-center icon-dual-file mr-3"></i>
+																														<div
+																															class="d-inline-block align-self-center">
+																															<h5 class="m-0">Documents cryptés
+																																(Quota de subventions)</h5>
+																															<small>80GB/200GB Used</small>
+																														</div>
+																													</a>
+																												</div>
+																											</div>
+																										</div>
+																										<!--end card-body-->
+																									</div>
+																									<!--end card-->
+
+																									<div class="card">
+																										<div class="card-body">
+																											<small class="float-right">62%</small>
+																											<h6 class="mt-0">620GB / 1TB utilisé</h6>
+																											<div class="progress" style="height: 5px;">
+																												<div class="progress-bar bg-success"
+																													role="progressbar" style="width: 62%;"
+																													aria-valuenow="62" aria-valuemin="0"
+																													aria-valuemax="100"></div>
+																											</div>
+																										</div>
+																										<!--end card-body-->
+																									</div>
+																									<!--end card-->
+																								</div>
+																								<!--end col-->
+
+																								<div class="col-lg-9">
+																									<div class="tab-content" id="files-tabContent">
+
+																										<div class="tab-pane fade show active"
+																											id="files-projects">
+																											<h4 class="card-title mt-0 mb-3">Projects</h4>
+																											<div class="file-box-content">
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-alt text-primary"></i>
+																														<h6 class="text-truncate">Admin_Panel</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-code text-danger"></i>
+																														<h6 class="text-truncate">Ecommerce.pdf</h6>
+																														<small class="text-muted">15 March
+																															2019 / 8MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i
+																															class="lar la-file-archive text-warning"></i>
+																														<h6 class="text-truncate">Payment_app.zip</h6>
+																														<small class="text-muted">11 April
+																															2019 / 10MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file text-secondary"></i>
+																														<h6 class="text-truncate">App_landing_001</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																											</div>
+
+																											<div class="row">
+																												<div class="col-12">
+																													<h4 class="card-title my-3">Freelancing
+																														Projects</h4>
+																												</div>
+																											</div>
+																											<div class="file-box-content">
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-alt text-primary"></i>
+																														<h6 class="text-truncate">Admin_Panel</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-code text-info"></i>
+																														<h6 class="text-truncate">Ecommerce.pdf</h6>
+																														<small class="text-muted">15 March
+																															2019 / 8MB</small>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																										<!--end tab-pane-->
+
+																										<div class="tab-pane fade" id="files-pdf">
+																											<h4 class="mt-0 card-title mb-3">PDF
+																												Files</h4>
+																											<div class="file-box-content">
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-info"></i>
+																														<h6 class="text-truncate">Admin_Panel</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-danger"></i>
+																														<h6 class="text-truncate">Ecommerce.pdf</h6>
+																														<small class="text-muted">15 March
+																															2019 / 8MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-warning"></i>
+																														<h6 class="text-truncate">Payment_app.zip</h6>
+																														<small class="text-muted">11 April
+																															2019 / 10MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-secondary"></i>
+																														<h6 class="text-truncate">App_landing_001.pdf</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																										<!--end tab-pane-->
+
+																										<div class="tab-pane fade"
+																											id="files-documents">
+																											<h4 class="mt-0 card-title mb-3">Documents </h4>
+																											<div class="file-box-content">
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-info"></i>
+																														<h6 class="text-truncate">Adharcard_update</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-danger"></i>
+																														<h6 class="text-truncate">Pancard</h6>
+																														<small class="text-muted">15 March
+																															2019 / 8MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-warning"></i>
+																														<h6 class="text-truncate">ICICI_statment</h6>
+																														<small class="text-muted">11 April
+																															2019 / 10MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-secondary"></i>
+																														<h6 class="text-truncate">March_Invoice</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																											</div>
+
+																											<div class="row">
+																												<div class="col-12">
+																													<h4 class="card-title my-3">Company
+																														Documents</h4>
+																												</div>
+																											</div>
+																											<div class="file-box-content">
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-success"></i>
+																														<h6 class="text-truncate">Adharcard_update</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-pink"></i>
+																														<h6 class="text-truncate">Pancard</h6>
+																														<small class="text-muted">15 March
+																															2019 / 8MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-purple"></i>
+																														<h6 class="text-truncate">ICICI_statment</h6>
+																														<small class="text-muted">11 April
+																															2019 / 10MB</small>
+																													</div>
+																												</div>
+																											</div>
+
+																											<div class="row">
+																												<div class="col-12">
+																													<h4 class="card-title my-3">Personal
+																														Documents</h4>
+																												</div>
+																											</div>
+																											<div class="file-box-content">
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-blue"></i>
+																														<h6 class="text-truncate">Adharcard_update</h6>
+																														<small class="text-muted">06 March
+																															2019 / 5MB</small>
+																													</div>
+																												</div>
+																												<div class="file-box">
+																													<a href="#" class="download-icon-link">
+																														<i
+																														class="dripicons-download file-download-icon"></i>
+																													</a>
+																													<div class="text-center">
+																														<i class="lar la-file-pdf text-dark"></i>
+																														<h6 class="text-truncate">Pancard</h6>
+																														<small class="text-muted">15 March
+																															2019 / 8MB</small>
+																													</div>
+																												</div>
+																											</div>
+																										</div>
+																										<!--end tab-pen-->
+
+																										<div class="tab-pane fade" id="files-hide">
+																											<h4 class="mt-0 card-title mb-3">Hide</h4>
+																										</div>
+																										<!--end tab-pane-->
+
+																									</div>
+																									<!--end card-body-->
+																								</div>
+																								<!--end col-->
+																							</div>
+																							<!--end row-->
+
+																						</div>
+																						<!-- container -->
+																						<div class="modal fade hide-modal" tabindex="-1"
+																							role="dialog" aria-hidden="true">
+																							<div class="modal-dialog modal-dialog-centered">
+																								<div class="modal-content">
+																									<div class="modal-header">
+																										<h5 class="modal-title mt-0"
+																											id="exampleModalLabel">Enter Password</h5>
+																										<button type="button" class="close"
+																											data-dismiss="modal" aria-label="Close">
+																											<span aria-hidden="true">&times;</span>
+																										</button>
+																									</div>
+																									<div class="modal-body">
+																										<div class="p-3">
+																											<form class="form-horizontal"
+																												action="index.html">
+
+																												<div class="text-center mb-4">
+																													<div
+																														class="avatar-box thumb-xl align-self-center mr-2">
+																														<span
+																															class="avatar-title bg-light rounded-circle text-danger"><i
+																															class="las la-lock"></i></span>
+																													</div>
+																												</div>
+
+																												<div class="input-group">
+																													<input type="password" class="form-control"
+																														placeholder="Password"
+																														aria-label="Password"
+																														aria-describedby="HideCard" />
+																													<div class="input-group-append">
+																														<button class="btn btn-primary"
+																															type="button" id="HideCard">
+																															<i class="las la-key"></i>
+																														</button>
+																													</div>
+																												</div>
+																											</form>
+																										</div>
+																									</div>
+																								</div>
+																								<!-- /.modal-content -->
+																							</div>
+																							<!-- /.modal-dialog -->
+																						</div>
+																						<!-- /.modal -->
+
+																					</div>
+
+
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</h:panelGroup>
+																<hr />
+																<div class="row">
+																	<div class="col-sm-3" />
+																	<div class="col-sm-9">
+																		<div class="button-items">
+																			<p:commandButton id="generer-odm-button-hidden"
+																				action="#{OrderMissionController.genererLesOdm()}"
+																				update="odm-table eve-table" style="display: none;"
+																				ajax="true" value="Générer les ordres de mission">
+																			</p:commandButton>
+																			<button type="button" id="generer-odm-button"
+																				class="btn btn-success waves-effect waves-light">
+																				Générer les ordres de mission</button>
+																			<p:commandButton id="signer-odm-button-hidden"
+																				action="#{OrderMissionController.signerLesOdm()}"
+																				update="odm-table eve-table" style="display: none;"
+																				ajax="true" value="Signer les ordres de mission">
+																			</p:commandButton>
+																			<button type="button" id="signer-odm-button"
+																				class="btn btn-warning waves-effect waves-light">
+																				Signer les ordres de mission</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- FIn panel ODM -->
+															
+															
+															<div class="tab-pane p-3 mt-2" id="documents-ast"
+																role="tabpanel">
+																<h:panelGroup id="ast-table">
+																	<div class="row">
+																		<div class="col-12">
+																			<div class="card"
+																				style="background-image: url(images/auth-bg.png)">
+																				<div class="card-body">
+																					<table id="datatableAST"
+																						class="table table-bordered dt-responsive nowrap"
+																						style="border-collapse: collapse; border-spacing: 0; width: 100%; text-align: center;">
+																						<thead>
+																							<tr>
+																								<th>Date</th>
+																								<th>Type</th>
+																								<th>Organisme</th>
+																								<th>Statut</th>
+																								<th>Fiche de controle</th>
+																							</tr>
+																						</thead>
+																						<tbody>
+																						
+										
+																								
+																									<tr>
+																									<td>02/03/2023</td>
+																									<td>Vérification du précédent cultural (avant semis), </td>
+																									<td>DISEM</td>
+																									<td> <a class="badge badge-pill badge-success"> Validé </a> </td>
+																									<td><h:commandLink
+																											
+																											title="Télécharger le rapport">
+																											<i
+																												class="las la-file-pdf text-success font-18"></i>
+																										</h:commandLink> <h:commandLink
+																											title="Télécharger la fiche d'instruction du controle ">
+																											<i
+																												class="las la-file-upload text-info font-18"></i>
+																										</h:commandLink></td>
+																								</tr>
+																						
+																						
+																						
+																							<tr>
+																									<td>12/04/2023</td>
+																									<td>la vérification de la densité (mesure des parcelles), </td>
+																									<td>DISEM/SDDR</td>
+																									<td> <a class="badge badge-pill badge-success">  Validé </a>  </td>
+																									<td><h:commandLink
+																											
+																											title="Télécharger le rapport">
+																											<i
+																												class="las la-file-pdf text-success font-18"></i>
+																										</h:commandLink> <h:commandLink
+																											title="élécharger la fiche d'instruction du controle  ">
+																											<i
+																												class="las la-file-upload text-info font-18"></i>
+																										</h:commandLink></td>
+																								</tr>
+																						
+																						
+																							<tr>
+																									<td>12/06/2023</td>
+																									<td>l’épuration variétale et l’homologation de la production (estimation de la production sur les parcelles retenues). I</td>
+																									<td>DISEM / DRDR</td>
+																									<td> <a class="badge badge-pill badge-warning"> En cours d'analyse </a> </td>
+																									<td><h:commandLink
+																											
+																											title="Télécharger le rapport">
+																											<i
+																												class="las la-file-pdf text-success font-18"></i>
+																										</h:commandLink> <h:commandLink
+																											title="Télécharger les justificatifs ">
+																											<i
+																												class="las la-file-upload text-info font-18"></i>
+																										</h:commandLink></td>
+																								</tr>
+																						
+																						
+																								
+																							
+																								<tr>
+																									<td>12/06/2023</td>
+																									<td>Contrôle Qualité SEMI</td>
+																									<td>DISEM</td>
+																									<td> <a class="badge badge-pill badge-warning"> En cours d'analyse </a> </td>
+																									<td><h:commandLink
+																											
+																											title="Télécharger le rapport">
+																											<i
+																												class="las la-file-pdf text-success font-18"></i>
+																										</h:commandLink> <h:commandLink
+																											title="Télécharger les justificatifs ">
+																											<i
+																												class="las la-file-upload text-info font-18"></i>
+																										</h:commandLink></td>
+																								</tr>
+																								
+																								
+																								
+																								
+																								<tr>
+																									<td>12/07/2023</td>
+																									<td>Contrôle au laboratoire</td>
+																									<td>DRDR/ DISEM</td>
+																									<td> <a class="badge badge-pill badge-warning"> En cours d'analyse </a> </td>
+																									<td><h:commandLink
+																											
+																											title="Télécharger le rapport">
+																											<i
+																												class="las la-file-pdf text-success font-18"></i>
+																										</h:commandLink> <h:commandLink
+																											title="Télécharger les justificatifs ">
+																											<i
+																												class="las la-file-upload text-info font-18"></i>
+																										</h:commandLink></td>
+																								</tr>
+																								
+																								
+																						
+																						</tbody>
+																					</table>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</h:panelGroup>
+																<hr />
+																<div class="row">
+																	<div class="col-sm-3" />
+																	<div class="col-sm-9">
+																		<div class="button-items">
+																			<sec:authorize access="hasAuthority('GENAST')">
+																				<p:commandButton id="generer-ast-button-hidden"
+																					action="#{OrderMissionController.genererLesAst()}"
+																					update="ast-table eve-table" style="display: none;"
+																					ajax="true"
+																					value="Générer les autorisations de sortie">
+																				</p:commandButton>
+																				<button type="button" id="generer-ast-button"
+																					class="btn btn-success waves-effect waves-light">
+																					Générer les autorisations de sortie</button>
+																			</sec:authorize>
+																			<sec:authorize access="hasAuthority('SIGNAST')">
+																				<p:commandButton id="signer-ast-button-hidden"
+																					action="#{OrderMissionController.signerLesAst()}"
+																					update="ast-table eve-table" style="display: none;"
+																					ajax="true"
+																					value="Signer les autorisations de sortie">
+																				</p:commandButton>
+																				<button type="button" id="signer-ast-button"
+																					class="btn btn-warning waves-effect waves-light">
+																					Signer les autorisations de sortie</button>
+																			</sec:authorize>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															
+															
+															
+															<div class="tab-pane p-3 mt-2" id="documents"
+																role="tabpanel">
+																<div class="row">
+																	<div class="col-12">
+																		<div class="card"
+																			style="background-image: url(images/auth-bg.png)">
+																			<div class="card-body">
+																				<table id="datatable"
+																					class="table table-bordered dt-responsive nowrap"
+																					style="border-collapse: collapse; border-spacing: 0; width: 100%; text-align: center;">
+																					<thead>
+																						<tr>
+																							<th>Référence</th>
+																							<th>Date d'édition</th>
+																							<th>Type document</th>
+																							<th>Action</th>
+																						</tr>
+																					</thead>
+																					<tbody>
+																						<p:repeat
+																							value="#{OrderMissionController.listDocuments}"
+																							var="document">
+																							<tr>
+																								<td>#{document.odmId}ODM</td>
+																								<td>#{document.dateCreationFormatter}</td>
+																								<td>#{document.typeDocument}</td>
+																								<td><h:commandLink
+																										action="#{OrderMissionController.downloadFile(document.path, document.odmId)}">
+																										<i class="las la-file-pdf text-info font-18"
+																											title="Télécharger le fichier"></i>
+																									</h:commandLink></td>
+																							</tr>
+																						</p:repeat>
+																					</tbody>
+																				</table>
+																			</div>
+																			<!--end card-->
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="tab-pane p-3 mt-2" id="rapport"
+																role="tabpanel">
+																<h:panelGroup
+																	rendered="#{OrderMissionController.selectedODM.rapportMission == null}">
+																	<div class="row">
+																		<div class="col-12">
+																			<div class="card">
+																				<div class="card-header">
+																					<h4 class="card-title">TDR</h4>
+																					<p class="text-muted mb-0">Terme de référence
+																						de la mission à éditer</p>
+																				</div>
+																				<!--end card-header-->
+																				<div class="card-body">
+																					<h:inputTextarea id="rapport-odm-texte" name="area"
+																						value="#{OrderMissionController.rapportMissionToCreate.texteLibre}" />
+																				</div>
+																				<!--end card-body-->
+																			</div>
+																			<!--end card-->
+																		</div>
+																		<!-- end col -->
+																	</div>
+																	<div class="row">
+																		<h:form enctype="multipart/form-data">
+																			<div class="col-xl-6">
+																				<div class="card">
+																					<div class="card-header">
+																						<h4 class="card-title"
+																							style="text-transform: none;">Rapport
+																							d'émission</h4>
+																					</div>
+																					<!--end card-header-->
+																					<div class="card-body">
+																						<p:fileUpload
+																							value="#{OrderMissionController.rapportMissionToCreate.rapportEmission}"
+																							mode="simple" sizeLimit="1000000" fileLimit="1"
+																							allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/" />
+																					</div>
+																					<!--end card-body-->
+																				</div>
+																				<!--end card-->
+																			</div>
+																			<!--end col-->
+																			<div class="col-xl-6">
+																				<div class="card">
+																					<div class="card-header">
+																						<h4 class="card-title"
+																							style="text-transform: none;">Annexes de
+																							rapport</h4>
+																					</div>
+																					<!--end card-header-->
+																					<div class="card-body">
+																						<p:fileUpload
+																							value="#{OrderMissionController.rapportMissionToCreate.annexesRapport}"
+																							mode="simple" sizeLimit="1000000" fileLimit="1"
+																							allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|doc|docx)$/" />
+																					</div>
+																					<!--end card-body-->
+																				</div>
+																				<!--end card-->
+																			</div>
+																			<!--end col-->
+																		</h:form>
+																	</div>
+																	<!--end row-->
+
+																	<div class="row">
+																		<div class="col-sm-5" />
+																		<div class="col-sm-4">
+																			<div class="button-items ">
+																				<button type="button"
+																					class="btn btn-success waves-effect waves-light">
+																					<h:commandLink
+																						action="#{OrderMissionController.createRapportOrderMission()}"
+																						style="color: #ffffff;" value="Enregistrer">
+																					</h:commandLink>
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																	<!--end row-->
+																</h:panelGroup>
+																<h:panelGroup
+																	rendered="#{OrderMissionController.selectedODM.rapportMission != null}">
+																	<div class="row">
+																		<div class="col-12">
+																			<div class="card">
+																				<div class="card-header">
+																					<h4 class="card-title">Texte libre</h4>
+																				</div>
+																				<!--end card-header-->
+																				<div class="card-body">
+																					<h:outputText escape="false"
+																						value="#{OrderMissionController.selectedODM.rapportMission.texteLibre}" />
+																				</div>
+																				<!--end card-body-->
+																			</div>
+																			<!--end card-->
+																		</div>
+																		<!-- end col -->
+																	</div>
+																	<div class="row">
+																		<h:form enctype="multipart/form-data">
+																			<div class="col-xl-6">
+																				<div class="card">
+																					<div class="card-header">
+																						<h4 class="card-title"
+																							style="text-transform: none; text-align: center;">
+																							Rapport d'émission</h4>
+																					</div>
+																					<!--end card-header-->
+																					<div class="card-body">
+																						<h:panelGroup
+																							rendered="#{OrderMissionController.selectedODM.rapportMission.rapportEmissionPath != ''}">
+																							<div class="row">
+																								<div
+																									style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%;">
+																									<h4
+																										class="font-weight-semibold text-dark font-15"
+																										style="margin-right: 3%;">Télécharger</h4>
+																									<p:commandButton ajax="false"
+																										style="border:none;background-color: white;"
+																										id="downloadRapportEmission"
+																										action="#{OrderMissionController.downloadFileByPath(OrderMissionController.selectedODM.rapportMission.rapportEmissionPath)}"
+																										icon="fa fa-download" />
+																								</div>
+																							</div>
+																						</h:panelGroup>
+																					</div>
+																					<!--end card-body-->
+																				</div>
+																				<!--end card-->
+																			</div>
+																			<!--end col-->
+																			<div class="col-xl-6">
+																				<div class="card">
+																					<div class="card-header">
+																						<h4 class="card-title"
+																							style="text-transform: none; text-align: center;">
+																							Annexes de rapport</h4>
+																					</div>
+																					<!--end card-header-->
+																					<div class="card-body">
+																						<h:panelGroup
+																							rendered="#{OrderMissionController.selectedODM.rapportMission.annexesRapportPath != ''}">
+																							<div class="row">
+																								<div
+																									style="display: flex; flex-direction: row; justify-content: center; align-items: center; width: 100%;">
+																									<h4
+																										class="font-weight-semibold text-dark font-15"
+																										style="margin-right: 3%;">Télécharger</h4>
+																									<p:commandButton ajax="false"
+																										style="border:none;background-color: white;"
+																										id="downloadAnnexesRapport"
+																										action="#{OrderMissionController.downloadFileByPath(OrderMissionController.selectedODM.rapportMission.annexesRapportPath)}"
+																										icon="fa fa-download" />
+																								</div>
+																							</div>
+																						</h:panelGroup>
+																					</div>
+																					<!--end card-body-->
+																				</div>
+																				<!--end card-->
+																			</div>
+																			<!--end col-->
+																		</h:form>
+																	</div>
+																</h:panelGroup>
+															</div>
+															<!-- PANEL HISTORIQUE -->
+															<div class="tab-pane p-3 mt-2" id="historique"
+																role="tabpanel">
+																<div class="row">
+																	<div class="col-8">
+																		<div class="card"
+																			style="background-image: url(images/auth-bg.png)">
+																			<div class="card-body">
+																				<h:panelGroup id="eve-table">
+																					<table id="datatableHisto"
+																						class="table table-bordered dt-responsive nowrap"
+																						style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+																						<thead>
+																							<tr>
+																								<th>Campagne</th>
+																								<th>Programme</th>
+																								<th>Rendement</th>
+																								<th>N° Dossier</th>
+																							</tr>
+																						</thead>
+																						<tbody>
+																							
+																								<tr>
+																									<td>Campagne 2015</td>
+																									<td>Programme  NPK 2015</td>
+																									<td>24%</td>
+																									<td>755GG8</td>
+																									
+																								</tr>
+																								
+																								<tr>
+																									<td>Campagne 2017</td>
+																									<td>Programme  Nerika 2</td>
+																									<td>44%</td>
+																									<td>228767G</td>
+																									
+																								</tr>
+																								
+																								<tr>
+																									<td>Campagne 2018</td>
+																									<td>Programme  Trackeur SR43 2018</td>
+																									<td>88%</td>
+																									<td>1505GG8</td>
+																									
+																								</tr>
+																								
+																					
+																						</tbody>
+																					</table>
+																				</h:panelGroup>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-lg-4">
+																		<div class="card">
+																			<div class="card-body">
+																				<div class="slimscroll activity-scroll">
+																					<div class="activity">
+																						<p:repeat
+																							value="#{OrderMissionController.historiqueOrdreDeMissions}"
+																							var="hisOdm">
+																							<div class="activity-info">
+																								<div class="icon-info-activity">
+																									<i
+																										class="las #{hisOdm.icone} bg-soft-primary #{hisOdm.classCss}"
+																										style="background-color: white !important;"></i>
+																								</div>
+																								<div class="activity-info-text">
+																									<div
+																										class="d-flex justify-content-between align-items-center">
+																										<h6 class="m-0 w-75">#{hisOdm.etatOrdreDeMissionDTO.libelleEtat}</h6>
+																										<span class="text-muted d-block"
+																											style="font-size: 11px;"> <h:outputText
+																												value="#{hisOdm.dateCreation}">
+																												<f:convertDateTime
+																													pattern="dd/MM/yyyy HH:mm" />
+																											</h:outputText>
+																										</span>
+																									</div>
+																								</div>
+																							</div>
+																						</p:repeat>
+																					</div>
+																					<!--end activity-->
+																				</div>
+																				<!--end activity-scroll-->
+																			</div>
+																			<!--end card-body-->
+																		</div>
+																		<!--end card-->
+																	</div>
+																	<!-- end col -->
+																</div>
+															</div>
+															<!-- FIN PANEL HISTORIQUE -->
+														</div>
+													</div>
+												</div>
+												<!--end card-body-->
+											</div>
+											<!--end card-->
+										</div>
+									</div>
+								</div>
+								<!--end card-->
+							</div>
+						</div>
+					</div>
+					<!-- end row -->
+					<button style="display: none;" type="button"
+						id="create-odm-topright-error">show alert</button>
+					<h:inputText value="#{OrderMissionController.blocErreurMsg}"
+						id="create-odm-error-text" style="display: none;" />
+					<button style="display: none;" type="button"
+						id="create-odm-topright-success">show alert</button>
+					<h:inputText value="#{OrderMissionController.blocConfirmationMsg}"
+						id="create-odm-succes-text" style="display: none;" />
+					<button type="button" style="display: none;">
+						<h:commandLink id="reset-error-msgs" value="Enregistrer"
+							style="color: #ffffff;">
+							<p:ajax event="click"
+								update="create-odm-succes-text create-odm-error-text"
+								process="@this"
+								listener="#{OrderMissionController.resetErrorMsgs()}"></p:ajax>
+						</h:commandLink>
+					</button>
+				</div>
+				<!-- container -->
+				<ui:include src="./includes/footer.xhtml" />
+				<!--end footer-->
+			</h:form>
+		</div>
+		<!-- end page content -->
+	</div>
+	<!-- end page-wrapper -->
+	<!-- jQuery  -->
+	<script src="assets/plugins/tinymce/tinymce.min.js"></script>
+	<script src="assets/pages/jquery.form-editor.init.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/js/metismenu.min.js"></script>
+	<script src="assets/js/waves.js"></script>
+	<script src="assets/js/feather.min.js"></script>
+	<script src="assets/js/simplebar.min.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	<script src="assets/js/moment.js"></script>
+	<script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+	<script src="assets/plugins/leaflet/leaflet.js"></script>
+	<script src="assets/plugins/lightpick/lightpick.js"></script>
+	<script src="assets/pages/jquery.profile.init.js"></script>
+	<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+	<!-- Sweet-Alert  -->
+	<script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+	<script src="assets/pages/jquery.sweet-alert.init.js"></script>
+	<!-- App js -->
+	<script src="assets/js/app.js"></script>
+	<script>
+      $('#datatable').DataTable({
+        "language": {
+          "sProcessing": "Traitement en cours ...",
+          "sLengthMenu": "Afficher _MENU_ lignes",
+          "sZeroRecords": "Aucun résultat trouvé",
+          "sEmptyTable": "Aucune donnée disponible",
+          "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+          "sInfoEmpty": "Aucune ligne affichée",
+          "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+          "sInfoPostFix": "",
+          "sSearch": "Chercher:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Chargement...",
+          "oPaginate": {
+            "sFirst": "Premier",
+            "sLast": "Dernier",
+            "sNext": "Suivant",
+            "sPrevious": "Précédent"
+          },
+          "oAria": {
+            "sSortAscending": ": Trier par ordre croissant",
+            "sSortDescending": ": Trier par ordre décroissant"
+          }
+        }
+      });
+      $('#datatableODM').DataTable({
+        "language": {
+          "sProcessing": "Traitement en cours ...",
+          "sLengthMenu": "Afficher _MENU_ lignes",
+          "sZeroRecords": "Aucun résultat trouvé",
+          "sEmptyTable": "Aucune donnée disponible",
+          "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+          "sInfoEmpty": "Aucune ligne affichée",
+          "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+          "sInfoPostFix": "",
+          "sSearch": "Chercher:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Chargement...",
+          "oPaginate": {
+            "sFirst": "Premier",
+            "sLast": "Dernier",
+            "sNext": "Suivant",
+            "sPrevious": "Précédent"
+          },
+          "oAria": {
+            "sSortAscending": ": Trier par ordre croissant",
+            "sSortDescending": ": Trier par ordre décroissant"
+          }
+        }
+      });
+      $('#datatableAST').DataTable({
+        "language": {
+          "sProcessing": "Traitement en cours ...",
+          "sLengthMenu": "Afficher _MENU_ lignes",
+          "sZeroRecords": "Aucun résultat trouvé",
+          "sEmptyTable": "Aucune donnée disponible",
+          "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+          "sInfoEmpty": "Aucune ligne affichée",
+          "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+          "sInfoPostFix": "",
+          "sSearch": "Chercher:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Chargement...",
+          "oPaginate": {
+            "sFirst": "Premier",
+            "sLast": "Dernier",
+            "sNext": "Suivant",
+            "sPrevious": "Précédent"
+          },
+          "oAria": {
+            "sSortAscending": ": Trier par ordre croissant",
+            "sSortDescending": ": Trier par ordre décroissant"
+          }
+        }
+      });
+      $('#datatableHisto').DataTable({
+        "language": {
+          "sProcessing": "Traitement en cours ...",
+          "sLengthMenu": "Afficher _MENU_ lignes",
+          "sZeroRecords": "Aucun résultat trouvé",
+          "sEmptyTable": "Aucune donnée disponible",
+          "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+          "sInfoEmpty": "Aucune ligne affichée",
+          "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+          "sInfoPostFix": "",
+          "sSearch": "Chercher:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Chargement...",
+          "oPaginate": {
+            "sFirst": "Premier",
+            "sLast": "Dernier",
+            "sNext": "Suivant",
+            "sPrevious": "Précédent"
+          },
+          "oAria": {
+            "sSortAscending": ": Trier par ordre croissant",
+            "sSortDescending": ": Trier par ordre décroissant"
+          }
+        }
+      });
+      $(document).ready(function() {
+        if ($('#create-odm-error-text').val() !== '') {
+          $('#create-odm-topright-error').click();
+          $('#reset-error-msgs').click();
+        }
+        if ($('#create-odm-succes-text').val() !== '') {
+          $('#create-odm-topright-success').click();
+          $('#reset-error-msgs').click();
+        }
+        $('#generer-odm-button').click(function () {
+          $('#generer-odm-button-hidden').click(); 
+        });
+        $('#signer-odm-button').click(function () {
+          $('#signer-odm-button-hidden').click(); 
+        });
+        $('#generer-ast-button').click(function () {
+          $('#generer-ast-button-hidden').click(); 
+        });
+        $('#signer-ast-button').click(function () {
+          $('#signer-ast-button-hidden').click(); 
+        });
+        $('[id^="upload-odm-signe-"]').click(function () {
+          $('[id$="upload-odm-hidden-"]').click(); 
+        });
+        
+      });
+      
+    </script>
+</h:body>
+</html>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<div class="col-md-12">
+
+
+				<!--********************************************************************** 
+				
+						CREATION INTRANT
+				
+				************************************************************************** -->
+				<h:form id="engraisList"
+					rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq  null}">
+					<br />
+
+					<h1 class="labelCustum"
+						style="text-align: center; color: #0c9848; TEXT-ALIGN: CENTER; FONT-SIZE: 25PX;">Edition
+						Intrant</h1>
+					<br />
+
+					<div class="container-fluid">
+
+
+						<p:messages id="msg" showDetail="true" showIcon="true"
+							style="text-align  : center;  width : 70%; margin-left: 15%;   font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+
+					</div>
+					<br />
+
+					<div class="col-xs-3" id="blocPV" />
+
+					<div class="col-xs-6" id="blocPV">
+
+
+						<h:panelGroup id="detailsPV"
+							rendered="#{referentielMB.modeBl == 0}">
+
+
+							<div class="form-group">
+								<label for="inputEmail3" style="margIn-top: 10px"
+									class="col-sm-2 control-label">Catégorie </label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{referentielMB.selectedIntrantDTO.idtypeProduit}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="La catégorie est requise ">
+										<f:selectItem itemLabel="Selectionnez une categorie "
+											/>
+										<f:selectItems
+											value="#{referentielMB.loadReferentielTypeIntrant()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+											itemLabel="#{CollaborateurDTO.libelle}" />
+											
+											</h:selectOneMenu>
+											<br/>
+								</div>
+							</div>
+
+							<br/>
+							<div class="form-group">
+								<label for="inputPassword3" style="margIn-top: 10px"
+									class="col-sm-2 control-label">Libelle intrant</label>
+								<div class="col-sm-10">
+									<p:inputText
+										value="#{referentielMB.selectedIntrantDTO.libelleProduit}"
+										styleClass="form-control" title="La quantité  est requise"
+										requiredMessage="La quantité  est requise" required="true" />
+<br/>
+								</div>
+								<br/>
+							</div>
+							
+								
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label"
+									style="margin-top: 10px">Unite de Mesure</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{referentielMB.selectedIntrantDTO.uniteDeMesure}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="L'unite de mesure est obligatoire ">
+										<f:selectItem itemLabel="Selectionnez un programme"
+											itemValue="" />
+										<f:selectItem itemLabel="Tonnage" itemValue="2" />
+										<f:selectItem itemLabel="Unité" itemValue="1" />
+										<f:selectItem itemLabel="Piéce" itemValue="3" />
+										<f:selectItem itemLabel="Flacon" itemValue="4" />
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<br/>
+							
+							
+						
+							
+							
+							<br/>
+							<div class="form-group"> <br/>
+								<label for="inputPassword3" style="margIn-top: 30px"
+									class="col-sm-3 control-label">Descriptif </label>
+								<div class="col-sm-7"> <br/>
+									<p:inputTextarea
+										value="#{referentielMB.selectedIntrantDTO.descriptifIntrant}"
+										styleClass="form-control" title="La quantité  est requise"
+										requiredMessage="La quantité  est requise" />
+										<br/>
+								</div>
+							</div>
+
+							<div id="buttons" class="pull-right">
+								<h:commandButton
+									styleClass="suivant  btn btn-validatd pull-right"
+									action="#{referentielMB.createIntrant}"
+									value="Enregistrer " name="suivants"
+									style="width : 200px ; margin-right : 13px; "
+									class="fa fa-undo  btn   pull-right btn-success" />
+
+								<a href="managerGestionDesRerefentiels.xhtml?idBlocToShow=4"
+									style="margin-right: 15px; margin-top: -2px"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+
+							</div>
+
+						</h:panelGroup>
+
+
+					</div>
+
+
+
+				</h:form>
+
+
+
+
+				<br /> <br />
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

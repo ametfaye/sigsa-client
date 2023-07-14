@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title"> PGCA Ajout Collaborateur </ui:define>
+
+	<ui:define name="section">
+
+		<h:form class="" id="form" action="dashboardG.html">
+			<p:messages id="messages" showDetail="false" />
+
+			<div class="formulaire_utilisateur">
+				<br /> <br />
+				<fieldset class="formulaire_ohada"
+					style="margin-top: 50px; min-height: 400px">
+
+					<br />
+					<h2 style="text-align: center ! important">Allocation budget
+						de collecte</h2>
+
+					<div class="col-md-12">
+						<br /> <br /> <br /> <br />
+
+						<div class="form-group">
+
+							<div class="row">
+
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<h:selectOneMenu value="#{tresoMB.selectedCollaborateurDTO.idPersonne}"
+										id="profilListe" required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le Profil est requis">
+										<f:selectItem itemLabel="Selectionnez un collaborateur "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.collaborateursDTOs}"
+											var="CollaborateurDTO"
+											itemValue="#{CollaborateurDTO.idPersonne}"
+											itemLabel="#{CollaborateurDTO.nom}" />
+										
+											<p:ajax event="change" 
+										listener="#{tresoMB.test}" update="AllModes" />
+												
+									</h:selectOneMenu>
+								</div>
+
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<p:outputLabel id="AllModes"
+										value="#{tresoMB.selectedCollaborateurDTO.idPersonne}" />
+
+								</div>
+
+							</div>
+
+
+
+						</div>
+
+
+						<div role="form">
+							<div class="row">
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<p:inputText id="code"
+											value="#{tresoMB.allocationBudget.montantAlloue}"
+											type="numeric" styleClass="form-control input-sm"
+											disabled="false" required="true" placeholder="Montant"
+											label="montant" requiredMessage="montant">
+										</p:inputText>
+
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<p:inputText id="nom"
+											value="#{tresoMB.allocationBudget.libelle}"
+											style="margin-top : 2px" required="true" label="libelle"
+											requiredMessage="Le libelle est obilgatoire"
+											styleClass="form-control input-sm"
+											validatorMessage="Le libelle saisi est incorrect"
+											placeholder="Libelle Allocation">
+											<f:validateRegex pattern="[a-zA-Zéèçîï  ]*" />
+										</p:inputText>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<p:inputText id="codeUser"
+											value="#{utilisateurMB.utilisateurDTO.code}"
+											styleClass="form-control input-sm" disabled="false"
+											required="true" label="code"
+											requiredMessage="Le login est obilgatoire">
+										</p:inputText>
+									</div>
+								</div>
+
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<p:password id="motdepasse" styleClass="form-control input-sm"
+											value="#{utilisateurMB.utilisateurDTO.password}"
+											label="motdepasse " style="margin-top : 2px" required="true"
+											placeholder="Mot de passe"
+											requiredMessage="Veuillez renseigner les champs obligatoires">
+											<f:validateLength minimum="4" />
+										</p:password>
+									</div>
+								</div>
+
+							</div>
+
+
+							<h2>
+								<h:outputLabel
+									value="#{tresoMB.selectedCollaborateurDTO.fonction}"></h:outputLabel>
+							</h2>
+
+							 
+
+
+						</div>
+
+						<div class="col-xs-4 col-sm-4 col-md-4 pull-right">
+							<h:commandButton
+								class="suivant btn btn-success btn-block pull-right"
+								action="#{utilisateurMB.createUtilisateur}" value="Valider"
+								styleClass="btn btn-info btn-block" type="submit" />
+						</div>
+
+
+
+
+					</div>
+
+
+				</fieldset>
+
+			</div>
+
+
+
+		</h:form>
+
+
+	</ui:define>
+
+</ui:composition>

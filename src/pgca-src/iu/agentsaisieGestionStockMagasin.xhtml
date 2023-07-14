@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<h:form id="MEPForm">
+			<input id="cumulSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}" />
+			<input id="reliquatSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}" />
+			<input id="intrantSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}" />
+
+
+			<div class="container-fluid fullbg">
+
+
+
+				<!--  Liste des points des ventes trouvés dans la commune -->
+
+
+
+				<h:panelGroup id="ListPVOfCommune">
+					<p:messages id="messages" showDetail="true"
+						style="width : 60% ; margin-left : 20%" />
+
+
+
+
+
+
+					<p class="pull-right" style="margin-right: 5%; color: #002839">
+						<i class="fa fa-home" aria-hidden="true"
+							style="margin-right: 5px; color: #80c347" /> Tableau de bord
+						/Journal
+					</p>
+					<hr />
+
+					<h1 class="titrePage">Liste des magasins</h1>
+
+					<p:dataTable id="ProfilID" var="pvDTO" widgetVar="journal"
+					value="#{agentSaisieMB.listMagasin}" reflow="true"
+					rowKey="#{pvDTO.idPv}" selection="#{agentSaisieMB.selectedPv}"
+					filteredValue="#{agentSaisieMB.listPointDeVentesFiltred}"
+					selectionMode="single"
+					emptyMessage="Ancun point de vente disponible" paginator="true"
+					rows="10" cellSeparator="10"
+					paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+					paginatorPosition="bottom"
+					style="width: 90%; margin-left:5%; font-size:15px ; ">
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter" onkeyup="PF('journal').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+
+						<p:column headerText="Libellé" filterBy="#{pvDTO.libelle}"
+							sortBy="#{pvDTO.libelle}" filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(pvDTO.libelle, 40)} 
+				        </p:column>
+						<p:column headerText="Département" filterBy="#{pvDTO.departement}"
+							sortBy="#{pvDTO.departement}" filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(pvDTO.departement, 40)} 
+				        </p:column>
+
+						<p:column headerText="Commune" filterBy="#{pvDTO.commune}"
+							sortBy="#{pvDTO.commune}" filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(pvDTO.commune, 40)} 
+				        </p:column>
+
+						<p:column headerText="Gérant" filterBy="#{pvDTO.gerant}"
+							sortBy="#{pvDTO.gerant}" filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(pvDTO.gerant, 40)} 
+				        </p:column>
+						<p:column headerText="Contact Gérant"
+							filterBy="#{pvDTO.contactGerant}" sortBy="#{pvDTO.contactGerant}"
+							filterMatchMode="startsWith">
+				          #{profilMB.StringCutter(pvDTO.contactGerant, 40)} 
+				        </p:column>
+
+
+						<p:ajax event="rowSelect"
+							listener="#{agentSaisieMB.loadContenueSelectedMagasin()}"
+							update=":MEPForm:filterMEPP  :MEPForm:indicateur" />
+
+					</p:dataTable>
+
+
+					<h:panelGroup id="indicateur">
+
+						<div class="modal-dialog modal-lg"
+							style="width: 80%; height: auto;">
+							<div class="container-fluid">
+								<div class="col-lg-4">
+									<div
+										style="height: 90px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+										<span class="ui-label"> <i class="fa fa-ravelry"
+											aria-hidden="true"></i> <a href="#" style="font-size: 27px;"><i
+												class="fa fa-home" style="color: red" aria-hidden="true"></i></a>
+											Couverture Point de vente <br />
+										</span>
+
+
+
+
+										<div id="ui-widget" class="pull-right"
+											style="margin-top: -10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25); width: 90px; height: 90px;">
+											<h1 class="ui-value " style="font-size: 20px;">
+												<a href="#" style="color: #029441;" title="POINT DE VENTRE ">
+													#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.nombrePontdeVente}
+													/ 100 </a> <br />
+
+											</h1>
+										</div>
+
+
+									</div>
+								</div>
+
+
+
+								<div class="col-md-4">
+
+
+									<img width="110px" height="100px" style="margin-left: 45%"
+										src="assets/images/wieght.png" alt=""></img> <br />
+
+									<div class="progress">
+
+
+
+										<div
+											class="progress-bar progress-bar-success progress-bar-striped active"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture}"
+											style="width: #{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture}">
+											<span>#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture}
+												% ...</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-4">
+									<div
+										style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+										<span class="ui-label"> <i class="fa fa-ravelry"
+											aria-hidden="true"></i> <a href="#" style="font-size: 17px;"><i
+												class="fa fa-balance-scale" style="color: red"
+												aria-hidden="true"></i> </a> Taux d'occupation du magasin
+										</span>
+										<h1 class="ui-value">
+											<a href="#" style="color: #029441; margin-top: 20px"
+												class="pull-right">
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}</a>
+											<div id="ui-widget" class="pull-right"
+												style="margin-top: -10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25); width: 80px; height: 80px">
+												<h1 class="ui-value " style="font-size: 20px;">
+													<a href="#" style="color: #029441;" title="">
+														#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture}
+														% </a>
+												</h1>
+											</div>
+										</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<div class="modal-dialog modal-lg"
+						style="width: 90%; height: auto;">
+
+						<!-- Modal content-->
+
+
+						<h:panelGroup id="filterMEPP">
+							<div id="previewBL" class="container-fluid">
+
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; height: 400px;">
+
+
+
+
+
+
+									<div class="col-lg-10 col-lg-offset-1">
+										<br />
+
+										<h3 style="text-align: center"> Liste des intrants disponibles</h3>
+										<br />
+							
+							<p:dataTable id="tableStateDT" var="intrantDTO" 
+							style="width: 90%; margin-left:5%; font-size:15px ; "
+							value="#{agentSaisieMB.listProduitslieeSelectedVente}"
+							widgetVar="carsTable" rows="10" paginator="true"
+							paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+							rowsPerPageTemplate="5,10,15" selectionMode="single"
+							
+							rowKey="#{intrantDTO.idProduit}" emptyMessage="Aucun  intrant "
+							filteredValue="#{agentSaisieMB.filtredlistIntrantsOfStock}"
+							paginatorPosition="bottom">
+
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Critères de recherche "
+										style="color : #002839" />
+									<i class="fa fa-search" aria-hidden="true"
+										style="color: #80c347" />
+
+									<p:inputText id="globalFilter"
+										onkeyup="PF('carsTable').filter()"
+										style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+										placeholder="Entrez un critère " />
+								</p:outputPanel>
+							</f:facet>
+
+
+<!-- 							<p:column headerText="Origine intrant" -->
+<!-- 								filterBy="#{intrantDTO.provenance}" -->
+<!-- 								sortBy="#{intrantDTO.provenance}" -->
+<!-- 								filterMatchMode="exact"> -->
+<!-- 										          #{profilMB.StringCutter(intrantDTO.provenance, 40)}  -->
+<!-- 						</p:column> -->
+						
+							<p:column headerText="Programme"
+								filterBy="#{intrantDTO.libelleProgramme}"
+								sortBy="#{intrantDTO.libelleProgramme}"
+								filterMatchMode="exact">
+										          #{profilMB.StringCutter(intrantDTO.libelleProgramme, 40)} 
+						</p:column>
+
+
+
+							<p:column headerText="Variété / Formule" filterBy="#{intrantDTO.libelle}"
+								sortBy="#{intrantDTO.libelle}"
+								filterMatchMode="exact">
+				          #{profilMB.StringCutter(intrantDTO.libelle, 40)} 
+				        </p:column>
+
+							<p:column headerText="Stock restant"  
+								sortBy="#{intrantDTO.quantite}"
+								filterMatchMode="exact">
+				          #{intrantDTO.quantite} 
+				        </p:column>
+
+
+							<p:column headerText="Tarif" sortBy="#{intrantDTO.prixUnitaire}"> 
+								#{intrantDTO.prixUnitaire} 
+
+							</p:column>
+							
+							</p:dataTable>
+										
+
+
+										<h:commandLink styleClass="pull-right" onclick="return false;"
+											style="color : #002839 ; font-size: 18px; margin-right : -130px; padding-top : 25px ; backgr"
+											action="#{agentSaisieMB.reportMiseEnplaceBypdfFormat()}"
+											value=" Telecharger le journal de mise en place "
+											target="_blank">
+
+
+											<img src="assets/images/exportExcel.png" class="pull-left"
+												style="width: 8%; height: 8%; margin-top: -15px" />
+										</h:commandLink>
+										<br /> <br /> <br />
+
+									</div>
+
+
+
+								</div>
+							</div>
+
+
+						</h:panelGroup>
+					</div>
+				</h:panelGroup>
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

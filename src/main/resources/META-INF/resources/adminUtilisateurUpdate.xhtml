@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+  xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+  <title>SIGMA | Modification d'un nouveau utilisateur</title>
+
+  <h:outputStylesheet name="css/login.css" />
+  
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+  <!-- Sweet Alert -->
+  <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css"/>
+  <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css"/>
+
+  <!-- App css -->
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+</h:head>
+
+<h:body class="dark-sidenav">
+  <!-- Left Sidenav -->
+  <ui:include src="./includes/leftSideNav.xhtml" />
+  <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row mb-2">
+              <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+                  <a class="navbar-brand" href="#">
+                    <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1"/>
+                  </a>
+                  <button class="navbar-toggler"
+                    type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item"><a class="nav-link" href="#">Administration / Utilisateurs / Modification d'un utilisateur</a></li>
+                    </ul>
+                    <!--end navbar-nav-->
+                    <div class="pull-right">                    
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="#">#{UtilisateurController.connectedUserDetails.entitePublique} / #{UtilisateurController.connectedUserDetails.service}
+                            / #{UtilisateurController.connectedUserDetails.sousService}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <!--end form-->
+                  </div>
+                  <!--end navbar-collapse-->
+                </nav>
+              </div>
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                   <p style="text-align :center"> <i class="las la-list text-secondary font-22 align-middle mr-2"></i>Mise à jour de l'utilisateur #{UtilisateurController.userToUpdate.identifiant}</p>
+                  		<hr/>
+                    <h:panelGroup id="form-horizontal" class="form-horizontal form-wizard-wrapper">
+                      <div class="row mb-4">
+                        <div class="col-md-2"></div>
+                        <label for="matricule" class="col-lg-3 col-form-label text-right">Matricule</label>
+                        <div class="col-lg-6">
+                          <div class="col-lg-5">
+                            <h:inputText value="#{UtilisateurController.userToUpdate.identifiant}" readonly="true" name="matricule" class="form-control"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="nom" class="col-lg-3 col-form-label text-right">Nom</label>
+                            <div class="col-lg-6">
+                              <h:inputText value="#{UtilisateurController.userToUpdate.nom}" readonly="true" id="nom-input" name="nomToUpdate" class="form-control" />
+                            </div>
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                        <!--end col-->
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="prenom" class="col-lg-3 col-form-label text-right">Prénom</label>
+                            <div class="col-lg-6">
+                              <h:inputText value="#{UtilisateurController.userToUpdate.prenom}" readonly="true" id="prenom-input"
+                                name="prenomToUpdate" class="form-control" />
+                            </div>
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                        <!--end col-->
+                      </div>
+                      <!--end row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="email" class="col-lg-3 col-form-label text-right">Email</label>
+                            <div class="col-lg-6">
+                              <h:inputText value="#{UtilisateurController.userToUpdate.email}" name="emailToUpdate" class="form-control" />
+                            </div>
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                        <!--end col-->
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="telephone" class="col-lg-3 col-form-label text-right">Téléphone</label>
+                            <div class="col-lg-6">
+                              <h:inputText value="#{UtilisateurController.userToUpdate.telephone}" name="telephoneToUpdate" class="form-control" />
+                            </div>
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                        <!--end col-->
+                      </div>
+                      <!--end row-->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="motdepasse" class="col-lg-3 col-form-label text-right">Mot de passe</label>
+                            <div class="col-lg-6">
+                              <h:inputSecret value="#{UtilisateurController.updateUserPassword}" type="password"
+                                class="form-control" name="updateUserPassword" id="updateUserPassword" />
+                            </div>
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                        <!--end col-->
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label for="confirmationmotdepasse" class="col-lg-3 col-form-label text-right">Confirmation de mot de passe</label>
+                            <div class="col-lg-6">
+                              <h:inputSecret value="#{UtilisateurController.updateUserConfirmPassword}" type="password"
+                                class="form-control" name="updateUserConfirmPassword" id="updateUserConfirmPassword" />
+                            </div>
+                          </div>
+                          <!--end form-group-->
+                        </div>
+                        <!--end col-->
+                      </div>
+                      <!--end row-->
+                      
+                      <div class="row" style="background: #f1f5f9; margin-left : 1px; margin-right : 1px;margin-top: 2%;">
+                        <div class="col-md-6" style=" margin-top : 10px;margin-bottom: 3%;">
+                          <p style="text-align : center; background: white;"> Tableau de bord </p>
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.TBADM}" id="TBADM" >
+                            <p:ajax update="TBCHS TBGS TBSG TBSGG ADMIN" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Tableau de bord administateur <br />
+                          
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.TBGS}" id="TBGS" >
+                            <p:ajax update="TBCHS TBADM TBSG TBSGG ADMIN" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Tableau de bord gestionnaire de service <br />
+
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.TBCHS}" id="TBCHS" >
+                            <p:ajax update="TBADM TBGS TBSG TBSGG ADMIN" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Tableau de bord chef de service <br />
+
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.TBSG}" id="TBSG" >
+                            <p:ajax update="TBCHS TBGS TBADM TBSGG ADMIN" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Tableau de bord SG <br />
+
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.TBSGG}" id="TBSGG" >
+                            <p:ajax update="TBCHS TBGS TBSG TBADM ADMIN" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Tableau de bord SGG <br />
+                        </div>
+
+                        <div class="col-md-6" style=" margin-top : 10px;margin-bottom: 3%;">
+                          <p style="text-align : center; background: white;"> Edition - Transmission </p>
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.EDIODM}" id="EDIODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Initialisation d'une mission (Sécrétaire) <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.UPODM}" id="UPODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Modifier ordre de mission <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.ADPART}" id="ADPART" >
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Ajouter/Supprimer des participant <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.TRODM}" id="TRODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Transmettre au supérieur hiérarchique <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.ERAODM}" id="ERAODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Saisir rapport de mission <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.GFODM}" id="GFODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Gestion des frais de mission <br />
+                        </div>
+                      </div>
+                      <div class="row" style="background: #f1f5f9; margin-left : 1px; margin-right : 1px;margin-top: 2%;">
+                        <div class="col-md-6" style=" margin-top : 10px;margin-bottom: 3%;">
+                          <p style="text-align : center ; background: white;"> Validation - Acceptation - Signature </p>
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.VRCHS}" id="VRCHS">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Validation/Refus mission (Chef de service) <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.ARSG}" id="ARSG">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Acceptation/Refus mission nationale (SG) <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.ARSGG}" id="ARSGG">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Acceptation/Refus mission internationale(SGG) <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.VRSGG}" id="VRSGG">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Validation/Refus sécrétaire général du gouvernement <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.SIGNODM}" id="SIGNODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Signer les ordres de mission <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.SIGNAST}" id="SIGNAST">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Signer les autorisations de sortie <br />
+                        </div>
+
+                        <div class="col-md-6" style=" margin-top : 10px;margin-bottom: 3%;">
+                          <p style="text-align : center ; background: white;"> Autres fonctionalités </p>
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.GENODM}" id="GENODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Générer ordre de mission <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.GENAST}" id="GENAST">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Générer autorisation de sortie de territoire <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.SVDOC}" id="SVDOC">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Scanner/Vérifier document ODM et AST <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.ADMIN}" id="ADMIN">
+                            <p:ajax update="TBCHS TBGS TBSG TBSGG TBADM" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Administration de la plateforme <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.PUBODM}" id="PUBODM">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Publications mission <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.EASTMAIL}" id="EASTMAIL">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Envoyer AST par mail (SG) <br />
+                          <h:selectBooleanCheckbox value="#{UtilisateurController.roleUpdateDTO.EODMMAIL}" id="EODMMAIL">
+                            <p:ajax update="ADPART" listener="#{UtilisateurController.updateRoleDTO}"/>
+                          </h:selectBooleanCheckbox> Envoyer ODM par mail (SG) <br />
+                        </div>
+                      </div>
+
+                      <div class="row mt-4">
+                        <div class="col-lg-5"></div>
+                        <div class="col-lg-5">
+                          <button type="button" class="btn btn-success waves-effect waves-light">
+                            <h:commandLink id="submit-button" action="#{UtilisateurController.updateUser()}"
+                              ajax="false" value="Modifier" style="color: #ffffff;">
+                            </h:commandLink>
+                          </button>
+                        </div>
+                      </div>
+                    </h:panelGroup>
+                  </div>
+                  <!--end card-body-->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+              <button style="display: none;" type="button" id="create-user-topright-error">show alert</button>
+              <h:inputText value="#{UtilisateurController.createUserErreurMsg}" id="create-user-error-text" style="display: none;"/>
+
+              <button type="button" style="display: none;">
+                <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                  <p:ajax event="click" update="create-user-error-text" process="@this"
+                    listener="#{UtilisateurController.resetErrorMsgs()}"></p:ajax>
+                </h:commandLink>
+              </button>
+
+          </div><!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+        </h:form> 
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+</h:body>
+
+<!-- jQuery  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/metismenu.min.js"></script>
+<script src="assets/js/waves.js"></script>
+<script src="assets/js/feather.min.js"></script>
+<script src="assets/js/simplebar.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/moment.js"></script>
+<script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="assets/pages/jquery.form-wizard.init.js"></script>
+
+<!-- Sweet-Alert  -->
+<script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script src="assets/pages/jquery.sweet-alert.init.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+
+<script>
+  $(document).ready(function() {
+    if ($('#create-user-error-text').val() !== '') {
+      $('#create-user-topright-error').click();
+      $('#reset-error-msgs').click();
+    }
+  });
+</script>
+
+</html>

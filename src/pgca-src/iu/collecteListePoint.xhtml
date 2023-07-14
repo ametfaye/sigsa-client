@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA ::Admin  Liste des points de  collectes eSEDAB </ui:define>
+
+	<ui:define name="section">
+
+		<h:form class="" id="form" action="dashboardG.html">
+			<p:messages id="msg" showDetail="true" />
+
+			<br />
+
+			<center>
+				<h4 style="font-size: 26px ! important; color: #137112 ! important;">Liste
+					des points de collectes</h4>
+			</center>
+			<br />
+			<br />
+
+
+			<p:dataTable id="EntiteJuridiqueID" reflow="true"
+				var="entiteJProviver" value="#{referentielMB.pointdeCollecteDTOs}"
+				rowKey="#{entiteJProviver.id}"
+				style="width: 90%; margin-left:5%; font-size:15px ; "
+				emptyMessage="Pas d'entites enregistrés !!!" paginator="true"
+				paginatorPosition="bottom" rows="8"
+				paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+				selection="#{entiteJMB.selectedEnjuDTO}" selectionMode="single">
+
+
+				<!--     <p:ajax event="rowEdit" listener="#{utilisateurMB.onEdit}"    update=":form:messages" /> -->
+
+				<!--   <p:ajax event="rowEditCancel" listener="#{utilisateurMB.onCancel}" process="carList" update=":form:messages" />  -->
+
+				<p:ajax event="rowSelect" listener="#{entiteJMB.onEdit}"
+					update=":form:buttonGroup :form:msg" />
+
+				<p:column headerText="Type">  
+								         #{entiteJProviver.labelType}  
+								        </p:column>
+
+				<p:column headerText="Libelle">  
+										 #{entiteJMB.StringCutter(entiteJProviver.libelle, 20)}
+								        </p:column>
+
+				<p:column headerText="Gerant">  
+										 #{entiteJMB.StringCutter(entiteJProviver.libelle, 20)}
+								        </p:column>
+
+
+				<p:column headerText="Téléphone">  
+								          #{entiteJMB.StringCutter(entiteJProviver.contact.fixe, 20)}
+								        </p:column>
+				<!-- 								         <p:column headerText="Ville" >   -->
+				<!-- 								           #{entiteJMB.StringCutter(entiteJProviver.adresse.ville, 20)} -->
+
+				<!-- 								        </p:column> -->
+				<!-- 								        <p:column headerText="Site Web" >  -->
+				<!-- 								           #{entiteJMB.StringCutter(entiteJProviver.contact.site, 20)}  -->
+
+				<!-- 								        </p:column> -->
+				<!-- <p:column headerText="Quartier" style="width:10%">  
+								         #{entiteJProviver.adresse.quartier}
+								        </p:column>
+								        <p:column headerText="Pays" style="width:10%">  
+								         #{entiteJProviver.labelPays}
+								        </p:column> -->
+				<!--  <p:column headerText="Ville" style="width:10%">  
+								         #{entiteJProviver.adresse.ville}
+								        </p:column>
+								        <p:column headerText="Code Postale" style="width:10%">  
+								         #{entiteJProviver.adresse.codepostal}
+								        </p:column>
+								        <p:column headerText="libelle adresse" style="width:10%">  
+								         #{entiteJProviver.adresse.libelle}
+								        </p:column> -->
+				<!-- 								         <p:column headerText="Courriel" style="width:17%"> -->
+				<!-- 								         #{entiteJMB.StringCutter(entiteJProviver.contact.courriel, 20)}  -->
+
+				<!-- 								        </p:column>   -->
+
+
+				<p:column headerText="Taux d'occupation"> 
+								           #{entiteJMB.StringCutter(entiteJProviver.labelRegion, 20)} 
+								   
+		                                </p:column>
+
+				<p:column headerText="Region"> 
+								           #{entiteJMB.StringCutter(entiteJProviver.labelRegion, 20)} 
+								   
+		                                </p:column>
+
+			</p:dataTable>
+
+			<p:toolbarGroup align="center" id="buttonGroup">
+				<div id="buttons">
+					<div class="greenBar" style="width: 55%; margin-left: 10px"></div>
+					<h:commandButton class="annuler" value="Modifier"
+						action="#{entiteJMB.initModifierEntiteJuridique}" name="annuler"
+						style="margin-right : 15px" />
+					<h:commandButton class="visualiser" value="Détails"
+						action="#{entiteJMB.detailEntitejuridique}" name="visualiser"
+						style="margin-right : 15px" />
+					<h:commandButton class="enregistrer" value="Supprimer"
+						rendered="#{!visit.readOnly}"
+						onclick="if (!confirm('Etes-vous sûr de vouloir supprimer  ?')) return false"
+						id="ajaxlnksubmit2" action="#{entiteJMB.supprimerEntiteJurique}"
+						name="enregistrer" style="margin-right : 15px" />
+
+					<h:commandButton class="suivant" value="Ajouter"
+						action="#{entiteJMB.initCreation()}" name="visualiser" />
+
+					<!--   <h:button class="suivant"  outcome="creerEntiteJuridique"  value="Ajouter" name="suivants"/> -->
+				</div>
+			</p:toolbarGroup>
+
+		</h:form>
+
+		<br />
+		<br />
+		<br />
+
+	</ui:define>
+
+</ui:composition>
+

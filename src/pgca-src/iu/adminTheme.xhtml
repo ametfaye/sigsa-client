@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+	<ui:define name="title">PGCA Liste des utilisateurs</ui:define>
+
+
+
+	<ui:define name="section">
+
+
+
+		<h:form id="form" class="container">
+			<br />
+			<br />
+			<br />
+			<h3 class="titrePage">Gestion des thèmes</h3>
+
+			<p:messages id="messages" />
+
+			<div class="row">
+
+
+
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeGreenSoft.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px; margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème standard </span>
+							<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="1" />
+					</h:commandLink>
+
+				</div>
+				
+				
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeGreen.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px ;  margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Green </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="2" />
+					</h:commandLink>
+				</div>
+				
+				
+				<div class="col-md-3">
+				
+						<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeGreenSoft.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px; margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Sokhou </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="9" />
+					</h:commandLink>
+					
+
+				</div>
+				
+				
+				
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeGreen.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px ;  margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Green Dégra </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="10" />
+					</h:commandLink>
+				</div>
+				
+			
+
+
+			</div>
+
+			
+			
+			
+			<div class="row">
+
+
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeOlive.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px;  margin-bottom : 20px" />
+						<f:param name="menuItem" value="Licht" />
+						<br />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Olive </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="3" />
+
+					</h:commandLink>
+
+				</div>
+			
+			
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeBlack.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px ;  margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Black </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="5" />
+					</h:commandLink>
+
+				</div>
+
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeYellow.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px;  margin-bottom : 20px" />
+						<f:param name="menuItem" value="Licht" />
+						<br />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Yellow </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="6" />
+
+					</h:commandLink>
+
+				</div>
+
+
+
+
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeBlack.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px ;  margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Soft White </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="8" />
+					</h:commandLink>
+
+				</div>
+				
+				
+				
+				<div class="col-md-3">
+					<h:commandLink action="#{connexionMB.changeTheme}">
+						<h:graphicImage value="assets/images/themeBlack.png"
+							class="pull-right"
+							style="text-decoration:none;border:0 ;  margin-top : 10px;  margin-right : 5px ;  margin-bottom : 20px" />
+
+						<span style="margin-left: 30px !important"> Appliquer le
+							thème Light </span>
+									<f:setPropertyActionListener
+										target="#{connexionMB.connectedUserThemeId}"
+										value="11" />
+					</h:commandLink>
+
+				</div>
+			</div>
+			
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+

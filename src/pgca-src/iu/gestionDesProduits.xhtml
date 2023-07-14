@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<h:form id="MEPForm">
+			<input id="cumulSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}" />
+			<input id="reliquatSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}" />
+			<input id="intrantSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}" />
+
+
+			<div class="container-fluid fullbg">
+
+
+
+				<!--  Liste des points des ventes trouvés dans la commune -->
+
+
+
+				<h:panelGroup id="ListPVOfCommune"  rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}" >
+					<p:messages id="messages" showDetail="true"
+						style="width : 60% ; margin-left : 20%" />
+
+
+
+		<h1 class="MainLabelCenter">
+							<i class="fa fa-assistive-listening-systems" aria-hidden="true"></i>
+							Gestion des approvisionnements
+						</h1>
+
+						<p:dataTable id="tableStateDT" var="intrantDTO" 
+							style="width: 90%; margin-left:5%; font-size:15px ; "
+							value="#{agentSaisieMB.listIntrantsOfStock}"
+							widgetVar="tableStateDTW" rows="15" paginator="true"
+							rowsPerPageTemplate="5,10,15" selectionMode="single"
+							selection="#{agentSaisieMB.selectedIntrantDTO}"
+							rowKey="#{intrantDTO.idProduit}" emptyMessage="Aucun  intrant "
+							filteredValue="#{agentSaisieMB.filtredlistIntrantsOfStock}"
+							paginatorPosition="bottom">
+
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Critères de recherche "
+										style="color : #002839" />
+									<i class="fa fa-search" aria-hidden="true"
+										style="color: #80c347" />
+
+									<p:inputText id="globalFilter"
+										onkeyup="PF('tableStateDTW').filter()"
+										style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+										placeholder="Entrez un critère" />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column headerText="Fournisseur"
+								filterBy="#{intrantDTO.libelleFournisseur}"
+								sortBy="#{intrantDTO.libelleFournisseur}"
+								filterMatchMode="exact">
+										          #{profilMB.StringCutter(intrantDTO.libelleFournisseur, 40)} 
+										</p:column>
+
+
+							<p:column headerText="Variété / Formule"
+							filterBy="#{intrantDTO.libelleProduit}"
+								sortBy="#{intrantDTO.libelleProduit}"
+								filterMatchMode="exact" >
+				          #{profilMB.StringCutter(intrantDTO.libelleProduit, 40)} 
+				        </p:column>
+
+							<p:column headerText="Stock initial">
+				          #{intrantDTO.quantiteInitaile} 
+				        </p:column>
+
+
+							<p:column headerText="Stock restant">
+				          #{intrantDTO.quantite} 
+				        </p:column>
+
+
+							<p:column headerText="Tarif"> 
+								#{intrantDTO.infosTarifs}  <i
+									class="#{intrantDTO.infosTarifsClass}  pull-right"
+									style="color: #{intrantDTO.infosTarifsClassColor}"
+									aria-hidden="true"></i>
+
+							</p:column>
+
+						</p:dataTable>
+						
+						
+						
+						
+						
+						
+									<div class=" pull-right" style="margin-right: 140px">
+							<br />
+
+
+					<h:commandLink action="#{agentSaisieMB.exportlistIntrantsOfStock}"
+							immediate="true" target="_blank" styleClass="" >
+							<img style="margin-right: 20px; margin-top: -5px" height="60px"
+								src="assets/images/pdf.png" alt="Logo PGCA" />
+						</h:commandLink>
+						
+						
+						<a href="gestionDesProduitEdition.xhtml?idBlocToShow=1" class="  btn btn-success pull-right"  >
+						<i class="fa fa-save " style="margin-top: 12px; margin-left: 20px; color: black" aria-hidden="true"></i>
+							Edition 
+						</a>
+						
+<!-- 						<h:commandLink styleClass="  btn btn-success pull-right"  	action="#{referentielMB.initCreation}"> -->
+<!-- 							<i class="fa fa-save " style="margin-top: 12px; margin-left: 20px; color: black" aria-hidden="true"></i> -->
+<!-- 							Edition -->
+<!-- 						</h:commandLink> -->
+
+
+
+
+						<h:commandLink styleClass="  btn btn-success pull-right"
+								action="#{referentielMB.initTarification}"
+								style="margin-right: 40px">
+
+								<i class="fa fa-money "
+									style="margin-top: 12px; margin-left: 20px; color: black; margin-right: 10px"
+									aria-hidden="true"> </i>
+							Tarifer
+						</h:commandLink>
+
+							<h:commandLink styleClass="  btn btn-success pull-right"
+								action="#{referentielMB.getDetailsIntrant}"
+								style="margin-left : 20px ; margin-right : 20px">
+
+								<i class="fa fa-info "
+									style="margin-top: 12px; margin-left: 20px; color: black; margin-right: 10px"
+									aria-hidden="true"> </i>
+							Détails
+						</h:commandLink>
+
+
+							<h:commandLink styleClass="  btn btn-success pull-right"
+								action="#{referentielMB.initUpdateIntrant}">
+
+								<i class="fa fa-save "
+									style="margin-top: 12px; margin-right: 20px; color: black; margin-right: 10px"
+									aria-hidden="true"> </i>
+							Modifier
+						</h:commandLink>
+
+
+
+
+							<br /> <br />
+
+
+
+						</div>
+						<br /> <br />
+						
+				
+				</h:panelGroup>
+				
+				
+				
+				
+				<!--  EDITION INTRRANT -->
+				
+			
+					<h:form  	rendered="#{param.idBlocToShow eq '0' }" >
+
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						
+						
+						
+							<div class="col-sm-6 col-sm-offset-3"  style="background-image: url('assets/images/footer2.png') ! important;">
+							
+							
+								<h1 class="labelCustum"
+							style="text-align: center;  color: #002839; TEXT-ALIGN: CENTER; FONT-SIZE: 45PX ; margin-top : 30px;">Approvisionnement
+							intrant auprès d'un fournisseur</h1>
+						<br />
+						<p:messages showSummary="true" showIcon="true"
+							style="text-align  : center;  width : 70%; margin-left : 15%;    font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+							
+							
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label"
+							style="margin-top: 25px"> Fournisseur</label>
+						<div class="col-sm-9">
+							<br />
+							<p:inputText style="min-width : 400px"
+								value="#{agentSaisieMB.libelleFournisseur}" maxlength="4"
+								styleClass="listeFournisseurs tt-query form-control"
+								title="Point de vente"
+								requiredMessage="Le point de vente est requis" required="true">
+							</p:inputText>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label"
+							style="margin-top: 25px">Intrant</label>
+						<div class="col-sm-9">
+							<br />
+							<p:inputText id="communeCommande23" style="min-width : 400px"
+								value="#{agentSaisieMB.libelleIntrant}" maxlength="4"
+								styleClass="listeIntrant tt-query form-control"
+								title="L'intrant à acheter chez le fournisseur"
+								requiredMessage="L'intrant est requis" required="true">
+							</p:inputText>
+						</div>
+					</div>
+
+
+
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label"
+							style="margin-top: 25px">Quantité </label>
+						<div class="col-sm-9">
+							<br />
+							<p:inputText id="communeCommande12" style="min-width : 400px"
+								value="#{agentSaisieMB.quantite}"
+								title="Point de vente"
+								requiredMessage="Le point de vente est requis" required="true">
+							</p:inputText>
+						</div>
+					</div>
+		</div>
+		
+		<BR/>
+					
+						
+				
+						<div  class="col-md-3 col-md-offset-4" >	
+
+							<div id="buttons" class="pull-right"
+								style="margin-top: 30px; ">
+								<h:commandButton
+									styleClass=" fa fa-plus btn btn-success pull-right"
+									style="width : 150px ; "
+									action="#{agentSaisieMB.createIntrantForCampagne}"
+									value=" Enregistrer" name="suivants">
+
+									<f:setPropertyActionListener
+										target="#{agentSaisieMB.idTypeProduit}"
+										value="#{referentielMB.selectedIntrantDTO.idtypeProduit}" />
+
+									<f:setPropertyActionListener
+										target="#{agentSaisieMB.idProduit}"
+										value="#{referentielMB.selectedIntrantDTO.idProduit}" />
+
+								</h:commandButton>
+								<a type="submit" style="margin-right: 22px; width: 150px"
+									href="dashboardAgentsaisie.xhtml"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+							</div>
+
+				</div>
+
+					</h:form>
+				
+				<!-- END EDITION -->
+				
+				
+				
+				
+				
+				<!-- Edition New intrant fournisseur -->
+					<h:panelGroup id="pform1"
+					rendered="#{param.idBlocToShow eq '1b'}">
+					<h:form id="form1"  >
+
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+						
+						
+						
+							<div class="col-sm-6 col-sm-offset-3"  style="background-image: url('assets/images/footer2.png') ! important;">
+							
+							
+								<h1 class="labelCustum"
+							style="text-align: center;  color: #002839; TEXT-ALIGN: CENTER; FONT-SIZE: 45PX ; margin-top : 30px;">Approvisionnement
+							intrant auprès d'un fournisseur</h1>
+						<br />
+						<p:messages showSummary="true" showIcon="true"
+							style="text-align  : center;  width : 70%; margin-left : 15%;    font-size: 15px;color: #253123; etter-spacing: 2px; text-align: center;" />
+							
+							
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label"
+							style="margin-top: 25px"> Fournisseur</label>
+						<div class="col-sm-9">
+							<br />
+							<p:inputText style="min-width : 400px"
+								value="#{agentSaisieMB.libelleFournisseur}" maxlength="4"
+								styleClass="listeFournisseurs tt-query form-control"
+								title="Point de vente"
+								requiredMessage="Le point de vente est requis" required="true">
+							</p:inputText>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label"
+							style="margin-top: 25px">Intrant</label>
+						<div class="col-sm-9">
+							<br />
+							<p:inputText id="communeCommande23" style="min-width : 400px"
+								value="#{agentSaisieMB.libelleIntrant}" maxlength="4"
+								styleClass="listeIntrant tt-query form-control"
+								title="L'intrant à acheter chez le fournisseur"
+								requiredMessage="L'intrant est requis" required="true">
+							</p:inputText>
+						</div>
+					</div>
+
+
+
+
+
+					<div class="form-group">
+						<label for="inputEmail3" class="col-sm-3 control-label"
+							style="margin-top: 25px">Quantité </label>
+						<div class="col-sm-9">
+							<br />
+							<p:inputText id="communeCommande12" style="min-width : 400px"
+								value="#{agentSaisieMB.quantite}"
+								title="Point de vente"
+								requiredMessage="Le point de vente est requis" required="true">
+							</p:inputText>
+						</div>
+					</div>
+		</div>
+		
+		<BR/>
+					
+						
+				
+						<div  class="col-md-3 col-md-offset-4" >	
+
+							<div id="buttons" class="pull-right"
+								style="margin-top: 30px; ">
+								<h:commandButton
+									styleClass=" fa fa-plus btn btn-success pull-right"
+									style="width : 150px ; "
+									action="#{agentSaisieMB.createIntrantForCampagne}"
+									value=" Enregistrer" name="suivants">
+
+									<f:setPropertyActionListener
+										target="#{agentSaisieMB.idTypeProduit}"
+										value="#{referentielMB.selectedIntrantDTO.idtypeProduit}" />
+
+									<f:setPropertyActionListener
+										target="#{agentSaisieMB.idProduit}"
+										value="#{referentielMB.selectedIntrantDTO.idProduit}" />
+
+								</h:commandButton>
+								<a type="submit" style="margin-right: 22px; width: 150px"
+									href="dashboardAgentsaisie.xhtml"
+									class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+							</div>
+
+				</div>
+
+					</h:form>
+
+				</h:panelGroup>
+				
+				
+				<!-- -END Edition -->
+				
+				
+				
+				
+				
+				
+				<!--********************************************************************** 
+				
+						BLOC  DETAILS PRODUITS
+				
+				************************************************************************** -->
+
+				<h:panelGroup id="engraisInfos" rendered="#{param.idBlocToShow eq '4'}" 	class="form-horizontal">
+
+					<br />
+					<br />
+					<br />
+					<br />
+					<div class="row ">
+						<p class="titrePage montantCFA">
+							#{referentielMB.selectedIntrantDTO.libelleProduit}</p>
+					</div>
+					<div class="row fullbg">
+						<div class="col-lg-1" />
+						<div class="col-md-4 fixed"
+							style="background: url('assets/images/#{agentSaisieMB.selectedIntrantDTO.pictoImages}'); height: 250px; float: left; background-color: #fff;">
+
+						</div>
+
+						<div class="col-lg-7">
+							<br />
+							<div class="col-lg-12">
+								<div class="col-lg-7">
+
+									<div class="form-group ">
+										<i class="fa fa-2x fa-user" aria-hidden="true"></i> <span
+											class="titrePage">Intrant </span>
+									</div>
+									<hr />
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"><i
+											style="color: #80c347" class="fa fa-spinner"
+											aria-hidden="true"></i> Programme </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.selectedIntrantDTO.libelleProgramme}"></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"><i
+											style="color: #d6ce35" class="fa fa-check" aria-hidden="true"></i>
+											Type Produit </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.selectedIntrantDTO.typeProduit}"></h:outputLabel>
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> <i
+											style="color: #bb0101" class="fa fa fa-home"
+											aria-hidden="true"></i> Stock
+										</label>
+										<div class="col-xs-8">
+											<h:outputLabel class=""
+												value="#{agentSaisieMB.selectedIntrantDTO.libellePointdeStock}"></h:outputLabel>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Tonnage
+											disponible </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=""
+												value="#{agentSaisieMB.selectedIntrantDTO.quantite} (T)"></h:outputLabel>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-5">
+									<div class="form-group ">
+										<i class="fa fa-2x fa-home" aria-hidden="true"></i> <span
+											class="titrePage">Tarification </span>
+									</div>
+									<hr />
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label">Taux Subvention
+										</label>
+										<div class="col-xs-8">
+											<i class="fa fa-long-arrow-down" aria-hidden="true"
+												style="color: red; margin-right: 5px"></i>
+											<h:outputLabel class=" "
+												value="#{agentSaisieMB.selectedIntrantDTO.tauxSubventionLibelle}" />
+										</div>
+									</div>
+
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Prix
+											Producteur </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{referentielMB.utils.formatFloatToCFA(agentSaisieMB.selectedIntrantDTO.prixProducteur)}" />
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-xs-4 col-form-label"> Prix non
+											subventionné </label>
+										<div class="col-xs-8">
+											<h:outputLabel class=" "
+												value="#{referentielMB.utils.formatFloatToCFA(agentSaisieMB.selectedIntrantDTO.prixNonSubventionne)}" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="buttons" class="pull-right" style="margin-top: 30px">
+								<a type="submit" style="margin-right: 22px; width: 150px"
+									href="gestionDesProduits.xhtml?idBlocToShow=1"
+									class="fa fa-undo btn btn-success pull-right"> retour</a>
+							</div>
+
+						</div>
+					</div>
+				</h:panelGroup>
+				
+				<!-- END DETAILS -->
+				
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

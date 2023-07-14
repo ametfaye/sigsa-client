@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">PGCA - Plateforme de gestion Agricole</ui:define>
+
+	<ui:define name="section">
+
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+
+		<h:form style=" margin-right : 15px"
+			rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}">
+			<div class="container-fluid"> 
+				<h4 class="MainLabelCenter">  #{referentielMB.pointDeVente.libelle} géré par #{referentielMB.pointDeVente.gerant} </h4>
+				<br /> <br /> <br />
+				<hr />
+
+
+
+				<div class="row">
+
+
+					<div class="col-md-6" id="pointdeVenteChartStock"
+						style="text-align: center; margin-top: -20px">
+						
+							
+							<a href="#">
+										<img src="assets/images/mag2.png"
+										style="" /> <br /> <span
+										style="text-align: center; margin-left: -10px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										</span>
+									</a>
+							
+
+
+						
+					</div>
+
+					<div class="col-md-6">
+					
+											<p style="font-size: 30px ;  ; text-align  : center">  #{referentielMB.nbIntrantDispo}  intrant (s) disponible  (s)  dans ce magasin.</p>
+					
+						
+						<br />
+
+						
+
+
+						<p:dataTable var="pvDTO"
+							value="#{referentielMB.listProduitslieeSelectedVente}"
+							reflow="true" emptyMessage="Le stock de ce magasin est vide"
+							paginator="true" rows="6" cellSeparator="10"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+							paginatorPosition="bottom"
+							style="font-size:15px ; text-align :center ; ">
+							<p:column headerText="Produit" style="width : 200px">
+
+								<h:commandLink
+									style="color : #002839 ; font-size: 18px; margin-right : 10px"
+									action="#{managerManagedBean.redirectSpecifiqueProduitInforations}"
+									value="#{pvDTO.libelle}">
+
+									<!--  pictoImages    envoyer pour afficher la photo sur le details produit -->
+									<f:setPropertyActionListener
+										target="#{managerManagedBean.selectedProduitId}"
+										value="#{pvDTO.idProduit}" />
+
+								</h:commandLink>
+
+							</p:column>
+							
+							<p:column headerText="Prix Producteur">
+				          				#{referentielMB.utils.formatFloatToCFA(pvDTO.prixUnitaire)}
+				        			</p:column>
+							
+							
+							
+							<p:column headerText="Tonnage disponible">
+				          				#{profilMB.StringCutter(pvDTO.quantite, 300)} 
+				        			</p:column>
+				        			
+				        			<p:column headerText="Programme">
+				          				#{profilMB.StringCutter(pvDTO.libelleProgramme, 100)} 
+				        			</p:column>
+				        			
+
+						</p:dataTable>
+						
+						
+						<a type="submit" style="margin-right: 22px; width: 150px"
+							href="gestionDesMagasins.xhtml?idBlocToShow=1"
+							class="fa fa-undo btn btn-success pull-right"> Retour</a>
+							
+
+<!-- 						<h:commandButton styleClass=" btn  pull-right btn_success_TA" -->
+<!-- 							update=" form1:totalCharge" -->
+<!-- 							style="width : 250px ; margin-right :10% ; margin-top : 5%" -->
+<!-- 							action="#{managerManagedBean.reportDataPOI()}" -->
+<!-- 							value=" Télécharger rapport de Zone" name="suivants"> -->
+<!-- 						</h:commandButton> -->
+						<div class="col-xs-1">
+							<!-- 						<div id="container22" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div> -->
+
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</h:form>
+
+
+
+
+
+
+		<!--   credit spécifique d'un point de vente -->
+		<h:form style=" margin-right : 15px"
+			rendered="#{param.idBlocToShow eq '2'}">
+			<div class="container-fluid">
+			
+				<div  class="row">
+				
+					<div  class="col-md-3">
+						
+					 </div>
+					
+					<div  class="col-md-3">
+					 </div>
+					
+					<div  class="col-md-3">
+					 </div>
+						
+				</div>
+				
+				
+				<h4 class="titleLevel4">
+					#{managerManagedBean.selectedPv.libelle} </h4>
+			
+				<hr />
+
+
+
+				<div class="row">
+
+
+					<div class="col-md-3" id="pointdeVenteChartStock"
+						style="text-align: center; margin-top: -20px">
+
+						<div id="ui-widget"
+							style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+							<h1 class="ui-value">
+								<a href="#" style="color: #029441; font-size: 20px;"> <i
+									class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+								#{referentielMB.utils.formatFloatToCFA(managerManagedBean.listeVentefSelectePVTotal)}
+																</a>
+							</h1>
+							<span class="ui-label"> <a href="#"
+								style="color: #029441; font-size: 17px;">VENTES </a></span>
+						</div>
+					</div>
+					
+					
+						<div class="col-md-3" id="pointdeVenteChartStock"
+						style="text-align: center; margin-top: -20px">
+
+						<div id="ui-widget"
+							style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+							<h1 class="ui-value">
+								<a href="#" style="color: #029441; font-size: 20px;"> <i
+									class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+									#{referentielMB.utils.formatFloatToCFA(managerManagedBean.listeCreditDTOofSelectePVTotal)}
+
+								</a>
+							</h1>
+							<span class="ui-label"> <a href="#"
+								style="color: #029441; font-size: 17px;">CREDIT </a></span>
+						</div>
+					</div>
+					
+						<div class="col-md-3" id="pointdeVenteChartStock"
+						style="text-align: center; margin-top: -20px">
+
+						<div id="ui-widget"
+							style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+							<h1 class="ui-value">
+								<a href="#" style="color: #029441; font-size: 20px;"> <i
+									class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+									#{referentielMB.utils.formatFloatToCFA(managerManagedBean.listeversementBanqueofSelectePVTotal)}
+
+								</a>
+							</h1>
+							<span class="ui-label"> <a href="#"
+								style="color: #029441; font-size: 17px;">Versement </a></span>
+						</div>
+					</div>
+					
+						<div class="col-md-3" id="pointdeVenteChartStock"
+						style="text-align: center; margin-top: -20px">
+
+						<div id="ui-widget"
+							style="margin-left: 10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+							<h1 class="ui-value">
+								<a href="#" style="color: #029441; font-size: 20px;"> <i
+									class="fa fa-caret-up" aria-hidden="true" style="color: red"></i>
+									0%
+
+								</a>
+							</h1>
+							<span class="ui-label"> <a href="#"
+								style="color: #029441; font-size: 17px;"> Mise en place </a></span>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+					<hr/>
+					
+				  <div class="row">
+				  
+				  	<h4 class="titrePage"
+							style="color: #333333; font-size: 18px; fill: #333333; text-align : center">
+							Intrants disponibles</h4>
+						
+						
+						<p:dataTable var="pvDTO"
+							value="#{managerManagedBean.listProduitslieeSelectedVente}"
+							reflow="true" emptyMessage="Le stock du point de vente est vide"
+							paginator="true" rows="6" cellSeparator="10"
+							paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+							paginatorPosition="bottom"
+							style="font-size:15px ; text-align :center ; width : 80%; margin-left: 10%">
+							
+
+									<p:column headerText="Programme">
+				          				#{profilMB.StringCutter(pvDTO.libelleProgramme, 100)} 
+				        			</p:column>
+				        			
+				        			<p:column headerText="Intrant">
+				          				#{profilMB.StringCutter(pvDTO.libelle, 100)} 
+				        			</p:column>
+				        			
+				        			<p:column headerText="Prix Unitaire">
+				          				#{profilMB.StringCutter(pvDTO.prixUnitaire, 100)} 
+				        			</p:column>
+				        			
+				        		
+
+									<p:column headerText="Tonnage disponible"> 
+				          				#{profilMB.StringCutter(pvDTO.quantite, 300)} T
+				        			</p:column>
+
+						</p:dataTable>  <br/>  <br/>
+						
+							<div id="buttons" class="">
+								<a  href="managergestionDesPointsdeVente.xhtml?idBlocToShow=1"
+									style="width: 150px; margin-top: -50px;; color: #006600; margin-right : 170px;"
+									data-toggle="modal"
+									class="fa fa-undo btn btn-default pull-right">
+									Retour</a>
+									
+									
+									
+							</div>
+							
+							<div class="col-md-5"/>
+								<div class="col-md-5">
+
+
+
+
+							
+							</div>
+							
+							
+				  </div>
+				
+						
+
+			</div>
+
+		</h:form>
+
+		<!-- fin credit -->
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="template.pgcaOffline.xhtml">
+	<ui:define name="bienvenueNomPrenomEJ">
+		<div class="welcome"></div>
+	</ui:define>
+
+	<ui:define name="menu">
+
+	</ui:define>
+
+
+	<ui:define name="section">
+		<div class="container-fluid " id="sedab">
+
+
+			<div class="row" >
+			
+						<img width="90px" height="80px" src="assets/images/logoSedab.gif"
+				alt="Logo du Sénégal" class="pull-right"></img>
+				<header>
+					<div id="header-logos"></div>
+					<div id="header-title" style="margin-left: 20% ; margin-top : -40px">
+						<h2>Plateforme de gestion des programmes Agricoles</h2>
+						<h3>
+							<span style="color: #006600">- SAHÉLIENNE D'ENTREPRISE DE
+								DISTRIBUTION EN AGROBUSINESS</span>
+						</h3>
+				
+					</div>
+				</header>
+			
+			</div>
+			
+				
+				
+
+			<div class="container-fluid">
+			
+									<p:messages id="messages" style=" margin-top: -110PX;  WIDTH: 80%; MARGIN-LEFT: 10%;  font-family: 'PTSans Bold'; font-size: 15px; color: red; text-align : center" />
+			
+			
+				<div class="col-md-4"></div>
+
+
+
+
+				<div class="col-md-4">
+
+
+
+					<h:form>
+						<!-- sticky="true" -->
+
+
+
+						<center>
+							<h3
+								style="margin-top: -50px; margin-bottom: 50px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 40px; color: #002d40; letter-spacing: 5px; margin-bottom: 50px;">authentification</h3>
+						</center>
+
+						<div class="form-group row">
+
+
+
+							<!-- 						 	 	<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span> -->
+							<h:outputLabel styleClass="form-control-label"
+								value="Identifiant Sedab" style="font-size: 30px;" />
+							<h:inputText value="#{connexionMB.connectionDTO.codeUtilisateur}"   style="  height: 50px; width : 450px"
+							
+								styleClass="form-control" />
+						</div>
+
+						<div class="form-group row">
+							<!-- 							   <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span> -->
+							<h:outputLabel styleClass="form-control-label" style="font-size: 30px;"
+								value="Mot de passe " /> 
+							<h:inputSecret id="Motdepasse"    style="  height: 50px; width : 450px"
+							
+								value="#{connexionMB.connectionDTO.motDePasse}"
+								label="Mot de passe " required="true" styleClass="form-control">
+								<f:validateLength minimum="4" maximum="10" />
+							</h:inputSecret>
+						</div>
+
+						<div class="form-group row" style=" margin-left : 250px">
+							<h:commandButton class="btn btn-success pull-right"    style="width : 200px ; height : 50px;"
+								action="#{connexionMB.login}" value="Se connecter"
+								name="suivants" />
+						</div>
+					</h:form>
+
+				</div>
+
+
+
+				<div class="col-md-4">
+
+				</div>
+
+			</div>
+		</div>
+		
+		
+		
+		
+			<!--  AMCHART CARTE SENEGAL -->
+
+	
+	</ui:define>
+
+
+</ui:composition>

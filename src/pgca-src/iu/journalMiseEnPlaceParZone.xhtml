@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<h:form id="MEPForm">
+			<input id="cumulSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.cumulIntrantAMettreEnplace}" />
+			<input id="reliquatSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.reliquatIntrantAMettreEnplace}" />
+			<input id="intrantSELECT" style="display: none"
+				value="#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}" />
+
+
+			<div class="container-fluid fullbg">
+
+
+
+				<!--  Liste des points des ventes trouvés dans la commune -->
+
+
+
+				<h:panelGroup id="ListPVOfCommune">
+					<p:messages id="messages" showDetail="true"
+						style="width : 60% ; margin-left : 20%" />
+
+
+
+					
+
+
+						<p class="pull-right" style=" margin-right:5% ; color : #002839"> <i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px ; color : #80c347"/>
+					   Tableau de bord  /Journal</p>
+					   <hr />
+
+					<h1 class="titrePage">Journal des quotas</h1>
+
+					<p:dataTable var="utilisateurProviver" selectionMode="single"
+						id="utilisateurProviver"
+						value="#{agentSaisieMB.listeAggregationMiseenPlaceParIntrant}"
+						selection="#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected}"
+						rowKey="#{utilisateurProviver.idIntrantAMettreEnplace}"
+						reflow="true" row="5" widgetVar="journal"
+						style="width: 90%; margin-left:5%; font-size:15px ;  overflow: none ! important;" 
+						emptyMessage="Aucune mise a disposition pour cette zone !!!"
+						paginator="true" paginatorPosition="bottom" rows="11"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink} ">
+
+
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Critères de recherche "
+									style="color : #002839" />
+								<i class="fa fa-search" aria-hidden="true"
+									style="color: #80c347" />
+
+								<p:inputText id="globalFilter" onkeyup="PF('journal').filter()"
+									style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+									placeholder="Entrez un critère " />
+							</p:outputPanel>
+						</f:facet>
+
+
+
+						<p:column headerText="Intrant à mettre en place"
+							filterBy="#{utilisateurProviver.libelleIntrantAMettreEnplace}"
+							sortBy="#{utilisateurProviver.libelleIntrantAMettreEnplace}"
+							filterMatchMode="startsWith">  
+								         #{entiteJMB.StringCutter(utilisateurProviver.libelleIntrantAMettreEnplace,90)} 
+								        </p:column>
+
+
+						<p:column headerText="total Quota national"
+							filterBy="#{utilisateurProviver.quotaIntrantAMettreEnplace}"
+							sortBy="#{utilisateurProviver.quotaIntrantAMettreEnplace}"
+							filterMatchMode="startsWith">  
+								         #{utilisateurProviver.quotaIntrantAMettreEnplace} 
+								        </p:column>
+						
+						<p:column headerText="total mise en place  national "
+							filterBy="#{utilisateurProviver.tauxCouverture}"
+							sortBy="#{utilisateurProviver.tauxCouverture}"
+							filterMatchMode="startsWith">  
+								         #{utilisateurProviver.tauxCouverture} 
+								         
+								        
+					   </p:column>
+								        
+						<p:column headerText="total reliquat  national"
+							filterBy="#{utilisateurProviver.reliquatIntrantAMettreEnplace}"
+							sortBy="#{utilisateurProviver.reliquatIntrantAMettreEnplace}"
+							filterMatchMode="startsWith">  
+								         #{utilisateurProviver.reliquatIntrantAMettreEnplace} 
+								         
+								        
+								        </p:column>
+
+
+												<p:column headerText="Nombre de point de vente"
+													filterBy="#{utilisateurProviver.nombrePontdeVente}"
+													sortBy="#{utilisateurProviver.nombrePontdeVente}"
+													filterMatchMode="startsWith">  
+														         #{utilisateurProviver.nombrePontdeVente} 
+														        </p:column>
+
+									
+
+
+						<p:ajax event="rowSelect"
+							listener="#{agentSaisieMB.listeMiseenPlaceParIntrant()}"
+							update=":MEPForm:filterMEPP  :MEPForm:indicateur" />
+
+					</p:dataTable>
+
+
+					<h:panelGroup id="indicateur">
+
+						<div class="modal-dialog modal-lg"
+							style="width: 80%; height: auto;">
+
+
+
+
+
+							<div class="container-fluid">
+
+								<div class="col-lg-4">
+									<div
+										style="height: 90px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+
+										<span class="ui-label"> <i class="fa fa-ravelry"
+											aria-hidden="true"></i> <a href="#" style="font-size: 27px;"><i
+												class="fa fa-home" style="color: red" aria-hidden="true"></i></a>
+											Couverture  Point de vente <br/>
+										</span>
+										
+										
+										
+										
+											<div id="ui-widget" class="pull-right" 
+											style="margin-top: -10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25); width: 90px; height: 90px;">
+											<h1 class="ui-value "  style="font-size: 20px;">
+												<a href="#" style="color: #029441;" title="POINT DE VENTRE ">
+													#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.nombrePontdeVente} / 100
+												</a>
+												<br/>
+											
+											</h1>
+										</div>
+										
+										
+									</div>
+								</div>
+
+
+
+								<div class="col-md-4">
+								
+	
+									<img width="110px" height="100px" style="margin-left: 45%"
+										src="assets/images/mep.jpg"
+										alt=""></img> <br />
+
+									<div class="progress">
+									
+
+									
+										<div
+											class="progress-bar progress-bar-success progress-bar-striped active"
+											role="progressbar" aria-valuenow="40" aria-valuemin="0"
+											aria-valuemax="#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture}" style="width: #{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture}%">
+											<span>#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture} % ...</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-4">
+									<div
+										style="height: 70px; padding: 10px 10px 30px 10px; font-size: 25px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25)">
+										<span class="ui-label"> <i class="fa fa-ravelry"
+											aria-hidden="true"></i> <a href="#" style="font-size: 17px;"><i
+												class="fa fa-balance-scale" style="color: red"
+												aria-hidden="true"></i> </a> Taux de couverture nationale
+										</span>
+										<h1 class="ui-value">
+											<a href="#" style="color: #029441; margin-top: 20px"
+												class="pull-right">
+												#{agentSaisieMB.selectedMiseEnplaceDTOPointDeVente.libelleIntrantAMettreEnplace}</a>
+											<div id="ui-widget" class="pull-right"
+												style="margin-top: -10px; box-shadow: inset 0 3px 0 rgb(34, 160, 88), inset 0 3px 5px rgba(0, 0, 0, .25); width: 80px; height: 80px">
+												<h1 class="ui-value " style="font-size: 20px;">
+													<a href="#"
+														style="color: #029441;"
+														title="">
+								#{agentSaisieMB.listeAggregationMiseenPlaceParIntrantSelected.tauxCouverture} %
+														 
+													</a>
+												</h1>
+											</div>
+										</h1>
+									</div>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+
+					<div class="modal-dialog modal-lg"
+						style="width: 90%; height: auto;">
+
+						<!-- Modal content-->
+
+
+						<h:panelGroup id="filterMEPP">
+							<div id="previewBL" class="container-fluid">
+
+								<!-- Data BL -->
+								<div class="row"
+									style="border-top: 2px solid #ffffff; height: 400px;">
+
+
+
+
+
+
+									<div class="col-lg-12">
+										<br />
+
+										<h3 style="text-align: center">Liste des mises en place
+											effectuées</h3>
+										<br />
+
+
+										<p:dataTable var="car" widgetVar="carsTable"  style=" overflow: none ! important;"
+											value="#{agentSaisieMB.listedesMiseEnplacedejaEffectue}"
+											sortBy="#{car.pointdeVenteLibelle}"
+											expandableRowGroups="true" reflow="true"
+											emptyMessage="Aucune mise en place trouvée"
+											paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+											paginator="true" paginatorPosition="bottom" rows="10">
+
+
+											<p:headerRow>
+												<p:column colspan="9">
+													<h:outputText value="#{car.pointdeVenteLibelleDepartement}" />
+												</p:column>
+											</p:headerRow>
+
+											<f:facet name="header">
+												<p:outputPanel>
+													<h:outputText value="Critères de recherche "
+														style="color : #002839" />
+													<i class="fa fa-search" aria-hidden="true"
+														style="color: #80c347" />
+
+													<p:inputText id="globalFilter"
+														onkeyup="PF('carsTable').filter()"
+														style="width:350px; margin-bottom  : 40px; margin-left : 20px; "
+														placeholder="Entrez un critère " />
+												</p:outputPanel>
+											</f:facet>
+
+											<p:column headerText=""
+												filterBy="#{car.pointdeVenteLibelleDepartement}"
+												sortBy="#{car.pointdeVenteLibelleDepartement}"
+												filterMatchMode="startsWith">
+
+											</p:column>
+
+											<p:column headerText="Point de vente"
+												filterBy="#{car.pointdeVenteLibelle}"
+												sortBy="#{car.pointdeVenteLibelle}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.pointdeVenteLibelle}" />
+											</p:column>
+
+											<p:column headerText="Date"
+												filterBy="#{car.dateMiseEnplaceEffectiveStr}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.dateMiseEnplaceEffectiveStr}" />
+											</p:column>
+
+											<p:column headerText="BL" filterBy="#{car.blManuel}"
+												sortBy="#{car.blManuel}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.blManuel}" />
+											</p:column>
+
+											<p:column headerText="LV" filterBy="#{car.blManuel}"
+												sortBy="#{car.blManuel}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.lvManuel}" />
+											</p:column>
+											
+											<p:column headerText="Tonnage" filterBy="#{car.quantiteAmettreEnplace}"
+												sortBy="#{car.quantiteAmettreEnplace}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.quantiteAmettreEnplace}" />
+											</p:column>
+
+											
+											
+											<p:column headerText="Camion" filterBy="#{car.camion}"
+												sortBy="#{car.camion}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.camion}" />
+											</p:column>
+
+											<p:column headerText="Transporteur" filterBy="#{car.transporteur}"
+												sortBy="#{car.transporteur}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.transporteur}" />
+											</p:column>
+
+
+											<p:column headerText="Chauffeur" filterBy="#{car.chauffeur}"
+												sortBy="#{car.chauffeur}"
+												filterMatchMode="startsWith">
+												<h:outputText value="#{car.chauffeur}" />
+											</p:column>
+
+
+										
+
+
+											<p:summaryRow>
+
+											</p:summaryRow>
+
+										</p:dataTable>
+
+
+										<h:commandLink styleClass="pull-right" onclick="return false;"
+											style="color : #002839 ; font-size: 18px; margin-right : -130px; padding-top : 25px ; backgr"
+											action="#{agentSaisieMB.reportMiseEnplaceBypdfFormat()}"
+											value=" Telecharger le journal de mise en place "
+											target="_blank">
+
+
+											<img src="assets/images/exportExcel.png" class="pull-left"
+												style="width: 8%; height: 8%; margin-top: -15px" />
+										</h:commandLink>
+										<br /> <br /> <br />
+
+									</div>
+
+
+
+								</div>
+							</div>
+
+
+						</h:panelGroup>
+					</div>
+				</h:panelGroup>
+			</div>
+
+
+
+		</h:form>
+
+
+
+
+
+
+
+
+
+	</ui:define>
+
+</ui:composition>

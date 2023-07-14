@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+	
+			<h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager}">
+	
+		<div class="container-fluid fullbg">
+
+
+
+			<p:messages id="msg" showIcon="true" showSummary="true"
+				showDetail="true"
+				style="text-align  : center; margin-top: 40px;    font-size: 15px;color: #253123; letter-spacing: 2px; text-align: center;" />
+
+
+			<h:form id="bloc2" prependId="false"
+				rendered="#{param.idBlocToShow eq '1' or param.idBlocToShow eq null}">
+				
+				
+				<div id="engraisCreate" class="form-horizontal">
+
+					<br />
+			
+					<h1 class="TitreGeneric">Allocation
+						budget collecte</h1> <br/>
+					<br />
+
+
+					<div class="col-xs-3" id="blocPV" />
+
+					<div class="col-xs-6" id="blocPV">
+
+
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Programme</label>
+							<div class="col-sm-10">
+								<h:selectOneMenu
+									value="#{managerManagedBean.budgetAlloue.idProgramme}"
+									required="true" styleClass="form-control input-sm CustomSelect"
+									requiredMessage="Le programme de collecte  est requis">
+									<f:selectItem itemLabel="Selectionnez un programme "
+										itemValue="" />
+									<f:selectItems value="#{referentielMB.getlistProgramme()}"
+										var="CoupleDTO" itemValue="#{CoupleDTO.clef}"
+										itemLabel="#{CoupleDTO.valeur}" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+
+
+						<h:panelGroup id="benef" rendered="#{referentielMB.modeBl == 0}">
+
+							<div class="form-group">
+								<label for="inputPassword3" style="font-size: 17px;"
+									class="col-sm-4 control-label">Point de collecte</label>
+								<div class="col-sm-6">
+									<h:selectOneMenu
+										value="#{managerManagedBean.budgetAlloue.idPointDecollecteBeneficiaire}"
+										id="profilListe" required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le point de collecte est requis">
+										<f:selectItem itemLabel="Selectionnez un point de collecte "
+											itemValue="" />
+										<f:selectItems
+											value="#{managerManagedBean.loadAllPointdeCollecte()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+										<p:ajax event="change" update="CollobPC" />
+									</h:selectOneMenu>
+								</div>
+								<br />
+							</div>
+
+							<div class="form-group">
+								<label for="inputPassword3" style="font-size: 17px;"
+									class="col-sm-4 control-label">Bénéficiaire</label>
+								<div class="col-sm-6">
+									<h:selectOneMenu id="CollobPC"
+										value="#{managerManagedBean.budgetAlloue.idColloborateurBeneficiaire}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="L'agent de collecte est requis">
+										<f:selectItem itemLabel="Selectionnez une categorie "
+											itemValue="" />
+										<f:selectItems
+											value="#{managerManagedBean.loadColloborateurOfPointDeCollecte()}"
+											var="CollaborateurDTO"
+											itemValue="#{CollaborateurDTO.idPersonne}"
+											itemLabel="#{CollaborateurDTO.prenom}  #{CollaborateurDTO.nom}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+						</h:panelGroup>
+
+
+
+						<div class="form-group">
+							<label for="inputPassword3" style="font-size: 17px;"
+								class="col-sm-4 control-label">Montant alloué</label>
+							<div class="col-sm-6">
+								<p:inputText
+									value="#{managerManagedBean.budgetAlloue.montantalloue}"
+									type="number" styleClass="form-control"
+									title="Montant allocation "
+									requiredMessage="le montant d'allocation est requis"
+									required="true" />
+							</div>
+						</div>
+
+
+						<h:panelGroup id="detailsPV"
+							rendered="#{referentielMB.modeBl == 0}">
+
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Catégorie
+								</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{managerManagedBean.budgetAlloue.idCategorieProduitACollecter}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="La categorie de l'intrant est requise">
+										<f:selectItem itemLabel="Selectionnez une categorie "
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.loadReferentielTypeIntrant()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+											itemLabel="#{CollaborateurDTO.libelle}" />
+
+										<p:ajax event="change"
+											listener="#{referentielMB.refresshListProduitFromTypeProduitSelected()}"
+											update="listeIntrantFiltred" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputPassword3" class="col-sm-2 control-label">Intrant</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu id="listeIntrantFiltred"
+										value="#{managerManagedBean.budgetAlloue.idProduitACollecter}"
+									 required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="L'intrant à collecter est requis">
+										<f:selectItem itemLabel="Selectionnez un intrant "
+											itemValue="" />
+									<f:selectItems
+											value="#{managerManagedBean.refreslistListIntrantByType()}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.idProduit}"
+											itemLabel="#{CollaborateurDTO.libelleProduit}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+
+
+						</h:panelGroup>
+
+
+						<h:commandButton styleClass="  btn btn-validatd pull-right"
+							value="Confirmer " name="suivants"
+							action="#{managerManagedBean.enregistrerAllocationBudeget}"
+							style="width : 200px ; margin-right : 0px;  margin-top : 20px"
+							class="btn   pull-right btn-success" />
+
+						<br />
+
+					</div>
+				</div>
+			</h:form>
+
+
+			<!-- 
+						LISTE DES ALLOCATIONS 
+			 -->
+			<h:form rendered="#{param.idBlocToShow eq '2'}">
+				
+					
+							
+				<div class="col-lg-10">
+
+					<br /> <br />
+					<h1
+						class="TitreGeneric">
+						Suivi des allocations</h1> <br/>
+
+
+					<p:dataTable var="CreditDTO" sortBy="#{CreditDTO.intranACollecter}"
+						value="#{managerManagedBean.loadAllAllocation()}"
+						rowKey="#{CreditDTO.alloc_id}" reflow="true" row="5"
+						selection="#{managerManagedBean.budgetAlloue}"
+						selectionMode="single"
+						style="width: 90%; margin-left:5%; font-size:15px ; "
+						emptyMessage="Aucune collecte  enregistrée !!" paginator="true"
+						paginatorPosition="bottom" rows="15"
+						paginatorTemplate="{PreviousPageLink} {NextPageLink}">
+
+						<p:column headerText="Zone "
+							sortBy="#{CreditDTO.pointdeCollecteBeneficiare}" sortable="true">  
+								     #{entiteJMB.StringCutter(CreditDTO.pointdeCollecteBeneficiare,80)}   
+								        </p:column>
+								<p:column headerText="Programme ">  
+								   #{entiteJMB.StringCutter(CreditDTO.programme,100)} 
+						</p:column>
+						
+						
+						<p:column headerText="Bénéficiaire ">  
+								     #{entiteJMB.StringCutter(CreditDTO.collaborateurBeneficiare,20)} 
+								        </p:column>
+
+				
+						<p:column headerText="Intrant à collecter ">  
+								   #{entiteJMB.StringCutter(CreditDTO.intranACollecter,100)} 
+						</p:column>
+
+						<p:column headerText="Montant" sortable="true"
+							sortBy="#{CreditDTO.montantalloue}">  		    
+				     #{referentielMB.utils.formatFloatToCFA(CreditDTO.montantalloue)}
+								  </p:column>
+
+					</p:dataTable>
+
+
+					<h:commandButton styleClass=" btn  pull-right btn-success"
+						action="#{managerManagedBean.showDetailsSelectedBudget}"
+						style="width : 300px ; margin-bottom : 20px ; margin-right : 90px"
+						value=" Suivre collecte" name="suivants" />
+				</div>
+
+					<div class="col-xs-6 col-sm-2">
+									<div id="ui-widget">
+								<h1 class="ui-value"> <a href="#" style="color: #029441;     font-size: 20px;">
+								<i class="fa fa-caret-up" aria-hidden="true" style="color : red"></i>
+								#{referentielMB.utils.formatFloatToCFA( managerManagedBean.montantTotalAllocation )} 
+									
+								 </a></h1>
+								<span class="ui-label" style="color: #029441;"> <a href="#" style="color: #029441;"> TOTAL </a></span>
+							</div>
+								
+							</div>
+
+			</h:form>
+
+
+
+
+
+
+
+			<h:form rendered="#{param.idBlocToShow eq '3'}">
+
+				<h1 class="" style="text-align: center; color: #49b97e ; TEXT-ALIGN: center; FONT-SIZE: 25PX; margin-top: 80px">
+					Suivi de l'évolution la collecte</h1>
+				<br />
+							
+				<div class="col-lg-4" style="margin-top: 15px;">
+					<p class="titrePage"
+						style="background: url('assets/images/small_shadow.jpg')">.</p>
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Campagne Agricole</label>
+						<div class="col-sm-6">
+							<p:outputLabel styleClass="form-control-static"
+								value="#{managerManagedBean.budgetAlloue.campagneAgricole}" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Programme</label>
+						<div class="col-sm-6">
+
+							<p:outputLabel styleClass="form-control-static"
+								value="#{managerManagedBean.budgetAlloue.programme}" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Auteur Allocation</label>
+						<div class="col-sm-6">
+							<p:outputLabel styleClass="form-control-static"
+								value="#{managerManagedBean.budgetAlloue.auteurAllocation}" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Date Allocation</label>
+						<div class="col-sm-6">
+							<p:outputLabel styleClass="form-control-static"
+								value="#{managerManagedBean.budgetAlloue.dateAllcation}" />
+						</div>
+					</div>
+
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Tonnage actuel</label>
+						<div class="col-sm-6">
+							<p:outputLabel styleClass="form-control-static"
+								value="#{managerManagedBean.budgetAlloue.totalCollecte}" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Montant utilisé</label>
+						<div class="col-sm-6"> 
+							<p:outputLabel styleClass="form-control-static"
+								value="	#{referentielMB.utils.formatFloatToCFA(managerManagedBean.budgetAlloue.montantalloue)}" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-6 col-form-label">Montant restant</label>
+						<div class="col-sm-6">
+							<p:outputLabel styleClass="form-control-static"
+								value="#{referentielMB.utils.formatFloatToCFA(managerManagedBean.budgetAlloue.montantalloue - managerManagedBean.budgetAlloue.montantUtilise)} " />
+						</div>
+					</div>
+
+
+					<p class="titrePage"
+						style="background: url('assets/images/small_shadow.jpg')">.</p>
+
+				</div>
+
+				<div class="col-lg-8">
+					<div id="container"
+						style="min-width: 100%; height: 400px; margin: 0 auto; margin-top: 15Px"></div>
+						<br/> <br/>
+					<h:commandButton styleClass=" btn  pull-right btn-success" onclick="return false"
+						style="width : 300px ; margin-right : 23px; margin-bottom : 80px"
+						value=" Télécharger rapport de collecte" name="suivants" />
+				</div>
+
+			</h:form>
+
+
+		</div>
+  
+  </h:panelGroup>
+  
+  
+  
+  
+  <h:panelGroup rendered="#{connexionMB.connectedUserProfilIManager == false}">
+			<div class="container-fluid">
+			<div class="col-md-12">
+
+				
+					<br />
+					<p class="titrePage">Accès restreint</p>
+						 <h1> Votre profil ne vous donne pas accès à cette ressource demandée</h1>
+						 
+						 <img
+							src="assets/images/restrict.png"
+							alt="Logo du Sénégal"/>
+			  
+		 
+		 </div> 
+		 </div>
+		</h:panelGroup>
+		
+		
+	</ui:define>
+</ui:composition>

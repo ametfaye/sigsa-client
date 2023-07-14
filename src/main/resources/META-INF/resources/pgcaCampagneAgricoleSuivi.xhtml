@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+  <h:head>
+    <title>SIGMA | Accueil</title>
+
+    <h:outputStylesheet name="css/login.css" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <style>
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+      .update-msg {
+        background-color: transparent ! important;
+      }
+      
+    </style>
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml"/>
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml"/>
+      <!-- Top Bar End -->
+      <div class="page-content">
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3 mb-2">
+              <a class="navbar-brand" href="#">
+                <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+                <img src="assets/images/logo-dark.png-" height="20" alt="" />
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Accueil</a>
+                  </li>
+                </ul>
+                <!--end navbar-nav-->
+                <div class="pull-right">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                      <a class="nav-link" href="#">#{DashboardAdminController.connectedUserDetails.entitePublique} / #{DashboardAdminController.connectedUserDetails.service}
+                        / #{DashboardAdminController.connectedUserDetails.sousService}</a>
+                    </li>
+                  </ul>
+                </div>
+                <!--end form-->
+              </div>
+              <!--end navbar-collapse-->
+            </nav>
+            <!-- Page-Title -->
+            <div class="row">
+              <div class="col-12">
+                <div class="card" style="background-image: url(images/auth-bg.png)">
+                  <!--end card-header-->
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-7 border-right">
+                        <p style="text-align :center"> <i class="las la-list text-secondary font-22 align-middle mr-2"></i>Suivi 360° campagne XXXXX </p>
+                          <hr/>
+                          
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%; text-align : center ">
+                          <thead>
+                            <tr>
+                              <th> Identifiant</th>
+                              <th> Nom</th>
+                              <th> Prénom</th>
+                              <th> Entité</th>
+                            <th> Statut</th>
+                              <th> Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <p:repeat value="#{DashboardAdminController.usersLists}" var="user">
+                              <tr>
+                                <td>#{user.identifiant}</td>
+                                <td>#{user.nom}</td>
+                                <td>#{user.prenom}</td>
+                                <td>#{user.entitePublique}</td>
+                                
+                                <td>
+                                  <a href="#" class="badge badge-pill #{user.classCss}"> #{user.statut} </a>
+                                </td>
+                            
+                                <td class="text-center"> 
+                                  <h:panelGroup rendered="#{user.active == 0}">  
+                                    <h:commandLink action="#{UtilisateurController.disableEnableUser(user.idUser, 1)}" ajax="false" update="succes-text">           
+                                      <i class="las la-lock text-danger font-18" title="Activer" style="color: darkturquoise !important;"></i>
+                                    </h:commandLink>
+                                  </h:panelGroup>
+                                  <h:panelGroup rendered="#{user.active == 1}">  
+                                    <h:commandLink action="#{UtilisateurController.disableEnableUser(user.idUser, 0)}" ajax="false" update="succes-text">  
+                                      <i class="las la-unlock text-warning font-18" title="Désactiver" style="color: darkturquoise !important;"></i>
+                                    </h:commandLink>
+                                  </h:panelGroup>
+                                  <h:commandLink action="#{UtilisateurController.showUpdateUser()}">
+                                    <i class="las la-pen text-warning font-18" title="Modifier"></i>
+                                    <f:param name="userMatriculeUpdate" value="#{user.identifiant}" />
+                                  </h:commandLink>
+                                  <a href="#" data-toggle="modal" data-target="#deleteUserModal-#{user.idUser}">
+                                    <i class="las la-trash-alt text-danger font-18" title="Supprimer"></i>
+                                  </a>
+                                  
+                                  <div class="modal fade bd-example-modal-sm" id="deleteUserModal-#{user.idUser}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-md" role="deleteUser">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h6 class="modal-title m-0" id="mySmallModalLabel">Confirmation de la suppression</h6>
+                                              <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true"><i class="la la-times"></i></span>
+                                              </button>
+                                          </div><!--end modal-header-->
+                                          <div class="modal-body text-center">
+                                              <h4 class="mb-1">Êtes-vous sûr de vouloir supprimer l'utilisateur</h4><br/>
+                                              <h5>#{user.prenom} #{user.nom} ? </h5>
+                                          </div><!--end modal-body-->
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary btn-xs" data-dismiss="modal">Annuler</button>
+                                              <button type="button" class="btn btn-primary btn-xs">
+                                                <h:commandLink action="#{UtilisateurController.deleteUser(user.idUser)}" style="color: #ffffff;" 
+                                                  update="succes-text" ajax="false" value="Confirmer">
+                                                </h:commandLink>
+                                              </button>
+                                          </div><!--end modal-footer-->
+                                          </div><!--end modal-content-->
+                                      </div><!--end modal-dialog-->
+                                  </div><!--end modal-->
+                                </td>
+                              </tr>
+                            </p:repeat>
+                          </tbody>
+                        </table>
+                        
+                      </div>
+                      <!--end col-->
+                      <div class="col-lg-5">
+                     
+                      
+                        <hr class="hr-dashed" />
+                        <div class="media">
+                          
+                          <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold">#{DashboardAdminController.profilsActifs}</h3>
+                            <p class="mb-0 text-muted"> <i data-feather="activity"></i> Programmes </p>
+                          </div>
+                          
+                          <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold">775</h3>
+                            <p class="mb-0 text-muted"> <i data-feather="mail"></i>Notifications </p>
+                          </div>
+                           <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold">675</h3>
+                            <p class="mb-0 text-muted">  <i data-feather="feather"></i> Intrant </p>
+                          </div>
+                          
+                          <!--end media-body-->
+                        </div>
+                       
+                        <hr class="hr-dashed" />
+                        <div class="media">
+                          
+                          <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold">76 998</h3>
+                            <p class="mb-0 text-muted"> <i data-feather="check-circle"></i> Point de vente</p>
+                          </div>
+                           <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold">#{DashboardAdminController.profilsInactifs}</h3>
+                            <p class="mb-0 text-muted"> <i data-feather="eye"></i> 8 commissions</p>
+                          </div>
+                          
+                            <div class="media-body align-self-center text-truncate ml-2">
+                            <h3 class="mb-0 font-weight-bold" style="color : red">76</h3>
+                            <p class="mb-0 text-muted" > <i data-feather="feather"></i>  alertes</p>
+                          </div>
+                          
+                          <!--end media-body-->
+                        </div>
+                        <div class="apexchart-wrapper mt-3">
+                          <div id="dash_spark_3" class="chart-gutters"></div>
+                        </div>
+                      </div>
+                      <!--end col-->
+                    </div>
+                    <!--end row-->
+                  </div>
+                  <!--end card-body-->
+                </div>
+                <!--end card-->
+              </div>
+              <!--end col-->
+            </div>
+            <!--end row-->
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/metismenu.min.js"></script>
+    <script src="assets/js/waves.js"></script>
+    <script src="assets/js/feather.min.js"></script>
+    <script src="assets/js/simplebar.min.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+    <script src="assets/js/moment.js"></script>
+    <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    
+    <!-- Chart JS -->
+    <script src="assets/plugins/chartjs/chart.min.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
+    
+    <script>
+      $('#datatable').DataTable({
+        "language": {
+          "sProcessing": "Traitement en cours ...",
+          "sLengthMenu": "Afficher _MENU_ lignes",
+          "sZeroRecords": "Aucun résultat trouvé",
+          "sEmptyTable": "Aucune donnée disponible",
+          "sInfo": "Lignes _START_ à _END_ sur _TOTAL_",
+          "sInfoEmpty": "Aucune ligne affichée",
+          "sInfoFiltered": "(Filtrer un maximum de_MAX_)",
+          "sInfoPostFix": "",
+          "sSearch": "Chercher:",
+          "sUrl": "",
+          "sInfoThousands": ",",
+          "sLoadingRecords": "Chargement...",
+          "oPaginate": {
+            "sFirst": "Premier", "sLast": "Dernier", "sNext": "Suivant", "sPrevious": "Précédent"
+          },
+          "oAria": {
+            "sSortAscending": ": Trier par ordre croissant", "sSortDescending": ": Trier par ordre décroissant"
+          }
+        }
+      });
+    </script>
+  </h:body>
+</html>

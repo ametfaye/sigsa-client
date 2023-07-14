@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+
+	<ui:define name="section">
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAgentSaisie}" id="containerrr">
+
+			<div class="container-fluid">
+
+				<!-- Bloc Liste des engrais -->
+				<div class="col-md-12" id="engraisListe">
+					<br />
+					<p
+						style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 15px; color: #253123; letter-spacing: 2px; text-align: center">
+						Tableau de bord agent de saisie</p>
+					<br /> <br /> <br />
+					<h:form>
+						<div class="row" id="allOptions">
+							<div class="col-md-3">
+
+								<h:commandLink action="#{referentielMB.initCreationIntrant()}">
+
+									<img src="assets/images/intrant.jpg"
+										style="height: 140px; height: 110px; margin-left: 35px" />
+									<br />
+									<span
+										style="text-align: center; margin-left: 50px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Edition Intrant</span>
+
+								</h:commandLink>
+							</div>
+
+
+							<div class="col-md-3">
+								<h:commandLink
+									action="#{agentSaisieMB.redirectToListCommande()}">
+
+									<img src="assets/images/bl.png"
+										style="height: 130px; height: 100px; margin-left: 35px" />
+									<br />
+									<span
+										style="text-align: center; margin-left: 20px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Gestion des commandes</span>
+
+								</h:commandLink>
+							</div>
+
+
+							<div class="col-md-3">
+
+								<h:commandLink action="#{referentielMB.redirectToBlEdition()}">
+									<img src="assets/images/car.png"
+										style="height: 130px; height: 100px; margin-left: 10px" />
+									<br />
+									<span
+										style="text-align: center; margin-left: -25px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Edition bon de livraison </span>
+
+								</h:commandLink>
+
+							</div>
+
+							<div class="col-md-3">
+								<a href="gestionDesOL.xhtml?idBlocToShow=1"> <h:commandLink
+										action="#{agentSaisieMB.redirectToOLEdition()}">
+										<img src="assets/images/order2.png"
+											style="height: 130px; height: 100px; margin-left: 10px" />
+										<br />
+										<span
+											style="text-align: center; margin-left: -20px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+											Edition Ordre de livraison </span>
+									</h:commandLink>
+								</a>
+							</div>
+
+						</div>
+						<br />
+						<br />
+						<br />
+						<br />
+
+
+						<br />
+						<br />
+						<br />
+						<br />
+						<div class="row" id="allOptions">
+							<div class="col-md-3">
+								<a href="#"> <img src="assets/images/mise2.jpg" data-toggle="modal" data-target="#BL"
+									style="height: 140px; height: 110px; margin-left: 35px" /> <br />
+									<span  data-toggle="modal" data-target="#BL"
+									style="text-align: center; margin-left: 30px; margin-top: 5px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Plan de mise en place</span>
+									
+								</a>
+							</div>
+
+
+							<div class="col-md-3">
+								<a href="gestionDesPointsdeVenteCreation.xhtml?idBlocToShow=2">
+									<img src="assets/images/pv.png"
+									style="height: 115px; margin-left: 35px" /> <br /> <span
+									style="text-align: center; margin-left: 30px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Point de vente</span>
+								</a>
+							</div>
+
+
+							<div class="col-md-3">
+
+								<a href="gestionDesPointsdeCollecteCreation.xhtml"> <img
+									src="assets/images/collecte.jpg"
+									style="height: 115px;; margin-left: -20px" /> <br /> <span
+									style="text-align: center; margin-left: -5px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Point de collecte </span>
+
+								</a>
+
+							</div>
+
+							<div class="col-md-3">
+								<a href="gestionDesClients.xhtml?idBlocToShow=1"> <img
+									src="assets/images/cclient.png"
+									style="height: 115px; margin-left: -20px" /> <br /> <span
+									style="text-align: center; margin-left: 10px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Gestion des clients </span>
+								</a>
+							</div>
+							
+							
+								
+			<!--  Modele Mise en place -->
+								<!-- Modal  BL -->
+					<div class="modal fade" id="BL" role="dialog">
+						<div class="modal-dialog modal-lg"
+							style="width: 1200px; height: auto;">
+
+							<!-- Modal content-->
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">X</button>
+									<h4 class="modal-title">
+										<p
+											style="text-align: center; margin-top: 30px; margin-bottom: 30px; text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 12px; color: #253123; letter-spacing: 2px; text-align: center text-transform: uppercase; font-family: 'PTSans Bold'; font-size: 24px; color: #253123; letter-spacing: 2px; margin-bottom: 1px;">
+											Commande Nº #{agentSaisieMB.commandeDTO.referenceCMD}</p>
+
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div id="previewBL" class="container-fluid">
+										<br />
+
+										<!-- Header BL -->
+										<div class="row">
+											<div class="col-md-5">
+											
+								<a href="#"> <img src="assets/images/mise2.jpg" data-toggle="modal" data-target="#BL"
+									style="height: 140px; height: 110px; margin-left: 35px" /> <br />
+									<span  data-toggle="modal" data-target="#BL"
+									style="text-align: center; margin-left: 30px; margin-top: 5px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Plan de mise en place</span>
+									
+								</a>
+							
+											</div>
+
+											<div class="col-md-2">
+												<img width="110px" height="100px"
+													src="assets/images/logoSedab.gif" alt="Logo du Sénégal"></img>
+												<br /> <br />
+											</div>
+
+											<div class="col-md-5 ">
+											
+				
+								<a href="#"> <img src="assets/images/mise2.jpg" data-toggle="modal" data-target="#BL"
+									style="height: 140px; height: 110px; margin-left: 35px" /> <br />
+									<span  data-toggle="modal" data-target="#BL"
+									style="text-align: center; margin-left: 30px; margin-top: 5px; float: left; color: #FFFFFFF; font-weight: bolder; font-size: 17px;">
+										Voir l'etat des mises</span>
+									
+								</a>
+											</div>
+										</div>
+
+
+
+
+										<br /> <br /> <br />
+										<!-- Data BL -->
+										<div class="row"
+											style="border-top: 2px solid #ffffff; background: #f9f9f9; height: 220px;">
+											<br />
+											<div class="col-md-10">
+		
+
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-2 control-label">Catégorie
+									</label>
+									<div class="col-sm-10">
+										<h:selectOneMenu
+											value="#{referentielMB.selectedIntrantDTO.idtypeProduit}"
+											required="true"
+											styleClass="form-control input-sm CustomSelect"
+											requiredMessage="La categorie  est requise">
+											<f:selectItem itemLabel="Selectionnez une categorie "
+												itemValue="" />
+											<f:selectItems
+												value="#{referentielMB.loadReferentielTypeIntrant()}"
+												var="CollaborateurDTO" itemValue="#{CollaborateurDTO.id}"
+												itemLabel="#{CollaborateurDTO.libelle}" />
+
+											<p:ajax event="change"
+												listener="#{referentielMB.refresshListProduitFromTypeProduitSelected()}"
+												update="listeIntrant" />
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputPassword3" class="col-sm-2 control-label">Intrant</label>
+									<div class="col-sm-10">
+										<h:selectOneMenu
+											value="#{referentielMB.selectedIntrantDTO.idProduit}"
+											id="listeIntrant" required="true"
+											styleClass="form-control input-sm CustomSelect"
+											requiredMessage="L'intrant  est requis">
+											<f:selectItem itemLabel="Selectionnez une categorie "
+												itemValue="" />
+											<f:selectItems
+												value="#{referentielMB.listReferentielfiltred}"
+												var="CollaborateurDTO"
+												itemValue="#{CollaborateurDTO.idProduit}"
+												itemLabel="#{CollaborateurDTO.libelleProduit}" />
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+
+
+
+				
+				
+											</div>
+										</div>
+
+										<!-- Marchandises -->
+										<br /> <br /> <br />
+										<div class="row">
+											<div class="col-md-2"></div>
+
+											<div class="col-md-8">
+
+												<div class="row" style="border-top: 2px solid #80c347;">
+													<br />
+													<p
+														style="color: #80c347; TEXT-ALIGN: CENTER; FONT-SIZE: 20PX;"></p>
+													<br />
+												</div>
+											
+
+											</div>
+											<div class="col-md-2 pull-right"></div>
+										</div>
+										<br /> <br /> <br />
+
+									
+
+										<div class="row">
+
+
+											<br /> <br /> <br /> <br /> <br />
+											<h1 class="ui-label pull-left">
+												contact@sedab.com<br />
+											</h1>
+											<h1 class="ui-label pull-right">www.sedab.com</h1>
+
+
+										</div>
+
+
+									</div>
+								</div>
+
+							
+							</div>
+						</div>
+					</div>
+				
+			<!--  Fin Modal -->
+			
+			
+			
+						</div>
+						<br />
+						<br />
+						<br />
+						<br />
+
+
+						<br />
+						<br />
+						<br />
+						<br />
+						
+						
+						
+		
+			
+					</h:form>
+				</div>
+			</div>
+			
+		
+			
+		</h:panelGroup>
+
+
+
+	
+			
+			
+
+		<h:panelGroup
+			rendered="#{connexionMB.connectedUserProfilIsAgentSaisie == false}">
+			<div class="container-fluid">
+				<div class="col-md-12">
+
+
+					<br />
+					<p class="titrePage">Accès restreint</p>
+					<h1>Votre profil ne vous donne pas accès à cette ressource
+						demandée</h1>
+
+					<img src="assets/images/restrict.png" alt="Logo du Sénégal" />
+
+
+				</div>
+			</div>
+		</h:panelGroup>
+
+	</ui:define>
+
+</ui:composition>

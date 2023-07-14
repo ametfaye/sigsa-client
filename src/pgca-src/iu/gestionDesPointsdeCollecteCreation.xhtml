@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	
+	<ui:define name="section">
+		<div class="container-fluid">
+		
+		
+			<div id="engraisCreate" class="form-horizontal">
+				<h:form  class="col-md-12" >
+									
+				<br/><br/><br/>
+					<p class="titrePage">Edition d'un point de collecte</p>
+					<br />
+							<p:messages id="messages" showDetail="false" style="width : 60% ; margin-left : 20%" />			
+				<br/><br/><br/>
+					<div class="col-xs-6">
+						
+
+
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Région</label>
+							<div class="col-sm-10">
+								<h:selectOneMenu value="#{referentielMB.pointDeVente.idRegion}"
+									required="true"
+									styleClass="form-control input-sm CustomSelect"
+									requiredMessage="La region est requise ">
+									<f:selectItem itemLabel="Selectionnez une region "
+										itemValue="" />
+									<f:selectItems value="#{referentielMB.loadAllRegions()}"
+										var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+										itemLabel="#{CollaborateurDTO.valeur}" />
+
+									<p:ajax event="change"
+										listener="#{referentielMB.refreshDepartementByRegionId()}"
+										update="deptList communList" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+							
+							
+						<h:panelGroup id="deptList">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Département</label>
+
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{referentielMB.pointDeVente.idDepartement}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="Le departement est requis">
+										<f:selectItem itemLabel="Selectionnez un département"
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.departements}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+										<p:ajax event="change"
+											listener="#{referentielMB.refreshCommunesByDepratementId()}"
+											update="communList" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</h:panelGroup>	
+
+
+						<h:panelGroup id="communList">
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-2 control-label">Commune</label>
+								<div class="col-sm-10">
+									<h:selectOneMenu
+										value="#{referentielMB.pointDeVente.idCommune}"
+										required="true"
+										styleClass="form-control input-sm CustomSelect"
+										requiredMessage="La commune est requise">
+										<f:selectItem itemLabel="Selectionnez une commune"
+											itemValue="" />
+										<f:selectItems value="#{referentielMB.communes}"
+											var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+											itemLabel="#{CollaborateurDTO.valeur}" />
+
+									</h:selectOneMenu>
+								</div>
+							</div>
+						</h:panelGroup>
+
+					</div>
+
+
+					<!--  right bloc -->
+					<div class="col-xs-6">
+					<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">Nom Point de Collecte</label>
+							<div class="col-sm-10">
+								<p:inputText
+									value="#{referentielMB.pointDeVente.libelle}"
+									styleClass="form-control" title="L'adresse"  
+									required="true"  requiredMessage="Le nom  du point de collecte est requis" />
+							</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<label for="inputEmail3" class="col-sm-2 control-label">Gérant
+							</label>
+							<h:panelGroup class="col-sm-10">
+								<h:selectOneMenu value="#{referentielMB.pointDeVente.idGerant}"
+									id="profilListe" required="true"
+									styleClass="form-control input-sm CustomSelect"
+									requiredMessage="Le gerant est requis">
+									<f:selectItem itemLabel="Selectionnez un gérant " itemValue="" />
+									<f:selectItems value="#{referentielMB.loadAllCollaborateurDTOsPersonne()}"
+										var="CollaborateurDTO"
+										itemValue="#{CollaborateurDTO.idPersonne}"
+										itemLabel="#{CollaborateurDTO.prenom} #{CollaborateurDTO.nom}" />
+
+								</h:selectOneMenu>
+							</h:panelGroup>
+						</div>
+
+
+						
+
+
+						<div class="form-group">
+							<label for="inputPassword3" class="col-sm-2 control-label">Adresse</label>
+							<div class="col-sm-10">
+								<p:inputText
+									value="#{referentielMB.pointDeVente.libelleAdresse}"
+									styleClass="form-control" title="L'adresse"  
+									required="true"  requiredMessage="L'adresse du point de vente est requise" />
+							</div>
+						</div>
+					
+					
+					</div>
+						<div id="buttons" class="pull-right">
+						<br/>
+					<br/>
+					
+				<h:commandButton styleClass=" fa fa-plus btn btn-success pull-right"
+						action="#{referentielMB.createPointdeCollecte}" value="Créer"
+						 style="width : 160px ; margin-left : 12px; margin-right : 20px" class=" btn btn-success pull-right"/>
+						 
+	
+					<a type="submit"
+						href="dashboardAgentsaisie.xhtml?"
+						class="fa fa-undo btn btn-default pull-right"> Annuler</a>
+				</div>
+				
+				</h:form>
+			
+			
+			</div>
+
+			
+
+		</div>
+	</ui:define>
+
+</ui:composition>

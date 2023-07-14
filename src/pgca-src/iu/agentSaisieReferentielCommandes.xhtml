@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+	<ui:define name="title">PGCA Tableau de bord agent de saisie</ui:define>
+
+	<ui:define name="section">
+		<div class="container-fluid">
+			<h:form id="form1">
+				<div id="engraisCreate" class="col-xs-12" style="margin-top: 10px">
+					<p:messages id="msg" showDetail="true" showIcon="true"
+						style="text-align  : center;     font-size: 15px; color: #253123;letter-spacing: 2px;text-align: center; margin-top : -10px ; margin-right : 15%;  margin-left : 15%" />
+
+					<!--   LISTE DES COMMANDES **************************
+						
+						 ** List = 5 
+						 ** Modif = 5b
+						 ** Details = 5c
+					
+					****************************************************-->
+
+					<h:form id="cmdListe" rendered="#{param.idBlocToShow eq '1'}"
+						prependId="false">
+						<!--  Paiement par credit -->
+
+						<h1 class="titrePage">Liste des ordres de livraisons</h1>
+
+						<!--  Filtre des ordres -->
+						<div class="col-xs-11 pull-right">
+							<br />
+							<br />
+							<div class="col-md-3" style="margin-top: -10px;">
+								<div class="form-inline">
+									<p class="form-control-static">Programme</p>
+									<div class="input-group-lg">
+										<h:selectOneMenu value="#{agentSaisieMB.filterIdProgramme}"
+											styleClass="form-control input-sm ">
+											<f:selectItem itemLabel="Tous les programmes" itemValue="0" />
+
+											<f:selectItems
+												value="#{agentSaisieMB.loadAllProgrammeOuvert()}"
+												var="CollaborateurDTO" itemValue="#{CollaborateurDTO.clef}"
+												itemLabel="#{CollaborateurDTO.valeur}" />
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-3" style="margin-top: -10px;">
+								<div class="form-inline">
+									<p class="form-control-static">Point de vente</p>
+									<div class="input-group-lg">
+										<h:selectOneMenu value="#{agentSaisieMB.filterIdpv}"
+											styleClass="form-control input-sm">
+											<f:selectItem itemLabel="Tous les points de vente"
+												itemValue="0" />
+
+											<f:selectItems
+												value="#{referentielMB.loadAllPointDeVentes('0')}"
+												var="CollaborateurDTO" itemValue="#{CollaborateurDTO.idPv}"
+												itemLabel="#{CollaborateurDTO.libelle}" />
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-md-3" style="margin-top: -10px;">
+								<div class="form-inline">
+									<p class="form-control-static">Statut</p>
+									<div class="input-group-lg">
+										<h:selectOneMenu value="#{agentSaisieMB.filterStatus}"
+											styleClass="form-control input-sm">
+											<f:selectItem itemLabel="Tous les statuts" itemValue="-1" />
+											<f:selectItem itemLabel="A traiter" itemValue="0" />
+											<!-- 										<f:selectItem itemLabel="Validé, en attente de traitement" itemValue="4" /> -->
+											<f:selectItem itemLabel="Traité" itemValue="1" />
+
+
+										</h:selectOneMenu>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-md-3" style="margin-top: -10px;">
+
+								<div class="form-inline" style="margin-right: 50px">
+									<p class="form-control-static">Client</p>
+									<div class="input-group input-group-lg">
+
+										<p:inputText value="#{agentSaisieMB.fileternomClient}"
+											styleClass="form-control" />
+										<div class="input-group-btn">
+
+
+											<h:commandButton value="Recherche"
+												action="#{agentSaisieMB.filterOL()}" name="Détails"
+												class="enregistrer a fa-info btn btn-default pull-right btn-default "
+												style="margin-left : 12px; margin-right : 25px" />
+										</div>
+									</div>
+									<br /> <br />
+								</div>
+							</div>
+						</div>
+						<hr />
+
+
+
+						<div class="container-fluid">
+
+
+							<br /> <br />
+
+
+							<p:dataTable id="ProfilID" var="intrantDTO"
+								value="#{agentSaisieMB.listCommandes}" reflow="true"
+								rowKey="#{intrantDTO.idCommande}"
+								emptyMessage="Ancun intrant disponible" paginator="true"
+								rows="10" cellSeparator="10"
+								paginatorTemplate="{PreviousPageLink} {NextPageLink} "
+								paginatorPosition="bottom"
+								selection="#{agentSaisieMB.commandeDTO}" selectionMode="single"
+								style="width: 90%; margin-left:5%; font-size:15px;">
+
+								<p:ajax event="rowSelect"
+									listener="#{agentSaisieMB.loadDetailsSelectedCMD}" />
+
+							
+								<p:column headerText="Programme">
+									<a> #{profilMB.StringCutter(intrantDTO.libelleProgramme, 40)} </a>
+								</p:column>
+								
+								<p:column headerText="Référence">
+									<a> #{profilMB.StringCutter(intrantDTO.referenceCMD, 40)} </a>
+								</p:column>
+
+								<p:column headerText="Date ">
+				          #{profilMB.StringCutter(intrantDTO.dateLivraisonSouhaite, 40)} 
+				        </p:column>
+
+								<p:column headerText="Point de Vente">
+				          #{profilMB.StringCutter(intrantDTO.communeLibelle, 40)}
+				        </p:column>
+
+								<p:column headerText="Client">
+				          #{profilMB.StringCutter(intrantDTO.clientNom, 60)} 
+				        </p:column>
+
+								<p:column headerText="Téléphone Client">
+				          #{profilMB.StringCutter(intrantDTO.clientTel, 60)} 
+				        </p:column>
+								<p:column headerText="Statut" style="width : 12%">
+									<span class="badge #{intrantDTO.styleClassCSSstatusCMD}">
+										<i class="#{intrantDTO.iconFontAwesome}" aria-hidden="true" />
+										#{intrantDTO.statusLibelle}
+									</span>
+								</p:column>
+
+
+
+							</p:dataTable>
+
+							<div class=" pull-right" style="margin-right: 55px">
+
+
+								
+								<h:commandButton value="Editer OL"
+									action="#{agentSaisieMB.redirectToOLEdition}" name="Détails"
+									class=" a fa-info btn btn-success pull-right"
+									style="margin-right : 15px; width : 120px" />
+									
+								<h:commandButton value="Détails"
+									action="#{agentSaisieMB.loadDetailsSelectedCMD}" name="Détails"
+									class=" a fa-info btn btn-success pull-right"
+									style="margin-right : 15px; width : 120px" />
+
+								<br />
+
+
+								<!-- #{referentielMB.initUpdateIntrant} -->
+								<!-- 								<h:commandButton value="Modifier" -->
+								<!-- 									 name="Modifier" -->
+								<!-- 									class="enregistrer a fa-info btn btn-default pull-right" -->
+								<!-- 									style="margin-right : 15px" /> -->
+								<!-- 								#{referentielMB.deleteIntrant} -->
+								<!-- 								<h:commandButton value="#{msg['form.btn.sup']}" -->
+								<!-- 									onclick="if (!confirm('Etes-vous sûr de vouloir supprimer cet intrant ?')) return false" -->
+								<!-- 									 name="Supprimer" -->
+								<!-- 									class="enregistrer a fa-info btn btn-default pull-right" -->
+								<!-- 									style="margin-right : 15px" /> -->
+							</div>
+
+							<br /> <br />
+
+
+						</div>
+						<br />
+						<br />
+
+					</h:form>
+
+				</div>
+			</h:form>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

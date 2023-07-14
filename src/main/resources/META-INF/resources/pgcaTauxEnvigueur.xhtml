@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>SIGSA | Gestion des agriculteurs</title>
+	<h:outputStylesheet name="css/login.css" />
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="assets/images/favicon.ico" />
+	<!-- Sweet Alert -->
+	<link href="assets/plugins/sweet-alert2/sweetalert2.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/animate/animate.css" rel="stylesheet"
+		type="text/css" />
+	<!-- DataTables -->
+	<link href="assets/plugins/datatables/dataTables.bootstrap4.min.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/plugins/datatables/buttons.bootstrap4.min.css"
+		rel="stylesheet" type="text/css" />
+	<!-- App css -->
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
+	<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/metisMenu.min.css" rel="stylesheet"
+		type="text/css" />
+	<link href="assets/plugins/daterangepicker/daterangepicker.css"
+		rel="stylesheet" type="text/css" />
+	<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+	<style>
+breadcrumb-item.active {
+	color: #bdb1ab ! important;
+}
+
+.badge.badge-soft-success {
+	color: #354840 !important;
+}
+
+.badge.badge-soft-warning {
+	color: #252118 !important;
+}
+
+.badge.badge-soft-danger {
+	color: #564448 !important;
+}
+</style>
+	<link rel="stylesheet" href="assets/css/bd-wizard.css" />
+</h:head>
+<h:body class="dark-sidenav">
+	<!-- Left Sidenav -->
+	<ui:include src="./includes/leftSideNav.xhtml" />
+	<!-- end left-sidenav-->
+	<div class="page-wrapper">
+		<!-- Top Bar Start -->
+		<ui:include src="./includes/topBar.xhtml" />
+		<!-- Top Bar End -->
+		<!-- Page Content-->
+		<div class="page-content">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+			<a class="navbar-brand" href="#"> <img
+				src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="#">SIGSA /
+							Agriculteurs / Gestion des points de ventes</a></li>
+				</ul>
+				<!--end navbar-nav-->
+				<div class="pull-right">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item "><a class="nav-link" href="#">#{AgentController.connectedUserDetails.entitePublique}
+								/ #{AgentController.connectedUserDetails.service} /
+								#{AgentController.connectedUserDetails.sousService}</a></li>
+					</ul>
+				</div>
+				<!--end form-->
+			</div>
+			<!--end navbar-collapse--> </nav>
+			<h:form class="form-horizontal" prependId="false">
+				<div class="container-fluid">
+					<!-- Page-Title -->
+					<!--end row-->
+					<!-- end page title end breadcrumb -->
+					<div class="row">
+						<div class="col-12">
+							<div class="card"
+								style="background-image: url(images/auth-bg.png)">
+								<div class="card-body">
+
+									<div class="row">
+										<div class="col-md-12">
+
+ <h4 style="text-align :center">
+                      <i class="las la-list text-secondary font-22 align-middle mr-2"></i>Liste taux de subventions en vigeur - Campagne 2023 - 2024
+                    </h4>
+
+
+											<div class="row" id="" style="background: #0b213a21">
+												<br />
+												<hr />
+
+
+
+												<!--end card-->
+												<div class="col-md-4">
+													<br /> <label class="control-label input-label"
+														for="startTime">Type d'intrant</label>
+													<div class="controls bootstrap-timepicker">
+														<h:selectOneMenu
+															value="#{IntrantController.idSelectedTypeIntrant}"
+															styleClass="custom-select"
+															style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+															<p:ajax process="@this" event="change"
+																update="select-intrant , tabPV "
+																listener="#{IntrantController.loadIntrantByCategorie}" />
+															<f:selectItem itemLabel="Sélectionner un type d'intrant"
+																itemValue="0" />
+															<f:selectItems
+																value="#{IntrantController.categorieIntrantDTOs}" var="categorie"
+																itemLabel="#{categorie.libelle}"
+																itemValue="#{categorie.id}" />
+														</h:selectOneMenu>
+													</div>
+												</div>
+												
+												<div class="col-md-4">
+													<br /> <label class="control-label input-label"
+														for="startTime">Intrant</label>
+													<div class="controls bootstrap-timepicker">
+														<h:selectOneMenu id="select-intrant"
+															value="#{IntrantController.idSelectedteIntrant}"
+															styleClass="custom-select"
+															style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+															<p:ajax process="@this" event="change"
+																update="select-variete, tabPV"
+																listener="#{IntrantController.loadIntrantByVariete}" />
+															<f:selectItem itemLabel="Sélectionner un intrant "
+																itemValue="0" />
+															<f:selectItems
+																value="#{IntrantController.intrantsSelectedCategie}" var="d"
+																itemLabel="#{d.libelle}"
+																itemValue="#{d.idProduit}" />
+														</h:selectOneMenu>
+													</div>
+														<br/>
+												</div>
+												
+												
+											<div class="col-md-4">
+													<br /> <label class="control-label input-label"
+														for="startTime">Variété d'intrant</label>
+													<div class="controls bootstrap-timepicker">
+														<h:selectOneMenu id="select-variete"
+															value="#{CommissionController.idSelectedDept}"
+															styleClass="custom-select"
+															style="box-shadow : inset 0 2px 2px white ;  height: 45PX ! important">
+															<p:ajax process="@this" event="change"
+																update="tabPV"
+																listener="#{CommissionController.loadCommunesByIdDepart}" />
+															<f:selectItem itemLabel="Sélectionner uen variété d'intrant "
+																itemValue="0" />
+															<f:selectItems
+																value="#{CommissionController.reflistDepart}" var="d"
+																itemLabel="#{d.valeurGenerique}"
+																itemValue="#{d.idGenerique}" />
+														</h:selectOneMenu>
+													</div>
+														<br/>
+												</div>
+										
+												<br />
+												<br />
+
+
+												<hr/>
+
+											</div>
+	<br/>
+
+										</div>
+									</div>
+
+									<div id="wizard">
+
+
+
+
+										<section>
+
+										<div class="card"
+											style="background-image: url(images/auth-bg.png)">
+
+											<div class="card-body">
+												<hr />
+												<h:panelGroup id="tabPV">
+													<table id="datatable"
+														class="table table-bordered dt-responsive nowrap"
+														style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+														<thead>
+															<tr>
+																<th>Numéro</th>
+																<th>Nom du point de vente</th>
+																<th>Actvités en cours</th>
+
+															</tr>
+														</thead>
+
+														<tbody>
+															<p:repeat value="#{CommissionController.reflistCom}"
+																var="odm">
+
+																<tr>
+																	<td>#{odm.idGenerique}</td>
+																	<td>#{odm.valeurGenerique}</td>
+																	
+																	
+																	<td style="width : 20%">
+																		
+																		      <button type="button" class="btn btn-soft-primary btn-icon-circle-sm mr-2" title="Cession Semence">
+                                        <i class="mdi mdi-bell font-16"></i>
+                                        <span class="badge badge-dot online"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-soft-info btn-icon-circle-sm mr-2" title="Retard material"> 
+                                        <i class="mdi mdi-account font-16"></i>
+                                        <span class="badge badge-dot offline"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-soft-warning btn-icon-circle-sm mr-2">
+                                        <i class="mdi mdi-bell font-16"></i>
+                                        <span class="badge badge-dot online"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-soft-danger btn-icon-circle-sm" title="Qualité sol " >
+                                        <i class="mdi mdi-account font-16"></i>
+                                        <span class="badge badge-dot offline"></span>
+                                    </button>
+                                    
+																	
+																	</td>
+
+																</tr>
+
+															</p:repeat>
+														</tbody>
+
+
+													</table>
+												
+												
+												<div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 align-self-center">
+                                            <img src="assets/images/products/01.png" alt="" class=" mx-auto  d-block" height="300"/>                                           
+                                        </div><!--end col-->
+                                        <div class="col-lg-6 align-self-center">
+                                            <div class="single-pro-detail">
+                                                <p class="mb-1">Dastyle</p>
+                                                <div class="custom-border mb-3"></div>
+                                                <h3 class="pro-title">Dastyle Morden Table Camera</h3>
+                                                <p class="text-muted mb-0">Morden and good look model 2020</p> 
+                                                <ul class="list-inline mb-2 product-review">
+                                                    <li class="list-inline-item"><i class="mdi mdi-star text-warning"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star text-warning"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star text-warning"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star text-warning"></i></li>
+                                                    <li class="list-inline-item"><i class="mdi mdi-star-half text-warning"></i></li>
+                                                    <li class="list-inline-item">4.5 (9830 reviews)</li>
+                                                </ul>
+                                                <h2 class="pro-price">$89.00 <span><del>$180.00</del></span><span class="text-danger font-weight-bold ml-2">50% Off</span></h2>                                                 
+                                                <h6 class="text-muted font-13">Features :</h6> 
+                                                <ul class="list-unstyled pro-features border-0">
+                                                    <li>It is a long established fact that a reader will be distracted.</li>
+                                                    <li>Contrary to popular belief, Lorem Ipsum is not text. </li>
+                                                </ul>
+                                                <h6 class="text-muted font-13 d-inline-block align-middle mr-2">Color :</h6> 
+                                                <div class="radio2 radio-info2 form-check-inline ml-2">
+                                                    <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked=""/>
+                                                    <label for="inlineRadio1"></label>
+                                                </div>
+                                                <div class="radio2 radio-dark2 form-check-inline">
+                                                    <input type="radio" id="inlineRadio2" value="option2" name="radioInline"/>
+                                                    <label for="inlineRadio2"></label>
+                                                </div>                                                
+                                                <div class="quantity mt-3 ">
+                                                    <input class="form-control form-control-sm" type="number" min="0" value="0" id="example-number-input"/>
+                                                    <a href="" class="btn btn-primary text-white px-4 d-inline-block"><i class="mdi mdi-cart mr-2"></i>Add to Cart</a>
+                                                </div>                                             
+                                            </div>
+                                        </div><!--end col-->                                            
+                                    </div><!--end row-->
+                                </div><!--end card-body-->
+                            </div>
+                            
+                            
+												
+												</h:panelGroup>
+											</div>
+										</div>
+
+										</section>
+										<section> </section>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- end col -->
+					</div>
+					<!-- end row -->
+					<button style="display: none;" type="button"
+						id="create-agent-topright-error">show alert</button>
+					<h:inputText value="#{AgentController.createAgentErreurMsg}"
+						id="create-agent-error-text" style="display: none;" />
+
+					<button type="button" style="display: none;">
+						<h:commandLink id="reset-error-msgs" value="Enregistrer"
+							style="color: #ffffff;">
+							<p:ajax event="click" update="create-agent-error-text"
+								process="@this" listener="#{AgentController.resetErrorMsgs()}"></p:ajax>
+						</h:commandLink>
+					</button>
+				</div>
+				<!-- container -->
+				<ui:include src="./includes/footer.xhtml" />
+				<!--end footer-->
+			</h:form>
+		</div>
+		<!-- end page content -->
+	</div>
+	<!-- end page-wrapper -->
+</h:body>
+<!-- jQuery  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/metismenu.min.js"></script>
+<script src="assets/js/waves.js"></script>
+<script src="assets/js/feather.min.js"></script>
+<script src="assets/js/simplebar.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/moment.js"></script>
+<script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+<!-- Sweet-Alert  -->
+<script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+<script src="assets/pages/jquery.sweet-alert.init.js"></script>
+
+
+
+<script>
+    $(document).ready(function() {
+      if ($('#create-agent-error-text').val() !== '') {
+        $('#create-agent-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+  </script>
+</html>

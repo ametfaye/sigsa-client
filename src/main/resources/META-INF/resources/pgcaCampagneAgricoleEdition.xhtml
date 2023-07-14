@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+ xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" 
+ xmlns:sec="http://www.springframework.org/security/tags" xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+    <title>SIGMA | Édition d'un nouvel ordre de mission</title>
+    <h:outputStylesheet name="css/login.css" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <!-- Sweet Alert -->
+    <link href="assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <!-- FlexSELECT -->
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+    <link rel="stylesheet" href="assets/plugins/flexselect/flexselect.css" type="text/css" media="screen" />
+    <!--     <script src="assets/plugins/flexselect/jquery.min.js" type="text/javascript"></script> -->
+    <script src="assets/plugins/flexselect/liquidmetal.js" type="text/javascript"></script>
+    <script src="assets/plugins/flexselect/jquery.flexselect.js" type="text/javascript"></script>
+    
+    <link href="assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
+    
+    <script>
+      
+    jQuery(document).ready(function() {
+        $("select.flexselect").flexselect();
+        $("#destination").select2();
+        $("#agentaAjouter").select2();
+        $("#select-entite-publique").select2();
+        $("#select-agent").select2();
+      });
+      
+      function cbChange(obj) {
+ 
+    	        if (obj.checked == true)
+    	        {
+    	        	var cbs = document.getElementsByClassName("b");
+    	      	     for (var i = 0; i &lt; cbs.length; i++) {
+    	      	        cbs[i].checked = false;
+    	               console.log(obj.id);
+    	        }
+    	    }
+    	  obj.checked   = true;
+      }
+      
+    </script>
+    <style>
+      .custumInput {
+        display: block;
+        width: 100%;
+        height: calc(1.8em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.8;
+        color: #303e67;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        box-shadow: none ! important;
+      }
+
+      .custom-select {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        background: #fffurl(data:image/svg+xml,%3csvg
+ xmlns='http://www.w3.org/2000/svg'viewBox='0 0 4 5'%3e%3cpath fill='%232c3652'd='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+      }
+
+      .flexselect_dropdown {
+        display: none;
+        position: absolute;
+        z-index: 999999;
+        margin: 0;
+        padding: 0;
+        border: 1px solid WindowFrame;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: Window;
+        color: WindowText;
+        text-align: left;
+        box-shadow: 0 6px 12px #ccc;
+        -webkit-box-shadow: 0 6px 12px #ccc;
+        background: linear-gradient(351deg, rgb(194 225 208), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0, 255, 0, 0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);
+      }
+
+      breadcrumb-item.active {
+        color: #bdb1ab ! important;
+      }
+
+      .badge.badge-soft-success {
+        color: #354840 !important;
+      }
+
+      .badge.badge-soft-warning {
+        color: #252118 !important;
+      }
+
+      .badge.badge-soft-danger {
+        color: #564448 !important;
+      }
+
+      .custom-select {
+        display: inline-block;
+        width: 100%;
+        vertical-align: middle;
+        background: #fffurl(data:image/svg+xml,%3csvg
+ xmlns='http://www.w3.org/2000/svg'viewBox='0 0 4 5'%3e%3cpath fill='%232c3652'd='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) no-repeat right .75rem center/8px 10px;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 1px solid #c5c5c5;
+        background: #f6f6f6;
+        font-weight: normal;
+        color: #454545;
+      }
+
+      .flexselect_dropdown {
+        display: none;
+        position: absolute;
+        z-index: 999999;
+        margin: 0;
+        padding: 0;
+        border: 1px solid WindowFrame;
+        max-height: 200px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: Window;
+        color: WindowText;
+        text-align: left;
+        box-shadow: 0 6px 12px #ccc;
+        -webkit-box-shadow: 0 6px 12px #ccc;
+        background: linear-gradient(351deg, rgb(194 225 208), rgb(248 249 251) 70.71%), linear-gradient(145deg, rgb(255 255 255), rgba(0, 255, 0, 0) 70.71%), linear-gradient(353deg, rgb(255 255 255), rgb(255 255 255) 70.71%);
+      }
+
+      .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        display: block;
+        width: 100%;
+        height: calc(1.8em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.8;
+        color: #303e67;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #e3ebf6;
+        border-radius: 0.25rem;
+        -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+      }
+
+      .ui-state-active .ui-icon {
+          background-image: url(/odm/javax.faces.resource/images/ui-icons_38667f_256x240.png.xhtml?ln=primefaces-aristo);
+          background: #468526;
+      }
+
+    </style>
+    <link rel="stylesheet" href="assets/css/bd-wizard.css" />
+  </h:head>
+  <h:body class="dark-sidenav">
+    <!-- Left Sidenav -->
+    <ui:include src="./includes/leftSideNav.xhtml" />
+    <!-- end left-sidenav-->
+    <div class="page-wrapper">
+      <!-- Top Bar Start -->
+      <ui:include src="./includes/topBar.xhtml" />
+      <!-- Top Bar End -->
+      <!-- Page Content-->
+      <div class="page-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+          <a class="navbar-brand" href="#">
+            <img src="assets/images/logo-sm.png" height="26" alt="" class="mr-1" />
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Administration / Campagne /  Ouverture Campagne</a>
+              </li>
+            </ul>
+            <!--end navbar-nav-->
+            <div class="pull-right">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                  <a class="nav-link" href="#">#{OrderMissionController.connectedUserDetails.entitePublique} / #{OrderMissionController.connectedUserDetails.service}
+                    / #{OrderMissionController.connectedUserDetails.sousService}</a>
+                </li>
+              </ul>
+            </div>
+            <!--end form-->
+          </div>
+          <!--end navbar-collapse-->
+        </nav>
+        <h:form class="form-horizontal" prependId="false">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <div class="" style="background-image: url(images/auth-bg.png)">
+                  <div class="card-body">
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4"></div>
+                      </div>
+                      <div id="wizard">
+                       
+                       	<p class="titrePage" style=" font-size  : 20px; text-align : center">Ouverture d'une campagne agricole</p>
+                        <hr />
+                    
+                        <div class="row">
+                          <div class="col-1" />
+                          <div class="col-5">
+                           
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Date de début</label>
+                              <p:inputText styleClass="form-control " type="date" value="#{CampagneAgricoleController.campagneAcreer.dateOuverture}" id="dateFinOM" style="box-shadow: none ! important;" >
+                              	
+                              </p:inputText>
+                            </div>
+                          </div>
+                          <div class="col-5">
+                          
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Date de Fin</label>
+                              <p:inputText styleClass="form-control " type="date" value="#{CampagneAgricoleController.campagneAcreer.dateFermeture}" id="dateDebutOM" style="box-shadow: none ! important;"> 
+
+
+                              
+                             </p:inputText>
+                            </div>
+                          </div>
+                          <div class="col-1" />
+                        </div>
+                        <div class="row">
+                          <br />
+                          <div class="col-12">
+                            <!--end card-header-->
+                            <div class="card-body">
+                              <p class="page-title " style="text-align : center">Présentation et objectifs de la campagne</p>
+                              <h:inputTextarea id="elm1" name="area" value="#{CampagneAgricoleController.campagneAcreer.presentation}"></h:inputTextarea>
+                            </div>
+                            <!--end card-body-->
+                            <!--end card-->
+                          </div>
+                          <!-- end col -->
+                        </div>
+                 
+                        <section>
+                          <div class="row" style="margin-top : 20px">
+                            <div class="col-sm-5" />
+                            <div class="col-sm-4">
+                              <div class="button-items ">
+                                <button type="button" class="btn btn-warning waves-effect waves-light">
+                                  <h:commandLink  style="color: #ffffff;" update="resultFile" value="Annuler"></h:commandLink>
+                                </button>
+                                <button type="button" class="btn btn-success waves-effect waves-light">
+                                  <h:commandLink action="#{CampagneAgricoleController.ouvrirCampagneCheckErrors()}" style="color: #ffffff;"  value="Enregistrer"></h:commandLink>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end col -->
+            </div>
+            <!-- end row -->
+            <button style="display: none;" type="button" id="create-odm-topright-error">show alert</button>
+            <h:inputText value="#{OrderMissionController.blocErreurMsg}" id="create-odm-error-text" style="display: none;" />
+            <button type="button" style="display: none;">
+              <h:commandLink id="reset-error-msgs" value="Enregistrer" style="color: #ffffff;">
+                <p:ajax event="click" update="create-odm-error-text" process="@this" listener="#{OrderMissionController.resetErrorMsgs()}"></p:ajax>
+              </h:commandLink>
+            </button>
+          </div>
+          <!-- container -->
+          <ui:include src="./includes/footer.xhtml"/>
+          <!--end footer-->
+        </h:form>
+      </div>
+      <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+  </h:body>
+  <!-- jQuery  -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/metismenu.min.js"></script>
+  <script src="assets/js/waves.js"></script>
+  <script src="assets/js/feather.min.js"></script>
+  <script src="assets/js/simplebar.min.js"></script>
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <script src="assets/js/moment.js"></script>
+  <script src="assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
+  <!-- Sweet-Alert  -->
+  <script src="assets/plugins/sweet-alert2/sweetalert2.min.js"></script>
+  <script src="assets/pages/jquery.sweet-alert.init.js"></script>
+  <!--Wysiwig js-->
+  <script src="assets/plugins/tinymce/tinymce.min.js"></script>
+  <script src="assets/pages/jquery.form-editor.init.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      $('#add-participant-button').click(function () {
+        $('#add-participant-hidden').click(); 
+      });
+      if ($('#create-odm-error-text').val() !== '') {
+        $('#create-odm-topright-error').click();
+        $('#reset-error-msgs').click();
+      }
+    });
+  </script>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="template.pgca.xhtml">
+
+	<ui:define name="title">Magasisier - PGCA - Plateforme de gestion Agricole</ui:define>
+
+
+
+	<ui:define name="section">
+		<div class="container-fluid">
+
+			
+					
+					
+				
+					
+
+
+			<div class="col-xs-6 col-xs-offset-3">
+
+	
+	<h1 class="MainLabelCenter">
+							<i class="fa fa-assistive-listening-systems" aria-hidden="true"></i>
+							Liste des mises en places 
+						</h1>
+
+
+					<div class="col-md-3 dashboardIndicateursInverse">
+						
+					
+									
+						<span class="pull-left" style="margin-right: 5%; color: #002839">
+						<a href="managerGestionMiseEnplace.xhtml" title="#{managerManagedBean.loadAllMEPtermines()}  mise (s) en place éffectuées "  style="text-decoration : none" >
+						 	<i class="fa fa-check" aria-hidden="true"
+							style="margin-right: 5px; color: #80c347" /> Mise en place terminées : <span
+							style="font-size: 30px;">
+								 #{managerManagedBean.loadAllMEPtermines()} </span>  </a>
+						</span> 
+						
+						
+					</div>
+
+
+				<div class="col-xs-6 col-sm-3"></div>
+
+
+					<div class="col-md-3 dashboardIndicateursInverse">
+						
+					
+									
+						<span class="pull-left" style="margin-right: 5%; color: #002839">
+						<a href="#" title="#{managerManagedBean.nbMiseEnplaceEnCours}  mise (s) en place en cours "  style="text-decoration : none" >
+						 	<i class="fa fa-balance-scale" aria-hidden="true"
+							style="margin-right: 5px; color: #80c347" /> Mise en place  en cours : <span
+							style="font-size: 30px;">
+								#{managerManagedBean.nbMiseEnplaceEnCours} </span>  </a>
+						</span> 
+						
+						
+					</div>
+
+
+
+			</div>
+			
+			
+
+		
+			<hr />
+
+			<p:dataTable var="utilisateurProviver" id="utilisateurProviver"
+				widgetVar="carsTable2" value="#{managerManagedBean.listPVOfCommune}"
+				rowKey="#{utilisateurProviver.idPointDeVente}" reflow="true"
+				style="width: 90%; margin-left:5%; font-size:15px ; "
+				paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+				rowsPerPageTemplate="5,10,15"
+				emptyMessage="Aucun  quota disponible !!!" paginator="true"
+				paginatorPosition="bottom" rows="11"
+				filteredValue="#{managerManagedBean.filtredlistPVOfCommune}">
+<!-- 				<f:facet name="header"> -->
+<!-- 					<p:outputPanel> -->
+<!-- 						<h:outputText value="Critères de recherche " -->
+<!-- 							style="color : #002839" /> -->
+<!-- 						<i class="fa fa-search" aria-hidden="true" style="color: #80c347" /> -->
+
+<!-- 						<p:inputText id="globalFilter" onkeyup="PF('carsTable2').filter()" -->
+<!-- 							style="width:350px; margin-bottom  : 40px; margin-left : 20px; " -->
+<!-- 							placeholder="Entrez un critère " /> -->
+<!-- 					</p:outputPanel> -->
+<!-- 				</f:facet> -->
+
+
+
+
+				<p:column headerText="Point de Vente"
+					>  
+								         #{entiteJMB.StringCutter(utilisateurProviver.nomPointDeVente,80)} 
+								        </p:column>
+
+<!-- 				<p:column headerText="Responsable" >   -->
+<!-- 								         #{entiteJMB.StringCutter(utilisateurProviver.nomGerant,40)}  -->
+<!-- 								        </p:column> -->
+
+
+				<p:column headerText="Intrant" >  
+								         #{entiteJMB.StringCutter(utilisateurProviver.libelleIntrantAMettreEnplace,20)} 
+								        </p:column>
+
+				<p:column headerText="Quota" >  
+								         #{entiteJMB.StringCutter(utilisateurProviver.quotaIntrantAMettreEnplace, 20)} 
+								        </p:column>
+
+
+				<p:column headerText="Reliquat" >  
+								         #{entiteJMB.StringCutter(utilisateurProviver.reliquatIntrantAMettreEnplace,20)} 
+								        </p:column>
+
+				<p:column headerText="Cumul" >  
+								         #{utilisateurProviver.quotaIntrantAMettreEnplace - utilisateurProviver.reliquatIntrantAMettreEnplace} 
+								        </p:column>
+
+
+			</p:dataTable>
+			<br /> <br /> <br />
+
+		</div>
+	</ui:define>
+
+</ui:composition>
