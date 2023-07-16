@@ -1,12 +1,12 @@
 
 .settings/
 
-target/classes/
-
-target/test-classes/importPackage/
+target/
 
 .classpath
 
 .factorypath
 
 .project
+
+log/
